@@ -1,0 +1,99 @@
+$sidebar_width: 300px;
+$header_width: 300px;
+
+$content_font_family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$header_font_family: Lato, Helvetica, Arial, sans-serif;
+
+$column_space: 40px;
+
+$hover_shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+$hover_border: 1px solid rgba(0, 0, 0, 0.075);
+
+// use: @media #{$var} {
+// 	...
+// }
+$screen-tiny: "only screen and (max-width : 320px)";
+$screen-small: "only screen and (max-width : 480px)";
+$screen-medium: "only screen and (max-width : 767px)";
+$screen-normal: "only screen and (max-width: 979px)";
+$screen-large: "only screen and (min-width : 1200px)";
+
+// use: .class { @include transition(all, .5s, ease-in); }
+@mixin transition($elements: all, $time: .25s, $ease: ease-out) {
+	-webkit-transition: $elements $time $ease;
+	   -moz-transition: $elements $time $ease;
+	    -ms-transition: $elements $time $ease;
+	     -o-transition: $elements $time $ease;
+	        transition: $elements $time $ease;
+}
+
+// use: .class { @include opacity(.5); }
+@mixin opacity($value: .5) {
+	opacity: $value;
+	filter: alpha(opacity=$value * 100);
+}
+
+// use: .class { @include x-rem(font-size, 2); }
+@mixin x-rem ($property, $value) {
+	#{$property}: $value * $main-font-size;
+	#{$property}: #{$value}rem;
+}
+
+// use: .class { @include animation-slide('left'); }
+@mixin animation-slide($direction) {
+	$x: 0;
+	$y: 0;
+
+	@if $direction == 'left' {
+		$x: -5em;
+	} @else if $direction == 'right' {
+		$x: 5em;
+	} @else if $direction == 'top' {
+		$y: -5em;
+	} @else if $direction == 'bottom' {
+		$y: 5em;
+	}
+
+	visibility: hidden;
+
+	-webkit-transform: translate($x, $y);
+	-ms-transform: translate($x, $y);
+	transform: translate($x, $y);
+
+	@include transition(all, .5s);
+	@include opacity(0);
+}
+
+// use: .class { @extend .animation-slided; }
+.animation-slided {
+	visibility: visible;
+
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	transform: translate(0, 0);
+
+	@include opacity(1);
+}
+
+// use: .class { @extend .transition; }
+.transition {
+	-webkit-transition: all .25s ease-out;
+	   -moz-transition: all .25s ease-out;
+	    -ms-transition: all .25s ease-out;
+	     -o-transition: all .25s ease-out;
+	        transition: all .25s ease-out;
+}
+
+// use: .class { @extend .after-clear; }
+.after-clear {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+// use: .class { @extend .box-sizing; }
+.box-sizing {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}

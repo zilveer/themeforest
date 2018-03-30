@@ -1,0 +1,1 @@
+<span class="logo" style="color: <?php echo $color ?>; font-size: <?php echo $size.$unit ?>;"><?php echo $content ?></span>

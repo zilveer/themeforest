@@ -1,0 +1,1 @@
+<span class="highlight"><?php echo do_shortcode($content); ?></span>

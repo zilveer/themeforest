@@ -1,0 +1,385 @@
+Actions
+--------------------
+
+ancora_action_before_init_theme
+	Do theme specific actions before theme init. For example - add/remove theme options, shortcodes settings, etc.
+	Attention!
+	Priority 1 reserved for the functions, where add theme specific actions and filters handlers, register templates, etc.
+	Priority 2 reserved for the functions, where create theme options
+	Priority 3 reserved for the functions, where add/delete/change theme options array and other global arrays
+
+ancora_action_init_theme
+	Load theme options and do theme specific actions while theme init.
+
+ancora_action_after_init_theme
+	Do theme specific actions after theme init. Place here actions, that need get_theme_option() and/or get_custom_option()
+
+
+ancora_action_add_styles
+	Add theme/skin specific stylesheet files
+
+ancora_action_add_responsive
+	Add theme/skin specific responsive stylesheet files
+
+ancora_action_add_scripts
+	Add theme/skin specific script files
+
+ancora_action_add_scripts_inline
+	Add theme/skin specific scripts into <script>...</script> tag in the footer
+
+
+ancora_action_blog_scripts($style)
+	Add template specific script files. Used in the template file
+
+
+ancora_action_load_main_options
+	Fired after loading main Theme options to add theme specific options
+
+ancora_action_load_custom_options
+	Fired after loading custom (from post, page, category, etc.) options to add theme specific options
+
+ancora_action_shortcodes_list
+	Fired after create shortcodes list
+
+ancora_action_shortcodes_list_vc
+	Fired after map shortcodes list for Visual Composer
+
+ancora_action_taxonomy_before_show_meta_box($tax_type, $tax_obj)
+	Fired before show custom options block for the taxonomy
+	$tax_type - current taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+
+ancora_action_taxonomy_after_show_meta_box($tax_type, $tax_obj)
+	Fired after show custom options block for the taxonomy
+	$tax_type - current taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+
+ancora_action_taxonomy_before_show_custom_field($tax_type, $tax_obj, $option, $id, $value)
+	Fired before show custom option field for the taxonomy
+	$tax_type - current taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$value - current value of the field
+
+ancora_action_taxonomy_after_show_custom_field($tax_type, $tax_obj, $option, $id, $value)
+	Fired after show custom options field for the taxonomy
+	$tax_type - current taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$value - current value of the field
+
+
+ancora_action_post_before_show_meta_box($post_type, $post_id)
+	Fired before show custom options block for the post
+	$post_type - current post_type
+	$post_id - edited post id
+
+ancora_action_post_after_show_meta_box($post_type, $post_id)
+	Fired after show custom options block for the post
+	$post_type - current post_type
+	$post_id - edited post id
+
+ancora_action_post_before_show_custom_field($post_type, $post_id, $option, $id, $value)
+	Fired before show custom option field for the post
+	$post_type - current post_type
+	$post_id - edited post id
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$value - current value of the field
+
+ancora_action_post_after_show_custom_field($$post_type, $post_id, $option, $id, $value)
+	Fired after show custom options field for the post
+	$post_type - current post_type
+	$post_id - edited post id
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$value - current value of the field
+
+
+
+
+
+Filters
+--------------------
+
+
+ancora_filter_save_options( $options, $override, $slug )
+	Make theme specific actions while save theme ($override='general'), post ($override='post'), page ($override='page') or category ($override='category') options.
+	If $slug not empty - save inheritance template options
+
+ancora_filter_save_schemes( $data )
+	Make theme specific actions while save color schemes.
+
+ancora_filter_theme_options_is_used( $options, $flag )
+	Return flag - does we need Theme options section on this post, page, category, etc.
+	
+ancora_filter_get_custom_option( $val, $name )
+	Return theme specific custom option value for the option with $name
+
+ancora_filter_show_custom_field( $output, $id, $field, $value )
+	Add custom field layout to the theme options
+
+
+ancora_filter_taxonomy_load_custom_options($opt, $tax_type, $tax_obj)
+	Fired before return loaded from database taxonomy custom options
+	$opt - loaded options
+	$tax_type - taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+	
+ancora_filter_taxonomy_save_custom_options($opt, $tax_type, $term_id)
+	Fired before save taxonomy custom options into database
+	$opt - custom options to save
+	$tax_type - taxonomy slug
+	$term_id - taxonomy term id
+
+ancora_filter_taxonomy_show_custom_field_option($option, $id, $tax_type, $tax_obj)
+	Fired before use taxonomy custom option to show field. You can add/change settings in the option array
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$tax_type - current taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+
+ancora_filter_taxonomy_show_custom_field_value($value, $option, $id, $tax_type, $tax_obj)
+	Fired before use taxonomy custom option value to show field. You can change this value
+	$value - current value of the field
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$tax_type - current taxonomy slug
+	$tax_obj - taxonomy term object or taxonomy slug (if just create new taxonomy)
+
+
+ancora_filter_post_load_custom_options($opt, $post_type, $post_id)
+	$opt - loaded options
+	$post_type - type of the post
+	$post_id - post ID
+
+ancora_filter_post_save_custom_options($opt, $post_type, $post_id)
+	$opt - custom options to save
+	$post_type - type of the post
+	$post_id - post ID
+
+ancora_filter_post_show_custom_field_option($option, $id, $post_type, $post_id)
+	Fired before use post custom option to show field. You can add/change settings in the option array
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$post_type - type of the post
+	$post_id - post ID
+
+ancora_filter_post_show_custom_field_value($value, $option, $id, $post_type, $post_id)
+	Fired before use post custom option value to show field. You can change this value
+	$value - current value of the field
+	$option - array with field's settings from Theme Options
+	$id - field id in theme options
+	$post_type - type of the post
+	$post_id - post ID
+
+
+ancora_filter_get_blog_type($type, $query)
+	Return theme (skin) specific page slug (if any) or leave $type unchanged, if it is standard framework page.
+	Fired when breadcrumbs and page title will be showed.
+
+ancora_filter_get_blog_title($title, $page)
+	Return theme (skin) specific page title (if any) or leave $title unchanged, if it is standard framework page.
+	Fired when breadcrumbs and page title will be showed.
+
+ancora_filter_get_stream_page_id($id, $page)
+	Return theme (skin) specific page ID for the all posts page (streampage).
+	Fired when breadcrumbs and page title will be showed.
+
+ancora_filter_get_stream_page_link($url, $page)
+	Return theme (skin) specific page URL for the all posts page (streampage).
+	Fired when breadcrumbs and page title will be showed.
+
+ancora_filter_get_stream_page_title($title, $page)
+	Return theme (skin) specific page title for the all posts page (streampage).
+	Fired when breadcrumbs and page title will be showed.
+
+ancora_filter_get_current_taxonomy($tax, $page)
+	Return theme (skin) specific taxonomy name (slug) (if any) or leave $tax unchanged, if it is standard framework page.
+	Fired when breadcrumbs will be showed.
+
+ancora_filter_is_taxonomy($tax, $query)
+	Return theme (skin) specific taxonomy name (slug) if current page is taxonomy page.
+
+ancora_filter_get_period_links($link, $page)
+	Return theme (skin) specific breadcrumbs links to the parent period (month, year).
+	Fired when breadcrumbs will be showed.
+
+
+ancora_filter_detect_inheritance_key
+	Detect current page (mode) and return correspond inheritance key
+
+ancora_filter_detect_template_page_id($id, $key)
+	Detect current page (mode) and return correspond template page id by inheritance key
+
+ancora_filter_detect_template_slug($slug, $key)
+	Detect current page (mode) and return correspond template slug by inheritance key
+
+
+ancora_filter_calendar_get_prev_month($prev_obj, $options)
+	Return object { month: xx, year: xxxx, done: array('post_type', 'post_type' ...) } with previous month with posts.
+	'done' - array with processed post_types (handler will add correspond post type in this array).
+	$options = array(
+		posts_types: allowed posts types,
+		year: current year,
+		month: current_month,
+		last_day: last day in the current month
+		)
+
+ancora_filter_calendar_get_next_month($next_obj, $options)
+	Return object { month: xx, year: xxxx, done: array('post_type', 'post_type' ...) } with next month with posts.
+	'done' - array with processed post_types (handler will add correspond post type in this array).
+	$options = array(
+		posts_types: allowed posts types,
+		year: current year,
+		month: current_month,
+		last_day: last day in the current month
+		)
+
+ancora_filter_calendar_get_curr_month_posts($posts, $options)
+	Return object {
+		done: array('post_type', 'post_type' ...),
+		link: day link,
+		titles: post's title from current day (if one post pusblished) or posts number (if 2+ posts published in this day),
+		posts: array(
+			post_id: post's ID,
+			post_title: post's title,
+			post_type: post's type,
+			post_date: post's publish date (or start event date for custom post types),
+			post_link: post's permalink
+			)
+	} with previous month with posts.
+	'done' - array with processed post_types (handler will add correspond post type in this array).
+	$options = array(
+		posts_types: allowed posts types,
+		year: current year,
+		month: current_month,
+		last_day: last day in the current month
+		)
+
+
+ancora_filter_add_theme_menus( $menus )
+	To register theme specific nav menus
+
+ancora_filter_update_notifier( $options )
+	Change theme specific settings (theme name, folder, path to xml-file with dummy data) for the update notifier
+
+ancora_filter_required_plugins( $plugins )
+	Add/Remove required/recommended plugins into list for TGM Activation Plugin
+
+ancora_filter_importer_options( $options )
+	Change options for Dummy Data Importer
+
+ancora_filter_importer_required_plugins( $not_installed )
+	Check if installed and add required plugins into comma separated list for Dummy Data Importer
+
+ancora_filter_add_theme_sidebars( $sidebars_list )
+	Add/remove theme specific sidebars into list. 
+	List = array( 'sidebar_slug' => __('Sidebar title', 'ancora'), ... )
+	
+ancora_filter_sc_clear_around( $text )
+	Clear spaces, tabs, <p>, </p>, <br> around open and close shortcode brackets [ and ]
+	This allow user to write:
+		[trx_columns]
+			[trx_column_item]
+				Column text ...
+			[/trx_column_item]
+		[/trx_columns]
+	instead
+		[trx_columns][trx_column_item]Column text ...[/trx_column_item][/trx_columns]
+		
+ancora_filter_p_clear_around( $text )
+	Remove p and br around div and h1-h6
+
+
+ancora_filter_get_post_data( $post_data, $opt, $post_obj )
+	Allow add/remove theme specific variables in the $post_data array for the each post
+
+ancora_filter_query_add_filters($args, $filter)
+	Add query arguments by $filter - for custom post types and taxonomies
+
+ancora_filter_related_posts_args($args, $post_data)
+	Add query arguments to query related posts - for custom post types and taxonomies
+
+ancora_filter_related_posts_title($title, $post_type)
+	Return title for the related posts area
+
+
+ancora_filter_list_sliders( $list )
+	Allow add/remove theme specific sliders into list (used in the theme options)
+
+ancora_filter_list_post_types( $list )
+	Allow add/remove theme specific post_types into list (used in the theme options and widgets)
+
+ancora_filter_list_popup_engines( $list )
+	Allow add/remove theme specific popup engines into list (used in the theme options)
+
+ancora_filter_list_body_styles( $list )
+	Allow add/remove theme specific body styles into list (used in the theme options and post/page options)
+
+ancora_filter_list_sortings( $list )
+	Allow add/remove theme specific posts sorting methods into list (used in the theme options and category/page options)
+
+ancora_filter_list_columns( $list )
+	Allow add/remove columns layouts into list
+
+ancora_filter_list_dedicated_locations( $list )
+	Allow add/remove dedicated content locations (created with shortcodes [trx_block] or/and [trx_section]) or featured image (if no dedicated content created) into list
+
+ancora_filter_list_fonts( $list )
+	Allow add/remove font names into list
+
+ancora_filter_used_fonts( $list )
+	Mark theme or skin specific fonts as used
+
+ancora_filter_portfolio_hovers( $list )
+	Add/Remove portfolio hovers into list
+
+ancora_filter_portfolio_hovers_directions( $list )
+	Add/Remove portfolio hovers directions into list
+
+ancora_filter_color_schemes( $list )
+	Add/Remove color schemes into list
+
+ancora_filter_bg_tints( $list )
+	Add/Remove background tints into list
+
+ancora_filter_sidebar_styles( $list )
+	Add/Remove sidebars background styles into list
+
+ancora_filter_label_positions( $list )
+	Add/Remove label positions for the custom forms (created by [trx_contact_form] shortcode)
+
+ancora_filter_field_types( $list )
+	Add/Remove field types for the custom forms (created by [trx_contact_form] shortcode)
+
+ancora_filter_googlemap_styles( $list )
+	Add/Remove styles for the Google maps into list
+
+ancora_filter_post_format_name( $name, $format )
+	Return post format name to show on page
+
+ancora_filter_post_format_icon( $icon, $format )
+	Return icon name to show on page near the specified post format
+
+ancora_filter_post_date($post_date, $post_id, $post_type)
+	Return post date or event start date for custom post types
+
+
+ancora_filter_add_styles_inline( $custom_style )
+	Add theme/skin specific styles into <style>...</style> tag in the <head>
+
+ancora_filter_add_responsive_inline( $custom_style )
+	Add theme/skin specific responsive styles into <style>...</style> tag in the <head>
+
+
+ancora_filter_blog_classes( $classes_str, $options )
+	Add theme specific classes into classes string, used for the blog (blogger) wrapper.
+	$options - array('style'=>'blog style name', 'dir'=>'posts direction', 'descr'=>description max length)
+	
+ancora_filter_blog_container( $container_str, $options )
+	Wrap output into template specific container. Mark the content place with '%s' inside container.
+	For example: <div class="columns_wrap">%s</div>
+	$options - array('style'=>'blog style name', 'dir'=>'posts direction')

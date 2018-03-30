@@ -1,0 +1,9 @@
+<?php return array(
+	'name' => __( '#Gallery Page (Fullsize)', 'beautyspot' ),
+	'custom_class' => 'lsvr-layout-template lsvr-layout-template-gallery-page',
+	'content' => '[vc_row wrap_in_section="" wrap_in_container="yes"][vc_column width="1/1"][vc_column_text]
+<h2>Promo Photos</h2>
+[/vc_column_text][/vc_column][/vc_row][vc_row][vc_column width="1/1"][lsvr_gallery_vc carousel="" items_per_slide="4" items_under_1200="4" items_under_992="4" items_under_768="2" items_under_481="2" crop="yes" crop_aspect_ratio="65" click_action="lightbox" inview_anim="none" images="73,74,75,76,78,79,80,77" size="medium"][/vc_column][/vc_row][vc_row wrap_in_section="" wrap_in_container="yes"][vc_column width="1/1"][lsvr_divider whitespace_size="m-medium" transparent="yes" inview_anim="none"][vc_column_text]
+<h2>Our Salon</h2>
+[/vc_column_text][/vc_column][/vc_row][vc_row wrap_in_section="" wrap_in_container=""][vc_column width="1/1"][lsvr_gallery_vc carousel="" items_per_slide="4" items_under_1200="4" items_under_992="4" items_under_768="2" items_under_481="2" crop="yes" crop_aspect_ratio="65" click_action="lightbox" inview_anim="none" images="81,82,83,84,85,86,87,88" size="medium"][/vc_column][/vc_row][vc_row wrap_in_section="" wrap_in_container="yes"][vc_column width="1/1"][lsvr_divider whitespace_size="m-small" transparent="" inview_anim="none"][vc_column_text]She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village.[/vc_column_text][/vc_column][/vc_row]'
+); ?>

@@ -1,0 +1,1 @@
+<strong><?php echo $content; ?></strong>

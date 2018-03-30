@@ -1,0 +1,2 @@
+
+(function(a){a(document).ready(function(){jQuery.fn.exists=function(){return this.length>0};if(a(".ut-selfvideo-player").exists()){a(".ut-selfvideo-player").each(function(){var b=a(this)[0],c=a(this).attr("volume")/100;b.volume=c});a(".ut-video-control").not(".youtube").click(function(c){var d=a(this).data("for"),b=a("#"+d)[0];if(a(this).hasClass("ut-unmute")){b.muted=false;a(this).removeClass("ut-unmute").addClass("ut-mute")}else{b.muted=true;a(this).removeClass("ut-mute").addClass("ut-unmute")}c.preventDefault()})}})})(jQuery);

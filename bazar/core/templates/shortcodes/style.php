@@ -1,0 +1,1 @@
+<span style="color: <?php echo $color;?>;"><?php echo do_shortcode( $content ); ?></span>

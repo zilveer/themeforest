@@ -1,0 +1,157 @@
+/* ========================================================================== *
+ * 3.5. Formats
+ * ========================================================================== */
+
+.format-image,
+.format-standard {
+	.mpcth-post-thumbnail {
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+	}
+}
+
+.format-gallery {
+	.mpcth-post-thumbnail {
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		#main_thumbs {
+			.flex-viewport {
+				li {
+					border: 1px solid #eeeeee;
+					margin-right: 20px; // non-RTL
+					cursor: pointer;
+
+					@include opacity(0.5);
+					@extend .transition;
+
+					&:hover,
+					&.flex-active-slide {
+						@include opacity(1);
+					}
+				}
+			}
+		}
+	}
+}
+
+.format-video {
+	.mpcth-post-thumbnail {
+		.mpcth-video-wrap {
+			position: relative;
+			height: 0;
+			padding-bottom: 56.25%;
+
+			&.mpcth-video-embed {
+				> iframe {
+					position: absolute;
+					@include left(0); // left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+				}
+			}
+			&.mpcth-video-shortcode {
+				> div {
+					position: absolute;
+					@include left(0); // left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+				}
+				.mejs-layer,
+				.wp-video-shortcode {
+					width: 100% !important;
+					height: 100% !important;
+				}
+				.mejs-overlay-button {
+					margin-top: -50px !important;
+				}
+			}
+		}
+	}
+}
+
+.format-aside {
+	.mpcth-post-header .mpcth-post-title {
+		display: none;
+	}
+	.mpcth-post-content {
+		margin-top: 0;
+	}
+}
+
+.format-quote {
+	.mpcth-post-thumbnail {
+		font-style: italic;
+		font-size: 1.083em;
+	}
+}
+
+.format-status {
+	.mpcth-post-thumbnail {
+		.twitter-tweet {
+			width: 100% !important;
+			max-width: 100% !important;
+			border: 1px solid #eeeeee !important;
+			box-shadow: none !important;
+			margin: 0 !important;
+			border-radius: 2px !important;
+
+			@extend .box-sizing;
+		}
+	}
+}
+.page-template-template-blog-php .format-status {
+	.mpcth-post-thumbnail {
+		.twitter-tweet {
+			@extend .transition;
+			@include opacity(1);
+			width: 100% !important;
+		}
+	}
+}
+
+.format-chat {
+	.mpcth-post-thumbnail {
+		&:after {
+			@extend .after-clear;
+		}
+
+		.mpcth-chat-message {
+			max-width: 66.66%;
+			@include float(left); // float: left;
+			margin-bottom: 1em;
+			display: inline-block;
+			clear: both;
+
+			.mpcth-chat-message-text {
+				background: #f3f3f3;
+				padding: .75em 1em;
+				margin: 0 0 .25em 0;
+				border-radius: 2px;
+				border: none;
+				border: $hover_border;
+
+				@extend .box-sizing;
+			}
+		}
+		.mpcth-chat-message-odd {
+			@include float(right); // float: right;
+
+			.mpcth-chat-message-text {
+				color: #ffffff;
+			}
+		}
+		.mpcth-chat-name {
+			@include text-align(right); // text-align: right;
+			margin: 0;
+		}
+	}
+}

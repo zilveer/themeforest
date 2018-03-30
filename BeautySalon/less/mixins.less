@@ -1,0 +1,159 @@
+/* Ellipsis */
+.ellipsis() {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-ms-text-overflow: ellipsis;
+}
+
+.transform(@transform) {
+	-webkit-transform: @transform;
+	-moz-transform: @transform;
+	-o-transform: @transform;
+	-ms-transform: @transform;
+	transform: @transform;
+}
+// Border Radius 
+.borderRadius (@radius: 2px) {
+	border-radius: @radius;
+}
+.boxSizing(@sizing) {
+	-webkit-box-sizing: @sizing;
+	-moz-box-sizing: @sizing;
+	-ms-box-sizing: @sizing;
+	box-sizing: @sizing;
+}
+.boxShadow(@shadow) {
+	-webkit-box-shadow: @shadow;
+	box-shadow: @shadow;
+}
+.transition (@transition: all 0.3s ease-in-out) {
+	-webkit-transition: @transition;
+	-moz-transition: @transition;
+	-ms-transition: @transition;
+	-o-transition: @transition;
+	transition: @transition;
+}
+.transitionDelay(@delay: 0.5s) {
+	-webkit-transition-delay: @delay;
+	-moz-transition-delay: @delay;
+	-ms-transition-delay: @delay;
+	transition-delay: @delay;
+}
+
+.transformOrigin(@origin: 50% 50%) {
+	-webkit-transform-origin: @origin;
+	-moz-transform-origin: @origin;
+	-ms-transform-origin: @origin;
+	-o-transform-origin: @origin;
+	transform-origin: @origin;
+}
+
+// Text Color
+.textColor (@a) when (lightness(@a) >= 35%) {
+	color: #444;
+}
+.textColor (@a) when (lightness(@a) >= 95%) {
+	color: #444;
+}
+.textColor (@a) when (lightness(@a) < 65%) {
+	color: #fff;
+}
+.bgColor (@a) when (lightness(@a) >= 35%) {
+	background-color: #444;
+}
+.bgColor (@a) when (lightness(@a) >= 95%) {
+	background-color: #fff;
+}
+.bgColor (@a) when (lightness(@a) < 65%) {
+	background-color: #444;
+}
+
+
+
+
+
+
+// Color mixin
+.borderColor (@a) when (lightness(@a) >= 50%) {
+	border-color: darken(@a, 8%);
+}
+.borderColor (@a) when (lightness(@a) >= 95%) {
+	border-color: darken(@a, 13%);
+}
+.borderColor (@a) when (lightness(@a) < 50%) {
+	border-color: #ddd;
+}
+
+.longShadow(@color, @size, @spread: 100, @flag: 1, @tmp: '') when (@size > 0) {
+  @percent: round(@flag / @size * 100) * @spread;
+  @shadowColor: fade(@color, @percent);
+  @shadow: ~"@{size}px @{size}px 1px @{shadowColor}";
+  @ends: ~"@{shadow}, @{tmp}";
+  @shadowString: ~"@{ends} 0px 0px 1px #000";
+
+  .longShadowLoop(@string, @index) when (@index < 1) {
+    text-shadow: @string;
+  }
+
+  .longShadowLoop(@shadowString, @size - 1);
+  .longShadow(@color, @size - 1, @spread, @flag + 1, @ends);
+}
+
+.longShadowBox(@color, @size, @spread: 1, @flag: 1, @tmp: '') when (@size > 0) {
+  @percent: round(@flag / @size * 100) * @spread;
+  @shadowColor: fade(@color, @percent);
+  @shadow: ~"@{size}px @{size}px 0 0 @{shadowColor}";
+  @ends: ~"@{shadow}, @{tmp}";
+  @shadowString: ~"@{ends} 0px 0px 0 0 #000";
+
+  .longShadowLoop(@string, @index) when (@index < 1) {
+    -webkit-box-shadow: @string;
+       -moz-box-shadow: @string;
+            box-shadow: @string;
+  }
+
+  .longShadowLoop(@shadowString, @size - 1);
+  .longShadowBox(@color, @size - 1, @spread, @flag + 1, @ends);
+}
+
+
+.bgPattern(@overlay) when (@overlay > 0) {
+	background-image: url("../images/patterns/@{overlay}.png");
+}
+
+.sectionStyle(@bg-color, @overlay: 0, @header-color: #666666, @text-color) {
+	.container-wrapper {
+		background-color: @bg-color;
+		.bgPattern(@overlay);
+		color: @text-color;
+		h2.title {
+			color: @header-color;
+		}
+
+	}
+}
+
+.colorGradient(@height) {
+	height: @height;
+	background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #a85e6c), color-stop(12.5%, #a85e6c), color-stop(12.5%, #e37f52), color-stop(25%, #e37f52), color-stop(25%, #ef9f48), color-stop(37.5%, #ef9f48), color-stop(37.5%, #9cb641), color-stop(50%, #9cb641), color-stop(50%, #009484), color-stop(62.5%, #009484), color-stop(62.5%, #21acb8), color-stop(75%, #21acb8), color-stop(75%, #3498db), color-stop(87.5%, #3498db), color-stop(87.5%, #8fa0ae), color-stop(100%, #8fa0ae));
+	background-image: -webkit-linear-gradient(left, #a85e6c 0%, #a85e6c 12.5%, #e37f52 12.5%, #e37f52 25%, #ef9f48 25%, #ef9f48 37.5%, #9cb641 37.5%, #9cb641 50%, #009484 50%, #009484 62.5%, #21acb8 62.5%, #21acb8 75%, #3498db 75%, #3498db 87.5%, #8fa0ae 87.5%, #8fa0ae 100%);
+	background-image: -moz-linear-gradient(left, #a85e6c 0%, #a85e6c 12.5%, #e37f52 12.5%, #e37f52 25%, #ef9f48 25%, #ef9f48 37.5%, #9cb641 37.5%, #9cb641 50%, #009484 50%, #009484 62.5%, #21acb8 62.5%, #21acb8 75%, #3498db 75%, #3498db 87.5%, #8fa0ae 87.5%, #8fa0ae 100%);
+	background-image: -o-linear-gradient(left, #a85e6c 0%, #a85e6c 12.5%, #e37f52 12.5%, #e37f52 25%, #ef9f48 25%, #ef9f48 37.5%, #9cb641 37.5%, #9cb641 50%, #009484 50%, #009484 62.5%, #21acb8 62.5%, #21acb8 75%, #3498db 75%, #3498db 87.5%, #8fa0ae 87.5%, #8fa0ae 100%);
+	background-image: linear-gradient(left, #a85e6c 0%,#a85e6c 12.5%,#e37f52 12.5%,#e37f52 25%,#ef9f48 25%,#ef9f48 37.5%,#9cb641 37.5%,#9cb641 50%,#009484 50%,#009484 62.5%,#21acb8 62.5%,#21acb8 75%,#3498db 75%,#3498db 87.5%,#8fa0ae 87.5%,#8fa0ae 100%);
+	background-image: -ms-linear-gradient(left, #a85e6c 0%,#a85e6c 12.5%,#e37f52 12.5%,#e37f52 25%,#ef9f48 25%,#ef9f48 37.5%,#9cb641 37.5%,#9cb641 50%,#009484 50%,#009484 62.5%,#21acb8 62.5%,#21acb8 75%,#3498db 75%,#3498db 87.5%,#8fa0ae 87.5%,#8fa0ae 100%);
+}
+
+.verticalGradient(@startColor: rgba(255,255,255,0.49), @endColor: rgba(255,255,255,0)) {
+	background-image: -moz-linear-gradient(top, @startColor 0%, @endColor 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @startColor), color-stop(100%, @endColor));
+	background-image: -webkit-linear-gradient(top, @startColor 0%, @endColor 100%);
+	background-image: -o-linear-gradient(top, @startColor 0%, @endColor 100%);
+	background-image: -ms-linear-gradient(top, @startColor 0%, @endColor 100%);
+	background-image: linear-gradient(top, @startColor 0%, @endColor 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7dffffff', endColorstr='#00ffffff', GradientType=0 );
+}
+

@@ -1,0 +1,1 @@
+<div id="<?php echo $id; ?>" class="panel group"><?php echo do_shortcode( $content ); ?></div>

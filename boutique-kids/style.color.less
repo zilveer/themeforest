@@ -1,0 +1,119 @@
+@import 'style.lib.less';
+
+.boutique_color_mixin(@page_color, @color_background, @color_forground, @color_mid, @color_highlight){
+  .boutique_color_@{page_color} {
+  }
+}
+
+
+
+.creatcolorclasses(@iterator:1) when(@iterator <= length(@coloroptions)) {
+  @page_color: extract(extract(@coloroptions, @iterator),1);
+  @color_background: extract(extract(@coloroptions, @iterator),2);
+  @color_forground: extract(extract(@coloroptions, @iterator),3);
+  @color_mid: extract(extract(@coloroptions, @iterator),4);
+  @color_highlight: extract(extract(@coloroptions, @iterator),5);
+  .boutique_color_mixin(@page_color,@color_background,@color_forground,@color_mid,@color_highlight);
+  .creatcolorclasses((@iterator + 1));
+}
+.creatcolorclasses();
+
+
+
+.boutique_menu_border_colors(@color_name) {
+  .boutique-menu-color-@{color_name} {
+    #menu_wrap {
+      .double_background("url(images/@{color_name}/menu-ribbon-tile.png)");
+    }
+    #menu_wrap::before {
+      .double_background("url(images/@{color_name}/menu-ribbon-left.png)");
+    }
+    #menu_wrap::after {
+      .double_background("url(images/@{color_name}/menu-ribbon-right.png)");
+    }
+  }
+  .boutique-border-color-@{color_name} {
+    #header_wrap {
+      .double_background("url(images/@{color_name}/main-side-tile-left.png), url(images/@{color_name}/main-side-tile-right.png)");
+    }
+    #header {
+      .double_background("url(images/@{color_name}/main-top-left.png), url(images/@{color_name}/main-top-right.png), url(images/@{color_name}/main-top-centre.png), url(images/@{color_name}/main-top-tile.png)");
+    }
+    #inner_content {
+      .double_background("url(images/@{color_name}/main-side-tile-left.png), url(images/@{color_name}/main-side-tile-right.png)");
+    }
+
+    #header_widgets{
+      /* header text contact us widget */
+      .widget.widget_style1{
+        .double_background("url(images/@{color_name}/hanger1.png)");
+      }
+      /* header language switcher widget */
+      .widget.widget_icl_lang_sel_widget,
+      .widget.widget_style2{
+        .double_background("url(images/@{color_name}/hanger2.png)");
+      }
+      /* header house widget */
+      .widget.widget_style3{
+        .double_background("url(images/@{color_name}/hanger3.png)");
+      }
+      /* header search widget */
+      .widget.widget_style4{
+        .double_background("url(images/@{color_name}/hanger4.png)");
+      }
+      /* header cart widget */
+      .widget.widget_style5{
+        .double_background("url(images/@{color_name}/hanger5.png)");
+      }
+    }
+
+
+
+    #footer {
+      .double_background("url(images/@{color_name}/main-bottom-left.png), url(images/@{color_name}/main-bottom-right.png), url(images/@{color_name}/main-bottom-centre.png)");
+    }
+    #footer_left {
+      .double_background("url(images/@{color_name}/main-bottom-tile.png)");
+    }
+    #footer_right {
+      .double_background("url(images/@{color_name}/main-bottom-tile.png)");
+    }
+    &.responsive_enabled {
+      @media (max-width: 1020px) {
+        #header {
+          .double_background("url(images/@{color_name}/main-top-left-small.png), url(images/@{color_name}/main-top-right-small.png), url(images/@{color_name}/main-top-centre.png), url(images/@{color_name}/main-top-tile.png)");
+        }
+      }
+      @media (max-width: 990px) {
+        #footer {
+          .double_background("url(images/@{color_name}/main-bottom-left.png), url(images/@{color_name}/main-bottom-right.png), url(images/@{color_name}/main-bottom-tile.png)");
+        }
+      }
+      @media (max-width: 677px) {
+        #header {
+          .double_background("url(images/@{color_name}/main-top-left-small.png), url(images/@{color_name}/main-top-right-small.png), url(images/@{color_name}/main-top-tile.png)");
+        }
+      }
+      @media (max-width: 479px) {
+        #header {
+          .double_background("url(images/@{color_name}/mob-main-top-left.png), url(images/@{color_name}/mob-main-top-right.png), url(images/@{color_name}/mob-main-top-centre.png), url(images/@{color_name}/mob-main-top-tile.png)");
+        }
+
+        #mobile_menu_toggle {
+          .double_background("url(images/@{color_name}/mob-menu.png)");
+        }
+
+        #mobile_cart {
+          .double_background("url(images/@{color_name}/mob-cart.png)");
+        }
+
+        #footer {
+          .double_background("url(images/@{color_name}/mob-main-bottom-left.png), url(images/@{color_name}/mob-main-bottom-right.png), url(images/@{color_name}/mob-main-bottom-tile.png)");
+        }
+      }
+    }
+  }
+}
+.boutique_menu_border_colors(blue);
+.boutique_menu_border_colors(brown);
+.boutique_menu_border_colors(grey);

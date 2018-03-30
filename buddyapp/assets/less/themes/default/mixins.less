@@ -1,0 +1,566 @@
+// main: ../../theme.less
+
+/*-----------------------------------------------------------------------------------
+    mixins.less
+-----------------------------------------------------------------------------------*/
+
+/* Theme Color Mixins
+-----------------------------------------------------------------*/
+
+// DEFAULT THEME COLORS MIXIN
+.theme-colors(
+  @background-color;
+  @border-color;
+  @heading-color;
+  @text-color;
+  @link-color;
+  @hover-link-color;
+  @accent-color) {
+      
+  background-color: @background-color;
+  color: @text-color;
+  border-color: @border-color;
+
+  // Sharing the same classes
+  a {
+    color: @link-color;
+    &:hover {
+      color: @hover-link-color;
+    }
+  }
+  .heading-color,
+    h1, h2, h3, h4, h5, h6 {
+      color: @heading-color;
+  }
+  .spost, .mpost {
+    border-color: @border-color;
+  }
+}
+
+
+// WIDGET COLORS MIXIN
+.widget-colors(
+  @background-color;
+  @border-color;
+  @heading-color;
+  @text-color;
+  @link-color;
+  @hover-link-color;
+  @accent-color) {
+
+  p,
+  .widget li,
+  .widget dt,
+  .widget dd,
+  .widget-error,
+  select,
+  label,
+  .wcMessageTime,
+  .wcMessageUser {
+    color: @text-color;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: @heading-color;
+  }
+  a {
+    color: @heading-color;
+    &:hover {
+      color: @hover-link-color;
+    }
+  }
+  input[type="text"],
+  input[type="password"] {
+    border-color: @border-color;
+    background-color: @background-color;
+    color: @text-color;
+    @media @tablet {
+      .transition(background-color 0.4s ease);
+    }
+    &:focus {
+      background-color: fade(contrast(@background-color, black, white, 10%),3%);
+    }
+  }
+    
+  button,
+  a.button,
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  ul.button-nav li a,
+  div.generic-button a,
+  .comment-reply-link,
+  a.bp-title-button,
+  .widget_cleverness-to-do-widget ol li {
+    background-color: @background-color;
+  }
+    
+ 
+  a.button,
+  input[type="submit"],
+  button {
+    border-color: @border-color;
+  }
+    
+  select {
+    background-color: @border-color !important;
+    padding: 3px 40px 3px 10px;
+  }   
+    
+    
+  /* Chat */  
+  .wcMessage {
+    // User
+    .wcMessageUser {
+      color: @text-color !important;
+      opacity: .4;
+      font-weight: 400 !important;
+    }
+    .wcMessageContent {
+      background-color: @border-color !important;
+      &::before {
+        border-bottom-color: @border-color !important;
+      }
+    }
+    .wcMessageContent {
+      color: @text-color !important;
+    }
+    
+    // Admin
+    &.wcWpMessage {
+      .wcMessageContent {
+          background: @accent-color !important;
+          color: contrast(@accent-color, black, white, 54%) !important;
+          &:before {
+            border-bottom-color:@accent-color !important;
+          }
+        }
+    }
+  }  
+    
+  .wcControls {
+    .wcInputContainer {
+      .wcInput {
+        background-color:@border-color !important;
+        &:focus {
+          background-color: fade(multiply(@border-color,#fff),5%) !important;
+        }
+      }
+    }
+  }  
+    
+  /* Widget Calendar */  
+  .widget_calendar {
+    #wp-calendar {
+      caption {
+        background: @accent-color;
+        color: contrast(@accent-color, black, white, 54%);
+      }
+    }
+  } 
+      
+  .widget.buddypress div.item-options {
+      a {
+          color: @link-color;
+          &:hover {
+              color: @hover-link-color;
+          }
+      }
+   }
+}
+
+
+/*  ICOMOON
+----------------------------------------------------------------- */
+
+.icomoon() {
+    font-family: 'icomoon';
+}
+.icomoon(@icon, @size, @position: 'before') {
+    @pseudo: ~":@{position}";
+    &@{pseudo} {
+          .icomoon();
+          content: '@{icon}';
+          display: inline-block;
+          speak: none;
+          font-size: @size;
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          text-transform: none;
+          line-height: 1;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+     }
+}
+
+/* A mixin which helps you to add depth to elements according to the Google Material Design spec:
+   http://www.google.com/design/spec/layout/layout-principles.html#layout-principles-dimensionality
+-----------------------------------------------------------------*/
+
+.md-box-shadow(@level: 1){
+    & when (@level = 1) {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    }
+    & when (@level = 2) {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+    & when (@level = 3) {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+    & when (@level = 4) {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+    & when (@level = 5) {
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    }
+}
+
+
+
+/* Font smooting
+-----------------------------------------------------------------*/
+@value: "on";
+.font-smoothing(@value) {
+    & when (@value = off) {
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    }
+    & when (@value = on) {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Portfolio Item Size Builder
+-----------------------------------------------------------------*/
+
+.portfolio-builder(@container, @columns, @margin) {
+    @width: floor( ( @container - ( @margin * ( @columns - 1 ) ) ) / @columns );
+    @height: floor( ( @width * 3 ) / 4 );
+}
+
+.portfolio-item-width(@container; @columns; @margin) {
+    .portfolio-builder(@container, @columns, @margin);
+    width: @width;
+}
+
+.portfolio-item-size(@container; @columns; @margin) {
+    .portfolio-builder(@container, @columns, @margin);
+    .size(@width; @height);
+}
+
+
+/* Shop Item Size Builder
+-----------------------------------------------------------------*/
+
+.shop-builder(@container, @columns, @margin) {
+    @width: floor( ( @container - ( @margin * ( @columns - 1 ) ) ) / @columns );
+    @height: floor( ( @width * 4 ) / 3 );
+}
+
+.shop-item-width(@container; @columns; @margin) {
+    .shop-builder(@container, @columns, @margin);
+    width: @width;
+}
+
+.shop-item-height(@container; @columns; @margin) {
+    .shop-builder(@container, @columns, @margin);
+    height: @height;
+}
+
+
+/* Blog Grid Item Size Builder
+-----------------------------------------------------------------*/
+
+.blog-grid-builder(@container, @columns, @margin) {
+    @width: floor( ( @container - ( @margin * ( @columns - 1 ) ) ) / @columns );
+    @height: floor( ( @width * 37 ) / 66 );
+}
+
+.blog-grid-item-width(@container; @columns; @margin) {
+    .blog-grid-builder(@container, @columns, @margin);
+    width: @width;
+}
+
+.blog-grid-item-height(@container; @columns; @margin) {
+    .blog-grid-builder(@container, @columns, @margin);
+    height: @height;
+}
+
+
+/* Helper Mixins
+-----------------------------------------------------------------*/
+
+.size(@width; @height) {
+    width: @width;
+    height: @height;
+}
+
+.square(@size) {
+    .size(@size; @size);
+}
+
+.rounded(@size: 50%) {
+    //.size(@size; @size);
+    -webkit-border-radius: @size;
+    -moz-border-radius: @size;
+    border-radius: @size;
+}
+
+.clearfix() {
+    &:before,
+    &:after {
+        content:"";
+        display:table;
+    }
+    &:after {
+        clear:both;
+    }
+}
+
+.opacity(@opacity) {
+    opacity: @opacity / 100;
+    filter: ~"alpha(opacity=@{opacity})";
+}
+
+.border-radius(@radius: 3px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.border-radius-custom(@topleft: 3px, @topright: 3px, @bottomright: 3px, @bottomleft: 3px) {
+    -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+    -moz-border-radius: @topleft @topright @bottomright @bottomleft;
+    border-radius: @topleft @topright @bottomright @bottomleft;
+}
+
+.box-shadow(@shadow) {
+    -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
+    -moz-box-shadow: @shadow;
+    box-shadow: @shadow;
+}
+.transform(@string){
+    -webkit-transform: @string;
+    -moz-transform: @string;
+    -ms-transform: @string;
+    -o-transform: @string;
+    transform: @string;
+}
+
+.transform-translate(@transition-x, @transition-y) {
+    -webkit-transform: -webkit-translate(@transition-x, @transition-y);
+    -moz-transform: -moz-translate(@transition-x, @transition-y);
+    -o-transform: -o-translate(@transition-x, @transition-y);
+    transform: translate(@transition-x, @transition-y);
+}
+
+.transition (@transition) {
+    -webkit-transition: @transition;
+    -moz-transition: @transition;
+    -o-transition: @transition;
+    -ms-transition: @transition;
+    transition: @transition;
+}
+.transition () {
+    -webkit-transition: all 1s linear;
+    -moz-transition: all 1s linear;
+    -o-transition: all 1s linear;
+    -ms-transition: all 1s linear;
+    transition: all 1s linear;
+}
+.transition-transform(@transition) {
+    -webkit-transition: -webkit-transform @transition;
+    -moz-transition: -moz-transform @transition;
+    -o-transition: -o-transform @transition;
+    transition: transform @transition;
+}
+
+.scale(@factor) {
+    -webkit-transform: scale(@factor);
+    -moz-transform:    scale(@factor);
+    -ms-transform:     scale(@factor);
+    -o-transform:      scale(@factor);
+    transform:         scale(@factor);
+}
+.transform-origin(@x:center, @y:center) {
+    -webkit-transform-origin: @x @y;
+    -moz-transform-origin:    @x @y;
+    -ms-transform-origin:     @x @y;
+    -o-transform-origin:      @x @y;
+    transform-origin:         @x @y;
+}
+.preseve-3d(@string-3d:preserve-3d) {
+  -webkit-transform-style: @string-3d;
+  -moz-transform-style: @string-3d;
+  transform-style: @string-3d;
+}
+
+// Useful for tags, tabs, users, etc.
+.user-select(@val) {
+    -webkit-touch-callout:  @val;
+    -webkit-user-select:    @val;
+    -moz-user-select:       @val;
+    -ms-user-select:        @val;
+    user-select:            @val;
+}
+.scale (@ratio_x:1.5, @ratio_y:@ratio_x){
+    .transform(scale(@ratio_x, @ratio_y));
+}
+
+
+// Gradient
+
+.linear-gradient (@deg, @color-start, @start, @color-end, @end) {
+        background: linear-gradient(~"@{deg}deg", @color-start ~"@{start}%", @color-end ~"@{end}%");
+}
+
+.linear-gradient-transparent (@deg, @rgba-color, @start, @end, @to:'left') {
+    & when (@to = 'left') {
+        background: linear-gradient(~"@{deg}deg", fadeout(@rgba-color,100%) ~"@{start}%", fadeout(@rgba-color,1%) ~"@{end}%");
+    }
+    & when (@to = 'right') {
+        background: linear-gradient(~"@{deg}deg", fadeout(@rgba-color,1%) ~"@{start}%", fadeout(@rgba-color,100%) ~"@{end}%");
+    }
+}
+
+// Placeholder
+// Placeholder text
+.placeholder(@color: @input-color-placeholder) {
+  &::-moz-placeholder {
+      color: @color;
+      opacity: 1;
+      .transition(color .3s ease-out);
+  } // See https://github.com/twbs/bootstrap/pull/11526
+    
+  &:-ms-input-placeholder {
+      color: @color;
+      .transition(color .3s ease-out);
+  } // Internet Explorer 10+
+    
+  &::-webkit-input-placeholder {
+      color: @color;
+      .transition(color .3s ease-out);
+  } // Safari and Chrome
+    
+}
+
+.property(@property, @value) {
+  & when (@property = color) {
+    color: @value;
+  }
+  & when (@property = background-color) {
+    background-color: @value;
+  }
+}
+
+/* Example: .auto-color(@header-background-color, background-color, 5%, 10% ); */
+
+.auto-color(@color, @property:color, @percent-white:10%, @percent-black:10%, @tolerance:54%)
+  when( contrast(@color, black, white, @tolerance ) = white ) {
+
+  .property(@property, fade(contrast(@color, black, white, @tolerance), @percent-black));
+
+}
+.auto-color(@color, @property:color, @percent-white:10%, @percent-black:10%, @tolerance:54%)
+  when( contrast(@color, black, white, @tolerance ) = black ) {
+
+  .property(@property, fade(contrast(@color, black, white, @tolerance), @percent-white));
+
+}
+
+
+/*------------------
+      FLEX-BOX
+-------------------*/
+
+.flex() {
+  display: -webkit-box;
+  display: -moz-box;
+  display:-webkit-flex;
+  display: -ms-flexbox;
+  display:flex;
+}
+
+.flex-justify(@justifyStyle) {
+  .ms-flex-justify(@justifyStyle);
+  -webkit-justify-content: @justifyStyle;
+  justify-content: @justifyStyle;
+}
+
+.flex-direction(@direction) {
+  -ms-flex-direction:@direction;
+  -webkit-flex-direction:@direction;
+  flex-direction:@direction;
+}
+
+.flex-align-items(@alignStyle) {
+  -ms-flex-align:@alignStyle;
+  -webkit-align-items:@alignStyle;
+  align-items: @alignStyle;
+}
+
+.flex-align-self(@selfAlignStyle) {
+  .ms-flex-align-self(@selfAlignStyle);
+  -webkit-align-self:@selfAlignStyle;
+  align-self: @selfAlignStyle;
+}
+
+.flex-order(@order) {
+  -webkit-box-ordinal-group: @order;   /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-ordinal-group: @order;
+  -ms-flex-order:@order;
+  -webkit-order:@order;
+  order:@order;
+}
+
+.flex-wrap(@wrap) {
+  -ms-flex-wrap:@wrap;
+  -webkit-flex-wrap:@wrap;
+  flex-wrap:@wrap;
+}
+
+
+/* These are the conditional mixins for the different syntax for IE10 Flexbox*/
+
+.ms-flex-justify(@msJustify) {
+  & when (@msJustify = space-between) {
+    -ms-flex-pack: justify;
+  }
+  & when (@msJustify = space-around) {
+    -ms-flex-pack: distribute;
+  }
+  & when (@msJustify = flex-end) {
+    -ms-flex-pack: end;
+  }
+  & when (@msJustify = flex-start) {
+    -ms-flex-pack: start;
+  }
+  & when (@msJustify = center) {
+    -ms-flex-pack: center;
+  }
+}
+
+.ms-flex-align-self(@msSelfAlign) {
+  & when (@msSelfAlign = flex-end) {
+    -ms-flex-item-align: end;
+  }
+  & when (@msSelfAlign = flex-start) {
+    -ms-flex-item-align: start;
+  }
+  & when (@msSelfAlign = auto),
+  (@msSelfAlign = center),
+  (@msSelfAlign = baseline),
+  (@msSelfAlign = stretch) {
+    -ms-flex-item-align: @msSelfAlign;
+  }
+}
+
+/* Some Flex Shorthand */
+.flex-short(@flex-grow:0,  @flex-shrink:1, @flex-basis:auto) {
+  -webkit-flex: @flex-grow @flex-shrink @flex-basis;
+  flex: @flex-grow @flex-shrink @flex-basis;
+}
+
+
+

@@ -1,0 +1,209 @@
+/* Slider */
+
+.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    @include user-select(none);
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+.slick-list {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+    padding: 0;
+		opacity: 0;
+		@extend .linear-quick-transition;
+    &:focus {
+        outline: none;
+    }
+
+    &.dragging {
+        cursor: pointer;
+        cursor: hand;
+    }
+}
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+    @include translate3d(0,0,0);
+}
+
+.slick-track {
+    position: relative;
+    left: 0;
+    top: 0;
+    display: block;
+
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    .slick-loading & {
+        visibility: hidden;
+    }
+}
+.slick-slide {
+    float: left;
+    height: 100%;
+    min-height: 1px;
+    outline: none;
+    [dir="rtl"] &,
+    .rtl & {
+        float: right;
+    }
+    img {
+        display: block;
+    }
+    &.slick-loading img {
+        display: none;
+    }
+		&.easyzoom {
+			position: relative;
+		}
+    display: none;
+
+    &.dragging img {
+        pointer-events: none;
+    }
+
+    .slick-initialized & {
+        display: block;
+    }
+
+    .slick-loading & {
+        visibility: hidden;
+    }
+
+    .slick-vertical & {
+      display: block;
+      height: auto;
+      margin: 3px 0;
+      @include transition(opacity .5s $transition);
+      
+      @include min-break($break-large) {
+      	margin: 5px 0;
+      }
+    }
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+/* Additions */
+.slick {
+	max-width: 100%;
+	height: 300px;
+	position: relative;
+	overflow: hidden;
+	@extend .thb-loading;
+	@extend .linear-quick-transition;
+	&:after {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		bottom: auto;
+		@extend .linear-quick-transition;
+		
+		.product-page.style2 & {
+			background-color: #f4f4f4;
+		}
+	}
+	&.slick-initialized {
+		height: auto;
+		overflow: visible;
+		.slick-list {
+			opacity: 1;
+		}
+		&:after {
+			display: none;
+		}
+	}
+	&.image-slider .slick-slide{
+		img {
+			width: 100%;
+		}
+	}
+}
+.carousel-container {
+	width: 100%;
+	position: relative;
+	
+	.ai-indicator {
+		display: none;
+	}
+	&.loading {
+		.ai-indicator {
+			display: block;
+		}
+		.carousel {
+			opacity: 0.3;
+		}
+	}
+}
+.slick-slider {
+	width: 100%;
+	&.products {
+		.slick-slide.product {
+			margin: 0;
+		}
+		.slick-nav {
+			top: 40%;	
+		}
+	}
+	.slick-slide {
+		
+		&>a {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	.slick-nav {
+		position: absolute;
+		top: 50%;
+		z-index: 99;
+		@include translateY(-50%);
+		@extend .transition;
+		
+		@include min-break($break-medium) {
+			opacity: 0;
+		}
+		.border {
+			display: none;
+		}
+		&.thb-prev {
+			left: 10px;
+			@include min-break($break-medium) {
+				left: 20px;
+				@include translateX(-100%);
+			}
+		}
+		&.thb-next {
+			right: 10px;
+			@include min-break($break-medium) {
+				right: 20px;
+				@include translateX(100%);
+			}
+		}
+	}
+	&:hover {
+		.slick-nav {
+			opacity: 1;
+			@include min-break($break-medium) {
+				@include translateX(0);
+			}
+		}	
+	}
+}

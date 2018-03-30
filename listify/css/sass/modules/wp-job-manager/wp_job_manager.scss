@@ -1,0 +1,471 @@
+/**
+ * gross
+ */
+@import 'job_edit';
+@import 'bookmarks';
+@import 'reviews';
+@import 'wc_paid_listings';
+@import 'products';
+@import 'claims';
+@import 'alerts';
+@import 'widgets/_job_listing-map';
+
+/** old `job_` prefix for existing class names */
+@import "job_filters";
+@import "update_results";
+@import "showing_jobs";
+@import "job_listing-title";
+@import "job_listing-entry-footer";
+@import "single-job_listing-cover-gallery";
+
+@import "listing-hero";
+@import "listing-entry-company-image";
+@import "listing-entry-company-logo";
+@import "claimed-ribbon";
+
+@import "listing-email";
+@import "company_video";
+@import "featured-badge";
+
+@import "widget--page-recent-listings.scss";
+
+/**
+ * WP Job Manager
+ *
+ * Job Manager overrides for forms and searching. The rest is
+ * handled through template files so the existing CSS isn't used.
+ */
+
+/** Forms */
+
+.job-manager-form fieldset {
+	border: 0;
+	margin: 0 0 2em;
+	padding: 0;
+}
+
+.job-manager-form input[type="text"],
+.job-manager-form input[type="email"] {
+	width: 100%;
+}
+
+td.business-hour {
+	padding: 0.5em;
+}
+
+.search_jobs > select.search_region,
+.search_jobs > .select.search_region-wrapper,
+.search_jobs > .select.search_region-wrapper select {
+	display: none !important;
+}
+
+.search_location {
+	position: relative;
+
+	input[type="text"] {
+		padding-right: 35px;
+	}
+}
+
+.search_location #search_region {
+	display: block;
+}
+
+body:not(.facetwp) .locate-me {
+	top: 0px;
+	right: 0;
+	z-index: 10;
+	position: absolute;
+	cursor: pointer;
+	width: 40px;
+	height: 44px;
+	text-align: center;
+
+	&:before {
+		@include ionicon;
+		color: #B4BCC7;
+		font-size: 16px;
+		content: '\f2e9';
+		line-height: 44px;
+		text-align: center;
+		display: inline-block;
+	}
+
+	&.loading:before {
+		content: '\f29c';
+
+		-webkit-animation: rotate 700ms infinite linear;
+		-moz-animation: rotate 700ms infinite linear;
+		animation: rotate 700ms infinite linear;
+	}
+
+	~ input[type="text"] {
+		padding-right: 35px !important;
+	}
+}
+
+body.facetwp .locate-me {
+    right: 10px;
+    top: -2px;
+}
+
+// rip
+body.facetwp .widget .locate-me {
+	width: 18px;
+	top: 10px;
+
+	&.loading:before {
+		@extend .ion;
+		font-size: 20px;
+		width: 18px;
+		content: '\f29c';
+		background: none;
+
+		-webkit-animation: rotate 700ms infinite linear;
+		-moz-animation: rotate 700ms infinite linear;
+		animation: rotate 700ms infinite linear;
+	}
+
+	~ input[type="text"] {
+		padding-right: 35px !important;
+	}
+}
+
+/** Errors */
+
+.job-manager-error,
+.job-manager-message {
+	@extend .woocommerce-message;
+
+	border-color: #ed3b3b;
+}
+
+
+/** Typography */
+
+.job-manager-form h2 {
+	margin: 2em 0;
+	padding: 0.75em 0;
+}
+
+
+/** Filtering */
+
+.search_jobs > div {
+	margin-bottom: 1em;
+
+	&.search-radius-wrapper {
+		width: 100% !important;
+	}
+}
+
+.job_filters .job_types {
+	margin: 0 0 1em;
+	padding: 0;
+	list-style: none;
+}
+
+.job_filters .job_types li {
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+	@include bp(sm) {
+		.search_jobs > div {
+			width: 48.5%;
+			margin-right: 3%;
+			margin-bottom: 0;
+			float: left;
+		}
+
+		.wp-job-manager-categories-enabled:not(.wp-job-manager-categories-multi-enabled) .search_jobs > div,
+		.wp-job-manager-categories-enabled.wp-job-manager-categories-multi-enabled.home .search_jobs > div {
+			width: 31.25%;
+			margin-right: 3%;
+		}
+
+		.home .home-widget .search_jobs > div.filter_by_tag {
+			width: 100%;
+			margin-right: 0;
+		}
+
+		.search_jobs > div:last-of-type,
+		body.wp-job-manager-categories-enabled .search_jobs > div.search_categories,
+		.wp-job-manager-categories-enabled.wp-job-manager-categories-multi-enabled.home .search_jobs > .search_categories,
+		body:not(.wp-job-manager-categories-enabled) .search_jobs .search_location,
+		body.wp-job-manager-categories-multi-enabled .search_jobs .search_location,
+		body:not(.wp-job-manager-categories-enabled) .search_jobs .search_region,
+		body.wp-job-manager-categories-multi-enabled .search_jobs .search_region {
+			margin-right: 0;
+		}
+
+		body.wp-job-manager-categories-multi-enabled:not(.home) .search_jobs .search_categories {
+			clear: both;
+			width: 100%;
+			margin: 1.5em 0 1em;
+		}
+
+		.job_filters .job_types {
+			margin: 1.5em 0 0;
+			padding: 0;
+			list-style: none;
+			clear: both;
+		}
+
+		.job_filters .job_types li {
+			display: inline-block;
+			margin: 0 0 5px 0;
+		}
+	}
+
+.search_jobs label {
+	display: none;
+}
+
+.search_jobs input,
+.search_jobs select {
+	width: 100%;
+}
+
+.wp-job-manager-categories-enabled .search_jobs > div.filter_by_tag,
+.search_jobs > div.filter_by_tag {
+	clear: both;
+	float: none;
+	width: 100%;
+	margin-right: 0;
+	width: 100%;
+}
+
+.job_filters .search_jobs .filter_by_tag a {
+	vertical-align: middle;
+	padding: 0 !important;
+
+	&.active {
+		background: none;
+	}
+}
+
+.job_filters .update_results {
+	clear: both;
+	float: none;
+	width: 100%;
+
+	&.refreshing {
+		box-shadow: none;
+	}
+}
+
+	@include bp(sm) {
+		.job_filters .update_results {
+			margin-top: 0.75em;
+		}
+	}
+
+.search_jobs .select,
+.facetwp-facet .select {
+	display: block;
+}
+
+.no_job_listings_found {
+
+}
+
+.job_listings.loading {
+	min-height: 50px;
+}
+
+.job_listings.loading:before {
+	@include ionicon;
+
+	content: '\f29c';
+	font-size: 50px;
+	margin: 0 auto;
+	display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 0;
+	margin-left: -25px;
+
+	-webkit-animation: rotate 800ms infinite linear;
+	-moz-animation: rotate 800ms infinite linear;
+	animation: rotate 800ms infinite linear;
+}
+
+
+/** Submit */
+
+.account-sign-in,
+.job-manager-form fieldset.fieldset-job_hours {
+	color: #b4bcc7;
+	margin-top: 1em;
+	padding: 1em;
+	border: 1px solid #e9edf2;
+	border-radius: 4px;
+}
+
+.field.account-sign-in .button {
+	float: right;
+}
+
+.job-manager-form fieldset.fieldset-job_hours {
+	border-width: 2px;
+}
+
+.fieldset-job_hours .field {
+	margin-top: 1em;
+	display: none;
+}
+
+.fieldset-job_hours .field table {
+	margin-bottom: 0;
+}
+
+.fieldset-job_hours label {
+	display: block;
+}
+
+.fieldset-job_hours label:before {
+	@include ionicon;
+
+	content: '\f48a';
+	font-size: 24px;
+	vertical-align: middle;
+	display: inline-block;
+	margin: -3px 8px 0 0;
+}
+
+.fieldset-job_hours.open label:before {
+	content: '\f463';
+}
+
+.job-manager-term-checklist {
+	margin: 1em 0 0;
+	padding: 0;
+	list-style: none;
+	overflow: hidden;
+
+	li {
+		margin-bottom: 10px;
+	}
+}
+
+	@include bp(sm) {
+		.job-manager-term-checklist li {
+			width: 50%;
+			float: left;
+		}
+	}
+
+	@include bp(md) {
+		.job-manager-term-checklist li {
+			width: 33%;
+			float: left;
+		}
+	}
+
+	@include bp(lg) {
+		.job-manager-term-checklist li {
+			width: 25%;
+			float: left;
+		}
+	}
+
+#submit-job-form.job-manager-form fieldset:first-child label {
+	display: none;
+}
+
+#submit-job-form h2 {
+	display: none;
+}
+
+.entry-content div.mce-toolbar-grp {
+	border-bottom-width: 2px;
+}
+
+/** Dashboard */
+
+.job-manager-jobs td.job_title {
+	font-size: 15px;
+}
+
+.job-manager-bookmark-actions,
+.job-manager-jobs td.date,
+.job-manager-jobs td.expires,
+.job-dashboard-actions a {
+	font-size: 12px;
+}
+
+.job-dashboard-actions {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.job-dashboard-actions li {
+	display: inline-block;
+
+	a {
+		margin-right: 10px;
+	}
+}
+
+.job-manager-bookmark-action-delete:before,
+.job-dashboard-action-edit:before,
+.job-dashboard-action-mark_filled:before,
+.job-dashboard-action-mark_not_filled:before,
+.job-dashboard-action-relist:before,
+.job-dashboard-action-delete:before {
+	@include ionicon;
+	margin-right: 3px;
+}
+
+.job-dashboard-action-edit:before {
+	content: '\f2bf';
+}
+
+.job-dashboard-action-mark_filled:before {
+	content: '\f400';
+}
+
+.job-dashboard-action-mark_not_filled:before {
+	content: '\f401';
+}
+
+.job-dashboard-action-relist:before {
+	content: '\f201';
+}
+
+.job-manager-bookmark-action-delete:before,
+.job-manager-bookmark-action-delete:hover,
+.job-dashboard-actions a.job-dashboard-action-delete:before,
+.job-dashboard-actions a.job-dashboard-action-delete:hover {
+	color: #A00;
+}
+
+.job-manager-bookmark-action-delete:before,
+.job-dashboard-action-delete:before {
+	content: '\f12a';
+}
+
+.directory-fields {
+	.job-dashboard-action-mark_filled,
+	th.filled,
+	td.filled {
+		display: none;
+	}
+}
+
+
+/** Pagination */
+
+.job-manager-pagination ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+
+.job-manager-pagination li,
+.job-manager-pagination a {
+	display: inline-block;
+}

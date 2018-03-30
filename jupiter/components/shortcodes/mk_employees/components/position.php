@@ -1,0 +1,1 @@
+<span class="team-member-position a_font-12 a_text-transform-up a_display-block a_color-777 a_letter-spacing-1"><?php echo get_post_meta(get_the_ID() , '_position', true); ?></span>

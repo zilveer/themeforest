@@ -1,0 +1,416 @@
+/*------------------------------------*\
+Typography
+
+[Table of contents]
+
+1. $General
+2. $Headings
+3. $Links
+4. $Lists
+5. $Blockquotes
+6. $Tables
+7. $Code
+------------------------------------------*/
+
+/*------------------------------------*\
+	1. $General
+\*------------------------------------*/
+
+body {
+	@extend %beta;
+	line-height: 1.6;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	color: $dark;
+	font-feature-settings: "kern" 1, "liga" 1, "swsh" 1;
+}
+
+// General Spacing
+h1, h2, h3, h4, h5, h6, hgroup, p, blockquote, pre,
+dl, dd, ol, ul,
+form, fieldset, legend,
+table, th, td, caption {
+	margin-bottom: $u;
+}
+
+// Default Centering
+// To be used with inline "max-width"
+p.desc {
+	// margin-left: auto;
+	// margin-right: auto;
+}
+
+
+.single-post .entry-content > * {
+	margin-bottom: 1.5 * $u; // bigger spacing on single due to bigger font-size
+}
+
+:first-child { margin-top: 0 }
+:last-child { margin-bottom: 0 }
+
+hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: #EEE;
+}
+
+// Hero Headings Spacing
+.hero-content {
+	h1, h2, h3 {
+		margin-bottom: $u/2;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		margin-top: 0;
+	}
+
+	> :first-child {
+		margin-top: 0;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+}
+
+
+
+/*------------------------------------*\
+	2. $Headings
+\*------------------------------------*/
+
+
+// Font Families
+
+%alpha {
+	font-family: "Montserrat", sans-serif;
+	font-weight: 800;
+	-webkit-font-smoothing: auto;
+}
+
+%beta {
+	font-family: "Montserrat", sans-serif;
+	font-weight: 300;
+}
+
+%gamma {
+	font-family: 'Libre Baskerville', serif;
+	-webkit-font-smoothing: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 2 * $u;
+
+	& + & {
+		margin-top: 0;
+	}
+}
+
+h1, h2, h3 {
+	@extend %alpha;
+	line-height: 1.2;
+
+	em {
+		@extend %gamma;
+
+		font-style: italic;
+		text-transform: none;
+		letter-spacing: 0;
+
+		color: $accent;
+	}
+}
+
+h4, h5, h6 {
+	@extend %beta;
+}
+
+
+
+// Font Sizes
+
+.bigger-fonts h1,
+.page__title,
+.page-title {
+	@extend %fs-100;
+	margin-left: -0.06em;
+}
+
+h1,
+.bigger-fonts h2 {
+	@extend %fs-61;
+}
+
+h2,
+.bigger-fonts h3 {
+	@extend %fs-38;
+}
+
+h3 {
+	@extend %fs-24;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+h4, h5, h6 {
+	@extend %fs-13;
+	letter-spacing: 0.23em;
+	text-transform: uppercase;
+	font-weight: 300;
+}
+
+h4 {
+	color: #FC5253;
+	font-weight: 500;
+
+	&.em { position: relative }
+	&.em:before {
+	    content: "";
+	    display: block;
+	    width: 1.3em;
+	    height: 2px;
+	    margin-right: 0.8em;
+	    margin-top: -2px;
+	    position: absolute;
+	    top: 50%;
+	    right: 100%;
+	    background: currentColor;
+	}
+}
+
+.bigger-fonts {
+	@extend %fs-20;
+}
+
+.hero em {
+	color: inherit;
+}
+
+
+
+
+/*------------------------------------*\
+	3. $Links
+\*------------------------------------*/
+
+a {
+	text-decoration: none;
+	color: inherit;
+	border-color: currentColor;
+
+	&:hover {
+		color: $light;
+		border-color: $light;
+	}
+
+	// Links inside content
+	.entry-content &,
+	.hero-content p &,
+	.site-footer & {
+		border-bottom-width: 1px;
+		border-bottom-style: dotted;
+
+		&[href$=".jpg"],
+		&[href$=".jpeg"],
+		&[href$=".png"],
+		&[href$=".gif"],
+		&[href$=".bmp"] {
+			border: 0;
+		}
+	}
+
+	&:not([href]) {
+		border-bottom: none;
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	4. $Lists
+\*------------------------------------*/
+// @todo style lists here
+// we should style only unclassed tags here
+
+.entry-content,
+.comment-body {
+
+	dt {
+		font-weight: bold;
+	}
+
+	dd {
+		padding-left: 3em;
+	}
+
+	dd + dt {
+		margin-top: 1.5em;
+	}
+
+	li:not([class]) {
+		> ul:not([class])
+		> ol:not([class]) {
+			padding-left: 3em;
+		}
+	}
+
+	ul, ol {
+		margin-left: 1.5em;
+
+		ol, ul {
+			margin-bottom: 0;
+		}
+	}
+
+	li {
+		margin-bottom: 0.75em;
+	}
+}
+
+acronym {
+	border-bottom: 1px dotted $gray;
+}
+
+
+
+
+
+/*------------------------------------*\
+	5. $Blockquotes
+\*------------------------------------*/
+
+blockquote {
+	@extend %gamma;
+	@extend %fs-30;
+
+	position: relative;
+    padding-bottom: 30px;
+    padding-top: 30px;
+
+	line-height: 1.55;
+	color: $dark;
+	-webkit-font-smoothing: antialiased; // looks better on bigger sizes
+
+	.pull-left &, .pull-right & {
+		margin-top: 10px;
+		border-top: 1px solid #EBEBEB;
+	}
+
+	// @todo come back and check this
+	p {
+		margin-bottom: 0;
+		transform: none;
+	}
+
+	cite {
+		@extend %beta;
+		@extend %fs-14;
+		display: block;
+		padding-top: 20px;
+		font-style: normal;
+		font-weight: bold;
+		color: $dark;
+		text-transform: uppercase;
+		letter-spacing: 2.15px;
+
+		&:before {
+			@extend %gamma;
+			@extend %fs-45;
+			content: '\201C';
+
+			height: 40px;
+			width: 40px;
+
+			position: relative;
+			display: inline-block;
+
+		    position: relative;
+		    top: 25px;
+		    margin-top: -25px;
+		    margin-right: 18px;
+
+			line-height: 1.56;
+			letter-spacing: 0;
+		    -webkit-font-smoothing: antialiased;
+			text-align: center;
+			color: white;
+
+			background: #91949B;
+			border-radius: 50%;
+		}
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	6. $Tables
+\*------------------------------------*/
+
+table {
+	@extend .table--fixed;
+	@extend .table--cosy;
+	@include rhythm(margin-bottom, 2);
+	width: 100%;
+	border-top: 0;
+
+	th {
+		text-align: left;
+	}
+
+	tr + tr {
+		// @todo why not use table--rows?
+		border-top: 1px dotted #91949B;
+	}
+
+	th, td {
+		vertical-align: middle;
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	7. $Code
+\*------------------------------------*/
+
+pre {
+	position: relative;
+
+	@include rhythm(padding-left, 3);
+	@include rhythm(padding-right, 3);
+	@include rhythm(padding-top, 2);
+	@include rhythm(padding-bottom, 2);
+
+	@include rhythm(margin-bottom, 2);
+
+	border: 1px solid $lightest;
+
+	&:before {
+		@extend %fs-14;
+		content: "\f121";
+
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		display: block;
+		padding: 3px;
+
+		font-family: FontAwesome;
+
+		color: white;
+		background: $lightest;
+	}
+}
+
+

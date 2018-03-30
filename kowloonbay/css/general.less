@@ -1,0 +1,252 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. HTML / html
+2. Body / body
+	2.1. Homepage body (no overflow) / &.overflow-hidden
+3. Preloader / .preloader
+	3.1. Preloader icon / .load
+4. Logo (h1 heading) / .logo>h1
+	4.1. Bold text styling / strong
+	4.2. Link styling / a:link, a:visited, a:hover, a:active
+5. Header / body>.container>header
+	5.1. Header content wrapper / .header-wrapper
+		5.1.1. Multi-level menu and mobile menu / ul.multi-level-menu, .mobile-menu-wrapper
+		5.1.2. Multi-level menu / ul.multi-level-menu
+		5.1.3. Mobile menu / select.mobile-menu
+		5.1.4. Drop-down symbol of Mobile menu / .mobile-menu-wrapper:after
+	5.2. Header (showing mobile menu) / &.show-mobile-menu
+		5.2.1. Multi-level menu / ul.multi-level-menu
+		5.2.2. Mobile menu / select.mobile-menu
+		5.2.3. Drop-down symbol of Mobile menu / .header-wrapper .mobile-menu-wrapper:after
+6. Main / body>.container>main
+7. Section / body>.container>main>section
+	7.1. First section / &:first-child
+		7.1.1. Section heading / .section-heading
+	7.2. Section heading / .section-heading
+		7.2.1. Breadcrumb symbol / a+i.fa
+		7.2.2. Heading / h2
+			7.2.2.1. Link in heading / a:link, a:visited, a:hover, a:active
+			7.2.2.2. Heading text / &>span
+			7.2.2.3. Heading decoration/ &:after
+		7.2.3. Breadcrumb and description / p
+		7.2.4. Description / p.section-desc
+			7.2.4.1. Description text / &>span
+8. Footer / body>.container>footer
+	8.1. Copyright / p.copyright
+
+-------------------------------------------------------------------*/
+
+html{
+	height: 100%;
+	overflow-y: scroll;
+}
+
+body{
+	height: 100%;
+	position: relative;
+
+	&.overflow-hidden{
+		overflow: hidden;
+	}
+}
+
+.preloader{
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: @titleTextColor;
+	opacity: 1;
+
+	.load{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		.transform(~'translate3d(-50%,-50%,0) scale(0.5, 0.5)');
+	    -ms-transform: translateX(-50%) translateY(-50%) scale(0.5, 0.5);
+	}
+}
+
+.logo>h1{
+	.body-font;
+	.uppercase;
+	letter-spacing: 0;
+	font-size: 24px;
+	line-height: @baseLineHeight;
+	font-weight: @bodyLightFontWeight;
+	margin: 0;
+	padding: 0;
+
+	strong{
+		.body-heavy-font-weight;
+	}
+
+	a:link, a:visited, a:hover, a:active{
+		color: @titleTextColor;
+	}
+}
+
+body>.container>header{
+	.padding-b-none;
+	position: relative;
+	z-index: 2;
+
+	.header-wrapper{
+		position: relative;
+		box-shadow: 0 1px 0 fadeout(desaturate(@primaryColor, 100%), 75%);
+		height: @headerWrapperHeight;
+		.padding-b-1x;
+
+		ul.multi-level-menu, .mobile-menu-wrapper{
+			position: absolute;
+			right: 0;
+			bottom: @baseLineHeight;
+		}
+
+		ul.multi-level-menu{
+			opacity: 0;
+			z-index: 1;
+		}
+
+		select.mobile-menu{
+			bottom: @baseLineHeight;
+			display: none;
+			color: @bodyTextColor;
+		}
+
+		.mobile-menu-wrapper:after{
+			display: none;
+			position: absolute;
+			width: @baseLineHeight;
+			height: 100%;
+			right: 0;
+			top: 0;
+			background-color: desaturate(darken(@primaryColor, 10%), 10%);
+			content: '\f0d7';
+			font-family: FontAwesome;
+			pointer-events: none;
+			text-align: center;
+			text-shadow: none;
+			color: @bgColor;
+		}
+	}
+
+	&.show-mobile-menu{
+		ul.multi-level-menu{
+			opacity: 0 !important;
+			visibility: hidden;
+			z-index: -1;
+		}
+
+		select.mobile-menu{
+			display: block;
+			border: 0 !important; 
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			color: #FFF;
+			border-radius: 0;
+			padding: 0 5px;
+			.primary-color-bg;
+			.medium-text;
+			.letter-spacing;
+		}
+
+		.header-wrapper .mobile-menu-wrapper:after {
+			display: block;
+		}
+	}
+}
+
+body>.container>main{
+	position: relative;
+	z-index: 1;
+	display: block;
+	.transform(translate3d(0, 0, 0));
+	.transition-transform(~'@{transitionDuration}');
+}
+
+body>.container>main>section{
+	&:first-child{
+		.section-heading{
+			margin-top: 0;
+		}
+	}
+
+	.section-heading{
+		.margin-b-2x;
+
+		a+i.fa{
+			margin-left: 10px;
+		}
+
+		h2{
+			display: inline-block;
+
+			a:link, a:visited, a:hover, a:active{
+				display: inline-block;
+				color: @titleTextColor;
+			}
+
+			&>span{
+				min-width: 12px;
+				.inline-block;
+				visibility: @sectionHeadingInitialVisibility;
+			}
+
+			font-size: 2.5em;
+			line-height: @baseLineHeight * 2;
+			.uppercase;
+			.letter-spacing;
+			position: relative;
+			margin: 0;
+			.padding-v-half;
+
+			&:after{
+				display: block;
+				content: '';
+				position: absolute;
+				bottom: -1px;
+				left: 0;
+				width: 50px;
+				height: 5px;
+				background-color: @primaryColor;
+				visibility: visible;
+			}
+		}
+
+		p{
+			color: @primaryColor;
+			.uppercase;
+			position: relative;
+			top: 10px;
+			font-weight: @bodyHeavyFontWeight;
+		}
+
+		p.section-desc{
+			visibility: @sectionDescInitialVisibility;
+
+			&>span{
+				display: inline-block;
+				min-width: 4px;
+				-webkit-animation-delay: 0.2s;
+				animation-delay: 0.2s;
+			}
+		}
+	}
+}
+
+body>.container>footer{
+	.padding-t-3x;
+	text-align: center;
+	position: relative;
+	width: 100%;
+
+	p.copyright{
+		.title-style;
+		.small-text;
+		color: @footerTextColor;
+	}
+}

@@ -1,0 +1,160 @@
+/**
+ * prepare yourself
+ */
+
+.claimed-ribbon {
+	font-size: 0;
+	display: inline-block;
+	height: 38px;
+	position: relative;
+	vertical-align: middle;
+
+	span:first-child {
+		display: inline-block;
+		vertical-align: middle;
+		box-shadow: none;
+		text-shadow: none;
+		position: relative;
+		z-index: 25;
+
+		&:before {
+			font-size: 37px;
+			line-height: 1;
+			z-index: 5;
+		}
+
+		&:after {
+			width: 20px;
+			height: 20px;
+			background: white;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			content: ' ';
+			z-index: -1;
+			border-radius: 50%;
+		}
+	}
+
+	.tooltip {
+		display: none;
+		background: rgba(0, 0, 0, .50);
+		color: #fff;
+		font-size: 14px;
+		margin: 0 0 0 10px;
+		vertical-align: middle;
+		padding: 2px 6px;
+		border-radius: 3px;
+	}
+
+	&:hover .tooltip {
+		display: inline-block;
+	}
+}
+
+// single
+.content-single-job_listing-hero-company {
+	// when there is no company image, display the tooltip to provide context
+	.claimed-ribbon {
+		.tooltip { 
+			display: inline-block;
+		}
+	}
+
+	// position ribbon over company image if exists
+	.listing-entry-company-image ~ .claimed-ribbon {
+		position: absolute;
+		z-index: 10;
+
+		.tooltip {
+			display: none;
+		}
+
+		&:hover .tooltip {
+			display: inline-block;
+		}
+	}
+
+	.listing-entry-company-image--style-circle ~ .claimed-ribbon {
+		top: 90px;
+		left: 100px;
+	}
+
+	.listing-entry-company-image--style-square ~ .claimed-ribbon {
+		top: 80px;
+		left: 120px;
+	}
+}
+
+// archive
+li.type-job_listing {
+	// don't display by default
+	.claimed-ribbon {
+		display: none;
+
+		&:hover .tooltip {
+			display: none;
+		}
+	}
+
+	&.style-grid .job_listing-entry-footer .claimed-ribbon {
+		position: absolute;
+		right: 20px;
+		top: 11px;
+		display: block;
+
+		span:first-child:before {
+			font-size: 31px;
+		}
+	}
+
+	&.style-grid .job_listing-entry-footer .listing-entry-company-image + .claimed-ribbon {
+		right: 10px;
+		top: 10px;
+
+		span:first-child:before {
+			font-size: 18px;
+		}
+	}
+
+	// position list
+	&.style-list .claimed-ribbon {
+		display: inline-block;
+		margin-bottom: -5px;
+	}
+
+	&.style-list {
+		.job_listing-entry-meta .claimed-ribbon {
+			left: -50px;
+			bottom: -5px;
+		}
+
+		.job_listing-entry-footer .claimed-ribbon {
+			display: none;
+		}
+	}
+
+	// shrink and position if there is a company image
+	&.style-list .job_listing-entry-meta .claimed-ribbon,
+	.listing-entry-company-image ~ .claimed-ribbon {
+		display: block;
+		position: absolute;
+		z-index: 30;
+
+		span {
+			width: 26px;
+			height: 26px;
+
+			&:before {
+				font-size: 18px;
+			}
+
+			&:after {
+				top: 3px;
+				left: 3px;
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+}

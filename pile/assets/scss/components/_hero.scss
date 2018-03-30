@@ -1,0 +1,283 @@
+//*------------------------------------*\
+//   $HERO COMPONENT
+//*------------------------------------*/
+
+.hero {
+	display: flex;
+	position: relative;
+	overflow: hidden;
+
+	height: 100%;
+	padding: 100px 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	@include query-below($lap) {
+		padding: 40px 25px;
+
+		.hero-title {
+			font-size: 24px;
+			margin-bottom: 0;
+			word-break: break-word;
+		}
+	}
+
+	body.admin-bar #djaxHero.full-height > & {
+		margin-top: -32px;
+	}
+}
+
+.hero-content {
+	position: relative;
+	z-index: 20;
+	max-width: 900px;
+	color: white;
+
+	&.top 		{ align-self: flex-start; }
+	&.bottom 	{ align-self: flex-end; }
+
+	&.left {
+		margin-right: auto;
+		text-align: left;
+	}
+
+	&.right {
+		margin-left: auto;
+		text-align: right;
+	}
+
+	.desc {
+		@extend %desc-hero;
+
+		&.small {
+			font-size: 1em;
+		}
+	}
+
+	:not(h4) {
+		color: inherit;
+	}
+
+	.btn {
+		background: transparent;
+		border: 1px solid transparent;
+
+		// Pseudo element needed due
+		// to border-color: currentColor
+		// transition issue when hover exit
+		&:after {
+			content: '';
+		    position: absolute;
+		    z-index: 1;
+		    left: -1px;
+		    right: -1px;
+		    top: -1px;
+		    bottom: -1px;
+		    border: 2px solid white;
+		}
+
+		&:hover {
+			color: $dark;
+			background: white;
+
+			&:after {
+				border-color: white;
+			}
+		}
+	}
+}
+
+
+
+
+
+//*------------------------------------*\
+//   $HERO SLIDER
+//*------------------------------------*/
+
+.hero-slider {
+	.hero {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.full-height,
+.two-thirds-height,
+.half-height {
+	height: 800px;
+
+	@media only screen and (orientation: landscape) {
+		height: 400px;
+	}
+}
+
+.full-height 		{ height: 100vh; }
+.two-thirds-height 	{ height: 66.667vh; }
+.half-height 		{ height: 50vh; }
+
+@media only screen and (max-height: 599px) {
+	.half-height, .two-thirds-height, .full-height {
+		min-height: 300px;
+	}
+}
+
+
+.hero-bg--color {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+
+.hero-bg--image,
+.hero-bg--map,
+.hero-bg--video {
+	position: absolute;
+    top: 0;
+    left: 0;
+    max-width: none;
+	will-change: transform;
+	object-fit: cover;
+}
+
+.hero-bg--map {
+	width: 100%;
+	height: 100%;
+}
+
+.hero-slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.hero-bg--color {
+	position: absolute;
+}
+
+.hero-title--map {
+	color: $dark;
+}
+
+.djax--hidden { display: none }
+
+.view-project-overlay {
+	// keep it as a regular button in hero
+	background: none;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+//*------------------------------------*\
+//   $HERO SCROLL DOWN ARROWS
+//*------------------------------------*/
+.hero-scroll-down {
+	display: block;
+	cursor: pointer;
+	position: absolute;
+	z-index: 10;
+	bottom: 40px;
+	left: 50%;
+	margin-left: -(43px/2);
+	color: white;
+
+	@include query-below($lap) {
+		display: none;
+	}
+
+	.arrows {
+		display: block;
+		width: 23px + 20px;
+		height: 17px + 20px;
+		padding: 10px;
+		margin-bottom: -10px;
+	}
+
+	path {
+		transform: translate(0,0);
+		transition: all 0.2s;
+	}
+
+	&:hover {
+		#arrow-1 {
+			transform: translate(0, 5px);
+		}
+
+		#arrow-2 {
+			transform: translate(0, 3px);
+		}
+	}
+}
+
+//*------------------------------------*\
+//   $OTHER ELEMENTS
+//*------------------------------------*/
+
+// Next link from the bottom of the Single Project page
+.hero--next {
+	background: #eee;
+	height: 50vh;
+	color: $dark;
+	position: relative;
+
+	&, &:hover {
+		border-color: #333;
+	}
+
+	.hero-content {
+		display: block;
+		color: inherit;
+		transition: color .3s ease-in-out;
+	}
+
+	.hero-slider {
+		background-color: #333;
+		position: absolute;
+		opacity: 0;
+		transition: opacity .3s ease-in-out;
+	}
+
+	&:hover {
+		.hero-content {
+			color: white;
+		}
+		.hero-slider {
+			opacity: 1;
+		}
+	}
+}
+
+.hero--next__label {
+	margin: 6px 0 0 0;
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+.hero--next__cta {
+    border-bottom: 1px solid currentColor;
+}
+
+.hero--next__link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}

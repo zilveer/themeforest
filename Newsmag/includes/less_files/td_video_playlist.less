@@ -1,0 +1,694 @@
+/*
+video list player
+*/
+
+//mixin for chorme sidebar
+.MIXIN_chrome_sidebar {
+  &::-webkit-scrollbar-track {
+    background-color: #383838;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #919191;
+    border-radius: 10px;
+  }
+}
+
+// player title
+.td_video_playlist_title {
+  position: relative;
+  z-index: 1;
+  background-color: #222222;
+
+  .td_video_title_text {
+    font-family: @font1;
+    font-weight: bold;
+    font-size: 15px;
+    color:#ffffff;
+    margin-left: 17px;
+    margin-right: 17px;
+    vertical-align: middle;
+    line-height: 24px;
+    padding: 10px 0px 10px 0px;
+
+    /* responsive phone */
+    @media (max-width: 767px) {
+      text-align: center;
+    }
+  }
+}
+// template with sidebar
+.page-template-page-pagebuilder-title-php {
+  .td_video_playlist_column_2 .td_wrapper_video_playlist {
+    left: 0;
+  }
+}
+
+// post css
+.post {
+  .td_block_video_playlist {
+    margin-bottom: 20px;
+  }
+
+  // 3 column
+  .td_video_playlist_column_3 {
+    .td_video_playlist_title {
+      left: 0px;
+      width: 100%;
+    }
+
+    .td_wrapper_player {
+      width: 676px;
+
+      /* responsive portrait tablet */
+      @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+        height: 405px;
+        width: 100%;
+      }
+    }
+
+    .td_wrapper_video_playlist {
+      left: 0px;
+    }
+
+    .td_container_video_playlist {
+      width: 304px;
+      right: 0px;
+
+      /* responsive portrait tablet */
+      @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+        width: 100%;
+      }
+
+      /* responsive portrait phone */
+      @media (max-width: @responsive_p_phone_max) {
+        width: 100%;
+      }
+    }
+  }
+
+  // 2 column
+  .td_video_playlist_column_2 {
+    .td_video_playlist_title {
+      left: 0px;
+      width: 100%;
+    }
+
+    .td_wrapper_player {
+      height: 388px;
+      width: 100%;
+
+      /* responsive portrait tablet */
+      @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+        height: 294px;
+        width: 100%;
+      }
+
+      @media (min-width: 361px) and (max-width: @responsive_p_phone_max) {
+        height: 350px;
+      }
+
+      @media (max-width: 360px) {
+        height: 192px;
+      }
+    }
+
+    .td_wrapper_video_playlist {
+      left: 0px;
+    }
+
+    .td_container_video_playlist {
+      width: 100%;
+      right: 0px;
+    }
+  }
+}
+
+
+.td_wrapper_video_playlist {
+  position: relative;
+
+  .td_video_controls_playlist_wrapper {
+    height: 65px;
+    background-color: @td_theme_color;
+    position: relative;
+
+    &:before {
+      content: '';
+      background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAGBAMAAADwPukCAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABnRSTlM9KRgMBADiSB2HAAAAFElEQVR4XmNgYBBgUGAwYHBgCAAAA3wA8fpXm6EAAAAASUVORK5CYII=) repeat-x;
+      width: 100%;
+      height: 6px;
+      position: absolute;
+      bottom: -6px;
+      z-index: 1;
+    }
+
+    .td_video_stop_play_control {
+      position: relative;
+      width: 65px;
+      height: 65px;
+      outline: 0 !important;
+
+      &:after {
+        content: '';
+        width: 1px;
+        height: 37px;
+        background-color: rgba(255, 255 ,255 ,0.2);
+        position: absolute;
+        top: 14px;
+        right: 0;
+      }
+
+
+
+      .td_youtube_control,
+      .td_vimeo_control {
+        position: relative;
+        top: 12px;
+        left: 11px;
+        cursor: pointer;
+
+      }
+    }
+
+    .td_video_title_playing {
+      position: absolute;
+      top: 13px;
+      left:80px;
+      font-family: @font2;
+      font-size: 13px;
+      line-height: 19px;
+      font-weight: bold;
+      color: #ffffff;
+      padding-right: 7px;
+      max-height: 37px;
+      overflow: hidden;
+    }
+
+    .td_video_time_playing {
+      position: absolute;
+      bottom:0px;
+      right:5px;
+      font-family: @font1;
+      font-size: 10px;
+      font-style: italic;
+      color: #ffffff;
+      line-height: 17px;
+    }
+  }
+
+  //this will be added from javascript for current video playing
+  .td_video_currently_playing{
+    background-color: #404040;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 3px solid @td_theme_color !important;
+      width: 3px;
+      height: inherit;
+    }
+  }
+
+  a.td_click_video {
+    height: 60px;
+    display: block;
+    width: 100%;
+    position: relative;
+
+    &:hover {
+      background-color: #333333;
+      cursor: pointer;
+    }
+
+    .td_video_thumb {
+      position: relative;
+      top:10px;
+      width: 72px;
+      height: 40px;
+      overflow: hidden;
+      margin-left: 16px;
+      //-webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+      //-moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+      //box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+
+      img {
+        position: relative;
+        top: -6px;
+      }
+    }
+
+    .td_video_title_and_time {
+      position: absolute;
+      top: 10px;
+      margin: 0 30px 0 103px;
+
+      .td_video_title {
+        font-family: @font1;
+        font-size: 12px;
+        color: #ffffff;
+        line-height: 15px;
+        max-height: 30px;
+        overflow: hidden;
+      }
+    }
+
+    .td_video_time {
+      font-family: @font1;
+      font-size: 10px;
+      font-style: italic;
+      color: #777777;
+      line-height: 13px;
+    }
+  }
+
+
+  .td_wrapper_player {
+    background-color: #000;
+    height: 425px;
+
+    iframe{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .td_container_video_playlist {
+    background-color: #222222;
+    vertical-align: top;
+    height: 410px;
+    overflow: hidden;
+  }
+
+
+  .td_playlist_clickable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 347px;
+  }
+
+}
+
+
+//3 columns
+.td_video_playlist_column_3 {
+
+  //wrapper variables
+  @player_wrapper : 681px;
+  @playlist_wrapper : 340px;
+
+  .td_wrapper_video_playlist {
+    left: -1px;
+    z-index: 1;
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      left: 0px;
+    }
+  }
+
+  .td_video_playlist_title {
+    left: -1px;
+    width: 1021px;
+
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: 756px;
+    }
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      width: 100%;
+      left: 0px;
+    }
+  }
+
+  .td_wrapper_player {
+    display: block;
+    width: @player_wrapper;
+    height: 413px;
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      display: block;
+      width: 756px;
+    }
+
+    @media (min-width: 361px) and (max-width: @responsive_p_phone_max) {
+      display: block;
+      width: 100%;
+      height: 350px;
+    }
+
+    @media (max-width: 360px) {
+      display: block;
+      width: 100%;
+      height: 192px;
+    }
+  }
+
+  .td_video_controls_playlist_wrapper {
+    .td_video_title_playing {
+      @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+        max-height: 20px;
+        top: 23px;
+      }
+
+      @media (min-width: 481px) and (max-width: @responsive_p_phone_max) {
+        max-height: 20px;
+        top: 23px;
+      }
+
+      @media (max-width: 480px) {
+        max-height: 37px;
+        top: 13px;
+      }
+    }
+  }
+
+  .td_container_video_playlist {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: -2px;
+    width: @playlist_wrapper;
+    height: 413px;
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      display: block;
+      position: relative;
+      width: 756px;
+      height: 305px;
+      right: 0px;
+    }
+
+    @media (max-width: @responsive_p_phone_max) {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 305px;
+      right: 0px;
+    }
+
+    @media (max-width: 480px) {
+      position: relative;
+      height: 245px;
+      right: 0px;
+    }
+  }
+
+  //add scroll bar for tablet portrait and mobile
+  .td_playlist_clickable.td_add_scrollbar_to_playlist_for_mobile {
+    height: 348px;
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) and (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      margin-right: 10px;
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) and (max-width: @responsive_p_phone_max){
+      margin-right: 10px;
+    }
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      height: 240px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      .MIXIN_chrome_sidebar;
+    }
+
+    @media (max-width: @responsive_p_phone_max) {
+      height: 240px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      .MIXIN_chrome_sidebar;
+    }
+
+    @media (max-width: 480px) {
+      height: 180px;
+    }
+  }
+
+  //add scroll bar for desktop and tablet landscape
+  .td_playlist_clickable.td_add_scrollbar_to_playlist {
+    height: 348px;
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+      margin-right: 10px;
+    }
+
+    .MIXIN_chrome_sidebar;
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      height: 240px;
+    }
+
+    @media (max-width: @responsive_p_phone_max) {
+      height: 240px;
+    }
+
+    @media (max-width: 480px) {
+      height: 180px;
+    }
+  }
+}
+
+
+
+//2 columns
+.td_video_playlist_column_2 {
+
+  //wrapper variables
+  @player_wrapper : 681px;
+  @playlist_wrapper : 681px;
+
+  .td_wrapper_video_playlist {
+    left: -1px;
+    z-index: 1;
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      left: 0px;
+    }
+  }
+
+  .td_video_playlist_title {
+    left: -1px;
+    width: 681px;
+
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: 505px;
+    }
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      width: 100%;
+      left: 0px;
+    }
+  }
+
+  .td_wrapper_player {
+    display: block;
+    width: @player_wrapper;
+    height: 412px;
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: 505px;
+      height: 283px;
+    }
+
+    @media (min-width: 361px) and (max-width: @responsive_p_phone_max) {
+      display: block;
+      width: 100%;
+      height: 350px;
+    }
+
+    @media (max-width: 360px) {
+      display: block;
+      width: 100%;
+      height: 192px;
+    }
+  }
+
+  .td_container_video_playlist {
+    display: block;
+    width: @playlist_wrapper;
+    height: 305px;
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: 505px;
+    }
+
+    @media (max-width: @responsive_p_phone_max) {
+      display: block;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      height: 245px;
+    }
+
+    .td_playlist_clickable {
+      height: 240px;
+
+      @media (max-width: 480px) {
+        height: 180px;
+      }
+    }
+
+    .td_playlist_clickable.td_add_scrollbar_to_playlist_for_mobile,
+    .td_playlist_clickable.td_add_scrollbar_to_playlist {
+      @media screen and (-webkit-min-device-pixel-ratio:0) {
+        margin-right: 10px;
+      }
+      .MIXIN_chrome_sidebar;
+    }
+  }
+
+  .td_video_controls_playlist_wrapper {
+    .td_video_title_playing {
+      max-height: 20px;
+      top: 23px;
+
+      @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+        max-height: 20px;
+        top: 23px;
+      }
+
+      @media (min-width: 481px) and (max-width: @responsive_p_phone_max) {
+        max-height: 20px;
+        top: 23px;
+      }
+
+      @media (max-width: 480px) {
+        max-height: 37px;
+        top: 13px;
+      }
+    }
+  }
+
+}
+
+
+//1 column
+.td_video_playlist_column_1 {
+
+  //wrapper variables
+  @player_wrapper : 341px;
+  @player_wrapper_height : 190px;
+
+  @playlist_wrapper : 341px;
+  @playlist_wrapper_height : 305px;
+
+  @playlist_clickable_height : 240px;
+
+  @tablet_portrait_width : 252px;
+
+  @mobile_col_width : 100%;
+
+  .td_wrapper_video_playlist {
+    left: -1px;
+    z-index: 1;
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      left: 0px;
+    }
+  }
+
+  .td_video_playlist_title {
+    left: -1px;
+    width: 341px;
+
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: 252px;
+    }
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      width: 100%;
+      left: 0px;
+    }
+  }
+
+  .td_wrapper_player {
+    display: block;
+    width: @player_wrapper;
+    height: @player_wrapper_height;
+
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: @tablet_portrait_width;
+      height: 143px;
+    }
+
+    @media (min-width: 361px) and (max-width: @responsive_p_phone_max) {
+      display: block;
+      width: 100%;
+      height: 350px;
+    }
+
+    @media (max-width: 360px) {
+      display: block;
+      width: 100%;
+      height: 192px;
+    }
+  }
+
+  .td_container_video_playlist {
+    display: block;
+    width: @playlist_wrapper;
+    height: @playlist_wrapper_height;
+
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      width: @tablet_portrait_width;
+    }
+
+    @media (max-width: @responsive_p_phone_max) {
+      width: @mobile_col_width;
+    }
+
+    @media (max-width: 480px) {
+      height: 245px;
+    }
+
+    .td_playlist_clickable.td_add_scrollbar_to_playlist_for_mobile,
+    .td_playlist_clickable.td_add_scrollbar_to_playlist{
+      height: @playlist_clickable_height;
+
+      @media screen and (-webkit-min-device-pixel-ratio:0) {
+        margin-right: 10px;
+      }
+
+      @media (max-width: 480px) {
+        height: 180px;
+      }
+
+      .MIXIN_chrome_sidebar;
+    }
+  }
+
+  .td_video_controls_playlist_wrapper {
+    .td_video_title_playing {
+      max-height: 37px;
+      top: 13px;
+
+      @media (min-width: 481px) and (max-width: @responsive_p_phone_max) {
+        max-height: 20px;
+        top: 23px;
+      }
+    }
+  }
+}
+
+//wp embed video - remove blue outline
+.wp-video-shortcode:focus {
+  outline: 0 !important;
+}

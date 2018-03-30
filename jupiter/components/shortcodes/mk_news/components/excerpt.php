@@ -1,0 +1,1 @@
+<div class="the-excerpt"><p><?php the_excerpt(); ?></p></div>

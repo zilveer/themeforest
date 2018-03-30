@@ -1,0 +1,1 @@
+<time class="news-date" datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date(); ?></time>

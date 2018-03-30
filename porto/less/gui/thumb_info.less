@@ -1,0 +1,85 @@
+
+// Thumb
+.thumb-info {
+    .thumb-info-type {
+        background-color: @skinColor;
+    }
+    .thumb-info-action-icon {
+        background-color: @skinColor;
+        i {
+            color: @color-primary-inverse;
+        }
+    }
+}
+
+.thumb-info-bottom-info .thumb-info-title {
+    &, a, a:hover {
+        color: @body_color;
+    }
+}
+
+.thumb-info-ribbon {
+    background-color: @color-primary;
+    color: @color-primary-inverse;
+    span {
+        font-family: @alt_font_family;
+    }
+    &:before {
+        .previewTipBorderColor() when (@rtl = 1) {
+            border-left-color: darken(@color-primary, 15%);
+        }
+        .previewTipBorderColor() when not (@rtl = 1) {
+            border-right-color: darken(@color-primary, 15%);
+        }
+        .previewTipBorderColor;
+    }
+}
+
+.thumb-info-social-icons {
+    a {
+        background-color: @color-primary;
+        i {
+            color: @color-primary-inverse;
+        }
+    }
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+    @color-inverse:  extract(@value, 3);
+
+    .thumb-info {
+        .thumb-info-action-icon-@{name} {
+            background-color: @color;
+            i {
+                color: @color-inverse;
+            }
+        }
+    }
+
+    .thumb-info-ribbon-@{name}{
+        background-color: @color;
+        color: @color-inverse;
+        &:before {
+            .previewTipBorderColor1() when (@rtl = 1) {
+                border-left-color: darken(@color, 15%);
+            }
+            .previewTipBorderColor1() when not (@rtl = 1) {
+                border-right-color: darken(@color, 15%);
+            }
+            .previewTipBorderColor1;
+        }
+    }
+
+    .thumb-info-social-icons {
+        a.thumb-info-social-links-@{name} {
+            background-color: @color;
+            i {
+                color: @color-inverse;
+            }
+        }
+    }
+}
+}

@@ -1,0 +1,182 @@
+
+// Buttons
+.btn-primary, .button, input.submit,
+input[type="submit"].btn-primary, input[type="submit"].button, input[type="submit"].submit {
+    .buttonBackground(@skinColor, spin(@skinColor, 20%), @color-primary-inverse);
+    border-color: @skinColor;
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            background-color: @skinColor;
+            border-color: @skinColor;
+        }
+    }
+}
+
+input[type="submit"],
+.geodir-search button[type="button"],
+.geodir-search input[type="button"],
+.geodir-search input[type="submit"],
+#geodir-wrapper button[type="button"],
+#geodir-wrapper input[type="button"],
+#geodir-wrapper input[type="submit"] {
+    background: @skinColor;
+    border-color: @skinColor;
+
+    &:hover,
+    &:active {
+        background: darken(@skinColor, 5%);
+        border-color: darken(@skinColor, 5%);
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            background-color: @skinColor;
+            border-color: @skinColor;
+        }
+    }
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+    @color-inverse:  extract(@value, 3);
+
+    .btn-@{name} {
+        .buttonBackground(@color, spin(@color, 20%), @color-inverse);
+        border-color: @color @color darken(@color, 10%);
+        &:hover, &:focus, &:active {
+            color: @color-inverse;
+            background-color: darken(@color, 5%);
+            border-color: @color @color darken(@color, 15%);
+        }
+    }
+
+    .btn-@{name}-scale-2 {
+        .buttonBackground(darken(@color, 10%), spin(@color, 30%), @color-inverse);
+        border-color: darken(@color, 10%) darken(@color, 10%) darken(@color, 20%);
+    }
+}
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+    @color-inverse:  extract(@value, 3);
+
+    .btn-borders {
+        &.btn-@{name} {
+            background: transparent;
+            border-color: @color;
+            color: @color;
+            text-shadow: none;
+            &:hover, &:focus, &:active {
+                background-color: darken(@color, 5%);
+                border-color: @color !important;
+                color: @color-inverse;
+            }
+        }
+    }
+}
+}
+
+.buttonBordersStyle(@c) when not (@c = 1) {
+
+}
+.buttonBordersStyle(@c) when (@c = 1) {
+    .btn, .button, input.submit,
+    input[type="submit"].btn-primary,
+    input[type="submit"].button, input[type="submit"].submit, input[type="submit"].btn,
+    input[type="submit"] {
+        background: transparent;
+        border-color: @skinColor;
+        color: @skinColor;
+        text-shadow: none;
+        border-width: 3px;
+        padding: 4px 10px;
+
+        &.btn-lg,
+        .btn-group-lg > & {
+            padding: 8px 14px;
+        }
+
+        &.btn-sm,
+        .btn-group-sm > & {
+            border-width: 2px;
+            padding: 4px 10px;
+        }
+
+        &.btn-xs,
+        .btn-group-xs > & {
+            padding: 1px 5px;
+            border-width: 1px;
+        }
+
+        &:hover, &:focus, &:active {
+            background-color: darken(@skinColor, 5%);
+            border-color: @skinColor !important;
+            color: @color-primary-inverse;
+        }
+    }
+    .btn-default,
+    input[type="submit"].btn-default {
+        border-color: #ccc;
+        color: #333;
+        &:hover, &:focus, &:active {
+            background-color: #e6e6e6;
+            border-color: #adadad !important;
+            color: #333;
+        }
+    }
+    body {
+        .cart-actions .button,
+        .checkout-button, #place_order {
+            padding: 8px 14px;
+        }
+    }
+    html {
+        .for(@colors-list); .-each(@value) {
+        @name:  extract(@value, 1);
+        @color:  extract(@value, 2);
+        @color-inverse:  extract(@value, 3);
+
+        .btn-@{name},
+        input[type="submit"].btn-@{name} {
+            background: transparent;
+            border-color: @color;
+            color: @color;
+            text-shadow: none;
+            border-width: 3px;
+
+            &:hover, &:focus, &:active {
+                background-color: darken(@color, 5%);
+                border-color: @color !important;
+                color: @color-inverse;
+            }
+        }
+    }
+    }
+}
+.buttonBordersStyle(@button_style_borders);
+
+.button3DStyle(@c) when not (@c = 1) {
+
+}
+.button3DStyle(@c) when (@c = 1) {
+
+}
+.button3DStyle(@button_style_3d);

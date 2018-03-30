@@ -1,0 +1,226 @@
+// Cart
+.header-cart {
+  position: relative;
+  max-height: 100px;
+  padding: 34px 0 30px;
+  text-align: right;
+
+  // grey line on the left
+  &:before {
+    content: "";
+    position: absolute;
+    background-color: darken($default-color, 15%);
+    width: 1px;
+    height: 36px;
+    top: 50%;
+    left: 0;
+    margin-top: -18px;
+  }
+  // the hover border top
+  &:after {
+    @extend %background-primary-color;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .1s linear;
+  }
+  // display the dropdown on hover
+  &:hover {
+    @extend %color-primary-color;
+
+    &:after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .header-cart__text--price {
+      @extend %color-primary-color;
+    }
+
+    .header-cart__open-cart {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.header-cart__items {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  width: 36px;
+  height: 36px;
+
+  // bag created with css
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+  }
+  &:after {
+    @extend %background-primary-color;
+    background-image: image-url("pattern_dark.png");
+    top: 3px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: 3px 3px 8px 8px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  &:before {
+    border-radius: 40%;
+    width: 18px;
+    height: 18px;
+    border: 2px solid $primary-color;
+    left: 50%;
+    top: -8px;
+    margin-left: -9px;
+  }
+
+  .header-cart__items-num {
+    position: absolute;
+    color: $lighter-color;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 7px;
+    font-weight: 600;
+  }
+}
+
+.header-cart__text {
+  color: $dark-color;
+  margin-right: 4px;
+  display: none;
+
+  @media (min-width: $screen-lg-min) {
+    display: inline;
+  }
+}
+
+.header-cart__text--price {
+  @extend %color-secondary-color;
+  font-weight: 700;
+  display: inline-block;
+  margin-right: 10px;
+  transition: all .1s linear;
+}
+
+.header-cart__open-cart {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  top: 100%;
+  right: 0;
+  width: 400px;
+  transition: all .1s linear;
+  padding: 10px;
+  z-index: 1001;
+  @extend %background-primary-color;
+  color: $lighter-color;
+  box-shadow: 0px 2px 0 rgba(0, 0, 0, 0.1) inset;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+
+  .btn-darker {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.header-cart__product {
+  font-size: 14px;
+  padding: 10px;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    border-top: 1px solid darken($primary-color, 12%);
+    border-bottom: 1px solid darken($primary-color, 12%);
+    padding-top: 9px;
+    padding-bottom: 9px;
+
+    .header-cart__product-image {
+      display: none;
+    }
+
+    .header-cart__product-image--hover {
+      display: block;
+    }
+  }
+}
+
+.header-cart__product-image {
+  float: left;
+  text-align: center;
+  width: 15%;
+}
+
+.header-cart__product-image--hover {
+  @extend .header-cart__product-image;
+  display: none;
+  line-height: 50px;
+
+  .glyphicon-circle {
+    color: $default-color;
+  }
+}
+
+.header-cart__product-title {
+  float: left;
+  width: 65%;
+  text-align: left;
+  font-weight: 600;
+
+  .header-cart__link {
+    color: $lighter-color;
+  }
+}
+
+.header-cart__qty {
+  @extend %color-secondary-color;
+  font-family: $secondary-font;
+  font-weight: 700;
+  font-size: 11px;
+  display: block;
+}
+
+.header-cart__price {
+  width: 20%;
+  font-weight: bold;
+  float: left;
+}
+
+.header-cart__divider {
+  border: 1px solid darken($primary-color, 12%);
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.header-cart__subtotal {
+  @extend %color-secondary-color;
+  font-family: $secondary-font;
+  font-weight: 700;
+  font-size: 12px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.header-cart__subtotal-price {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.header-cart__subtotal-box {
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.mobile-cart {
+  text-align: center;
+}

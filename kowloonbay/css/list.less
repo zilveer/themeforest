@@ -1,0 +1,132 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. List reset / .list-reset
+2. Unordered list/ ul
+3. Project info list / ul.project-info
+4. Item list / ul.item-list
+	4.1. Item / &>li
+5. Definition list / dl
+	5.1. Term / dt
+6. Price list / dl.price-list
+	6.1. Plan name / dt
+	6.2. Plan details / dd
+	6.3. Plan price / dd.price
+	6.4. Sign up button / .btn
+		6.4.1. Font Awesome icon / i.fa
+7. Item icon / &>.item-icon
+	7.1. Icon image / &>img
+8. Item description / &>.item-desc
+	8.1 Heading / h1, h2, h3, h4, h5, h6
+		8.1.1. Link (normal & visited state) / a:not(.btn):link, a:not(.btn):visited
+		8.1.2. Link (hover & active state) / a:not(.btn):hover, a:not(.btn):active
+9. Item icon & description / &>.item-icon, &>.item-desc
+
+-------------------------------------------------------------------*/
+
+.list-reset{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+ul{
+	margin-bottom: @baseLineHeight;
+}
+
+ul.project-info{
+	li{
+		margin-right: 20px;
+
+		&:last-child{
+			margin-right: 0;
+		}
+	}
+}
+
+@itemListIconDim: @baseLineHeight * 4;
+
+ul.item-list{
+	.list-reset;
+
+	&>li{
+		text-align: center;
+		position: relative;
+		margin-bottom: @baseLineHeight;
+	}
+}
+
+dl{
+	dt{
+		.title-style;
+	}
+}
+
+dl.price-list{
+	text-align: center;
+	.transition(~'box-shadow @{transitionDuration}');
+
+	dt{
+		font-size: 20px;
+		line-height: @baseLineHeight * 3;
+		.lightgray-bg-1;
+	}
+
+	dd{
+		line-height: @baseLineHeight * 2;
+		.lightgray-bg-3;
+	}
+
+	dd.price{
+		background-color: @primaryColor;
+		color: @bgColor;
+		font-size: 30px;
+		.body-heavy-font-weight;
+		line-height: @baseLineHeight * 3;
+	}
+
+	.btn{
+		display: block;
+		line-height: @baseLineHeight * 2;
+		.title-style;
+		color: @bgColor;
+		padding: 0;
+		border-width: 0;
+
+		i.fa{
+			color: @bgColor;
+		}
+	}
+}
+
+.item-icon{
+	text-align: center;
+	height: @itemListIconDim;
+	line-height: @itemListIconDim;
+	width: @itemListIconDim;
+
+	&>img{
+		width: 100%;
+		height: auto;
+		padding-right: 10px;
+	}
+}
+
+.item-desc{
+	text-align: left;
+	width: ~'calc(100% - @{itemListIconDim})';
+
+	h1, h2, h3, h4, h5, h6{
+		a:not(.btn):link, a:not(.btn):visited{
+			color: @titleTextColor;
+		}
+		a:not(.btn):hover, a:not(.btn):active{
+			color: @primaryColor;
+		}
+	}
+}
+
+.item-icon, .item-desc{
+	vertical-align: middle;
+	display: inline-block;
+}

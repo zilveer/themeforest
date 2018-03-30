@@ -1,0 +1,202 @@
+
+// Tabs
+.resp-tabs-list {
+    li {
+        color: @skinColor;
+        &:hover,
+        &:focus,
+        &.resp-tab-active {
+            border-top-color: @skinColor;
+        }
+    }
+}
+.resp-vtabs {
+    .resp-tabs-list {
+        li {
+            &:hover,
+            &:focus,
+            &.resp-tab-active {
+                .respTabBorder() when (@rtl = 1) {
+                    border-right-color: @skinColor;
+                }
+                .respTabBorder() when not (@rtl = 1) {
+                    border-left-color: @skinColor;
+                }
+                .respTabBorder;
+            }
+        }
+    }
+}
+h2.resp-accordion {
+    color: @skinColor;
+}
+
+.tabs {
+    ul.nav-tabs {
+        a, a:hover {
+            color: @skinColor;
+        }
+
+        a:hover,
+        a:focus {
+            border-top-color: @skinColor;
+        }
+
+        li.active a {
+            &,
+            &:hover,
+            &:focus {
+                border-top-color: @skinColor;
+                color: @skinColor;
+            }
+        }
+        &.nav-justified {
+            a:hover,
+            a:focus {
+                border-top-color: @skinColor;
+            }
+        }
+    }
+    &.tabs-bottom {
+        ul.nav-tabs {
+            li a:hover,
+            li.active a,
+            li.active a:hover,
+            li.active a:focus {
+                border-bottom-color: @skinColor;
+            }
+        }
+    }
+    &.tabs-vertical.tabs-left {
+        ul.nav-tabs {
+            li a:hover,
+            li.active a,
+            li.active a:hover,
+            li.active a:focus {
+                border-left-color: @skinColor;
+            }
+        }
+    }
+    &.tabs-vertical.tabs-right {
+        ul.nav-tabs {
+            li a:hover,
+            li.active a,
+            li.active a:hover,
+            li.active a:focus {
+                border-right-color: @skinColor;
+            }
+        }
+    }
+    &.tabs-simple {
+        .nav-tabs {
+            > li {
+                a, a:hover, a:focus,
+                &.active a, &.active a:hover, &.active a:focus {
+                    color: @body_color;
+                }
+                a:hover, a:focus,
+                &.active a {
+                    border-bottom-color: @skinColor;
+                }
+            }
+        }
+    }
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+    @color-inverse:  extract(@value, 3);
+
+    .tabs-@{name} {
+        .nav-tabs {
+            &,
+            &.nav-justified {
+                li {
+                    a {
+                        &,
+                        &:hover {
+                            color: @color;
+                        }
+
+                        &:hover {
+                            border-top-color: @color;
+                        }
+                    }
+
+                    &.active {
+                        a,
+                        a:hover,
+                        a:focus {
+                            border-top-color: @color;
+                            color: @color;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.tabs-bottom {
+            .nav-tabs {
+                &,
+                &.nav-justified {
+                    li {
+                        a {
+                            &:hover {
+                                border-bottom-color: @color;
+                            }
+                        }
+
+                        &.active {
+                            a,
+                            a:hover,
+                            a:focus {
+                                border-bottom-color: @color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.tabs-vertical {
+            &.tabs-left {
+                li {
+                    a {
+                        &:hover {
+                            border-left-color: @color;
+                        }
+                    }
+
+                    &.active {
+                        a,
+                        a:hover,
+                        a:focus {
+                            border-left-color: @color;
+                        }
+                    }
+                }
+            }
+
+            &.tabs-right {
+                li {
+                    a {
+                        &:hover {
+                            border-right-color: @color;
+                        }
+                    }
+
+                    &.active {
+                        a,
+                        a:hover,
+                        a:focus {
+                            border-right-color: @color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+}

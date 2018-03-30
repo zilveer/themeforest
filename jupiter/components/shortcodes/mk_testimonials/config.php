@@ -1,0 +1,26 @@
+<?php
+extract( shortcode_atts( array(
+	'title' 			=> '',
+	'show_as' 			=> 'slideshow',
+	'column' 			=> 3,
+	'style' 			=> 'avantgarde',
+	'count'				=> 10,
+	'orderby'			=> 'date',
+	'testimonials' 		=> '',
+	'categories'             => '',
+	"animation_speed" 	=> 500,
+	"slideshow_speed" 	=> 7000,
+	'order'				=> 'ASC',
+	'skin' 				=> 'dark',
+	'text_color' 		=> '#777777',
+	'author_color' 		=> '#444444',
+	'skill_color' 		=> '#777777',
+	'font_size' 		=> '18',
+	'font_style' 		=> 'italic',
+	'font_weight' 		=> 'bold',
+	'text_transform' 	=> 'initial',
+	'letter_spacing' 	=> '0',
+	"el_class"			=> '',
+	'animation' 		=> '',
+), $atts ) );
+Mk_Static_Files::addAssets('mk_testimonials');

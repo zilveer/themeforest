@@ -1,0 +1,1 @@
+<?php _default_wp_die_handler('Portfolio project has no separate page. In order to view the project, please create or edit Page or Page Section and insert <b>[portfolio]</b> shortcode there.', 'Grata: Notice');

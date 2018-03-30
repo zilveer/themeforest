@@ -1,0 +1,93 @@
+// default configration for typeline
+$typeline_config: (
+	points: (0 1.2, 50 1.6, 200 1.8),
+	breakpoints: 1200px 760px 560px,
+	rules: (
+		'body': 16px,
+		'h1': 81px,
+		'h2': 54px,
+		'h3': 36px,
+		'h4': 24px
+	)
+) !default;
+
+$typeline_points: 		map-get($typeline_config, points) 		!default;
+$typeline_breakpoints: 	map-get($typeline_config, breakpoints) 	!default;
+$typeline_rules: 		map-get($typeline_config, rules) 		!default;
+
+$A: nth($typeline_points, 1);
+$B: nth($typeline_points, 2);
+$C: nth($typeline_points, 3);
+
+@function strip-unit($number) {
+	@if type-of($number) == 'number' and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+	@return $number;
+}
+
+@function pow($base, $exponent) {
+    // reset value
+    $value: $base;
+    // positive intergers get multiplied
+    @if $exponent > 1 {
+        @for $i from 2 through $exponent {
+            $value: $value * $base;
+        }
+    }
+    // negitive intergers get divided. A number divided by itself is 1
+    @if $exponent < 1 {
+        @for $i from 0 through -$exponent {
+            $value: $value / $base;
+        }
+    }
+    // return the last value written
+    @return $value;
+}
+
+// returns Y value for a given font-size for the first breakpont
+// according to the given variable values
+@function getY($fontSize) {
+	$fontSize: strip-unit($fontSize);
+	@if $fontSize < nth($B, 1) {
+		// if given fontSize is smaller then B.x
+		// use an exponential function to determine Y value [ ie. y = ab^(x^3) ]
+		$a: nth($A, 2);
+		$b: (nth($B, 2) - nth($A, 2)) / pow(nth($B, 1), 3);
+		@return $a + $b * pow($fontSize, 3);
+	} @else {
+		// otherwise use a basic linear equation solving method
+		@return nth($B, 2) + (nth($C, 2) - nth($B, 2)) * ($fontSize - nth($B, 1)) / (nth($C, 1) - nth($B, 1));
+	}
+}
+
+// used to get the actual font-size for a given breakpoint
+@function getFontSize($fontSize, $breakpoint: false) {
+
+	$index: index($typeline_breakpoints, $breakpoint);
+	@if $index == null {
+		@return $fontSize;
+	}
+
+	// we need to find values that are equally spread across the interval [1, getY($fontSize)] for each breakpoint we have
+	$y: getY($fontSize);
+	$ratio: ($y - 1) * $index / length($typeline_breakpoints) + 1;
+	@return round($fontSize / $ratio);
+}
+
+//
+@each $selector, $value in $typeline_rules {
+	#{$selector} {
+		font-size: $value;
+	}
+}
+
+@each $breakpoint in $typeline_breakpoints {
+	@media only screen and (max-width: $breakpoint) {
+		@each $selector, $value in $typeline_rules {
+			#{$selector} {
+				font-size: getFontSize($value, $breakpoint);
+			}
+		}
+	}
+}

@@ -1,0 +1,173 @@
+.more-featured-news {
+	margin: 30px 0;
+
+	.single {
+		width: 45%;
+		height: 300px;
+		float: left;
+		background-size: cover;
+		background-position: center center;
+		position: relative;
+
+		a {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+
+			&:before {
+				font-family: $fa;
+				content: "\f105";
+				width: 60px;
+				height: 60px;
+				text-align: center;
+				line-height: 56px;
+				padding-left: 3px;
+				color: #fff;
+				font-size: 24px;
+				float: left;
+				border: 1px solid #fff;
+				@include border-top-radius(50%);
+				@include border-bottom-radius(50%);
+				position: absolute;
+				z-index: 5;
+				top: 15px;
+				right: 15px;
+				@include opacity(0);
+				@include transition(all .5s);
+				@include transform(translateX(-100%) rotate(-360deg));
+			}
+
+			&:hover {
+				.overlay {
+					@include opacity(.85);
+				}
+				&:before {
+					@include opacity(1);
+					@include transform(none);
+				}
+			}
+
+			.overlay {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				@include opacity(0);
+				@include transition(all .25s);
+			}
+
+			.valign {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 3;
+				padding: 30px;
+				color: #fff;
+				/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+				background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC42NSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+				background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+				background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-8 */
+
+
+				.post-info {
+					font-size: 12px;
+					display: block;
+
+					span {
+						margin-right: 10px;
+
+						i {
+							margin-right: 5px;
+						}
+
+						&:last-child {
+							margin-right: 0;
+						}
+					}
+				}
+
+				.post-title {
+					display: block;
+					font-family: $proxima-bold;
+					font-size: 22px;
+					line-height: 23px;
+					margin-top: 7px;
+				}
+			}
+		}
+	}
+	.view-more {
+		width: 10%;
+		height: 300px;
+		float: left;
+		background: #222;
+		position: relative;
+
+		&:hover {
+			background: $theme-color;
+		}
+
+		.valign {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 15px;
+			font-size: 15px;
+			font-family: $proxima-bold;
+			text-transform: uppercase;
+			color: #fff;
+
+			&:before {
+				content: "\f105";
+				font-family: $fa;
+				display: block;
+				margin-bottom: 5px;
+			}
+		}
+	}
+
+	@media screen and (max-width: 992px) {
+		.single {
+			width: 50%;
+		}
+		.view-more {
+			width: 100%;
+			height: 60px;
+
+			.valign {
+				bottom: auto;
+				top: 50%;
+				@include transform(translateY(-50%));
+
+				&:before {
+					display: inline-block;
+					margin: 0;
+					margin-right: 10px;
+				}
+			}
+		}
+	}
+
+	@media screen and (max-width: 640px) {
+		.single {
+			width: 100%;
+			height: 200px;
+
+			a {
+				.overlay {
+					@include opacity(.85);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,1 @@
+<?php echo jaw_get_template_part('content-middle', 'content'); ?>

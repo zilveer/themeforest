@@ -1,0 +1,198 @@
+/*
+	 AnythingSlider v1.4
+
+	 By Chris Coyier: http://css-tricks.com
+	 with major improvements by Doug Neiner: http://pixelgraphics.us/
+	 based on work by Remy Sharp: http://jqueryfordesigners.com/
+*/
+
+/******* SET DEFAULT DIMENSIONS HERE ********/
+div.anythingSlider {
+	width:960px;
+	height:400px;
+	margin:0 auto 20px;
+	padding:10px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-khtml-border-radius:4px;
+	-webkit-border-radius:4px;
+	box-shadow:0 1px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.2);
+	background:#fff;
+	position:relative;
+	*z-index:-1;
+}
+
+div.anythingSlider a {outline:none;}
+
+/****** SET COLORS HERE *******/
+/* Default State */
+div.anythingSlider .thumbNav a.cur {
+	/*background:url(../images/colors/sky-blue/bullets.png) 0 0 no-repeat;*/
+}
+div.anythingSlider .anythingWindow {
+	width: 960px;
+	height: 400px;
+	margin: 0 auto;
+	background:url(../images/loader.gif) 50% 50% no-repeat;
+}
+/* Active State */
+div.anythingSlider.activeSlider .thumbNav a.cur, div.anythingSlider.activeSlider .thumbNav a {
+
+}
+div.anythingSlider.activeSlider .anythingWindow {
+
+}
+
+/**** DO NOT CHANGE BELOW THIS LINE ****/
+/* anythingSlider viewport window */
+div.anythingSlider .anythingWindow {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+/* anythingSlider base UL */
+ul.anythingBase {
+	background: transparent;
+	list-style: none;
+	position: absolute;
+	top: 0; left: 0;
+	margin: 0;
+}
+ul.anythingBase li.panel {
+	background: #fff;
+	display: block;
+	float: left;
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+
+/* Navigation Arrows */
+div.anythingSlider .arrow {
+	top: 45%;
+	position: absolute;
+	display: block;
+	z-index: 101;
+}
+div.anythingSlider .arrow a {
+	display: block;
+	width: 53px;
+	height: 60px;
+	text-align: center;
+	outline: 0;
+	text-indent: -9999px;
+}
+
+div.anythingSlider .forward { right: -12px !important; }
+div.anythingSlider .back { left: -10px !important; }
+div.anythingSlider .forward a { background:transparent url(../images/colors/sky-blue/nav_right.png) 0 0 no-repeat;}
+div.anythingSlider .back a { background:transparent url(../images/colors/sky-blue/nav_left.png) 0 0 no-repeat;}
+div.anythingSlider .forward a:hover, div.anythingSlider .forward a.hover { background-position: 0px -60px; }
+div.anythingSlider .back a:hover, div.anythingSlider .back a.hover { background-position: 0px -60px; }
+
+/* Navigation Links */
+div.anythingSlider .thumbNav {
+	position:absolute;
+	left: 40%;
+	text-align: center;
+	z-index:100;
+	bottom: 0px;
+	background:#fff;
+	padding:7px 0 0 10px;
+	border-radius:4px 4px 0 0;
+	-moz-border-radius:4px 4px 0 0;
+	-khtml-border-radius:4px 4px 0 0;
+	-webkit-border-top-left-radius:4px;
+	-webkit-border-top-right-radius:4px;
+	}
+div.anythingSlider .thumbNav li { display: inline; }
+div.anythingSlider .thumbNav a {
+	cursor: pointer;
+	position: relative;
+	width:16px;
+	height:15px;
+	display: inline-block;
+	text-indent:-9999px;
+	margin-right:10px;
+	/*background:url(../images/colors/sky-blue/bullets.png) -20px 0 no-repeat;*/
+}
+/*div.anythingSlider .thumbNav a:hover { background:url(../images/colors/sky-blue/bullets.png) 0 0 no-repeat; }*/
+
+/* slider autoplay right-to-left, reverse order of nav links to look better */
+div.anythingSlider.rtl .thumbNav a { float: right; } /* reverse order of nav links */
+div.anythingSlider.rtl .thumbNav { float: left; }    /* move nav link group to left */
+/* div.anythingSlider.rtl .start-stop { float: right; } */ /* move start/stop button - in case you want to switch sides */
+
+/* Autoplay Start/Stop button */
+div.anythingSlider .start-stop {
+	z-index: 1000;
+	background: #fff;
+	color: #000;
+	right:10px;
+	bottom: 10px;
+	padding: 2px 5px;
+	width: 40px;
+	text-align: center;
+	text-decoration: none;
+	position:absolute;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+}
+div.anythingSlider .start-stop.playing { background: #fff; }
+div.anythingSlider .start-stop:hover, div.anythingSlider .start-stop.hover { color: #ccc }
+
+.anything_caption {
+	background:#000;
+	color:#fff;
+	filter:alpha(opacity=60);
+	-moz-opacity:0.6;
+	-khtml-opacity: 0.6;
+	opacity: 0.6;
+	position: absolute;
+	z-index: 100;
+	padding: 10px;
+}
+.anything_caption h3 {
+	color:#fff;
+}
+
+.caption_left {
+	left: 0px;
+	height: 400px;
+	width: 300px;
+}
+
+.caption_right {
+	right: 0px;
+	height: 400px;
+	width: 300px;
+}
+
+.caption_top {
+	top: 0px;
+}
+
+.caption_bottom {
+	bottom: 0px;
+}
+
+div.text_slide_left div.pic {
+	float: left;
+	border:none !important;
+	padding:0 !important;
+}
+
+div.text_slide_right div.pic {
+	float: right;
+	border:none !important;
+	padding:0 !important
+}
+
+div.txt {
+	height:380px;
+	padding: 10px;
+	overflow: hidden;
+}

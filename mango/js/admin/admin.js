@@ -1,0 +1,1 @@
+(function($) { $(".mango-chosen-select").chosen(); })(jQuery);

@@ -1,0 +1,83 @@
+/* Transitions */
+.ubermenu .ubermenu-item.ubermenu-in-transition > .ubermenu-submenu-drop,
+.ubermenu .ubermenu-item.ubermenu-active.ubermenu-in-transition > .ubermenu-submenu-drop{
+	overflow:hidden !important;
+	height:auto;
+}
+.ubermenu:not(.ubermenu-transition-slide) .ubermenu-item.ubermenu-in-transition > .ubermenu-submenu-drop,
+.ubermenu:not(.ubermenu-transition-slide) .ubermenu-item.ubermenu-active.ubermenu-in-transition > .ubermenu-submenu-drop{
+	max-height:none; //all except slide down	//may just need this for a specific transition type
+}
+.ubermenu .ubermenu-item .ubermenu-submenu-drop{
+	-webkit-transition-duration:.3s;
+	-ms-transition-duration:.3s;
+	transition-duration:.3s;
+
+	-webkit-transition-timing-function: ease-in;
+	-ms-transition-timing-function: ease-in;
+	transition-timing-function: ease-in;
+}
+
+/* No Transition */
+.ubermenu-transition-none .ubermenu-item .ubermenu-submenu-drop{
+	-webkit-transition:none;
+	-ms-transition:none;
+	transition:none;
+	top:auto;
+}
+.ubermenu-nojs.ubermenu-transition-none .ubermenu-item:hover > .ubermenu-submenu-drop,
+.ubermenu-transition-none .ubermenu-item.ubermenu-active > .ubermenu-submenu-drop{
+	max-height:none;
+	height:auto;
+	overflow-y:visible;
+}
+
+/* Slide Transition */
+.ubermenu-transition-slide .ubermenu-item .ubermenu-submenu-drop{
+	-webkit-transition-property:max-height, visibility;
+	-ms-transition-property:max-height, visibility;
+	transition-property:max-height, visibility; /*max-height;*/
+	max-height:0;
+	top:auto;
+}
+.ubermenu-nojs.ubermenu-transition-slide .ubermenu-item:hover > .ubermenu-submenu-drop,
+.ubermenu-transition-slide .ubermenu-item.ubermenu-active > .ubermenu-submenu-drop{
+	max-height:1000px;	/* just for animation timing */
+}
+
+/* Fade Transition */
+.ubermenu-transition-fade .ubermenu-item .ubermenu-submenu-drop{
+	opacity:0;
+	-webkit-transition-property:opacity, visibility;
+	-ms-transition-property:opacity, visibility;
+	transition-property:opacity, visibility;
+	top:auto;
+	margin-top:1px;
+}
+.ubermenu-nojs.ubermenu-transition-fade .ubermenu-item:hover > .ubermenu-submenu-drop,
+.ubermenu-transition-fade .ubermenu-item.ubermenu-active > .ubermenu-submenu-drop{
+	opacity:1;
+	top:auto;
+}
+
+/* Shift Up Transition */
+.ubermenu-transition-shift .ubermenu-item .ubermenu-submenu-drop{
+	margin-top:20px;
+	top:auto;
+	opacity:0;
+	-webkit-transition-property:margin-top, opacity, visibility;
+	-ms-transition-property:margin-top, opacity, visibility;
+	transition-property:margin-top, opacity, visibility;	/* Including visibility really matters */
+}
+.ubermenu-nojs.ubermenu-transition-shift .ubermenu-item:hover > .ubermenu-submenu-drop,
+.ubermenu-transition-shift .ubermenu-item.ubermenu-active > .ubermenu-submenu-drop{
+	margin-top:0;
+	opacity:1;
+}
+
+/* Mega */
+.ubermenu .ubermenu-active > .ubermenu-submenu.ubermenu-submenu-type-mega{
+	max-height:600px;
+	overflow-y:auto; // !important; removed because it forces scrollbar to show in Windows
+	-webkit-overflow-scrolling: touch;
+}

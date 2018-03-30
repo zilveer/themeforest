@@ -1,0 +1,147 @@
+// set the variable when the media
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+  .display-type {
+    content: "tablet";
+  }
+}
+@media (max-width: @screen-xs-max) {
+  .display-type {
+    content: "phone";
+  }
+}
+
+.index-isotope {
+  padding-top: 20px;
+  &.v2 {
+    padding-top: 0px;
+  }
+}
+
+
+
+// GRID FOR FIXED WIDTH PAGE
+@media (min-width: 992px) {
+  .page-fixed-width {
+    .index-isotope, .featured-posts-slider-contents, ul.products {
+      margin-left: -1%;
+      margin-right: -1%;
+      .item-isotope, article.featured-post {
+        @temp-width: 100% / 3 - 0.01%;
+        width: @temp-width;
+        padding: 1%;
+      }
+    }
+    .featured-posts-slider-contents, .featured-posts-slider-contents article.featured-post {
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+}
+
+
+
+// GRID GENERATOR MIXIN
+.os-make-isotope-grid(@os-items-per-row, @os-screen-min, @os-screen-max) {
+
+  @media (min-width: @os-screen-min) and (max-width: @os-screen-max) {
+    .index-isotope, .featured-posts-slider-contents {
+      margin-left: -1%;
+      margin-right: -1%;
+      .item-isotope, article.featured-post {
+        @temp-width: 100% / @os-items-per-row - 0.01%;
+        width: @temp-width;
+        padding: 1%;
+      }
+      &.isotope-condensed {
+        .item-isotope, article.featured-post {
+          padding: 0.7%;
+        }
+      }
+    }
+    .index-isotope.v2 {
+      margin-left: 0%;
+      margin-right: 0%;
+      .item-isotope {
+        @temp-width: 100% / @os-items-per-row - 0.01%;
+        width: @temp-width;
+        padding: 0%;
+      }
+    }
+    .featured-posts-slider-contents, .featured-posts-slider-contents article.featured-post {
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+
+}
+
+
+
+.page-fluid-width {
+  &.no-sidebar {
+    &.menu-position-left, &.menu-position-right {
+      @media (max-width: 992px) {
+        .index-isotope.v1, .index-isotope.v3 {
+          padding: 0px;
+          .item-isotope {
+            padding: 15px 0px;
+            float: none;
+          }
+        }
+      }
+      .os-make-isotope-grid(@wosmlr_columns_992_1200, 992px, 1199px);
+      .os-make-isotope-grid(@wosmlr_columns_1200_1600, 1200px, 1599px);
+      .os-make-isotope-grid(@wosmlr_columns_1600_1750, 1600px, 1749px);
+      .os-make-isotope-grid(@wosmlr_columns_1750_5000, 1750px, 5000px);
+    }
+    &.menu-position-top {
+      @media (max-width: 768px) {
+        .index-isotope.v1, .index-isotope.v3 {
+          padding: 0px;
+          .item-isotope {
+            padding: 15px 0px;
+            float: none;
+          }
+        }
+      }
+      .os-make-isotope-grid(@wosmt_columns_768_992, 768px, 991px);
+      .os-make-isotope-grid(@wosmt_columns_992_1200, 992px, 1199px);
+      .os-make-isotope-grid(@wosmt_columns_1200_1300, 1200px, 1299px);
+      .os-make-isotope-grid(@wosmt_columns_1300_1600, 1300px, 1599px);
+      .os-make-isotope-grid(@wosmt_columns_1600_5000, 1600px, 5000px);
+    }
+  }
+
+  &.sidebar-position-left, &.sidebar-position-right {
+    &.menu-position-left, &.menu-position-right {
+      @media (max-width: 992px) {
+        .index-isotope.v1, .index-isotope.v3 {
+          padding: 0px;
+          .item-isotope {
+            padding: 15px 0px;
+            float: none;
+          }
+        }
+      }
+      .os-make-isotope-grid(@wsmlr_columns_992_1600, 992px, 1599px);
+      .os-make-isotope-grid(@wsmlr_columns_1600_1750, 1600px, 1749px);
+      .os-make-isotope-grid(@wsmlr_columns_1750_5000, 1750px, 5000px);
+    }
+    &.menu-position-top {
+      @media (max-width: 992px) {
+        .index-isotope.v1, .index-isotope.v3 {
+          padding: 0px;
+          .item-isotope {
+            padding: 15px 0px;
+            float: none;
+          }
+        }
+      }
+      .os-make-isotope-grid(@wsmt_columns_992_1300, 992px, 1299px);
+      .os-make-isotope-grid(@wsmt_columns_1300_1600, 1300px, 1599px);
+      .os-make-isotope-grid(@wsmt_columns_1600_1880, 1600px, 1879px);
+      .os-make-isotope-grid(@wsmt_columns_1880_5000, 1880px, 5000px);
+    }
+  }
+}
+

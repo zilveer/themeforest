@@ -1,0 +1,84 @@
+.linkarea-gen(@bgcolor:#DDD) when (iscolor(@bgcolor)) {
+	&.background-transparent {
+		background-color: transparent;
+		background-color: fade(@bgcolor, 0%);
+		border-radius: 4px;
+	}
+
+	&:hover,
+	&:focus {
+		background-color: @bgcolor;
+		border-radius: 4px;
+
+		a {
+			text-decoration: none;
+		}
+	}
+
+	&:active {
+		background-color: darken(@bgcolor, 5%);
+	}
+
+	&:focus {
+		border : 1px solid darken(@bgcolor, 15%);
+		outline: none;
+	}
+}
+
+.linkarea-gen(@bgcolor: #ddd) when not (iscolor(@bgcolor)) {
+	.linkarea-gen(transparent);
+}
+
+.linkarea {
+	padding: 20px;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	min-height: 50px;
+	.border-box();
+	-webkit-background-clip: border-box;
+	-moz-background-clip: border;
+	background-clip: border-box;
+	.transition(all .5s);
+
+	&.background-accent1 { background-color: @accent-color-1; }
+	&.background-accent2 { background-color: @accent-color-2; }
+	&.background-accent3 { background-color: @accent-color-3; }
+	&.background-accent4 { background-color: @accent-color-4; }
+	&.background-accent5 { background-color: @accent-color-5; }
+	&.background-accent6 { background-color: @accent-color-6; }
+	&.background-accent7 { background-color: @accent-color-7; }
+	&.background-accent8 { background-color: @accent-color-8; }
+
+	&.accent1 { .linkarea-gen(@accent-color-1); }
+	&.accent2 { .linkarea-gen(@accent-color-2); }
+	&.accent3 { .linkarea-gen(@accent-color-3); }
+	&.accent4 { .linkarea-gen(@accent-color-4); }
+	&.accent5 { .linkarea-gen(@accent-color-5); }
+	&.accent6 { .linkarea-gen(@accent-color-6); }
+	&.accent7 { .linkarea-gen(@accent-color-7); }
+	&.accent8 { .linkarea-gen(@accent-color-8); }
+
+	.first {
+		text-align: center;
+		padding-bottom: 10px;
+
+		img {
+			display: inline-block;
+			vertical-align: bottom;
+		}
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+
+	h3 {
+	}
+
+	&:hover h3 {
+		text-decoration: none;
+		color      : @css_link_color;
+		transition: color 0.4s;
+	}
+}

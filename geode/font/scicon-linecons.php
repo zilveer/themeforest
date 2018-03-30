@@ -1,0 +1,52 @@
+        <div class="the-icons span3" data-search="music"><i class="scicon-linecons-music"></i><span class="i-name">.scicon-linecons-music</span></div>
+        <div class="the-icons span3" data-search="wallet"><i class="scicon-linecons-wallet"></i><span class="i-name">.scicon-linecons-wallet</span></div>
+        <div class="the-icons span3" data-search="mail"><i class="scicon-linecons-mail"></i><span class="i-name">.scicon-linecons-mail</span></div>
+        <div class="the-icons span3" data-search="heart"><i class="scicon-linecons-heart"></i><span class="i-name">.scicon-linecons-heart</span></div>
+        <div class="the-icons span3" data-search="star"><i class="scicon-linecons-star"></i><span class="i-name">.scicon-linecons-star</span></div>
+        <div class="the-icons span3" data-search="user"><i class="scicon-linecons-user"></i><span class="i-name">.scicon-linecons-user</span></div>
+        <div class="the-icons span3" data-search="videocam"><i class="scicon-linecons-videocam"></i><span class="i-name">.scicon-linecons-videocam</span></div>
+        <div class="the-icons span3" data-search="camera"><i class="scicon-linecons-camera"></i><span class="i-name">.scicon-linecons-camera</span></div>
+        <div class="the-icons span3" data-search="photo"><i class="scicon-linecons-photo"></i><span class="i-name">.scicon-linecons-photo</span></div>
+        <div class="the-icons span3" data-search="attach"><i class="scicon-linecons-attach"></i><span class="i-name">.scicon-linecons-attach</span></div>
+        <div class="the-icons span3" data-search="lock"><i class="scicon-linecons-lock"></i><span class="i-name">.scicon-linecons-lock</span></div>
+        <div class="the-icons span3" data-search="eye"><i class="scicon-linecons-eye"></i><span class="i-name">.scicon-linecons-eye</span></div>
+        <div class="the-icons span3" data-search="tag"><i class="scicon-linecons-tag"></i><span class="i-name">.scicon-linecons-tag</span></div>
+        <div class="the-icons span3" data-search="thumbs-up"><i class="scicon-linecons-thumbs-up"></i><span class="i-name">.scicon-linecons-thumbs-up</span></div>
+        <div class="the-icons span3" data-search="pencil"><i class="scicon-linecons-pencil"></i><span class="i-name">.scicon-linecons-pencil</span></div>
+        <div class="the-icons span3" data-search="comment"><i class="scicon-linecons-comment"></i><span class="i-name">.scicon-linecons-comment</span></div>
+        <div class="the-icons span3" data-search="location"><i class="scicon-linecons-location"></i><span class="i-name">.scicon-linecons-location</span></div>
+        <div class="the-icons span3" data-search="cup"><i class="scicon-linecons-cup"></i><span class="i-name">.scicon-linecons-cup</span></div>
+        <div class="the-icons span3" data-search="trash"><i class="scicon-linecons-trash"></i><span class="i-name">.scicon-linecons-trash</span></div>
+        <div class="the-icons span3" data-search="doc"><i class="scicon-linecons-doc"></i><span class="i-name">.scicon-linecons-doc</span></div>
+        <div class="the-icons span3" data-search="note"><i class="scicon-linecons-note"></i><span class="i-name">.scicon-linecons-note</span></div>
+        <div class="the-icons span3" data-search="cog"><i class="scicon-linecons-cog"></i><span class="i-name">.scicon-linecons-cog</span></div>
+        <div class="the-icons span3" data-search="params"><i class="scicon-linecons-params"></i><span class="i-name">.scicon-linecons-params</span></div>
+        <div class="the-icons span3" data-search="calendar"><i class="scicon-linecons-calendar"></i><span class="i-name">.scicon-linecons-calendar</span></div>
+        <div class="the-icons span3" data-search="search"><i class="scicon-linecons-search"></i><span class="i-name">.scicon-linecons-search</span></div>
+        <div class="the-icons span3" data-search="clock"><i class="scicon-linecons-clock"></i><span class="i-name">.scicon-linecons-clock</span></div>
+        <div class="the-icons span3" data-search="lightbulb"><i class="scicon-linecons-lightbulb"></i><span class="i-name">.scicon-linecons-lightbulb</span></div>
+        <div class="the-icons span3" data-search="tv"><i class="scicon-linecons-tv"></i><span class="i-name">.scicon-linecons-tv</span></div>
+        <div class="the-icons span3" data-search="desktop"><i class="scicon-linecons-desktop"></i><span class="i-name">.scicon-linecons-desktop</span></div>
+        <div class="the-icons span3" data-search="mobile"><i class="scicon-linecons-mobile"></i><span class="i-name">.scicon-linecons-mobile</span></div>
+        <div class="the-icons span3" data-search="cd"><i class="scicon-linecons-cd"></i><span class="i-name">.scicon-linecons-cd</span></div>
+        <div class="the-icons span3" data-search="inbox"><i class="scicon-linecons-inbox"></i><span class="i-name">.scicon-linecons-inbox</span></div>
+        <div class="the-icons span3" data-search="globe"><i class="scicon-linecons-globe"></i><span class="i-name">.scicon-linecons-globe</span></div>
+        <div class="the-icons span3" data-search="cloud"><i class="scicon-linecons-cloud"></i><span class="i-name">.scicon-linecons-cloud</span></div>
+        <div class="the-icons span3" data-search="paper-plane"><i class="scicon-linecons-paper-plane"></i><span class="i-name">.scicon-linecons-paper-plane</span></div>
+        <div class="the-icons span3" data-search="fire"><i class="scicon-linecons-fire"></i><span class="i-name">.scicon-linecons-fire</span></div>
+        <div class="the-icons span3" data-search="graduation-cap"><i class="scicon-linecons-graduation-cap"></i><span class="i-name">.scicon-linecons-graduation-cap</span></div>
+        <div class="the-icons span3" data-search="megaphone"><i class="scicon-linecons-megaphone"></i><span class="i-name">.scicon-linecons-megaphone</span></div>
+        <div class="the-icons span3" data-search="database"><i class="scicon-linecons-database"></i><span class="i-name">.scicon-linecons-database</span></div>
+        <div class="the-icons span3" data-search="key"><i class="scicon-linecons-key"></i><span class="i-name">.scicon-linecons-key</span></div>
+        <div class="the-icons span3" data-search="beaker"><i class="scicon-linecons-beaker"></i><span class="i-name">.scicon-linecons-beaker</span></div>
+        <div class="the-icons span3" data-search="truck"><i class="scicon-linecons-truck"></i><span class="i-name">.scicon-linecons-truck</span></div>
+        <div class="the-icons span3" data-search="money"><i class="scicon-linecons-money"></i><span class="i-name">.scicon-linecons-money</span></div>
+        <div class="the-icons span3" data-search="food"><i class="scicon-linecons-food"></i><span class="i-name">.scicon-linecons-food</span></div>
+        <div class="the-icons span3" data-search="shop"><i class="scicon-linecons-shop"></i><span class="i-name">.scicon-linecons-shop</span></div>
+        <div class="the-icons span3" data-search="diamond"><i class="scicon-linecons-diamond"></i><span class="i-name">.scicon-linecons-diamond</span></div>
+        <div class="the-icons span3" data-search="t-shirt"><i class="scicon-linecons-t-shirt"></i><span class="i-name">.scicon-linecons-t-shirt</span></div>
+        <div class="the-icons span3" data-search="sound"><i class="scicon-linecons-sound"></i><span class="i-name">.scicon-linecons-sound</span></div>
+
+<div class="clear"></div><hr>
+<a href="http://designmodo.com/linecons-free/" target="_blank">http://designmodo.com/linecons-free/</a>
+<div class="clear"></div><hr><br>

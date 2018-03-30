@@ -1,0 +1,89 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Carousel / .owl-carousel
+	1.1. Item / .owl-item
+		1.1.1. Video item / .item-video
+			1.1.1.1. 16-by-9 video item / &.item-video-16by9
+			1.1.1.2. 4-by-3 video item / &.item-video-4by3
+			1.1.1.3. Video wrapper / .owl-video-wrapper
+	1.2. Vertical carousel / &.owl-custom-vertical
+	1.3. Video poster container / .owl-video-tn
+2. Carousel controls inside carousel / .owl-carousel:not(.carousel-controls-outside) .owl-controls
+3. Carousel dots / .owl-theme .owl-dots .owl-dot span
+4. Carousel dots (active & hover states) / .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span
+5. Carousels for multiple items and related items / .carousel-multiple-items, .carousel-related-items
+	5.1. Stage / .owl-stage
+	5.2. Item / .owl-item
+		5.2.1. First item / &:first-child
+
+-------------------------------------------------------------------*/
+
+.owl-carousel{
+	.margin-v-1x;
+
+	.owl-item{
+		-webkit-backface-visibility: visible !important;
+
+		.item-video{
+			&.item-video-16by9{
+				padding-bottom: 56.25%;
+				height: 0;
+			}
+
+			&.item-video-4by3{
+				padding-bottom: 75%;
+				height: 0;
+			}
+
+			.owl-video-wrapper{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
+	&.owl-custom-vertical{
+		position: relative;
+		margin: 0 -15px;
+		width: auto;
+	}
+
+	.owl-video-tn{
+		background-size: @portfolioVideoPostersAlwaysCover;
+	}
+}
+
+.owl-carousel:not(.carousel-controls-outside) .owl-controls{
+	.transform(~'translateY(-100%) translateY(-20px)');
+    position: relative;
+    z-index: 1;
+}
+
+.owl-theme .owl-dots .owl-dot span{
+	box-shadow: inset 0 0 0 2px fadeout(@bgColor, 20%), 0 0 5px #000, inset 0 0 3px 2px #000;
+	background-color: transparent;
+}
+
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span{
+	box-shadow: inset 0 0 0 2px fadeout(@bgColor, 20%), 0 0 5px #000;
+	background: fadeout(@bgColor, 20%);
+}
+
+.carousel-multiple-items, .carousel-related-items{
+	.owl-stage{
+		background-color: @titleTextColor;
+	}
+
+	.owl-item{
+		background-color: @titleTextColor;
+		box-shadow: 2px 0 0 @titleTextColor;
+
+		&:first-child{
+			box-shadow: -2px 0 0 @titleTextColor;
+		}
+	}
+}

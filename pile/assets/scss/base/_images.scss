@@ -1,0 +1,196 @@
+/*-----------------------------------------
+Images and image components
+
+
+[Table of contents]
+
+1. $Images
+2. $Figures and captions
+3. $Galleries
+------------------------------------------*/
+
+
+
+
+
+
+
+/*------------------------------------*\
+	1. $Images
+\*------------------------------------*/
+
+/**
+ * 1. Fluid images for responsive purposes.
+ * 2. Offset `alt` text from surrounding copy.
+ */
+img{
+    max-width: 100%; /* [1] */
+    height: auto;
+    font-style: italic; /* [2] */
+}
+
+.alignleft, .alignright {
+	p + & {
+		@include query-above($lap) {
+			margin-top: 0.5em;
+		}
+	}
+}
+
+.entry--single {
+	figure.alignleft { @extend .pull-left; }
+	figure.alignright { @extend .pull-right; }
+}
+
+@if $editor-style {
+	.post-type-post {
+		.alignleft {
+			@extend .pull-left;
+			margin-right: 0;
+		}
+		.alignright {
+			@extend .pull-right;
+			margin-left: 0;
+		}
+	}
+}
+
+.entry--page {
+	.alignleft {
+		float: left;
+		margin-right: 25px;
+
+		@include query-above($large) {
+			margin-right: 50px;
+		}
+	}
+
+	.alignright {
+		float: right;
+		margin-left: 25px;
+
+		@include query-above($large) {
+			margin-left: 50px;
+		}
+	}
+}
+
+.alignleft, .alignright, .aligncenter, .alignnone {
+    display: block;
+}
+
+figure.alignleft, figure.alignright {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+figure.aligncenter, figure.alignnone {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.aligncenter {
+	text-align: center;
+	margin: 0 auto;
+
+	img {
+		margin: 0 auto;
+	}
+}
+
+@include query-above($large) {
+    .entry--single {
+	    figure.alignnone,
+	    figure.aligncenter {
+		    // fallback
+		    margin-left: 0;
+		    margin-right: 0;
+		    max-width: 100%;
+
+		    // magic
+		    margin-left: calc(#{-$pull-offset});
+		    margin-right: calc(#{-$pull-offset});
+		    max-width: calc(100% + #{$pull-offset * 2});
+
+		    //width: calc(100% + #{$pull-offset * 2}) !important;
+
+		    img {
+			    margin: 0 auto;
+			    width: auto;
+		    }
+	    }
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+	2. $Figures and captions
+\*------------------------------------*/
+// @todo figure and figcaption
+.wp-caption {
+	width: auto !important;
+
+	img {
+		display: block;
+	}
+}
+
+.wp-caption-text, .gallery-caption {
+	font-size: 13px;
+	margin-top: $u/4;
+	color: $light;
+}
+
+
+
+
+
+/*------------------------------------*\
+	3. $Galleries
+\*------------------------------------*/
+.gallery.gallery {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+
+	& > * { min-width: 0; }  //Firefox Bug?!
+}
+
+.gallery-item.gallery-item {
+	margin-bottom: 5px;
+	text-align: center;
+
+	@include query-above($lap) {
+		margin-bottom: 10px;
+	}
+
+	a {
+		display: block;
+		border: 0;
+	}
+
+	.widget-area & {
+		margin-bottom: 5px;
+	}
+}
+
+.gallery-icon img {
+	margin: 0 auto;
+	display: block;
+}
+
+.gallery-caption {
+	margin-left: 0 !important;
+}
+
+
+@for $i from 1 through 9 {
+	.gallery-columns-#{$i} {
+		.gallery-item {
+			flex-basis: calc(#{percentage(1/$i)} - 5px);
+		}
+	}
+}

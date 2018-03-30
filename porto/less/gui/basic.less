@@ -1,0 +1,159 @@
+
+// mixins
+.opacity (@opacity) {
+    opacity: 		@opacity;
+    @opacity_ie: (@opacity * 100);
+    filter: alpha(opacity=@opacity-ie);
+}
+
+.boxShadowByOpacity(@b) when not (@b = alpha(transparent)) {
+
+}
+.boxShadowByOpacity(@b) when (@b = alpha(transparent)) {
+    box-shadow: none;
+}
+
+.backgroundOpacity(@c, @o) when not (@c = transparent) {
+    background-color: fade(@c, @o);
+    .boxShadowByOpacity(alpha(fade(@c, @o)));
+}
+.backgroundOpacity(@c, @o) when (@c = transparent) {
+    box-shadow: none;
+}
+
+.borderOpacity(@c, @o) when not (@c = transparent) {
+    border-color: fade(@c, @o);
+}
+.borderOpacity(@c, @o) when (@c = transparent) {
+
+}
+
+.containerBoxedWidth() {
+    @media (min-width: 768px) {
+        max-width: 720px + @grid_gutter_width;
+    }
+    @media (min-width: 992px) {
+        max-width: 960px + @grid_gutter_width;
+    }
+    @media (min-width: (@container_width + @grid_gutter_width)) {
+        max-width: @container_width + @grid_gutter_width;
+    }
+}
+
+.calcContainerWidth(@c) when not (@c = 1) {
+    @media (min-width: 768px) {
+        max-width: 720px + @grid_gutter_width;
+    }
+    @media (min-width: 992px) {
+        max-width: 960px + @grid_gutter_width;
+    }
+    @media (min-width: (@container_width + @grid_gutter_width)) {
+        max-width: @container_width + @grid_gutter_width;
+    }
+}
+.calcContainerWidth(@c) when (@c = 1) {
+    @media (min-width: 768px) {
+        max-width: 720px - @grid_gutter_width;
+
+        .container {
+            width: 720px - @grid_gutter_width * 2;
+        }
+    }
+    @media (min-width: 992px) {
+        max-width: 960px - @grid_gutter_width;
+
+        .container {
+            width: 960px - @grid_gutter_width * 2;
+        }
+    }
+    @media (min-width: (@container_width + @grid_gutter_width)) {
+        max-width: @container_width - @grid_gutter_width;
+
+        .container {
+            width: @container_width - @grid_gutter_width * 2;
+        }
+    }
+}
+
+.mainMenuWrapLevelPaddingBottom(@c) when not (@c = transparent) {
+    padding-bottom: (@main_menu_level1_padding1_bottom + 3px);
+
+    @media (max-width: @screen_large) {
+        padding-bottom: (@main_menu_level1_padding2_bottom + 3px);
+    }
+}
+.mainMenuWrapLevelPaddingBottom(@c) when (@c = transparent) {
+
+}
+
+.mainMenuWrapLevelMarginBottom(@c) when not (@c = transparent) {
+
+}
+.mainMenuWrapLevelMarginBottom(@c) when (@c = transparent) {
+    margin-bottom: 0;
+}
+
+.mainMenuWrapPopupMarginTop(@c) when not (@c = transparent) {
+
+}
+.mainMenuWrapPopupMarginTop(@c) when (@c = transparent) {
+    margin-top: 0;
+}
+
+.menuPopupMargin(@c) when not (@c = 1) {
+    margin-top: 0;
+}
+.menuPopupMargin(@c) when (@c = 1) {
+
+}
+
+.wideMenuPopup(@c) when not (@c = 1) {
+    .popup {
+        border-width: 0;
+        > .inner {
+            border-radius: @border_base;
+        }
+    }
+
+    &.pos-left {
+        .popup {
+            > .inner {
+                border-radius: 0 @border_base @border_base @border_base;
+            }
+        }
+    }
+
+    &.pos-right {
+        .popup {
+            > .inner {
+                border-radius: @border_base 0 @border_base @border_base;
+            }
+        }
+    }
+}
+.wideMenuPopup(@c) when (@c = 1) {
+
+}
+
+.narrowMenuPopup(@c) when not (@c = 1) {
+    border-width: 0;
+}
+.narrowMenuPopup(@c) when (@c = 1) {
+
+}
+
+// Basic
+.alternative-font {
+    color: @skinColor;
+}
+
+a {
+    color: @skinColor;
+    &:hover {
+        color: lighten(@skinColor, 5%);
+    }
+    &:active {
+        color: darken(@skinColor, 5%);
+    }
+}
+

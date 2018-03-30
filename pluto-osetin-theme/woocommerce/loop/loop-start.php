@@ -1,0 +1,1 @@
+<div class="woo-products index-isotope v1" data-layout-mode="fitRows">

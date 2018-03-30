@@ -1,0 +1,84 @@
+.site-header {
+	width: 100%;
+	height: 200px;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	// above next/prev
+	// project buttons
+	z-index: 110;
+
+	background: white;
+
+	// &.js-transparent-header {
+	transition: all .2s ease-out;
+	transition-property: color, background-color;
+
+	@include query-above($lap) {
+		transform: translateZ(0);
+	}
+	// }
+
+	@include query-below($lap) {
+		z-index: 1000;
+
+		&.site-header {
+			background: none;
+		}
+	}
+
+	a { transition: color .2s ease-out; }
+
+	// make all descendants (especially links) inherit color
+	// in order to easily customize it
+	a, .navigation-toggle:hover { color: inherit }
+
+
+	@include wp-offset();
+}
+
+.site-header--static {
+	position: absolute;
+}
+
+.site-header {
+	.logo__img--light { opacity: 0 }
+}
+
+.site-header--transparent {
+	background: transparent !important;
+
+	.navigation-toggle, .navigation-toggle:hover { color: white }
+
+	@include query-above($lap) {
+		.nav--main > li > a,
+		& {
+			color: white;
+		}
+	}
+
+	.logo__img--dark { opacity: 0 }
+	.logo__img--light { opacity: 1 }
+}
+
+.site-header--trigger {
+	@include query-above($lap) {
+		.site-navigation,
+		.navigation-toggle {
+			transition: opacity .2s ease-out;
+		}
+
+		.site-navigation,
+		.nav--is-visible & .navigation-toggle {
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.navigation-toggle,
+		.nav--is-visible & .site-navigation {
+			opacity: 1;
+			pointer-events: auto;
+		}
+	}
+}

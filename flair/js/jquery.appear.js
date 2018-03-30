@@ -1,0 +1,8 @@
+/*
+ * jQuery.appear
+ * http://code.google.com/p/jquery-appear/
+ *
+ * Copyright (c) 2009 Michael Hixson
+ * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
+*/
+(function($){jQuery.fn.appear=function(f,o){var s=jQuery.extend({one:true},o);return this.each(function(){var t=jQuery(this);t.appeared=false;if(!f){t.trigger('appear',s.data);return;}var w=jQuery(window);var c=function(){if(!t.is(':visible')){t.appeared=false;return;}var a=w.scrollLeft();var b=w.scrollTop();var o=t.offset();var x=o.left;var y=o.top;if(y+t.height()>=b&&y<=b+w.height()&&x+t.width()>=a&&x<=a+w.width()){if(!t.appeared)t.trigger('appear',s.data);}else{t.appeared=false;}};var m=function(){t.appeared=true;if(s.one){w.unbind('scroll',c);var i=jQuery.inArray(c,jQuery.fn.appear.checks);if(i>=0)jQuery.fn.appear.checks.splice(i,1);}f.apply(this,arguments);};if(s.one)t.one('appear',s.data,m);else t.bind('appear',s.data,m);w.scroll(c);jQuery.fn.appear.checks.push(c);(c)();});};jQuery.extend(jQuery.fn.appear,{checks:[],timeout:null,checkAll:function(){var l=jQuery.fn.appear.checks.length;if(l>0)while(l--)(jQuery.fn.appear.checks[l])();},run:function(){if(jQuery.fn.appear.timeout)clearTimeout(jQuery.fn.appear.timeout);jQuery.fn.appear.timeout=setTimeout(jQuery.fn.appear.checkAll,20);}});jQuery.each(['append','prepend','after','before','attr','removeAttr','addClass','removeClass','toggleClass','remove','css','show','hide'],function(i,n){var u=jQuery.fn[n];if(u){jQuery.fn[n]=function(){var r=u.apply(this,arguments);jQuery.fn.appear.run();return r;}}});})(jQuery);

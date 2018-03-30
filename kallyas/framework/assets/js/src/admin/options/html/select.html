@@ -1,0 +1,21 @@
+<% if( name.length > 0 ) { %>
+	<h4 class="znhg-option-title">
+		<%= name %>
+	</h4>
+<% } %>
+<% if( description.length > 0 ) { %>
+	<div class="znhg-option-description">
+		<%= description %>
+	</div>
+<% } %>
+<div class="znhg-option-content">
+	<select name="<%= id %>" id="znhg-control-id-<%= id %>" <% if( multiple ) { %> multiple <% } %>>
+		<!-- <option value="volvo">Volvo</option> -->
+		<% _.each(options, function(name, id) {
+			var selected = _.isArray(value) ? _.indexOf( value, id ) : value == id,
+				selectedString = selected ? 'selected' : '';
+		%>
+			<option value="<%= id %>" <%= selectedString %>><%= name %></option>
+		<% }); %>
+	</select>
+</div>

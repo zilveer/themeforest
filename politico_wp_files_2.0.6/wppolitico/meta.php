@@ -1,0 +1,1 @@
+<small class="metaStuff"><i class="fa fa-clock-o"></i><?php the_time('M j, Y') ?> <i class="fa fa-comment"></i><?php comments_popup_link(__('No Comments &rsaquo;&rsaquo;','themolitor'), __('1 Comment &rsaquo;&rsaquo;','themolitor'), __('% Comments &rsaquo;&rsaquo;','themolitor')); ?> <i class="fa fa-user"></i><?php the_author(); ?></small>

@@ -1,0 +1,1 @@
+<a class="mk-readmore" href="<?php echo esc_url( get_permalink() ); ?>"><?php Mk_SVG_Icons::get_svg_icon_by_class_name(true, 'mk-moon-arrow-right-2', 8); ?><?php _e('Read More', 'mk_framework'); ?></a>

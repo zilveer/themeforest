@@ -1,0 +1,219 @@
+
+#nav-panel {
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    top: 0;
+    botom: 0;
+    font-size: .9em;
+    #{$left}: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 9001;
+    @include transform(translate(if-ltr(-260px, 260px)));
+    @include transition(transform .2s ease-in-out 0s);
+
+    &.panel-left  {
+        left: 0;
+        right: auto;
+        @include transform(translate(-260px));
+    }
+
+    &.panel-right  {
+        right: 0;
+        left: auto;
+        @include transform(translate(260px));
+    }
+}
+
+#nav-panel-close {
+    border-radius: corner-values(0 $border-medium $border-medium 0);
+    display: block;
+    font-size: 17px;
+    height: 40px;
+    line-height: 38px;
+    position: fixed;
+    #{$left}: 260px;
+    margin-#{$left}: -40px;
+    text-align: center;
+    text-decoration: none;
+    top: 85px;
+    width: 40px;
+    z-index: 9000;
+    @include transform(translate(if-ltr(-260px, 260px)));
+
+    &.panel-left {
+        left: 260px;
+        right: auto;
+        margin-left: -40px;
+        margin-right: auto;
+        @include transform(translate(-260px));
+        border-radius: 0 $border-medium $border-medium 0;
+    }
+
+    &.panel-right {
+        right: 260px;
+        left: auto;
+        margin-right: -40px;
+        margin-left: auto;
+        @include transform(translate(260px));
+        border-radius: $border-medium 0 0 $border-medium;
+    }
+}
+
+.panel-overlay {
+    opacity: 0;
+
+    &.active {
+        background: #000;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 8999;
+        min-height: 100vh;
+        opacity: .35;
+        @include transition(opacity .2s ease-in-out 0s);
+    }
+}
+
+html.panel-opened {
+    body {
+        > * {
+            z-index: 0;
+        }
+
+        #nav-panel {
+            @include transition(transform .3s ease-in-out 0s);
+            z-index: 9001;
+            @include transform(translate(0px));
+        }
+
+        #nav-panel-close {
+            margin-#{$left}: 0;
+            @include transition(transform .3s ease-in-out 0s, margin ease-in-out 0s);
+            z-index: 9000;
+            @include transform(translate(0px));
+
+            &.panel-left {
+                margin-left: 0;
+                margin-right: auto;
+            }
+
+            &.panel-right {
+                margin-right: 0;
+                margin-left: auto;
+            }
+        }
+    }
+
+    #wpadminbar {
+        z-index: 8000;
+    }
+}
+
+#nav-panel {
+    .welcome-msg {
+        text-align: center;
+        display: block;
+        margin: 15px 0;
+        padding: 0 10px;
+
+        p {
+            margin: 5px 0;
+        }
+
+        .pull-left,
+        .pull-right {
+            float: none !important;
+        }
+    }
+
+    .accordion-menu {
+        font-size: .8571em;
+        .arrow {
+            #{$right}: 5px;
+        }
+    }
+
+    .mobile-menu {
+        font-size: 1em;
+    }
+
+    .switcher-wrap {
+        margin: 15px 0;
+        padding: 0 10px;
+    }
+
+    .woocs-switcher {
+        li,
+        li > h5 {
+            cursor: pointer !important;
+        }
+    }
+
+    .menu-wrap {
+        margin: 15px 0;
+        padding: 0 10px;
+    }
+
+    .menu-custom-block {
+        margin: 15px 0;
+        padding: 0 10px;
+
+        a,
+        span {
+            display: block;
+        }
+
+        a {
+            padding: 5px 6px;
+            text-decoration: none;
+        }
+
+        .tip {
+            color: #fff;
+            display: inline-block;
+            font-size: 9px;
+            font-style: normal;
+            border-radius: $border-small;
+            line-height: 1;
+            padding: 2px;
+            position: relative;
+            margin-#{$left}: 10px;
+            vertical-align: middle;
+
+            &.hot {
+                background-color: #eb2771;
+
+                .tip-arrow:before {
+                    color: #eb2771;
+                }
+            }
+
+            .tip-arrow:before {
+                display: inline-block;
+                font-family: "Elusive-Icons";
+                font-size: 5px;
+                font-style: normal;
+                position: absolute;
+                width: 4px;
+                height: 6px;
+                margin: auto;
+                content: if-ltr($el-var-caret-left, $el-var-caret-right);
+                #{$left}: -4px;
+                text-align: $right;
+                top: 0;
+                bottom: 0;
+            }
+        }
+    }
+
+    .share-links {
+        font-size: 1em;
+        margin: 15px 0;
+        padding: 0 5px;
+        text-align: center;
+    }
+}

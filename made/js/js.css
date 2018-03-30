@@ -1,0 +1,329 @@
+.mosaic-block{float:left;position:relative;overflow:hidden;width:220px;height:150px;background:#FFF url(../images/progress.gif) no-repeat center 20px;}
+.mosaic-backdrop{display:none;position:absolute;bottom:-45px;height:100px;background:#FFF;}
+.mosaic-overlay{display:none;z-index:5;position:absolute;width:100%;height:100%;background:#FFF;}
+.circle .mosaic-overlay{background:url(../img/hover-magnify.png) no-repeat center center;opacity:0;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";filter:alpha(opacity=00);display:none;}
+.fade .mosaic-overlay{opacity:0;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";filter:alpha(opacity=00);background:url(../img/bg-black.png);}
+.bar .mosaic-overlay{bottom:-100px;height:100px;background:url(../img/bg-black.png);}
+.bar2 .mosaic-overlay{bottom:-50px;height:100px;opacity:0.8;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter:alpha(opacity=80);}
+.bar2 .mosaic-overlay:hover{opacity:1;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";filter:alpha(opacity=100);}
+.bar3 .mosaic-overlay{top:-100px;height:100px;background:url(../img/bg-black.png);}
+.tweet,
+.query{}
+.tweet .loading{padding:10px 15px;margin:0px;}
+.tweet_list{list-style:none;margin:0;padding:0;overflow-y:hidden;}
+.tweet_list .awesome,
+.tweet_list .epic{text-transform:uppercase;}
+.tweet_list li{overflow-y:auto;overflow-x:hidden;padding:0.5em;list-style-type:none;}
+.tweet_list li a{}
+.tweet_list .tweet_even{}
+.tweet_list .tweet_avatar{padding-right:15px;float:left;}
+.tweet_list .tweet_avatar img{vertical-align:middle;}
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute;top:0;left:0;z-index:9999;overflow:hidden;}
+#cboxOverlay{position:fixed;width:100%;height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto;}
+#cboxLoadedContent iframe{display:block;width:100%;height:100%;border:0;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute;top:0;left:0;width:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+#cboxOverlay{background:#000;}
+#colorbox{}
+#cboxContent{margin-top:20px;}
+#cboxLoadedContent{background:#000;padding:5px;}
+#cboxTitle{position:absolute;top:-20px;left:0;color:#ccc;}
+#cboxCurrent{position:absolute;top:-20px;right:0px;color:#ccc;}
+#cboxSlideshow{position:absolute;top:-20px;right:90px;color:#fff;}
+#cboxPrevious{position:absolute;top:50%;left:5px;margin-top:-32px;background:url(images/controls.png) top left no-repeat;width:28px;height:65px;text-indent:-9999px;}
+#cboxPrevious.hover{background-position:bottom left;}
+#cboxNext{position:absolute;top:50%;right:5px;margin-top:-32px;background:url(images/controls.png) top right no-repeat;width:28px;height:65px;text-indent:-9999px;}
+#cboxNext.hover{background-position:bottom right;}
+#cboxLoadingOverlay{background:#000;}
+#cboxLoadingGraphic{background:url(images/loading.gif) center center no-repeat;}
+#cboxClose{position:absolute;top:5px;right:5px;display:block;background:url(images/controls.png) top center no-repeat;width:38px;height:19px;text-indent:-9999px;}
+#cboxClose.hover{background-position:bottom center;}
+/*
+ * jQuery Nivo Slider v3.0.1
+ * http://nivo.dev7studios.com
+ *
+ * Copyright 2012, Dev7studios
+ * Free to use and abuse under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+ 
+/* The Nivo Slider styles */
+.nivoSlider {
+	position:relative;
+	width:100%;
+	height:auto;
+	/*overflow: hidden;*/
+}
+.nivoSlider img {
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:none;	
+}
+.nivo-main-image {
+	display: block !important;
+	position: relative !important; 
+	width: 100% !important;
+}
+
+/* If an image is wrapped in a link */
+.nivoSlider a.nivo-imageLink {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	border:0;
+	padding:0;
+	margin:0;
+	z-index:6;
+	display:none;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	background:white;
+}
+/* The slices and boxes in the Slider */
+.nivo-slice {
+	display:block;
+	position:absolute;
+	z-index:5;
+	height:100%;
+	top:0;
+}
+.nivo-box {
+	display:block;
+	position:absolute;
+	z-index:5;
+	overflow:hidden;
+}
+.nivo-box img { display:block; }
+
+/* Caption styles */
+.nivo-caption {
+	position:absolute;
+	left:0px;
+	bottom:0px;
+	background:#000;
+	color:#fff;
+	width:100%;
+	z-index:8;
+	padding: 5px 10px;
+	opacity: 0.95;
+	display: none;
+	-moz-opacity: 0.95;
+	filter:alpha(opacity=95);
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.nivo-caption p {
+	padding:5px;
+	margin:0;
+}
+.nivo-caption a {
+	display:inline !important;
+}
+.nivo-html-caption {
+    display:none;
+}
+/* Direction nav styles (e.g. Next & Prev) */
+.nivo-directionNav a {
+	position:absolute;
+	top:45%;
+	z-index:9;
+	cursor:pointer;
+}
+.nivo-prevNav {
+	left:0px;
+}
+.nivo-nextNav {
+	right:0px;
+}
+/* Control nav styles (e.g. 1,2,3...) */
+.nivo-controlNav {
+	text-align:center;
+	padding: 15px 0;
+}
+.nivo-controlNav a {
+	cursor:pointer;
+}
+.nivo-controlNav a.active {
+	font-weight:bold;
+}
+.ui-tabs-hide{display:none;}
+.colorpicker{width:356px;height:176px;overflow:hidden;position:absolute;z-index:1000;background:url(../images/colorpicker_background.png);font-family:Arial, Helvetica, sans-serif;display:none;}
+.colorpicker_color{width:150px;height:150px;left:14px;top:13px;position:absolute;background:#f00;overflow:hidden;cursor:crosshair;}
+.colorpicker_color div{position:absolute;top:0;left:0;width:150px;height:150px;background:url(../images/colorpicker_overlay.png);}
+.colorpicker_color div div{position:absolute;top:0;left:0;width:11px;height:11px;overflow:hidden;background:url(../images/colorpicker_select.gif);margin:-5px 0 0 -5px;}
+.colorpicker_hue{position:absolute;top:13px;left:171px;width:35px;height:150px;cursor:n-resize;}
+.colorpicker_hue div{position:absolute;width:35px;height:9px;overflow:hidden;background:url(../images/colorpicker_indic.gif) left top;margin:-4px 0 0 0;left:0px;}
+.colorpicker_new_color{position:absolute;width:60px;height:30px;left:213px;top:13px;background:#f00;}
+.colorpicker_current_color{position:absolute;width:60px;height:30px;left:283px;top:13px;background:#f00;}
+.colorpicker input{background-color:transparent;border:1px solid transparent;position:absolute;font-size:10px;font-family:Arial, Helvetica, sans-serif;color:#898989;top:4px;right:11px;text-align:right;margin:0;padding:0;height:11px;}
+.colorpicker_hex{position:absolute;width:72px;height:22px;background:url(../images/colorpicker_hex.png) top;left:212px;top:142px;}
+.colorpicker_hex input{right:6px;}
+.colorpicker_field{height:22px;width:62px;background-position:top;position:absolute;}
+.colorpicker_field span{position:absolute;width:12px;height:22px;overflow:hidden;top:0;right:0;cursor:n-resize;}
+.colorpicker_rgb_r{background-image:url(../images/colorpicker_rgb_r.png);top:52px;left:212px;}
+.colorpicker_rgb_g{background-image:url(../images/colorpicker_rgb_g.png);top:82px;left:212px;}
+.colorpicker_rgb_b{background-image:url(../images/colorpicker_rgb_b.png);top:112px;left:212px;}
+.colorpicker_hsb_h{background-image:url(../images/colorpicker_hsb_h.png);top:52px;left:282px;}
+.colorpicker_hsb_s{background-image:url(../images/colorpicker_hsb_s.png);top:82px;left:282px;}
+.colorpicker_hsb_b{background-image:url(../images/colorpicker_hsb_b.png);top:112px;left:282px;}
+.colorpicker_submit{position:absolute;width:22px;height:22px;background:url(../images/colorpicker_submit.png) top;left:322px;top:142px;overflow:hidden;}
+.colorpicker_focus{background-position:center;}
+.colorpicker_hex.colorpicker_focus{background-position:bottom;}
+.colorpicker_submit.colorpicker_focus{background-position:bottom;}
+.colorpicker_slider{background-position:bottom;}
+div.scrollWrapper {position: relative;overflow: hidden;width: 100%;height: 100%;}
+div.scrollableArea {position: relative;width: auto;height: 100%;}
+#toTop {display:none;text-decoration:none;position:fixed;bottom:10px;right:10px;overflow:hidden;width:51px;height:51px;border:none;text-indent:100%;background:url(images/ui.totop.png) no-repeat left top;}
+#toTopHover {background:url(images/ui.totop.png) no-repeat left -51px;width:51px;height:51px;display:block;overflow:hidden;float:left;opacity: 0;-moz-opacity: 0;filter:alpha(opacity=0);}
+#toTop:active, #toTop:focus {outline:none;}
+
+
+.selectBox-dropdown {width:165px;margin-top:2px;font-size:11px;min-width: 150px;position: relative;border: solid 1px #BBB;line-height: 1.5;text-decoration: none;text-align: left;color: #000;outline: none;vertical-align: middle;background: #F2F2F2;background: -moz-linear-gradient(top, #F8F8F8 1%, #E1E1E1 100%);background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #F8F8F8), color-stop(100%, #E1E1E1));filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F8F8F8', endColorstr='#E1E1E1', GradientType=0);-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .75);-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .75);box-shadow: 0 1px 0 rgba(255, 255, 255, .75);-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;display: inline-block;cursor: default;}
+.cat-menu .selectBox-dropdown {margin-top:9px;margin-left:10px;width:205px !important;}
+.selectBox-dropdown:focus, .selectBox-dropdown:focus .selectBox-arrow {border-color: #666;}
+.selectBox-dropdown.selectBox-menuShowing {-moz-border-radius-bottomleft: 0;-moz-border-radius-bottomright: 0;-webkit-border-bottom-left-radius: 0;-webkit-border-bottom-right-radius: 0;border-bottom-left-radius: 0;border-bottom-right-radius: 0;}
+.selectBox-dropdown .selectBox-label {padding: 2px 8px;display: inline-block;white-space: nowrap;overflow: hidden;}
+.selectBox-dropdown .selectBox-arrow {position: absolute;top: 0;right: 0;width: 23px;height: 100%;background: url(jquery.selectBox-arrow.gif) 50% center no-repeat;border-left: solid 1px #BBB;}
+.selectBox-dropdown-menu {position: absolute;z-index: 99999;max-height: 200px;min-height: 1em;border: solid 1px #BBB;
+	background: #FFF;-moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);-webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);box-shadow: 0 2px 6px rgba(0, 0, 0, .2);overflow: auto;}
+.selectBox-inline {min-width: 150px;outline: none;border: solid 1px #BBB;background: #FFF;display: inline-block;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;overflow: auto;}
+.selectBox-inline:focus {border-color: #666;}
+.selectBox-options, .selectBox-options LI, .selectBox-options LI A {list-style: none;display: block;cursor: default;padding: 0;margin: 0;}
+.selectBox-options LI A {line-height: 1.5;padding: 0 .5em;white-space: nowrap;overflow: hidden;background: 6px center no-repeat;font-size:11px;}
+.selectBox-options LI.selectBox-hover A {background-color: #EEE;color:#000;}
+.selectBox-options LI.selectBox-disabled A {color: #888;background-color: transparent;}
+.selectBox-options LI.selectBox-selected A {background-color: #C8DEF4;}
+.selectBox-options .selectBox-optgroup {color: #666;background: #EEE;font-weight: bold;line-height: 1.5;padding: 0 .3em;white-space: nowrap;}
+.selectBox.selectBox-disabled {color: #888 !important;}
+.selectBox-dropdown.selectBox-disabled .selectBox-arrow {opacity: .5;filter: alpha(opacity=50);border-color: #666;}
+.selectBox-inline.selectBox-disabled {color: #888 !important;}
+.selectBox-inline.selectBox-disabled .selectBox-options A {background-color: transparent !important;}
+.selectBox-options li.selected a {color:#09F;}
+/*jquery rateit*/
+div.rateit
+{
+    display: -moz-inline-box;
+    display: inline-block;
+    position: relative;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+div.rateit div.rateit-range
+{
+    position: relative;
+    display: -moz-inline-box;
+    display: inline-block;
+    background: url(images/star.gif);
+    height: 16px;
+}
+
+/* for IE 6 */
+* html div.rateit, * html div.rateit div.rateit-range
+{
+    display: inline;
+}
+
+/* for IE 7 */
+* + html div.rateit, * + html div.rateit div.rateit-range
+{
+    display: inline;
+}
+
+div.rateit div.rateit-hover, div.rateit div.rateit-selected
+{
+    position: absolute;
+    left: 0px;
+}
+
+div.rateit div.rateit-hover-rtl, div.rateit div.rateit-selected-rtl
+{
+    left: auto;
+    right: 0px;
+}
+
+div.rateit div.rateit-hover
+{
+    background: url(images/star.gif) left -32px;
+}
+
+div.rateit div.rateit-hover-rtl
+{
+    background-position: right -32px;
+}
+
+div.rateit div.rateit-selected
+{
+    background: url(images/star.gif) left -16px;
+}
+
+div.rateit div.rateit-selected-rtl
+{
+    background-position: right -16px;
+}
+
+div.rateit div.rateit-preset
+{
+    background: url(images/star.gif) left -48px;
+}
+
+div.rateit div.rateit-preset-rtl
+{
+    background: url(images/star.gif) left -48px;
+}
+
+div.rateit div.rateit-reset
+{
+    background: url(images/delete.gif) 0 0;
+    width: 16px;
+    height: 16px;
+    display: -moz-inline-box;
+    display: inline-block;
+    float: left;
+}
+
+div.rateit div.rateit-reset:hover
+{
+    background-position: 0 -16px;
+}
+/*big stars*/
+div.bigstars {padding:15px 12px 0px 0px;}
+div.bigstars div.rateit-range
+{
+    background: url(../images/star-empty.png);
+    height: 20px;
+}
+ 
+div.bigstars div.rateit-hover
+{
+    background: url(../images/star-full-yellow.png);
+}
+ 
+div.bigstars div.rateit-selected
+{
+    background: url(../images/star-full-orange.png);
+}
+ 
+div.bigstars div.rateit-reset
+{
+    background: url(../images/star-empty.png);
+    width: 20px;
+    height: 20px;
+}
+ 
+div.bigstars div.rateit-reset:hover
+{
+    background: url(../images/star-empty.png);
+}

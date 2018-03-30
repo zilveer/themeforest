@@ -1,0 +1,1 @@
+Read theme documentation to set up the theme. THX

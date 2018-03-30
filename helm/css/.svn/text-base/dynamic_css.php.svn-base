@@ -1,0 +1,216 @@
+<?php
+require_once( '../../../../wp-load.php' );
+Header("Content-type: text/css");
+
+$theme_imagepath =  get_template_directory_uri() . '/images/';
+
+
+function ApplyFont ( $fontName , $fontClasses ) {
+
+	$got_font=of_get_option($fontName, $fontClasses);
+	
+	if ($got_font) {
+		$font_pieces = explode(":", $got_font);
+		$font_name = $font_pieces[0];
+		echo $fontClasses . "{ font-family:'" . $font_name . "'; }";
+	}
+
+}
+
+$heading_classes='
+h1,
+h2,
+h3,
+h4,
+h5,
+h6';
+
+$page_heading_classes='
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6,
+ul#portfolio-tiny h4,
+ul#portfolio-small h4, ul#portfolio-large h4,
+.entry-post-title h2,
+.news-text a
+';
+//Font
+
+ApplyFont ( "heading_font" , $heading_classes );
+ApplyFont ( "page_headings" , $page_heading_classes );
+ApplyFont ( "menu_font" , ".homemenu, .homemenu ul li strong" );
+ApplyFont ( "super_title" , ".slideshow_title" );
+
+
+//Accents
+$accent_color=of_get_option('accent_color');
+if ($accent_color) {
+//background color
+echo "
+.main-select-menu select,
+.posted-date,
+.portfolio-cat,
+.header_search,
+ul.ajax-metainfo,
+ul.portfolio-filter li.current a,
+.pagenavi span.current {
+background-color:".$accent_color.";
+}
+
+.pagenavi span.current {
+border: 1px solid ".$accent_color.";
+}
+
+.homemenu ul li:hover strong {
+color: ".$accent_color.";
+}
+ 
+ul.portfolio-filter li.current a:after,
+ol.commentlist li.bypostauthor .avatar {
+border-top-color: ".$accent_color.";
+}
+
+.portfolio-displayed .ajax-image-selector {
+border:8px solid ".$accent_color.";
+}
+
+.portfolio-shoutout h2 a {
+color: ".$accent_color.";
+}
+";
+
+}
+
+
+//Photomenu color
+$photomenu_color=of_get_option('photomenu_color');
+$photomenu_rgb=hex2RGB($photomenu_color,true);
+
+if ($photomenu_color) {
+echo "
+.homemenu ul li { 
+	background: ".$photomenu_color.";
+	background: rgba(".$photomenu_rgb.",0.7);
+	}
+";
+}
+
+$photomenusubcat_color=of_get_option('photomenusubcat_color');
+if ($photomenusubcat_color) {
+echo '.homemenu ul ul li { background:'.$photomenusubcat_color.'; }';
+}
+
+$photomenu_hover_color=of_get_option('photomenu_hover_color');
+if ($photomenu_hover_color) echo '.homemenu ul li:hover>a,.homemenu ul ul li:hover>a {background:'.$photomenu_hover_color.';}';
+
+$photomenu_link_color=of_get_option('photomenu_link_color');
+if ($photomenu_link_color) echo '.homemenu a,.homemenu ul li strong {color:'.$photomenu_link_color.' !important;}';
+
+$photomenu_desc_color=of_get_option('photomenu_desc_color');
+if ($photomenu_desc_color) echo '.homemenu ul li span {color:'.$photomenu_desc_color.';}';
+
+$photomenu_subcat_hover_color=of_get_option('photomenu_subcat_hover_color');
+if ($photomenu_subcat_hover_color) echo '.homemenu ul ul li {background:'.$photomenu_subcat_hover_color.';}';
+
+$content_pagebg=of_get_option('content_pagebg');
+if ($content_pagebg) {
+echo 'body, .container, .postsummarywrap, .contents-wrap, .fullpage-contents-wrap, .page-contents-wrap,.mcycletextwrap { background-color:'.$content_pagebg.'; }';
+echo '.blogseperator { background-color:'.$content_pagebg.'; border:none;}';
+echo 'ul.portfolio-list li { background:none; }';
+}
+
+$content_titlebg=of_get_option('content_titlebg');
+if ($content_titlebg) {
+echo 'h1.entry-title,.ajax-gallery-navigation { background-color:'.$content_titlebg.'; }';
+echo '.header_search:after { border-right-color:'.$content_titlebg.'; }';
+}
+
+$content_titlelinks=of_get_option('content_titlelinks');
+if ($content_titlelinks) {
+echo 'ul.portfolio-four h4 a, ul.portfolio-three h4 a, ul.portfolio-two h4 a, ul.portfolio-one h4 a { color:'.$content_titlelinks.'; }';
+}
+
+$content_titlehover=of_get_option('content_titlehover');
+if ($content_titlehover) {
+echo 'ul.portfolio-four h4 a:hover, ul.portfolio-three h4 a:hover, ul.portfolio-two h4 a:hover, ul.portfolio-one h4 a:hover { color:'.$content_titlehover.'; }';
+}
+
+$content_titles=of_get_option('content_titles');
+if ($content_titles) {
+echo '
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6,
+.mcycletextwrap h3,
+h2.ajax-projects-title,
+.entry-post-title h2 a,
+#contactform #contact label,
+ul.tabs li a
+{ color:'.$content_titles.'; }';
+}
+
+$content_text=of_get_option('content_text');
+if ($content_text) {
+echo '
+.entry-content p,
+.entry-content,
+.postformat_quote,
+.quote_author,
+.news-text,
+.work-details p
+{ color:'.$content_text.'; }';
+}
+
+
+$sidebar_bg=of_get_option('sidebar_bg');
+if ($sidebar_bg) {
+echo '.sidebar-widget { background-color:'.$sidebar_bg.'; }';
+}
+
+$sidebar_title=of_get_option('sidebar_title');
+if ($sidebar_title) {
+echo '.sidebar h3 { color:'.$sidebar_title.'; }';
+}
+
+
+$blog_allowedtags=of_get_option('blog_allowedtags');
+if ($blog_allowedtags) {
+echo '.form-allowed-tags { display:none; }';
+}
+
+$footer_bgcolor=of_get_option('footer_bgcolor');
+if ($footer_bgcolor) {
+echo '.footer-container { background-color:'.$footer_bgcolor.'; }';
+}
+
+$footer_labeltextbg=of_get_option('footer_labeltextbg');
+if ($footer_labeltextbg) {
+echo '#footer h3 { color:'.$footer_labeltextbg.'; }';
+}
+
+$footer_labelbg=of_get_option('footer_labelbg');
+if ($footer_labelbg) {
+echo '#footer h3 { background-color:'.$footer_labelbg.'; }';
+}
+
+$footer_copyrightbg=of_get_option('footer_copyrightbg');
+if ($footer_copyrightbg) {
+echo '#copyright { background-color:'.$footer_copyrightbg.'; }';
+}
+
+$footer_copyrighttext=of_get_option('footer_copyrighttext');
+if ($footer_copyrighttext) {
+echo '#fullscr-copyright li { color:'.$footer_copyrighttext.'; text-shadow:none; }';
+}
+
+$submenu_hover=of_get_option('submenu_hover');
+if ($submenu_hover) {
+echo '.menu ul {left:auto;}';
+}
+?>

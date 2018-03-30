@@ -1,0 +1,1 @@
+.th-wowslider a.ws_next, .th-wowslider a.ws_prev {background-image:url(<?php echo THEME_BASE_URI; ?>/pagebuilder/elements/TH_WowSlider/assets/k-wow-nav.png);}

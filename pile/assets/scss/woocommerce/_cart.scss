@@ -1,0 +1,135 @@
+.woocommerce-cart .woocommerce {
+	@extend %woo-wrapper;
+	min-height: 100vh;
+	flex-wrap: wrap;
+	align-content: center;
+
+	> .cart-empty {
+		@extend %fs-38;
+		font-weight: bold;
+	}
+
+	> .cart-empty,
+	> .return-to-shop {
+		width: 100%;
+		align-self: center;
+		text-align: center;
+	}
+
+	> form {
+		@extend %woo-column-left;
+		margin-bottom: 0;
+
+		.shop_table {
+			tr {
+				padding: 1.4em 0;
+
+				&:first-child {
+					padding-top: 0;
+				}
+			}
+
+			@include query-below($lap) {
+				&.shop_table {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+
+	> .cart-collaterals {
+		@extend %woo-column-right;
+	}
+}
+
+.cart-collaterals h2 {
+	@extend %fs-18;
+	margin: 0;
+	border-bottom: 1px solid #EBEBEB;
+	padding-bottom: 1em;
+}
+
+@include query-above($lap) {
+
+	.woocommerce-cart,
+	.woocommerce-checkout {
+		[id="djaxContent"] {
+			min-height: 100vh;
+			display: flex;
+			align-items: stretch;
+		}
+	}
+}
+
+.woocommerce-cart {
+
+	.entry-content,
+	.woocommerce {
+		height: 100%;
+	}
+}
+
+.entry--page {
+	min-height: 0;
+	flex: 1 1 auto;
+}
+
+.product-subtotal {
+	text-align: right;
+}
+
+.product-remove {
+
+	@include query-above($lap) {
+		position: absolute;
+		//top: 50%;
+		right: 100%;
+		//transform: translate(0, -50%);
+	}
+}
+
+.woocommerce-cart .woocommerce > form {
+	.cart_item {
+		@extend %fs-18;
+		font-weight: 700;
+
+		a {
+			border: 0;
+		}
+	}
+}
+
+// Because of IE flexbox issues
+.is--ie {
+	.cart_totals {
+		max-width: 100%;
+	}
+}
+
+
+@include query-below($lap) {
+	.shop_table.cart {
+
+		.variation {
+			display: none;
+		}
+
+		td.actions {
+			flex-wrap: wrap;
+
+			.coupon {
+				margin-right: 0;
+			}
+		}
+
+		[name="update_cart"] {
+			margin-top: 2em;
+			padding: 18px 24px;
+			opacity: 1;
+			background-color: $dark;
+			color: white;
+			font-weight: 700;
+			letter-spacing: .2em;
+		}
+	}
+}

@@ -1,0 +1,321 @@
+#footer {
+	background: transparent;
+	padding: 15px 0;
+	width: 100%;
+	
+	display: flex;
+	align-items: stretch;
+	@include translateZ(0);
+	@extend .transition;
+	@include min-break($break-small) {
+		padding: 0;	
+	}
+	&.row {
+		max-width: 100%;
+	}
+	&.style1 {
+		z-index: 999;
+		height: 80px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		
+		.background--dark.home &,
+		.background--dark.snap_scroll_on & {
+			&:not(:hover) {
+				@include min-break($break-small) {
+					.footer-menu .select-wrapper select,
+					.footer-menu .select-wrapper:after {
+						color: #fff;
+					}	
+					.footer-menu p {
+						color: rgba(#fff,0.6);	
+					}
+					.footer-toggle a {
+						color: rgba(#fff,0.4);
+					}
+					.footer-menu .sf-menu li a {
+						color: #fff;
+					}
+				}
+			}
+		}
+		&:hover,
+		&.hover,
+		&.active {
+			background: #fff;
+			
+			.social-links .paymenttypes {
+				@include filter(grayscale(0));
+				@include opacity(1);
+			}
+			
+		}
+		&.active {
+			.footer-toggle a {
+				color: $color1;	
+			}
+		}
+		@media only screen and (max-width: $break-small) {
+			position: relative;
+			background: #fff;
+			height: auto;
+			clear: both;
+			z-index: 1;
+			text-align: center;
+		}
+		.footer-menu {
+			text-align: center;
+			
+			@include min-break($break-small) {
+				text-align: left;	
+			}
+		}
+	}
+	&.style2 {
+		background: #3e3e3e;
+		color: #fff;
+		padding: 30px 0;
+		
+		@include min-break($break-small) {
+			padding: 50px 0;	
+		}
+		.footer-menu {
+			text-align: center;
+			.select-wrapper {
+				color: #fff;
+				
+				select {
+					color: #fff;
+					font-size: 14px;
+				}
+			} 
+			p {
+				margin-top: 10px;
+				color: rgba(255,255,255,0.6);
+			}
+		}
+		.social-links {
+			text-align: center;
+		}
+		.footer-menu {
+			.sf-menu li a {
+				color: #fff;
+				font-size: 14px;
+				margin: 0 15px;
+			}
+		}
+	}
+	.footer-menu {
+		font-weight: 300;
+		text-align: left;
+		p {
+			margin: 0;
+			color: rgba(102,102,102,0.6);
+			font-size: 12px;
+		}
+		.select-wrapper + p {
+			line-height: 20px;
+			clear: left;
+		}
+		.select-wrapper {
+			margin: 0 0 20px 0;
+			background: transparent;
+			border: 0;
+			min-width: 0;
+			
+			@include min-break($break-small) {
+				margin: 0 20px 0 0;
+			}
+			select {
+				height: 20px;
+				font-size: 11px;
+				padding: 0 15px 0 0;
+				line-height: 20px;
+				background: transparent;
+				
+				.rtl & {
+					padding: 0 0 0 15px;	
+				}
+			}
+			
+			img {
+				display: none;
+			}
+			&:after {
+				top:3px;
+				right: 0;
+				
+				.rtl & {
+					right: auto;
+					left: 0;
+				}
+			}
+			
+			&.currency_switcher {
+				width: 50px;	
+			}
+		}
+		.sf-menu {
+			display: block;
+			list-style: none;
+			margin: 0 0 20px;
+			padding: 0;
+			@include min-break($break-small) {
+				display: inline-block;	
+				margin: 0;
+			}
+			li {
+				display: block;
+				line-height: 2;
+				margin: 0;
+				@include min-break($break-small) {
+					display: inline-block;	
+					line-height: 1.6;
+				}
+				a {
+					display: block;
+					    font-size: 11px;
+					    margin: 0 15px 0 0;
+				}	
+			}
+		}
+	}
+	.social-links {
+		line-height: 40px;
+		text-align: center;
+		@include min-break($break-small) {
+			text-align: right;
+		}
+		a {
+			color: rgba(0,0,0,0.3);	
+			margin-left: 15px;
+		}
+		.paymenttypes {
+			display: inline-block;
+			margin: 0;
+			width: 50px;
+			height: 20px;
+			vertical-align: middle;
+			background: transparent url('../img/payment-types.png') top left;
+			background-size: 50px 270px;
+			@include filter(grayscale(100%));
+			@include translateZ(0);
+			&.visa {
+				background-position: 0 -4px;
+			}
+			&.mc {
+				background-position: 0 -34px;
+			}
+			&.paypal {
+				background-position: 0 -64px;
+			}
+			&.discover {
+				background-position: 0 -94px;
+			}
+			&.stripe {
+				background-position: 0 -124px;
+			}
+			&.amazon {
+				background-position: 0 -154px;
+			}
+			&.amex {
+				background-position: 0 -184px;
+			}
+			&.diners {
+				background-position: 0 -214px;
+			}
+			&.wallet {
+				background-position: 0 -244px;
+			}
+		}
+	}
+	.footer-toggle {
+		text-align: center;
+		
+		a {
+			display: block;
+			font-size: 12px;
+			color: rgba(21,21,21,0.4);	
+			line-height: 1;
+			br {
+				line-height: 18px;	
+			}
+			&:hover {
+				color: $color1;	
+			}
+		}
+	}
+}
+.footer_inner {
+	display: flex;
+	flex: 1;
+	position: relative;
+	padding: 0 35px;
+	width: 100%;
+
+	.footer_products {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 100%;
+		height: auto;
+		@include opacity(0);
+		visibility: hidden;
+		@extend .transition;
+	}
+}
+.footer_products {
+	background: #fff;
+	display: block;
+	clear: left;
+	.active & {
+		visibility: visible;
+		@include opacity(1);
+	}
+	
+	.footer_tabs {
+		background: #fff;
+		height: 85px;
+		@extend .transition;
+
+		ul {
+			text-align: center;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			line-height: 85px;
+			li {
+				display: inline-block;	
+			}
+			a {
+				display: inline-block;
+				font-size: 22px;
+				padding: 0;
+				margin: 0 20px;
+				border-bottom: 2px solid transparent;
+				color: #bababa;
+				line-height: 1.5;
+				&.active {
+					color: $color1;
+					border-bottom: 1px solid $color1;
+				}
+				&:hover {
+					color: $color1;	
+				}
+			}	
+		}
+	}
+	.carousel-container.row.max_width {
+		@include min-break($break-small) {
+			padding: 0 35px;
+			margin: 0 auto;
+		}
+		.ai-indicator {
+			position: absolute;
+		}
+		.carousel {
+			@extend .transition;
+		}
+	}
+}

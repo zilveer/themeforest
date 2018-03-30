@@ -1,0 +1,90 @@
+.strip_text {
+	background: #fddc32;
+	padding:45px 0;
+	position: relative;
+
+	&:before {
+		content: "";
+		position: absolute;
+		z-index: 5;
+		top: 0;
+		left: 50%;
+		margin-left: -6px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 15px 12px 0 12px;
+		border-color: #fff transparent transparent transparent;
+	}
+
+	.container {
+		position: relative;
+	}
+
+	p {
+		margin: 0;
+		font-family: $bebas;
+		font-size: 28px;
+		line-height: 1;
+		color: #333;
+	}
+
+	a {
+		width: 40px;
+		height: 40px;
+		text-align: center;
+		line-height: 45px;
+		font-size: 20px;
+		position: absolute;
+		top: 50%;
+		margin-top: -20px;
+		right: 15px;
+		color: #333;
+
+		i {
+			position: relative;
+			z-index: 3;
+		}
+
+		&:hover {
+			color: darken(#fddc32, 5);
+
+			&:before {
+				@include transform(scale(1));
+				@include transition(all .25s cubic-bezier(.82,.73,.43,1.45));
+			}
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background: #fff;
+			@include border-top-radius(50%);
+			@include border-bottom-radius(50%);
+			@include transform(scale(0));
+			@include transition(all .25s);
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		p {
+			width: 100%;
+			text-align: center;
+			margin-bottom: 60px;
+			line-height: 1.2;
+		}
+
+		a {
+			top: auto;
+			right: auto;
+			margin-top: 0;
+			bottom: 0;
+			left: 50%;
+			margin-left: -20px;
+		}
+	}
+}

@@ -1,0 +1,139 @@
+/*===================================================================================*/
+/*  Breadcrumb
+/*===================================================================================*/
+
+.breadcrumb-nav-holder {
+    display: inline-block;
+    float: $start;
+
+    &.minimal {
+        .mc-breadcrumb {
+            > li {
+                &:before,
+                &:after {
+                    display:none;
+                }
+        
+                > a,
+                > span {
+                    background-color: #fff;
+                    padding: 10px 18px;  
+                }
+            }
+        }
+    }
+
+    .mc-breadcrumb {
+        > li {
+            display: inline-block!important;
+            float: $start;
+            position: relative!important;
+            display: table-cell;
+            
+            &:last-child {
+                
+                &:after, 
+                &:before {
+                    display: none;
+                }
+
+                a, span {
+                    border-#{$end}: 0;
+                }
+            }
+            
+            &.open, &:focus, &:hover {
+                &:after {
+                    border-color: dir-values(transparent transparent transparent darken($second-color,5%) ) !important;
+                }
+                
+                > a,
+                > span {
+                    background-color: darken($second-color,5%);
+                }
+            }
+            
+            &:before,
+            &:after {
+                content:"";
+                display: block;
+                position: absolute;
+                z-index: 100;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                @include transition(0.3s,ease);
+            }
+
+            &:before {
+                top: 39%;
+                #{$end}: -10px;
+                border-width: dir-values(7.5px 0 7.5px 10px);
+                border-color: dir-values(transparent transparent transparent darken($second-color,10%) );
+            }
+            
+            &:after {
+                top: 39%;
+                #{$end}: -8px;
+                border-width: dir-values(7.5px 0 7.5px 10px);
+                border-color: dir-values(transparent transparent transparent $second-color);
+            }
+
+            .dropdown-menu {
+                min-width:100%;
+                top: 97%!important;
+                #{$start}: 0!important;
+                #{$end}: auto!important;
+
+                li {
+                    > a, 
+                    > span {
+                        padding: 8px 16px;
+                        border-bottom: 1px solid darken($second-color,10%)!important;;
+                        
+                        &:last-child {
+                            border-bottom:none!important;
+                        }
+                    } 
+                }
+            
+                &:before {
+                    display: none;
+                }
+            }
+
+            > span,
+            > a {
+                letter-spacing: -1px;
+                display: inline-block;
+                background-color: $second-color;
+                padding: 20px 18px;
+                color: $black;
+                border-#{$end}: 1px solid darken($second-color,10%);
+                position: relative;
+
+                > a {
+                    color: $black;
+                }
+
+                &.dropdown-toggle {
+                    &:after {
+                        content: dir-check("\f0da","\f0d9");
+                        color: $black;
+                        font-size: 12px;
+                        display: inline-block;
+                        vertical-align: bottom;
+                        margin: dir-values(0 0 0 5px);
+                        @include rotate(45deg);
+                    }
+                }
+            }
+        }
+    }
+}
+
+#breadcrumb-alt {
+    border-bottom: 1px solid darken($second-color,10%);
+    margin-bottom: 27px;
+}
+

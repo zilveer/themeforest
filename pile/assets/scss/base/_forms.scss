@@ -1,0 +1,368 @@
+/*----------------------------------------*\
+INPUTS / FORMS
+
+[Table of contents]
+
+1. $Common form controls
+2. $Common form controls
+3. $Checkboxes and radios
+4. $Inline forms
+5. $Input groups
+6. $3rd Party Plugins
+------------------------------------------*/
+
+
+
+
+
+
+/*------------------------------------*\
+	1. $Form Reset
+\*------------------------------------*/
+/* Remove the stupid outer glow in Webkit */
+input:focus
+{
+	outline:0;
+}
+
+/* Make webkit render the search input like a normal text field */
+input[type=search]
+{
+	-webkit-appearance:textfield;
+	-webkit-box-sizing:content-box;
+}
+
+/* IE8 and FF freak out if this rule is within another selector */
+::-webkit-file-upload-button
+{
+	padding:0;
+	border:0;
+	background:none;
+}
+
+/* Turn off the recent search for webkit. It adds about 15px padding on the left */
+::-webkit-search-decoration
+{
+	display:none;
+}
+
+
+
+
+
+/*------------------------------------*\
+	2. $Common form controls
+\*------------------------------------*/
+/**
+ *
+ * Shared size and type resets for form controls. Apply `.form-control` to any
+ * of the following form controls:
+ */
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.form-control,
+.select2-container .select2-choice,
+%field {
+	min-height: 46px;
+	display: block;
+	vertical-align: middle;
+	width: 100%;
+	padding: 13px 16px;
+	outline: 0;
+
+	font-size: 15px;
+	line-height: normal;
+	font-weight: 300;
+
+	border: 1px solid #DEDEDE;
+	border-radius: 0;
+	box-shadow: none;
+
+	&:focus {
+		outline: 1px solid $lightest;
+	}
+}
+
+select,
+%field-select {
+	//height: 48px;
+	padding-top: 13px; // text cut off fix
+
+	-moz-appearance: none;
+	-webkit-appearance: none;
+
+	// SVG Arrow as Background
+    background: #fff url('data:image/svg+xml;utf8,<svg width="11px" height="6px" viewBox="241 20 11 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M246.059058,26 L244.619559,24.2927665 C243.413039,22.8618443 241,20 241,20 L251.115174,20 L246.059058,26 Z" id="Imported-Layers" stroke="none" fill="#3E4758" fill-rule="evenodd"></path></svg>') no-repeat calc(100% - 16px) center;
+}
+
+// Buttons
+input[type="submit"],
+%submit-field {
+	@extend %btn;
+}
+
+
+
+
+
+
+/*------------------------------------*\
+	3. $Checkboxes and radios
+\*------------------------------------*/
+/**
+ *
+ * Indent the labels to position radios/checkboxes as hanging controls.
+ */
+
+.radio,
+.checkbox {
+	padding-left: 20px;
+	vertical-align: middle;
+
+	label {
+		display: inline;
+		margin-bottom: 0;
+		font-weight: normal;
+		cursor: pointer;
+	}
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+	float: left;
+	margin-left: $u/2;
+}
+
+.radio + .radio,
+.checkbox + .checkbox {
+	margin-top: -$u/4; // Move up sibling radios or checkboxes for tighter spacing
+}
+
+// Radios and checkboxes on same line
+.radio-inline,
+.checkbox-inline {
+	display: inline-block;
+	padding-left: $u/2;
+	margin-bottom: 0;
+	vertical-align: middle;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+	margin-top: 0;
+	margin-left: $u/4; // space out consecutive inline controls
+}
+
+
+
+
+
+
+/*------------------------------------*\
+	4. $Inline forms
+\*------------------------------------*/
+/**
+  *
+  * Make forms appear inline(-block) by adding the `.form-inline` class. Inline
+  * forms begin stacked on extra small (mobile) devices and then go inline when
+  * viewports reach <768px.
+  *
+  * Requires wrapping inputs and labels with `.form-group` for proper display of
+  * default HTML form controls and our custom form controls (e.g., input groups).
+  */
+
+.form-inline {
+
+	// Kick in the inline
+	@media (min-width: 768px) {
+		// Inline-block all the things for "inline"
+		.form-group {
+			display: inline-block;
+			margin-bottom: 0;
+			vertical-align: middle;
+		}
+
+		// In navbar-form, allow folks to *not* use `.form-group`
+		.form-control {
+			display: inline-block;
+		}
+
+		// Remove default margin on radios/checkboxes that were used for stacking, and
+		// then undo the floating of radios and checkboxes to match (which also avoids
+		// a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
+		.radio,
+		.checkbox {
+			display: inline-block;
+			margin-top: 0;
+			margin-bottom: 0;
+			padding-left: 0;
+		}
+		.radio input[type="radio"],
+		.checkbox input[type="checkbox"] {
+			float: none;
+			margin-left: 0;
+		}
+	}
+}
+
+
+
+
+
+
+/*------------------------------------*\
+	5. $Input groups
+\*------------------------------------*/
+.input-group {
+	position: relative; // For dropdowns
+	display: table;
+	border-collapse: separate; // prevent input groups from inheriting border styles from table cells when placed within a table
+
+	// Undo padding and float of grid classes
+	&.col {
+		float: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.form-control {
+		width: 100%;
+		margin-bottom: 0;
+	}
+}
+
+// Display as table-cell
+.input-group-addon,
+.input-group-btn,
+.input-group .form-control {
+	display: table-cell;
+
+	&:not(:first-child):not(:last-child) {
+		border-radius: 0;
+	}
+}
+
+// Addon and addon wrapper for buttons
+.input-group-addon,
+.input-group-btn {
+	width: 1%;
+	white-space: nowrap;
+	vertical-align: middle; // Match the inputs
+}
+
+
+
+
+
+
+/*------------------------------------*\
+	6. $WPForms Lite
+	-> https://wordpress.org/plugins/wpforms-lite/
+\*------------------------------------*/
+div.wpforms-container-full.wpforms-container  {
+	.wpforms-form {
+		input[type=date],
+		input[type=datetime],
+		input[type=datetime-local],
+		input[type=email],
+		input[type=month],
+		input[type=number],
+		input[type=password],
+		input[type=range],
+		input[type=search],
+		input[type=tel],
+		input[type=text],
+		input[type=time],
+		input[type=url],
+		input[type=week],
+		select,
+		textarea {
+			@extend %field;
+		}
+
+		select {
+			@extend %field-select;
+		}
+
+		button[type="submit"] {
+			@extend %submit-field;
+
+			&:hover {
+				border-color: currentColor;
+			}
+
+			&.full {
+				width: 100%;
+			}
+		}
+
+		.wpforms-field-label {
+			margin-bottom: 10px;
+			font-size: 15px;
+			font-weight: 300;
+		}
+
+		.wpforms-required-label {
+			color: $light;
+		}
+	}
+
+	.wpforms-field-small,
+	.wpforms-field-medium,
+	.wpforms-field-large {
+		max-width: 100% !important;
+	}
+
+	.wpforms-field-container {
+		display: flex;
+	    flex-wrap: wrap;
+	    justify-content: space-between;
+
+		.wpforms-field {
+			flex: 0 0 100%;
+			padding: 15px 0;
+		}
+
+		.wpforms-field.half {
+			flex: 0 0 calc(50% - 10px);
+		}
+
+		.wpforms-field.third {
+			flex: 0 0 calc(100%/3 - 10px);
+		}
+	}
+
+	&.wpforms-container .wpforms-submit-container {
+		padding-top: 17px;
+	}
+}
+
+.select2-container .select2-choice {
+	border-radius: 0;
+}
+
+.select2-drop {
+	border-color: #DEDEDE;
+}
+
+.select2-search input {
+	min-height: 0;
+}

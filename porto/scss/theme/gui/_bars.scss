@@ -1,0 +1,145 @@
+/* Circular Bars */
+.circular-bar {
+    text-align: center;
+    margin-bottom: 25px;
+    .circular-bar-chart {
+        position: relative;
+    }
+    strong {
+        display: block;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 30px;
+        position: absolute;
+        top: 37%;
+        width: 80%;
+        #{$left}: 10%;
+        text-align: center;
+    }
+    label {
+        display: block;
+        font-weight: 100;
+        font-size: 17px;
+        line-height: 20px;
+        position: absolute;
+        top: 52%;
+        width: 80%;
+        #{$left}: 10%;
+        text-align: center;
+    }
+
+    &.only-icon {
+        i {
+            display: block;
+            font-weight: 600;
+            font-size: 38px;
+            line-height: 30px;
+            position: absolute;
+            top: 42%;
+            width: 80%;
+            #{$left}: 10%;
+            text-align: center;
+        }
+    }
+
+    &.single-line {
+        strong {
+            top: 42%;
+        }
+    }
+
+    &.circular-bar-sm {
+        label {
+            font-size: 14px;
+            top: 38%;
+        }
+    }
+
+    &.circular-bar-lg {
+        strong {
+            font-size: 20px;
+            top: 42%;
+        }
+    }
+}
+
+/* Progress */
+.vc_progress_bar .vc_single_bar.progress,
+.progress {
+    border-radius: $progress-border;
+    height: 20px;
+    margin-bottom: 20px;
+    background: if-light(#fafafa, $color-dark-4);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    overflow: visible;
+
+    &.progress-border-radius {
+        &,
+        & .progress-bar {
+            border-radius: 3px;
+        }
+    }
+
+    &.progress-no-border-radius {
+        &,
+        & .progress-bar {
+            border-radius: 0;
+        }
+    }
+
+    &.progress-sm {
+        height: 10px;
+        .progress-bar {
+            line-height: 10px;
+        }
+    }
+
+    &.progress-lg {
+        height: 35px;
+        .progress-bar {
+            font-size: 13px;
+            line-height: 35px;
+        }
+    }
+}
+.vc_progress_bar .vc_single_bar.progress .vc_bar,
+.progress-bar {
+    float: $left;
+    background-color: #CCC;
+    box-shadow: none;
+    position: relative;
+    border-radius: $progress-border;
+
+    @each $state in $states {
+        &.progress-bar-#{nth($state,1)} {
+            background-color: #{nth($state,2)};
+            color: #{nth($state,3)};
+        }
+    }
+}
+
+.progress-bar-tooltip {
+    position: absolute;
+    padding: 4px 8px;
+    background-color: #333;
+    color: #FFF;
+    line-height: 15px;
+    font-size: 11px;
+    display: block;
+    position: absolute;
+    top: -28px;
+    #{$right}: 5px;
+    border-radius: $border-thin;
+    opacity: 0;
+    &:after {
+        border-color: #333 transparent;
+        border-style: solid;
+        border-width: 5px 5px 0;
+        bottom: -5px;
+        content: "";
+        display: block;
+        #{$left}: 13px;
+        position: absolute;
+        width: 0;
+    }
+}

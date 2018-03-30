@@ -1,0 +1,206 @@
+.pa                 { position: absolute; }
+.pr                 { position: relative; }
+
+.screen-reader-text { display: none; }
+
+.text--center       { text-align: center; }
+.text--left         { text-align: left; }
+.text--right        { text-align: right; }
+.text--justify      { text-align: justify; }
+
+.italic             { font-style: italic; }
+
+.list--unstyled     { list-style: none }
+
+
+
+.stretch {
+    @extend .pa;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+}
+
+.cover {
+    @extend .pa;
+    @extend .fill;
+    top: 0;
+    left: 0;
+}
+
+.center {
+    @extend .pa;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+// Bigger Descriptions
+// On .hero-content or using .large class
+%desc-hero {
+    @include query-above($lap) {
+        font-size: 1.5em;
+        // line-height: 2;
+    }
+}
+
+
+
+// #WORDPRESS
+
+///*------------------------------------*\
+//    $WORDPRESS CORE ELEMENTS
+//\*------------------------------------*/
+
+
+
+
+
+///* $THEME SPECIFIC CLASSES */
+
+// Bigger Description text
+.desc {
+	@extend %gamma;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.25em;
+    // line-height: 1.5;
+	// color: $dark;
+
+	@include query-below($lap) {
+		font-size: 1em;
+	}
+
+    &.large {
+        @extend %desc-hero;
+    }
+}
+
+// Split the content into two columns
+.twocolumn {
+	margin-bottom: $u;
+
+	@include query-above($lap) {
+		position: relative;
+		column-count: 2;
+		column-gap: $gutter;
+	}
+}
+
+//Transform the first letter into a dropcap
+.dropcap {
+    @extend %alpha;
+	@extend %fs-82;
+
+    float: left;
+	line-height: 1;
+	@include rhythm(margin-bottom, -1, 82px);
+	@include rhythm(margin-right, 1, 82px);
+}
+
+//Highlight a selection of text
+.highlight{
+    position: relative;
+    padding: 0 8px;
+    margin: 0 4px;
+    z-index: 0;
+
+    &:before{
+        content: "";
+
+        position: absolute;
+        z-index: -1;
+
+        top: -4px; left: 0;
+        bottom: -4px; right: 0;
+
+        background: #ededed;
+    }
+}
+
+
+
+
+// Pull Content Outside
+// Used for blockquotes and Left/Right aligned images
+
+@if $editor-style == false {
+    $pull-gutter: 50px;
+    $pull-width: calc(#{$pull-gutter} + 50%);
+
+    .pull-left {
+        padding-right: $pull-gutter/2;
+    }
+
+    .pull-right {
+        padding-left: $pull-gutter/2;
+    }
+
+    @include query-above($large) {
+        .pull-left {
+            margin-left: -$pull-offset;
+            max-width: $pull-width;
+            padding-right: $pull-gutter;
+
+            float: left;
+
+            text-align: right;
+        }
+
+        .pull-right {
+            margin-right: -$pull-offset;
+            max-width: $pull-width;
+            padding-left: $pull-gutter;
+
+            float: right;
+
+            text-align: left;
+        }
+    }
+}
+
+@if $editor-style {
+    @include query-above(870px) {
+        $pull-offset: 100px;
+        $pull-gutter: 50px;
+        $pull-width: calc(#{$pull-gutter} + 50%);
+
+        .pull-left {
+            margin-left: -$pull-offset;
+            max-width: $pull-width;
+            padding-right: $pull-gutter;
+
+            float: left;
+
+            text-align: right;
+        }
+
+        .pull-right {
+            margin-right: -$pull-offset;
+            max-width: $pull-width;
+            padding-left: $pull-gutter;
+
+            float: right;
+
+            text-align: left;
+        }
+    }
+}
+
+
+
+
+.tiled-gallery .gallery-row{
+	margin: 0 auto;
+}
+
+.bypostauthor{	//required
+	font-size: inherit;
+}

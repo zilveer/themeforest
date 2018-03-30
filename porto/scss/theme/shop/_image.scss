@@ -1,0 +1,158 @@
+
+.product-image {
+    display: block;
+    position: relative;
+    background: if-light(#fff, $color-dark-3);
+    border: if-light($product-image-border-width solid #ddd, $product-image-border-width solid $color-dark-3);
+    border-radius: $border-thick;
+    width: 100%;
+    padding: $product-image-padding;
+
+    &:hover {
+        z-index: 1;
+    }
+
+    .inner {
+        display: block;
+        overflow: hidden;
+        position: relative;
+    }
+
+    img {
+        border-radius: $border-normal;
+        display: inline-block;
+        width: 100%;
+        height: auto;
+        @include transition($image-transition);
+    }
+
+    .labels {
+        line-height: 1;
+        color: $color-white;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+
+        .onhot,
+        .onsale {
+            position: absolute;
+            z-index: 1;
+            top: .8em;
+            border-radius: $border-base;
+            font-size: .8571em;
+            padding: .5833em .6333em;
+        }
+
+        .onhot {
+            background: $hot-bg;
+            #{$left}: .8em;
+        }
+
+        .onsale {
+            background: $sale-bg;
+            #{$right}: .8em;
+        }
+
+        .viewcart {
+            font-size: 1.8em;
+            background: if-light(#fff, $color-dark-3);
+            border-radius: 50%;
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 0; right: 0;
+            margin: auto;
+            z-index: 1;
+            text-align: center;
+            width: 2.2em;
+            height: 2.2em;
+            line-height: 2.1em;
+            display: none;
+            opacity: 0;
+            @include transition($transition);
+
+            &:before {
+                font-family: "minicart-font" !important;
+                font-style: normal !important;
+                font-weight: normal !important;
+                font-variant: normal !important;
+                text-transform: none !important;
+                speak: none;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                content: "\e800";
+                font-size: .9em;
+                vertical-align: top;
+            }
+
+            &.viewcart2:before {
+                font-family: "FontAwesome" !important;
+                content: $fa-var-shopping-cart;
+                vertical-align: baseline;
+            }
+
+            &.viewcart3:before {
+                font-family: "Simple-Line-Icons" !important;
+                content: "\e04e";
+                vertical-align: baseline;
+                font-size: 1.1em;
+            }
+            &.viewcart4:before {
+                font-family: "Simple-Line-Icons" !important;
+                content: "\e035";
+                vertical-align: baseline;
+            }
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        .tooltip {
+            font-weight: normal;
+            text-transform: none;
+            white-space: nowrap;
+            z-index: 100;
+        }
+    }
+
+    .stock {
+        position: absolute;
+        z-index: 1;
+        background: if-light(#fff, $color-dark-3);
+        background: if-light(rgba(255, 255, 255, .9), rgba(0, 0, 0, .9));
+        color: #000;
+        top: 0; bottom: 0; left: 0; right: 0;
+        width: 10em;
+        height: 3em; line-height: 3em;
+        margin: auto;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        text-align: center;
+        //opacity: 0;
+        @include transition($transition);
+    }
+
+    &:hover {
+        .stock {
+            //bottom: 0;
+            //opacity: 1;
+        }
+    }
+}
+
+.yith-wcbm-badge {
+    margin: ($thumbnail-padding + $thumbnail-border-width);
+    border-radius: $border-base;
+
+    img {
+        margin: -($thumbnail-padding + $thumbnail-border-width) !important;
+        border-radius: 0;
+        opacity: 1 !important;
+    }
+
+    .products & {
+        margin: 0;
+        img {
+            margin: 0 !important;
+        }
+    }
+}

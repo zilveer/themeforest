@@ -1,0 +1,198 @@
+@menuitem-padding-x: 10px;
+@menuitem-padding-y: 12px;
+@sub-menu-width: 170px;
+@menu-height: 41px;
+
+/* -------------------------------------------------------------------------- */
+
+@main-menu-hover-background-local: @main-menu-hover-background;
+
+/* Level 1 */
+@menu-level1-bg: @accent-color-8;
+@menu-level1-color: @css_submenu_color;
+@menu-level1-hover-bg: @menu-level1-bg;
+@menu-level1-hover-color: @css_submenu_hover_color;
+
+/* -------------------------------------------------------------------------- */
+
+#menus {
+	position: relative;
+	z-index: 210;
+	min-height: @menu-height;
+}
+
+#main-menu .menu {
+	position: relative;
+	min-height: @menu-height;
+	font-size: 0;
+
+	// any menu item
+	.menu-item {
+		position: relative;
+		margin-bottom: 1px;
+		padding: 0;
+		list-style: none;
+		cursor: pointer;
+
+		&:hover > .sub-menu-wrapper > .sub-menu {
+			display: block;
+		}
+
+		a {
+			display: block;
+			padding: .3em .6em;
+			text-decoration: none;
+			transition: color .3s;
+
+			strong {
+				font-weight: normal;
+			}
+		}
+
+		&.home > a {
+			@home-icon-size: 16px;
+			width: @home-icon-size;
+			text-align: left;
+			text-indent: -6000px;
+			position: relative;
+
+			&:before {
+				position: absolute;
+				top: 4px;
+				left: @menuitem-padding-x/2;
+				z-index: 5;
+				width: @home-icon-size;
+				height: @home-icon-size;
+				content: icon(home3);
+				text-indent: 0 !important;
+				font-size: @home-icon-size;
+				font-family: icomoon;
+			}
+		}
+	}
+
+	// any sub menu
+	.sub-menu {
+		position: absolute;
+		top: 0;
+		z-index: 200;
+		display: none;
+		margin: 0 auto auto 0;
+		width: @sub-menu-width;
+		text-align: left;
+		border-radius: 5px;
+		box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.09);
+		background: @menu-level1-bg;
+		padding: 10px;
+		.border-box();
+
+		.menu-item {
+			> a {
+				padding: .6em @menuitem-padding-x;
+				color: @menu-level1-color;
+				font: e(@menu-font-weight)  @menu-font-face;
+				font-size: 12px;
+			}
+
+			&.current-menu-parent,
+			&.current-menu-item,
+			&.current-menu-ancestor,
+			&.current-menu-ancestor,
+			&:hover {
+				background: @css_menu_background;
+				transition: all .3s;
+				border-radius: 4px;
+
+				> a {
+					text-decoration: none;
+					color: @menu-level1-hover-color;
+				}
+			}
+		}
+	}
+
+	body.sticky-header-type-over.sticky-header.wpv-not-scrolled & {
+		> .menu-item {
+			&:not(.current-menu-parent):not(.current-menu-item):not(.current-menu-ancestor):not(.current-menu-ancestor):not(:hover) {
+				> a {
+					&, &:visited {
+						color: @menu-font-color;
+					}
+				}
+			}
+		}
+	}
+
+	// first level
+	> .menu-item {
+		padding: 9px 8px 5px 0;
+		background: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"); // 1px transparent gif, otherwise IE won't extend the element to contain its children
+		display: inline-block;
+
+		> a {
+			border-bottom: 2px double transparent;
+
+			&, &:visited {
+				color: @menu-font-color;
+				font-weight: e(@menu-font-weight);
+				font-size: @menu-font-size;
+				font-family: @menu-font-face;
+				line-height: 16px;
+			}
+		}
+
+		&.current-menu-parent,
+		&.current-menu-item,
+		&.current-menu-ancestor,
+		&.current-menu-ancestor,
+		&:hover {
+			border-bottom-color: @css_menu_hover_color;
+
+			> a {
+				padding-top: .3em;
+				padding-bottom: .3em;
+				background-color: @main-menu-hover-background-local;
+				color: @css_menu_hover_color;
+				text-decoration: none;
+			}
+		}
+
+		&:hover > .sub-menu-wrapper {
+			padding-top: 25px;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 100%;
+		}
+
+		// second level
+		> .sub-menu-wrapper > .sub-menu {
+			left: 50%;
+			margin: 0 auto auto -@sub-menu-width/2;
+			transition: all .3s;
+
+			&:before {
+				@size: 8px;
+
+				position: absolute;
+				top: -@size + 1px;
+				left: @sub-menu-width/2-@size;
+				width: 0;
+				height: 0;
+
+				border: @size solid transparent;
+				border-top: 0;
+				border-bottom: (@size - 1px) solid @menu-level1-bg;
+
+				content: "";
+			}
+
+			// lower levels
+			.sub-menu {
+				left: 100%;
+				top: -10px;
+				padding-left: @menuitem-padding-x;
+			}
+		}
+	}
+}

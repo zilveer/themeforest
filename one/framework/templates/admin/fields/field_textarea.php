@@ -1,0 +1,1 @@
+<textarea name="<?php echo $field_name; ?>" class="<?php echo isset($allow_code) ? 'code' : ''; ?>" data-language="<?php echo $code_language; ?>"><?php echo $field_value; ?></textarea>

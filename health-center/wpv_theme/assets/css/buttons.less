@@ -1,0 +1,209 @@
+// common styles for dynamically generated buttons (to be used with .button-gen())
+.button-gen-common() {
+	font-size: 14px;
+	font-weight: normal;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+	z-index: 0;
+	vertical-align: middle;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	text-decoration: none;
+	text-shadow: none;
+	border-radius: 1.5em;
+	border: 0;
+	transition: color .3s ease, border .3s ease, background .3s ease;
+	padding: .5em 1em;
+	border: none;
+	font-weight: normal;
+	text-shadow: none;
+
+    span {
+		display: inline-block ;
+		font-size: 1em;
+		line-height: 1.15;
+		padding: 0 .4em ;
+		margin: 0 0;
+		vertical-align: baseline ;
+		transition: color .3s ease;
+
+		&.icon {
+			font-size: 100% ;
+			line-height: inherit;
+			vertical-align: baseline !important;
+
+			&.shortcode.inverted-colors {
+				font-size: 100% ;
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(255, 255, 255, 0.2);
+				text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+			}
+
+			&:first-child {
+				margin-right: 0 ;
+			}
+
+			&:last-child {
+				margin-left: 0 ;
+			}
+		}
+
+		&.btext {
+			font-weight: normal;
+			position: relative;
+		}
+	}
+
+ 	&:hover {
+		&, span {
+			text-decoration: none;
+		}
+	}
+
+	&.button-filled-small {
+		box-shadow: 0px 3px 0px 0px #EAEAEA;
+		padding: 0.2em 1em;
+		border-radius: 1.5em;
+		font-weight: normal;
+	}
+
+	&.button-border {
+		padding: 0.2em 1em;
+		border-radius: 1.5em;
+		background: transparent;
+		box-shadow: none;
+		font-style: normal;
+	}
+}
+
+// mixins for generating button styles based on their background color
+
+.button-gen(@bgcolor:#DDD) when (iscolor(@bgcolor)) {
+	background: @bgcolor;
+	.readable-color(@bgcolor);
+
+	span {
+		.readable-color(@bgcolor);
+	}
+
+	&.button-border {
+		border: 2px solid @bgcolor;
+
+		span {
+			color: @bgcolor;
+		}
+	}
+}
+
+.button-gen(@bgcolor:#DDD) when not (iscolor(@bgcolor)) {
+	.button-gen();
+}
+
+.button-gen-hover(@bgcolor:#DDD) when (iscolor(@bgcolor)) {
+	&:hover,
+	&:focus,
+	&:active {
+		background: @bgcolor;
+
+		&, span {
+			.readable-color(@bgcolor) ;
+		}
+	}
+
+	&.button-border {
+		&:hover {
+			&, span {
+				border-color: @bgcolor;
+				color: lighten(@bgcolor, 90%) ;
+				background: @bgcolor;
+				transition: color 0.3s;
+			}
+		}
+	}
+}
+
+.button-gen-hover(@bgcolor:#DDD) when not (iscolor(@bgcolor)) {
+	.button-gen-hover();
+}
+
+/*
+ *  common style for submit buttons
+ */
+.submit-button-style {
+	.button-gen-common();
+	.button-gen(@accent-color-2);
+	.button-gen-hover(@accent-color-1);
+}
+
+// actual buttons below
+
+.button,
+.vamtam-button,
+input[type=button],
+input[type=submit] {
+	.submit-button-style;
+}
+
+.button,
+.vamtam-button,
+.slogan-content .button {
+	&,
+	&.accent1,
+	&.accent2,
+	&.accent3,
+	&.accent4,
+	&.accent5,
+	&.accent6,
+	&.accent7,
+	&.accent8 {
+		.button-gen-common();
+	}
+
+	&.accent1 {.button-gen(@accent-color-1); }
+	&, &.accent2 { .button-gen(@accent-color-2); }
+	&.accent3 { .button-gen(@accent-color-3); }
+	&.accent4 { .button-gen(@accent-color-4); }
+	&.accent5 { .button-gen(@accent-color-5); }
+	&.accent6 { .button-gen(@accent-color-6); }
+	&.accent7 { .button-gen(@accent-color-7); }
+	&.accent8 { .button-gen(@accent-color-8); }
+
+	&, &.hover-accent1 {.button-gen-hover(@accent-color-1); }
+	&.hover-accent2 { .button-gen-hover(@accent-color-2); }
+	&.hover-accent3 { .button-gen-hover(@accent-color-3); }
+	&.hover-accent4 { .button-gen-hover(@accent-color-4); }
+	&.hover-accent5 { .button-gen-hover(@accent-color-5); }
+	&.hover-accent6 { .button-gen-hover(@accent-color-6); }
+	&.hover-accent7 { .button-gen-hover(@accent-color-7); }
+	&.hover-accent8 { .button-gen-hover(@accent-color-8); }
+}
+
+.button,
+a.button,
+.vamtam-button {
+
+    .button-gen-common();
+
+	&.full {
+		width: auto;
+		float: none;
+		display: block;
+	}
+}
+
+.wpv-simple-button-border {
+	padding: 5px;
+	margin-top: 10px;
+	border: 1px solid @accent-color-4;
+	border-radius: 4px;
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	.border-box();
+
+	&:hover {
+		border-color: @accent-color-2;
+	}
+}

@@ -1,0 +1,45 @@
+.tabs__nav {
+	@extend %fs-18;
+	@extend .nav;
+	font-weight: normal;
+	margin-bottom: $u;
+
+	li {
+		border: $u/4 solid transparent;
+
+		&:last-child{
+			border: 0;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+
+		&.current, &:hover {
+			border-bottom-color: $gray;
+		}
+	}
+}
+
+.tabs__content {
+	position: relative;
+	min-height: 1px;
+	//overflow: hidden;
+}
+
+.tabs__pane {
+	width: 100%;
+	position: absolute;
+	transition: opacity .2s ease-in-out;
+	-webkit-backface-visibility: hidden;
+	transform: translate3d(0, 0, 0);
+	// @include rem(margin-right, $_u);
+	z-index: 20;
+
+	&.hide {
+		opacity: 0;
+		z-index: 5;
+		pointer-events: none;
+	}
+}

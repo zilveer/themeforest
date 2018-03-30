@@ -1,0 +1,459 @@
+/*--------------------------------------------------------------
+4.0 - Grid system
+--------------------------------------------------------------*/
+
+
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+.container {
+  .container-fixed();
+
+  @media (min-width: @screen-sm-min) {
+    width: @container-sm;
+  }
+  @media (min-width: @screen-md-min) {
+    width: @container-md;
+  }
+  @media (min-width: @screen-lg-min) {
+    width: @container-lg;
+  }
+}
+.visible-x-large {
+  display: none;
+  @media (min-width: 1600px) {
+    display: block;
+  }
+}
+
+
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but without any defined
+// width for fluid, full width layouts.
+#wrapper{
+  .transition(transform 0.3s ease 0s);
+  .backface-visibility(hidden);
+}
+.full-wrap{
+  .container{
+    width: 100%;
+    max-width: 1280px;
+  }
+}
+.fullwidth-container-wrap:not(.container-with-header-sidebar){
+  .content-container{
+    .container-fluid{
+      .container();
+    }
+  }
+  .content-container-padding,
+  .navbar-fixed-top,
+  .footer,
+  .footer-widget,
+  .heading-container,
+  .header-container{
+    @media (min-width: @screen-lg) {
+      padding-left: @grid-gutter-width;
+      padding-right: @grid-gutter-width;
+    }
+    @media (min-width: 1440px) {
+      padding-left: @grid-gutter-width*2;
+      padding-right: @grid-gutter-width*2;
+    }
+  }
+  .navbar-default-wrap > .container-fluid{
+    @media (min-width: @screen-lg) {
+      padding: 0; 
+    }
+  }
+  .heading-container{
+    background: none;
+    > div{
+      background: @heading-bg;
+    }
+  }
+}
+.wide-wrap{
+
+}
+.boxed-wrap{
+  &:extend(.clearfix all); 
+  background: @boxed-bg;
+  background-attachment: scroll;
+  background-position: center center;
+  background-repeat: repeat;
+  .box-shadow(0 0 15px rgba(0, 0, 0, 0.15));
+  margin: 0 auto; 
+  position: relative;  
+  z-index: 1;
+  @media (min-width: @screen-sm-min) {
+    width: @container-sm;
+  }
+  @media (min-width: @screen-md-min) {
+    width: @container-md;
+  }
+  @media (min-width: @screen-lg-min) {
+    width: @container-lg;
+  }
+  .container {
+    @media (min-width: @screen-sm-min) {
+      width: @container-sm - @grid-gutter-width;
+    }
+    @media (min-width: @screen-md-min) {
+      width: @container-md - @grid-gutter-width;
+    }
+    @media (min-width: @screen-lg-min) {
+      width: @container-lg - @grid-gutter-width;
+    }
+  }
+  .header-container {
+    .container {
+      padding-left: @grid-gutter-width;
+      padding-right: @grid-gutter-width;
+      @media (min-width: @screen-sm-min) {
+        width: @container-sm;
+      }
+      @media (min-width: @screen-md-min) {
+        width: @container-md;
+      }
+      @media (min-width: @screen-lg-min) {
+        width: @container-lg;
+      }
+    }
+  }
+}
+.content-container{
+  padding-top: @content-padding;
+  padding-bottom: @content-padding;
+  min-height: 500px;
+  @media (max-width: @screen-xs-max) {
+    padding-top: @grid-gutter-width;
+    padding-bottom: @grid-gutter-width;
+  }
+  &.no-padding{
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.container-fluid {
+  .container-fixed();
+}
+.container-full {
+  padding-left:  0;
+  padding-right: 0;
+  overflow: hidden;
+}
+
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+// .box{
+//   position: relative;
+//   @media (max-width: @screen-xs-max) {
+//     &.box-custom-margin-padding{
+//       margin:0 !important;
+//       padding-left: (@grid-gutter-width / 2) !important;
+//       padding-right: (@grid-gutter-width / 2) !important;
+//   }
+//   }
+//   &.border-top {
+//     border-top: 1px solid @border-color-base; 
+//   }
+
+//   &.border-left {
+//     border-left: 1px solid @border-color-base; 
+//   }
+
+//   &.border-right {
+//     border-right: 1px solid @border-color-base; 
+//   }
+
+//   &.border-bottom {
+//     border-bottom: 1px solid @border-color-base; 
+//   }
+// }
+// .box-image-bg{
+//   position: absolute; 
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: -100;
+//   background-repeat: no-repeat;
+//   background-position: center center;
+//   background-attachment: scroll;
+//   .bg-cover();
+//   &.bg-repeat{
+//     background-repeat: repeat;
+//     background-size: auto auto !important;
+//   }
+// }
+// .row-image-bg[data-fixed="1"],
+// .box-image-bg[data-parallax="1"]{
+//   background-attachment: fixed;
+// }
+.row {
+  .make-row();
+}
+.row{
+  position: relative;
+  &.row-custom-margin{
+    z-index: 100; 
+  }
+  @media (max-width: @screen-xs-max) {
+    &.row-custom-padding{
+      padding-top: (@grid-gutter-width / 2) !important;
+      padding-bottom: (@grid-gutter-width / 2) !important;
+    }
+    &.row-custom-margin{
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
+  // .row-image-bg{
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   z-index: -100;
+  //   background-repeat: no-repeat;
+  //   background-position: center center;
+  //   background-attachment: scroll;
+  //   .bg-cover();
+  //   &.bg-repeat{
+  //     background-repeat: repeat;
+  //     background-size: auto auto !important;
+  //   }
+  // }
+  // .row-image-bg[data-fixed="1"],
+  // .row-image-bg[data-parallax="1"]{
+  //   background-attachment: fixed;
+  // }
+
+  // &.border-top {
+  //   border-top: 1px solid @border-color-base; 
+  // }
+
+  // &.border-left {
+  //   border-left: 1px solid @border-color-base; 
+  // }
+
+  // &.border-right {
+  //   border-right: 1px solid @border-color-base; 
+  // }
+
+  // &.border-bottom {
+  //   border-bottom: 1px solid @border-color-base; 
+  // }
+  // .box-video-bg,
+  // .row-video-bg{
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   left: 0;
+  //   top: 0;
+  //   z-index: -100;
+  //   overflow: hidden;
+  //   .full-video{
+  //     min-height: 100%;
+  //       min-width: 100%;
+  //       position: relative;
+  //       left: 0;
+  //       top: 0;
+  //       bottom: 0;
+  //       right: 0;
+  //       z-index: -100;
+  //   }
+  // }
+}
+// @media (min-width: @screen-sm-min) {
+//   .page-layout-right-sidebar,
+//   .page-template-page-right-slidebar-php{
+//     .col-md-9.main-wrap{
+//         .main-content{
+//           padding-right: (@grid-gutter-width);
+//         }
+//     }
+//     .col-md-3.sidebar-wrap{
+//       padding-left: 0;
+//     }
+//   }
+//   .page-layout-left-sidebar,
+//   .page-template-page-left-slidebar-php{
+//     .col-md-9.main-wrap{
+//         .main-content{
+//           padding-left: (@grid-gutter-width);
+//         }
+//     }
+//     .col-md-3.sidebar-wrap{
+//       padding-right: 0;
+//     }
+//   }
+// }
+.sidebar-wrap{
+  //padding-right: 0 !important;
+  @media (max-width: @screen-sm-max) {
+    margin-top: @grid-gutter-width;
+  }
+}
+.main-sidebar{
+  //background: @background-color-base;
+  //padding:2em;
+  > div:first-child{
+    .widget-title{
+      margin-top: 0;
+    }
+  }
+}
+ @media (min-width: 800px) {
+.page-layout-left-sidebar{
+  .main-wrap{
+    float: right;
+  }
+}
+}
+// .col-md-2.sidebar-extra-wrap{
+//   .extra-sidebar{
+//     padding:(@grid-gutter-width);
+//     background-color: #fbfbfb;
+//   }
+// }
+// @media (max-width: @screen-md-max){
+//   .sidebar-extra-wrap{
+//     display: none;
+//   }
+// }
+@screen-sm-min-2 : (@screen-sm-min + 1);
+@media (max-width: @screen-sm-max) and (min-width: @screen-sm-min-2) {
+  .container{
+    width: 97%;
+  }
+
+  .main-wrap{ 
+    float: left;
+    width: percentage((8 / @grid-columns));
+  }
+  .col-md-12.main-wrap{
+    width: inherit;
+    float: none;
+  }
+  // .sidebar-extra-wrap{
+  //   display: none;
+  // }
+  .sidebar-wrap{
+    float: left;
+    width: percentage((4 / @grid-columns));
+  }
+}
+@media (max-width: @screen-xs-max){
+  .sidebar-wrap{
+    border-top: 1px solid @border-color-base;
+    clear: both;
+    margin-top: 60px;
+    padding-top: 30px;
+  }
+}
+// Columns
+//
+// Common styles for small and large grid columns
+
+.make-grid-columns();
+
+
+.column{
+  position: relative;
+  // &.border-top {
+  //   border-top: 1px solid @border-color-base; 
+  // }
+
+  // &.border-left {
+  //   border-left: 1px solid @border-color-base; 
+  // }
+
+  // &.border-right {
+  //   border-right: 1px solid @border-color-base; 
+  // }
+
+  // &.border-bottom {
+  //   border-bottom: 1px solid @border-color-base; 
+  // }
+  // &[data-fade="1"]{
+  //   .opacity(0);
+  //   @media (max-width: @nav-float-breakpoint-max) {
+  //     .opacity(1);
+  //   }
+  // }
+}
+
+// Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+
+.make-grid(xs);
+
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (min-width: @screen-sm-min) {
+  .make-grid(sm);
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: @screen-md-min) {
+  .make-grid(md);
+}
+
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: @screen-lg-min) {
+  .make-grid(lg);
+}
+
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: (@grid-gutter-width / 2);
+    padding-left: (@grid-gutter-width / 2);
+}
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+.col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+

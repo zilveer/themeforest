@@ -1,0 +1,284 @@
+/*--------------------------------------------------------------
+30.0 - Comment form
+--------------------------------------------------------------*/
+.comments-area{
+	margin-top: @grid-gutter-width;
+	.form-allowed-tags{
+		display: none;
+	}
+	.commentst-title{
+		margin-bottom:  (@line-height-computed / 2);
+		h3{
+			font-size: @font-size-xlarge;
+			text-transform: uppercase;
+		}
+	}
+	.comment-list{
+		margin-top: @grid-gutter-width;
+		list-style: none;
+	}
+	.comment-paginate{
+		.paginate_links{
+			float: left;
+			.page-numbers{
+				padding: 0.1em 0.7em;
+				font-size: @font-size-small;
+			}
+			.next,
+			.prev{
+				&,
+				&:hover{
+					border-color: transparent;
+				}
+			}
+		}
+	}
+}
+
+
+// Comments List
+//----------------------------------------------------------
+.comment-list,
+.comment-list .children {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// Child comments.
+.comment-list .children {
+	@media (min-width: @grid-float-breakpoint) {
+	   // border-left: 1px solid @comment-boder-color;
+	    padding-left: ((45px / @font-size-root) + @font-unit);
+	    position: relative;
+	}
+}
+
+// Comment wrapper ( Li )
+li.comment {
+	margin: 0;
+	padding: 0;
+}
+
+li.comment.odd {}
+
+li.comment.even {}
+
+li.comment.depth-1 {}
+
+li.comment.depth-2 {}
+
+li.comment.depth-3 {}
+
+
+// Gravatar image.
+.comment-img {
+	@media (min-width: @screen-xs) {
+		float: left;
+	}
+}
+
+
+// Comment content
+.comment-wrap{
+	position: relative;
+	padding: 0 0 @grid-gutter-width;
+}
+.comment-block {
+	padding: 0;
+	padding: 15px 20px;
+	background: @background-color-base;
+	position: relative;
+	margin: @grid-gutter-width/2 0 0;
+	@media (min-width: @screen-xs) {
+		margin: 0 0 0 100px;
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		top: 15px;
+		left: -10px;
+		width: 0px;
+	    height: 0px;
+	    border-top: 6px solid transparent;
+	    border-bottom: 6px solid transparent;
+	    border-right: 10px solid @background-color-base;
+	    display: none;
+	    @media (min-width: @screen-xs) {
+	    	display: block;
+	    }
+	}
+	time {
+		color: @text-secondary-color;
+		font-size: @font-size-small;
+		font-family: @headings-font-family;
+		display: block;
+		margin-bottom: 10px;
+	}
+}
+
+.comment-header {
+	padding-bottom: @padding-base-vertical;
+	span.pull-right{
+		margin-top: ((6px / @font-size-root) + @font-unit);
+	}
+}
+
+.comment-content {
+	position: relative;
+}
+
+.comment-author {
+	font-weight: bold;
+	font-family: @headings-font-family;
+	font-size: ((14px/@font-size-root) + @font-unit);
+	a {
+		color: @gray-dark;
+		&:hover {
+			color: @link-hover-color;
+		}
+	}
+}
+
+.ispostauthor {
+	background: #8C8C8C;
+    color: #fff;
+    font-size: @font-size-small;
+    padding: ((2px / @font-size-root) + @font-unit) ((8px / @font-size-root) + @font-unit);
+    .border-radius(3px);
+}
+
+.comment-meta {
+	position: relative;
+	margin: 0 0 0 @grid-gutter-width;
+	.comment-edit-link{
+		color: @text-secondary-color;
+		font-style: italic;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.comment-pending {
+	padding: @padding-base-vertical @padding-base-horizontal;
+	text-align: center;
+	color: @link-color;
+	background-color: @gray-lighter;
+	.border-radius(@border-radius-base);
+}
+
+// Comment Reply
+//----------------------------------------------------------
+.comment-reply-link{
+	color: @brand-primary;
+	&:hover{
+		text-decoration: underline;
+	}
+}
+#respond {
+	margin-bottom: ((50px / @font-size-root) + @font-unit);
+	.required {
+		position: relative;
+		color: @text-color;
+	}
+}
+.comment-reply-title{
+	font-size: 1.5em;
+	a{
+		color: inherit;
+		font-family: @font-family-base;
+		color: @text-secondary-color;
+	}
+}
+.comments-area > #respond-wrap .comment-reply-title{
+	font-size: @font-size-xlarge;
+	text-transform: uppercase;
+}
+
+#commentform {
+	margin-bottom: 0;
+}
+
+.comment-notes{
+	&:extend(.clearfix all);
+}
+.comment-notes,
+.logged-in-as {
+	margin-bottom: (@line-height-computed / 2);
+	color: @text-secondary-color;
+	margin-bottom: @grid-gutter-width;
+	font-style: italic;
+	a{
+		font-weight: @headings-font-weight;
+	}
+}
+.comment-form-author,
+.comment-form-email,
+.comment-form-url,
+.comment-form-comment{
+	input,
+	textarea{
+		.form-control();
+		height: 50px;
+	}
+	label{
+		font-weight: @font-weight-base;
+		text-transform: uppercase;
+	}
+	::-webkit-input-placeholder {
+	  color: @text-color;
+	}
+	:-moz-placeholder {
+	  color: @text-color;
+	}
+	::-moz-placeholder {
+	  color: @text-color;
+	}
+	:-ms-input-placeholder {
+	  color: @text-color;
+	}
+}
+.comment-form-author,
+.comment-form-email,
+.comment-form-url,
+.comment-form-rating,
+.comment-form-comment {
+	margin: 0;
+	label {
+		font-size: @font-size-base;
+	}
+	.required {
+		color: @brand-danger !important;
+	}
+}
+
+
+p.comment-form-author,
+p.comment-form-email,
+p.comment-form-url,
+p.comment-form-rating,{
+	.form-group();
+	margin-bottom: 20px;
+}
+
+.comment-form-comment {
+	textarea {
+	    margin-bottom:@line-height-computed ;
+	    height: ((200px / @font-size-root) + @font-unit);
+	    resize: none;
+	    width: 100%;
+	    margin-top: 0em;
+	}
+}
+
+#review_form .form-submit,
+.comment-form .form-submit {
+	margin: 0;
+	input[type="submit"] {
+		.btn();
+		.btn-primary();
+		font-size: @font-size-h5;
+		padding: @padding-large-vertical @padding-xlarge-horizontal;
+	}
+}

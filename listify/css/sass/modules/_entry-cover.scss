@@ -1,0 +1,62 @@
+.listify-cover {
+	background-size: cover;
+	background-position: center;
+	position: relative;
+
+	&.has-image:after {
+		content: ' ';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: rgba(0, 0, 0, .45);
+		z-index: 5;
+	}
+
+	@include bp(sm) {
+		&.has-image:after {
+			overflow: hidden;
+		}
+	}
+
+	&.has-image,
+	&.has-image a {
+		color: #fff;
+		text-shadow: rgba(0, 0, 0, .80) 0 1px 0;
+	}
+}
+
+.entry-cover {
+	@extend .listify-cover;
+	padding: 5em 0 3em;
+}
+
+.entry-cover--gradient {
+	&.has-image:after {
+		content: ' ';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: linear-gradient( 180deg,rgba( 0, 0, 0, .7 ) 0, rgba( 0, 0, 0, 0.14 ) 30%, rgba( 0, 0, 0, 0.35 ) 70%, rgba( 0, 0, 0, .7 ) );
+		z-index: 5;
+	}
+}
+
+.entry-cover--grid-cover {
+	padding: 170px 0 1em;
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+// this has no title so it needs a fixed height
+.entry-cover--grid-empty.has-image {
+	height: 270px;
+	padding: 0;
+
+	&:after {
+		display: none;
+	}
+}

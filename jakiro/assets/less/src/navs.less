@@ -1,0 +1,614 @@
+/*--------------------------------------------------------------
+9.0 - Navs
+--------------------------------------------------------------*/
+
+// Base class
+// --------------------------------------------------
+
+.nav {
+  margin-bottom: 0;
+  padding-left: 0; // Override default ul/ol
+  list-style: none;
+  &:extend(.clearfix all);
+  > li {
+    position: relative;
+    display: block;
+
+    > a {
+      position: relative;
+      display: block;
+      padding: @nav-link-padding;
+      &:hover{
+        text-decoration: none;
+        //background-color: @nav-link-hover-bg;
+      }
+    }
+    // Disabled state sets text to gray and nukes hover/tab effects
+    // &.disabled > a {
+    //   color: @nav-disabled-link-color;
+    //   &:hover{
+    //     color: @nav-disabled-link-hover-color;
+    //     text-decoration: none;
+    //     background-color: transparent;
+    //     cursor: not-allowed;
+    //   }
+    // }
+  }
+
+  // Open dropdowns
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      //background-color: @nav-link-hover-bg;
+      //border-color: @link-color;
+    }
+  }
+
+  // Prevent IE8 from misplacing imgs
+  //
+  // See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
+  > li > a > img {
+    max-width: none;
+  }
+}
+
+
+// Tabs
+// -------------------------
+
+// Give the tabs something to sit on
+.nav-tabs {
+  border-bottom: 1px solid @nav-tabs-border-color;
+  > li {
+    float: left;
+    // Make the list-items overlay the bottom border
+    margin-bottom:-1px;
+
+    // Actual tabs (as links)
+    > a {
+      margin-right: 2px;
+      line-height: @line-height-base;
+      border: 1px solid transparent;
+      .border-radius(@nav-tabs-border-radius @nav-tabs-border-radius 0 0);
+      color: @text-secondary-color;
+      &:hover {
+        //border-color: @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+        //background: @nav-tabs-hover-bg;
+      }
+      > i{
+        margin-right: 0.5em;
+      }
+    }
+
+    // Active state, and its :hover to override normal :hover
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background: #fff;
+         color: @headings-color;
+        //color: @nav-tabs-active-link-hover-color;
+        border: 1px solid @nav-tabs-border-color;
+        border-bottom-color: transparent;
+        cursor: default;
+      }
+    }
+  }
+}
+
+.nav-tabs-center{
+  display: table;
+  margin: 0 auto;
+}
+
+// Tabbable tabs
+// -------------------------
+
+// Hide tabbable panes to start, show them when `.active`
+.tab-content {
+  padding: (@grid-gutter-width / 1.5) 0;
+  > .tab-pane {
+    display: none;
+  }
+  > .active {
+    display: block;
+  }
+  .widget {
+    margin-bottom: 0;
+  }
+  .widget &{
+    padding-bottom: 0;
+  }
+}
+// /* custom inclusion of right, left and below tabs */
+// .tabs-top > .nav-tabs > li > a{
+//   border-top-width: 2px;
+// }
+// .tabs-top > .nav-tabs > .active > a,
+// .tabs-top > .nav-tabs > .active > a:hover,
+// .tabs-top > .nav-tabs > .active > a:focus {
+//   border-top: 2px solid @nav-tabs-active-link-hover-border-color;
+// }
+// .tabs-below > .nav-tabs,
+// .tabs-right > .nav-tabs,
+// .tabs-left > .nav-tabs {
+//   border-bottom: 0;
+// }
+
+// .tab-content > .tab-pane,
+// .pill-content > .pill-pane {
+//   display: none;
+// }
+
+// .tab-content > .active,
+// .pill-content > .active {
+//   display: block;
+// }
+
+// .tabs-below > .nav-tabs {
+//   border-top: 1px solid @nav-tabs-border-color;
+// }
+
+// .tabs-below > .nav-tabs > li {
+//   margin-top: -1px;
+//   margin-bottom: 0;
+// }
+
+// .tabs-below > .nav-tabs > li > a {
+//   .border-radius(0);
+// }
+
+
+// .tabs-below > .nav-tabs > .active > a,
+// .tabs-below > .nav-tabs > .active > a:hover,
+// .tabs-below > .nav-tabs > .active > a:focus {
+//   border-color: transparent @nav-tabs-border-color @nav-tabs-active-link-hover-border-color @nav-tabs-border-color;
+//   border-bottom-width: 2px;
+// }
+
+// .tabs-right,
+// .tabs-left{
+//   display: table;
+//   width: 100%;
+//   > .nav-tabs{
+//     display: table-cell;
+//     width: 30%;
+//     vertical-align: middle;
+//     > li{
+//       float: none;
+//     }
+//   }
+//   > .tab-content{
+//     padding: 0;
+//     float: none;
+//     display: table-cell;
+//     vertical-align: top;
+//     width: 70%;
+//   }
+// }
+
+// .tabs-left > .nav-tabs > li > a,
+// .tabs-right > .nav-tabs > li > a {
+//   min-width: 74px;
+//   margin-right: 0;
+//   margin-bottom: 3px;
+// }
+// .tabs-left > .nav-tabs {
+//   margin-right: ((19px / @font-size-root) + @font-unit);
+//   border-right: 1px solid @nav-tabs-border-color;
+// }
+// .tabs-left > .tab-content{
+//   padding-left: (@grid-gutter-width / 1.5);
+// }
+// .tabs-left > .nav-tabs > li > a {
+//   margin-right: -1px;
+//   .border-radius(0);
+// }
+// .tabs-left > .nav-tabs .active > a,
+// .tabs-left > .nav-tabs .active > a:hover,
+// .tabs-left > .nav-tabs .active > a:focus {
+//   border-color: @nav-tabs-border-color transparent @nav-tabs-border-color @nav-tabs-active-link-hover-border-color;
+//   *border-right-color: #ffffff;
+//   border-left-width: 2px;
+// }
+
+// .tabs-right > .nav-tabs {
+//   margin-left: ((19px / @font-size-root) + @font-unit);
+//   border-left: 1px solid @nav-tabs-border-color;
+// }
+// .tabs-right > .tab-content{
+//   padding-right: (@grid-gutter-width / 1.5);
+// }
+// .tabs-right > .nav-tabs > li > a {
+//   margin-left: -1px;
+//   .border-radius(0);
+// }
+
+// .tabs-right > .nav-tabs .active > a,
+// .tabs-right > .nav-tabs .active > a:hover,
+// .tabs-right > .nav-tabs .active > a:focus {
+//   border-color: @nav-tabs-border-color @nav-tabs-active-link-hover-border-color @nav-tabs-border-color transparent;
+//   *border-left-color: #ffffff;
+//   border-right-width: 2px;
+// }
+// .tabs-default{
+//   a{
+//     color: @text-color;
+//     &:hover,
+//     &:focus{
+//       color: @text-color;
+//     }
+//   }
+//   &.tabs-top {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-top-color: @border-color-base;
+//             color: @text-color;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-left {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-left-color: @border-color-base;
+//             color: @text-color;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-right {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-right-color: @border-color-base;
+//             color: @text-color;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-below {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-bottom-color: @border-color-base;
+//             color: @text-color;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tabs-primary{
+//   a{
+//     color: @text-color;
+//     &:hover,
+//     &:focus{
+//       color: @brand-primary;
+//     }
+//   }
+//   &.tabs-top {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-top-color: @brand-primary;
+//             color: @brand-primary;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-left {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-left-color: @brand-primary;
+//             color: @brand-primary;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-right {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-right-color: @brand-primary;
+//             color: @brand-primary;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-below {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-bottom-color: @brand-primary;
+//             color:@brand-primary;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tabs-success{
+//   a{
+//     color: @text-color;
+//     &:hover,
+//     &:focus{
+//       color: @brand-success;
+//     }
+//   }
+//   &.tabs-top {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-top-color: @brand-success;
+//             color: @brand-success;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-left {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-left-color: @brand-success;
+//             color: @brand-success;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-right {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-right-color: @brand-success;
+//             color: @brand-success;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-below {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-bottom-color: @brand-success;
+//             color:@brand-success;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tabs-info{
+//   a{
+//     color: @text-color;
+//     &:hover,
+//     &:focus{
+//       color: @brand-info;
+//     }
+//   }
+//   &.tabs-top {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-top-color: @brand-info;
+//             color: @brand-info;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-left {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-left-color: @brand-info;
+//             color: @brand-info;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-right {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-right-color: @brand-info;
+//             color: @brand-info;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-below {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-bottom-color: @brand-info;
+//             color:@brand-info;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tabs-warning{
+//   a{
+//     color: @text-color;
+//     &:hover,
+//     &:focus{
+//       color: @brand-warning;
+//     }
+//   }
+//   &.tabs-top {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-top-color: @brand-warning;
+//             color: @brand-warning;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-left {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-left-color: @brand-warning;
+//             color: @brand-warning;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-right {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-right-color: @brand-warning;
+//             color: @brand-warning;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-below {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-bottom-color: @brand-warning;
+//             color:@brand-warning;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tabs-danger{
+//   a{
+//     color: @text-color;
+//     &:hover,
+//     &:focus{
+//       color: @brand-danger;
+//     }
+//   }
+//   &.tabs-top {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-top-color: @brand-danger;
+//             color: @brand-danger;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-left {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-left-color: @brand-danger;
+//             color: @brand-danger;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-right {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-right-color: @brand-danger;
+//             color: @brand-danger;
+//         }
+//       }
+//     }
+//   }
+//   &.tabs-below {
+//     .nav-tabs {
+//       > li {
+//           &.active > a,
+//           &.active > a:hover,
+//           &.active > a:focus {
+//             border-bottom-color: @brand-danger;
+//             color:@brand-danger;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tabs-center{
+//   > .nav-tabs{
+//     text-align: center;
+//   }
+//   > .nav-tabs > li{
+//     display: inline-block;
+//     float: none;
+//   }
+// }
+// .tabs-full{
+//   > .nav-tabs{
+//     display: table;
+//     width: 100%;
+//     > li{
+//       display: table-cell;
+//       float: none;
+//       > a{
+//         margin-right: 0;
+        
+//         background-color:@background-color-base;
+//       }
+//       &.active > a,
+//       &.active > a:hover,
+//       &.active > a:focus{
+//         background-color: #fff;
+//       }
+//     }
+//   }
+//   &.tabs-top > .nav-tabs > li > a{
+//     border-top-width: 2px;
+//     margin-bottom: -1px;
+//   }
+//   &.tabs-below > .nav-tabs > li > a{
+//     border-bottom-width:2px;
+//     margin-top:-1px;
+//   }
+// }
+

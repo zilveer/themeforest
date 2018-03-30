@@ -1,0 +1,205 @@
+@mixin min-break($size) {
+	@media only screen and (min-width: $size) { @content; }
+}
+@mixin max-break($size) {
+	@media only screen and (max-width: $size) { @content; }
+}
+@mixin input-placeholder {
+	&:-moz-placeholder { @content; }
+	&::-moz-placeholder { @content; }
+	&:-ms-input-placeholder { @content; }
+	&::-webkit-input-placeholder { @content; }
+}
+.reset {
+	margin: 0;
+	padding: 0;
+}
+.cf {
+	&:before,
+	&:after {
+	    content: " ";
+	    display: table;
+	}
+	&:after {
+	    clear: both;
+	}
+}
+.endcolumn {
+	[class*="column"] + [class*="column"]:last-child {
+		float: left;
+	}
+}
+.transition {
+	@include transition(all .5s $transition);
+}
+.quick-transition {
+	@include transition(all .25s $transition);
+}
+.linear-transition {
+	@include transition(all 1s linear);
+}
+.linear-quick-transition {
+	@include transition(all .25s linear);
+}
+.admin-style {
+	.admin-bar & {
+		top: 46px;
+		
+		@media screen and (min-width: 783px){
+		  top: 32px;
+		}
+	}
+}
+@include min-break($break-small) {
+	.row {
+		padding: 0 35px;
+		
+		.row {
+			padding: 0;
+		}
+	}
+}
+.row {
+	width: 100%;
+	
+	&:before,
+	&:not(.thb-loading):after {
+		display: none !important;	
+	}
+	&.full-width-row {
+	   width: 100%;
+	   margin-left: auto;
+	   margin-right: auto;
+	   max-width: 100%;
+	}
+	&.no-row-padding {
+		padding: 0;
+	}
+	&.no-padding {
+		margin: auto;
+		padding: 0;
+		&>.columns,
+		.slick-slide>.columns  {
+			padding: 0;
+		}
+	}
+	&.max_width {
+    max-width: 112.5em;
+    padding: 0;
+    margin: 0 auto;
+    @include min-break($break-small) {
+    	padding: 0 35px;
+    }
+	}
+	.row {
+		width: auto;
+		
+		&.max_width {
+			margin: 0 -.9375rem;
+			@include min-break($break-small) {
+				padding: 0;
+			}
+		}
+	}
+	&.row-o-full-height {
+		height: 100vh;
+	}
+}
+.flex-video {
+	margin: 0;
+}
+
+/* Custom Scroll */
+.custom_scroll {
+	overflow: hidden;
+	position: relative;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+	@include user-select(none);
+	&>div {
+		width: 100%;
+		position: absolute;
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+		@include translateZ(0);
+		@include user-select(none);
+		-webkit-text-size-adjust: none;
+		-moz-text-size-adjust: none;
+		-ms-text-size-adjust: none;
+		-o-text-size-adjust: none;
+		text-size-adjust: none;
+		
+		&.iScrollVerticalScrollbar {
+			z-index: 99 !important;
+			opacity: 0;
+			@include transition(opacity .25s $transition);
+		}
+	}
+	&:hover {
+		&>div.iScrollVerticalScrollbar {
+			opacity: 1;
+		}	
+	}
+}
+.iScrollVerticalScrollbar {
+	width: 2px !important;
+	border: 0 !important;
+	background: #e6e6e6;
+	border-radius: 1px !important;
+	.iScrollIndicator {
+		width: 2px !important;
+		border-radius: 1px !important;
+		border: 0 !important;
+		background: $color1 !important;
+	}
+}
+.thb-five {
+	width: 20%;
+	
+	@media only screen and (max-width: $break-small) {
+		width: 50%;
+	}
+}
+.page-padding {
+	padding-top: 0;
+	padding-bottom: 0;
+	@include min-break($break-small) {
+		padding-top: 110px;
+		padding-bottom: 90px;
+		
+		.header_style_style2 & {
+			padding-top: 0;
+		}
+	}
+	&.no-bottom-padding {
+		padding-bottom: 0;
+	}
+}
+.page-bottom-padding {
+	padding-bottom: 90px;
+	
+	@media only screen and (max-width: $break-small) {
+		padding-bottom: 0;
+	}
+}
+.extra-page-padding {
+	padding-top: 130px;
+	padding-bottom: 110px;
+	
+	@media only screen and (max-width: $break-small) {
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+}
+.thb-loading:after {
+	content: '';
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	bottom: 80px;
+	left: 50%;
+	margin-left: -16px;
+	background: #fff url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMjIyMjIyIj4KICA8cGF0aCBvcGFjaXR5PSIuMjUiIGQ9Ik0xNiAwIEExNiAxNiAwIDAgMCAxNiAzMiBBMTYgMTYgMCAwIDAgMTYgMCBNMTYgNCBBMTIgMTIgMCAwIDEgMTYgMjggQTEyIDEyIDAgMCAxIDE2IDQiLz4KICA8cGF0aCBkPSJNMTYgMCBBMTYgMTYgMCAwIDEgMzIgMTYgTDI4IDE2IEExMiAxMiAwIDAgMCAxNiA0eiI+CiAgICA8YW5pbWF0ZVRyYW5zZm9ybSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIHR5cGU9InJvdGF0ZSIgZnJvbT0iMCAxNiAxNiIgdG89IjM2MCAxNiAxNiIgZHVyPSIwLjhzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8L3BhdGg+Cjwvc3ZnPgo=') center center no-repeat;
+}

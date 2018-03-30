@@ -1,0 +1,1 @@
+<div class="news-the-title"><span><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></span></div>

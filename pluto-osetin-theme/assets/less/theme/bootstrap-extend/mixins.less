@@ -1,0 +1,172 @@
+
+// Button variants
+// -------------------------
+
+// 3D buttons
+
+.button-variant-unflat(@color; @background; @border) {
+  color: @color;
+  background-color: @background;
+  #gradient > .vertical(lighten(@background, 10%), @background);
+  border-color: darken(@border, 5%);
+  border-bottom-color: darken(@border, 15%);
+  .box-shadow(~"0px 1px 2px 0px rgba(0,0,0,0.2), inset 0px 1px 0px 0px "lighten(@background, 20%));
+  text-shadow: -1px -1px 0px darken(@background, 15%);
+  font-weight: 700;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    color: @color;
+    background-color: darken(@background, 8%);
+        border-color: darken(@border, 12%);
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: #fff;
+  }
+}
+
+
+// Transparent buttons
+
+.button-variant-trans(@color; @border) {
+  color: @color;
+  background-color: transparent;
+  border-color: @border;
+  box-shadow: inset 0px 0px 0px 1px @border;
+  font-weight: 400;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    color: @color;
+        border-color: darken(@border, 12%);
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+  }
+}
+
+// Add extra conditional gradient mixins
+#osetin_gradient {
+  .horizontal(@start-color: #555; @end-color: #333; @start-percent: 0%; @end-percent: 100%) when (@start-color = @end-color) {
+    background-color: @start-color;
+  }
+  .horizontal(@start-color: #555; @end-color: #333; @start-percent: 0%; @end-percent: 100%) when not (@start-color = @end-color) {
+    background-image: -webkit-linear-gradient(left, color-stop(@start-color @start-percent), color-stop(@end-color @end-percent)); // Safari 5.1-6, Chrome 10+
+    background-image:  linear-gradient(to right, @start-color @start-percent, @end-color @end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",argb(@start-color),argb(@end-color))); // IE9 and down
+  }
+
+
+  .vertical(@start-color: #555; @end-color: #333; @start-percent: 0%; @end-percent: 100%) when (@start-color = @end-color) {
+    background-color: @start-color;
+  }
+  .vertical(@start-color: #555; @end-color: #333; @start-percent: 0%; @end-percent: 100%) when not (@start-color = @end-color) {
+    background-image: -webkit-linear-gradient(top, @start-color @start-percent, @end-color @end-percent);  // Safari 5.1-6, Chrome 10+
+    background-image: linear-gradient(to bottom, @start-color @start-percent, @end-color @end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@start-color),argb(@end-color))); // IE9 and down
+  }
+}
+
+
+// Custom web fonts helper
+.osfont {
+  font-family: 'osfonts';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+// background transparent mixin for older browsers
+.os_rgba(@colour, @alpha){
+  @alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
+
+  background-color: @colour; // Fallback for older browsers
+  background-color: @alphaColour;
+}
+
+.os-vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.os-vertical-align-parent {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+
+.header-highlight-stroke {
+  position: relative;
+  margin-bottom: 40px;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    display: block;
+    height: 4px;
+    background-color: @highlightStrokesBackground;
+    bottom: -15px;
+  }
+}
+
+.os-background-size(@size){
+  -o-background-size: @size;
+  -moz-background-size: @size;
+  -webkit-background-size: @size;
+  background-size: @size;
+}

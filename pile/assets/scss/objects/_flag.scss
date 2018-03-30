@@ -1,0 +1,358 @@
+///*------------------------------------*\
+//    #FLAG
+//\*------------------------------------*/
+//
+///**
+// * The flag object is a design pattern similar to the media object, however it
+// * utilises `display: table[-cell];` to give us control over the vertical
+// * alignments of the text and image. csswizardry.com/2013/05/the-flag-object
+// */
+
+// Predefine the variables below in order to alter and enable specific features.
+$flag-gutter:             $base-spacing-unit !default;
+$flag-gutter--small:      halve($flag-gutter) !default;
+$flag-gutter--large:      double($flag-gutter) !default;
+
+$enable-flag--small:      false !default;
+$enable-flag--large:      false !default;
+$enable-flag--rev:        false !default;
+$enable-flag--flush:      false !default;
+$enable-flag--top:        false !default;
+$enable-flag--bottom:     false !default;
+$enable-flag--responsive: false !default;
+$flag-collapse-at:        720px !default;
+
+
+
+
+
+///**
+// * 1. Allows us to control vertical alignments
+// * 2. Force the object to be the full width of its parent. Combined with [1],
+// *    this makes the object behave in a quasi-`display: block;` manner.
+// */
+.#{$namespace}flag,
+%#{$namespace}flag {
+    display: table; /* [1] */
+    width: 100%; /* [2] */
+}
+
+//    /**
+//     * Items within a flag object. There should only ever be one of each.
+//     *
+//     * 1. Default to aligning content to their middles.
+//     */
+    .#{$namespace}flag__img,
+    %#{$namespace}flag__img,
+    .#{$namespace}flag__body,
+    %#{$namespace}flag__body {
+        display: table-cell;
+        vertical-align: middle; /* [1] */
+    }
+
+//    /**
+//     * Flag images have a space between them and the body of the object.
+//     */
+    .#{$namespace}flag__img,
+    %#{$namespace}flag__img {
+        padding-right: $flag-gutter;
+
+        > img {
+            display: block;
+            max-width: none;
+        }
+
+    }
+
+//    /**
+//     * The container for the main content of the flag object.
+//     *
+//     * 1. Forces the `.flag__body` to take up all remaining space.
+//     */
+    .#{$namespace}flag__body,
+    %#{$namespace}flag__body {
+        width: 100%; /* [1] */
+    }
+
+
+
+
+
+@if ($enable-flag--small == true) {
+
+//    /**
+//     * Small flags.
+//     */
+
+    .#{$namespace}flag--small,
+    %#{$namespace}flag--small {
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img {
+            padding-right: $flag-gutter--small;
+        }
+
+        @if ($enable-flag--rev == true) {
+
+            /**
+             * Small reversed flags.
+             */
+
+            &.#{$namespace}flag--rev,
+            &%#{$namespace}flag--rev {
+
+                > .#{$namespace}flag__img,
+                > %#{$namespace}flag__img {
+                    padding-right: 0;
+                    padding-left:  $flag-gutter--small;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@if ($enable-flag--large == true) {
+
+//    /**
+//     * Large flags.
+//     */
+
+    .#{$namespace}flag--large,
+    %#{$namespace}flag--large {
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img {
+            padding-right: $flag-gutter--large;
+        }
+
+        @if ($enable-flag--rev == true) {
+
+            /**
+             * Large reversed flags.
+             */
+
+            &.#{$namespace}flag--rev,
+            &%#{$namespace}flag--rev {
+
+                > .#{$namespace}flag__img,
+                > %#{$namespace}flag__img {
+                    padding-right: 0;
+                    padding-left:  $flag-gutter--large;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
+@if ($enable-flag--rev == true) {
+
+//    /**
+//     * Reversed flag objects have their image-content to the right, and text-content
+//     * to the left.
+//     *
+//     * 1. Swap the rendered direction of the object
+//     * 2. and reset it.
+//     * 3. Reassign margins to the correct sides.
+//     */
+
+    .#{$namespace}flag--rev,
+    %#{$namespace}flag--rev {
+        direction: rtl; /* [1] */
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img,
+        > .#{$namespace}flag__body,
+        > %#{$namespace}flag__body {
+            direction: ltr; /* [2] */
+        }
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img {
+            padding-right: 0; /* [3] */
+            padding-left: $flag-gutter; /* [3] */
+        }
+
+    }
+
+}
+
+
+
+
+
+@if ($enable-flag--flush == true) {
+
+//    /**
+//     * Flush flag objects have no space between the image- and text-content.
+//     */
+
+    .#{$namespace}flag--flush,
+    %#{$namespace}flag--flush {
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img {
+            padding-right: 0;
+            padding-left:  0;
+        }
+
+    }
+
+}
+
+
+
+
+
+@if ($enable-flag--top == true) {
+
+//    /**
+//     * Vertically top aligned flag objects.
+//     */
+
+    .#{$namespace}flag--top,
+    %#{$namespace}flag--top {
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img,
+        > .#{$namespace}flag__body,
+        > %#{$namespace}flag__body {
+            vertical-align: top;
+        }
+
+    }
+
+}
+
+@if ($enable-flag--bottom == true) {
+
+//    /**
+//     * Vertically bottom aligned flag objects.
+//     */
+
+    .#{$namespace}flag--bottom,
+    %#{$namespace}flag--bottom {
+
+        > .#{$namespace}flag__img,
+        > %#{$namespace}flag__img,
+        > .#{$namespace}flag__body,
+        > %#{$namespace}flag__body {
+            vertical-align: bottom;
+        }
+
+    }
+
+}
+
+
+
+
+@if ($enable-flag--responsive == true) {
+
+//    /**
+//     * Responsive flag objects.
+//     *
+//     * There is a very pragmatic, simple implementation of a responsive flag
+//     * object, which simply places the text-content beneath the image-content.
+//     *
+//     * We use a `max-width` media query because:
+//     *
+//     * a) it is the least verbose method in terms of amount of code required.
+//     * b) the flag object's default state is image-next-to-text, so its stacked
+//     *    state is the exception, rather than the rule.
+//     */
+
+    @media screen and (max-width: $flag-collapse-at) {
+
+        .#{$namespace}flag--responsive,
+        %#{$namespace}flag--responsive {
+
+            @if ($enable-flag--rev == true) {
+
+//                /**
+//                 * Disable reversal of content because there is no concept of
+//                 * 'reversed' in a stacked layout.
+//                 */
+                direction: ltr;
+            }
+
+            &,
+            > .#{$namespace}flag__img,
+            > %#{$namespace}flag__img,
+            > .#{$namespace}flag__body,
+            > %#{$namespace}flag__body {
+                display: block;
+            }
+
+//            /**
+//             * Rework the spacings on regular flag objects.
+//             */
+            > .#{$namespace}flag__img,
+            > %#{$namespace}flag__img {
+                padding-right: 0;
+                padding-left:  0;
+                margin-bottom: $flag-gutter;
+            }
+
+            @if ($enable-flag--small == true) {
+
+//                /**
+//                 * Small responsive flags.
+//                 *
+//                 * Take a little more heavy-handed approach to reworking
+//                 * spacings on flags that are also small flags in their regular
+//                 * state.
+//                 */
+
+                &.#{$namespace}flag--small,
+                &%#{$namespace}flag--small {
+
+                    > .#{$namespace}flag__img,
+                    > %#{$namespace}flag__img {
+                        padding-right: 0;
+                        padding-left:  0;
+                    }
+
+                }
+
+            }
+
+            @if ($enable-flag--large == true) {
+
+//                /**
+//                 * Large responsive flags.
+//                 *
+//                 * Take a little more heavy-handed approach to reworking
+//                 * spacings on flags that are also large flags in their regular
+//                 * state.
+//                 */
+
+                &.#{$namespace}flag--large,
+                &%#{$namespace}flag--large {
+
+                    > .#{$namespace}flag__img,
+                    > %#{$namespace}flag__img {
+                        padding-right: 0;
+                        padding-left:  0;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}

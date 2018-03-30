@@ -1,0 +1,1 @@
+<span class="mk-testimonial-author"><?php echo strip_tags( get_post_meta( get_the_ID(), '_author', true ) ); ?></span>

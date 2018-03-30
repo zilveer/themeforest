@@ -1,0 +1,541 @@
+/*  ----------------------------------------------------------------------------
+    fake border (right of the container)
+*/
+.td-container-border:after {
+  position:absolute;
+  bottom: 0;
+  right: 0;
+  display: block;
+  content: '';
+  height: 100%;
+  width: 1px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: @td_grid_border_color;
+  z-index: -1;
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    smart sidebar - fix ?
+*/
+.td-ss-main-sidebar,
+.td-ss-row .td-pb-span4 .wpb_wrapper {
+  -webkit-backface-visibility: hidden;
+  //-webkit-perspective: 1000; // this brake the static smart sidebar and borders are overlapped on blocks - don't know why is used - to fix what?
+  z-index: 1; // fix the pulldown overlapped by the next row on floating sidebar
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    container
+*/
+.td-container {
+  width: 1021px;
+  margin-right: auto;
+  margin-left: auto;
+  border-bottom: 1px solid @td_grid_border_color;
+  background-color: white;
+  position: relative;
+  clear: both;
+  z-index: 1;
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    rows
+*/
+.td-pb-row {
+  .mx-row();
+  margin-bottom: 0;
+  margin-left: 0;
+
+}
+
+/* ----------------------------------------------------------------------------
+    marius - add borders
+*/
+.td-pb-row {
+  // border on all columns right side
+  .wpb_column {
+    position: relative;
+    &:before {
+      .mx-magic-border();
+      right: -1px;
+    }
+    &:last-child:before {
+      display: none;
+    }
+  }
+}
+// 3 columns - span4 hack
+// first span4
+.td-pb-row .td-pb-span4:nth-of-type(3) {
+  &:after {
+    .mx-magic-border();
+    left: -341px;
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      left: -253px;
+    }
+  }
+}
+// last span4
+.td-pb-row .td-pb-span4:nth-last-of-type(3) {
+  &:after {
+    .mx-magic-border();
+    right: -341px;
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      right: -253px;
+    }
+  }
+}
+.page-template-page-pagebuilder-title {
+  // full width
+  .td-pagebuilder-sidebar-full.td-main-content:before {
+    right: 0;
+  }
+
+  // sidebar right
+  .td-pagebuilder-sidebar-right {
+    .td-main-content:before {
+      right: -1px;
+    }
+  }
+
+  .td-pb-span8 .td-pb-span4:after {
+    display: none;
+  }
+}
+
+
+// left border on entire content
+.td-container-border:before {
+  .mx-magic-border();
+  left: 0;
+}
+// border on main content on right side - this is for templates
+.td-main-content {
+  position: relative;
+  &:before {
+    .mx-magic-border();
+    right: -1px;
+  }
+
+  // fix templates without sidebar
+  &.td-pb-span12:before {
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      right: 0;
+    }
+  }
+}
+// sidebar border fix
+.td-main-sidebar {
+  &:before {
+    .mx-magic-border();
+    right: -1px;
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      right: 0;
+    }
+  }
+}
+
+// Magic border
+.mx-magic-border() {
+  content: '';
+  position: absolute;
+  background-color: @td_grid_border_color;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  //z-index: 1;
+  display: block;
+
+  /* responsive portrait phone */
+  @media (max-width: @responsive_p_phone_max) {
+    display: none;
+  }
+}
+
+
+
+
+
+
+
+
+/*  ----------------------------------------------------------------------------
+    all spans
+*/
+
+.td-pb-row [class*="td-pb-span"] {
+  .mx-span();
+
+  margin-left: 0;
+  border-left: 1px solid @td_grid_border_color;
+  //z-index: 1; // this fix the borders to overlap the colored blocks
+}
+
+// this fix the border style from VC editor is you want to add a border on a column from VC
+// ----------------------------------------------------------------------------------------
+.wpb_column,
+.wpb_row {
+  border-style: solid;
+  border-width: 0;
+  border-color: @td_grid_border_color;
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    grid in grid
+*/
+.td-pb-row .td-pb-row {
+
+  .td-pb-span12 {
+    width: 100%;
+  }
+
+  .td-pb-span11 {
+    width: 91.66%;
+  }
+  .td-pb-span10 {
+    width: 83.33%;
+  }
+
+  .td-pb-span9 {
+    width: 75%;
+  }
+
+  .td-pb-span8 {
+    width: 66.66%;
+  }
+
+  .td-pb-span7 {
+    width: 58.33%;
+  }
+
+  .td-pb-span6 {
+    width: 50%; //span 6 - is manually sized down ( td-1-col @the_manual_resize )
+  }
+
+  .td-pb-span5 {
+    width: 41.66%;
+  }
+
+  .td-pb-span4 {
+    width: 33.33%;
+  }
+
+  .td-pb-span3 {
+    width: 25%;
+  }
+
+  .td-pb-span2 {
+    width: 16.66%;
+  }
+
+  .td-pb-span1 {
+    width: 8.333%;
+  }
+}
+
+
+/*  ----------------------------------------------------------------------------
+    main grid
+*/
+.td-pb-span1 {
+  width: 85px;
+}
+.td-pb-span2 {
+  width: 170px;
+}
+.td-pb-span3 {
+  width: 255px;
+}
+.td-pb-span4 {  // td-1-col
+  width: 340px;
+  position: relative;
+}
+.td-pb-span5 {
+  width: 425px;
+}
+.td-pb-span6 {
+  width: 510px;
+}
+.td-pb-span7 {
+  width: 595px;
+}
+
+.td-pb-span8 {  // td-2-col
+  width: 680px;
+
+  /*
+    one span 8 devided by 2 = td-1-col
+    only this span needs fixing, the rest are procentual.
+  */
+  .td-pb-row {
+    width: 680px;
+    position: relative;
+    left:-1px;
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      left: 0;
+    }
+  }
+
+  .td-pb-row div.td-pb-span6 { // td-1-col @the_manual_resize
+    width: 340px;
+  }
+}
+
+.td-pb-span9 {
+  width: 765px;
+}
+.td-pb-span10 {
+  width: 850px;
+}
+.td-pb-span11 {
+  width: 935px;
+}
+.td-pb-span12 {  // td-3-col
+  width: 1020px;
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    black edition cell
+*/
+
+.td-pb-full-cell {
+  position: relative;
+}
+
+
+// td-1-col - with background - root
+.td-container-border > .td-pb-row > .td-pb-span4 > * > .td-pb-full-cell {
+  width: 341px;
+  left:-1px;
+}
+
+// full cell on a template sidebar
+.td-main-sidebar .td-pb-full-cell {
+  width: 341px;
+  left: -1px;
+}
+
+/* when we have a wordpress sidebar added via visual composer that has a block with background. fix for  td-1-col - with background - root */
+@media (min-width: @responsive_p_tablet_max) {
+  .td-container-border > .td-pb-row > .td-pb-span4 .wpb_widgetised_column  .td-pb-full-cell {
+    width: 341px;
+    left: -1px;
+  }
+}
+
+// td-1-col - with background - span 8 -> span 6 (when it's in a column + sidebar layout)
+.td-pb-span8 .td-pb-span6 .td-pb-full-cell {
+  width: 341px;
+  left: -1px;
+}
+
+
+// td-2-col - with background - root
+.td-container-border > .td-pb-row > .td-pb-span8 > * > .td-pb-full-cell {
+    width: 681px;
+    left: -1px;
+}
+
+// td-3-col - with background - root
+.td-container-border > .td-pb-row > .td-pb-span12 > * > .td-pb-full-cell {
+  width: 1021px;
+  left: -1px;
+}
+
+
+/*  ----------------------------------------------------------------------------
+    padding cell
+*/
+.td-pb-padding {
+  padding: 20px 19px 20px 20px;
+
+  /* responsive portrait tablet */
+  @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+    padding: 17px;
+  }
+
+  /* responsive portrait phone */
+  @media (max-width: @responsive_p_phone_max) {
+    padding: 10px;
+  }
+}
+
+/*  ----------------------------------------------------------------------------
+    padding left-right
+*/
+.td-pb-padding-side {
+  padding: 0 19px 0 20px;
+
+  /* responsive portrait tablet */
+  @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+    padding: 0 17px;
+  }
+
+  /* responsive portrait phone */
+  @media (max-width: @responsive_p_phone_max) {
+    padding: 0 10px;
+  }
+}
+
+
+/*  ----------------------------------------------------------------------------
+    margin left-right
+*/
+.td-pb-margin-side {
+  margin: 0 19px 0 20px;
+
+  /* responsive portrait tablet */
+  @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+    margin: 0 17px;
+  }
+
+  /* responsive portrait phone */
+  @media (max-width: @responsive_p_phone_max) {
+    margin: 0 10px;
+  }
+}
+
+
+/*  ----------------------------------------------------------------------------
+    padding left-right for default page builder elements
+*/
+.wpb_content_element {
+  padding: 0 19px 20px 20px;
+
+  /* responsive portrait tablet */
+  @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+    padding: 0 17px 17px 17px;
+  }
+
+  /* responsive portrait phone */
+  @media (max-width: @responsive_p_phone_max) {
+    padding: 0 10px 17px 10px;
+  }
+}
+
+/*  ----------------------------------------------------------------------------
+
+    remove border for first row in container
+
+
+*/
+.td-container-border {
+  > .td-pb-row:first-child {
+    // remove the top border for the first block in page
+    .wpb_wrapper {
+      .td_block_wrap:nth-of-type(1) {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    border top class for cell
+*/
+
+.td-pb-border-top {
+  border-top: 1px solid @td_grid_border_color;
+}
+
+
+// a border class for elements that need a top border and don't have design option (tabs)
+.td-top-border {
+  border-top: 1px solid @td_grid_border_color !important;
+}
+
+// remove left border if you want on a column
+.td-no-left-border {
+  border-left: 0 !important;
+}
+
+
+/*  ----------------------------------------------------------------------------
+    hacks
+*/
+.wpb_raw_code {
+  margin-bottom: 0 !important;
+}
+
+.wpb_row, .wpb_content_element,
+ul.wpb_thumbnails-fluid > li,
+.last_toggle_el_margin,
+.wpb_button {
+  margin-bottom: 0;
+}
+
+p {
+  margin-top: 0;
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    visual editor live
+*/
+/* body.view-mode - in live editor with guides off, body.compose-mode in live editor with guides on */
+body.compose-mode, body.view-mode {
+  [class*="vc_span"] {
+    padding: 0 !important;
+  }
+}
+
+
+/* row edit controlls in live edit mode */
+body.compose-mode .controls-out-tl {
+  top: 0 !important;
+}
+
+body.compose-mode .controls-bc {
+  z-index: 99999;
+}
+body.compose-mode .control-btn-append {
+  top: 0 !important;
+
+}
+
+
+// Visual Composer VC latest version 4.9
+// @updated by RA 14 july 2016 - if we use !important, the build in design tab from visual composer cannot overwrite
+.vc_col-has-fill>.vc_column-inner,
+.vc_row-has-fill+.vc_row-full-width+.vc_row>.vc_column_container>.vc_column-inner,
+.vc_row-has-fill+.vc_row>.vc_column_container>.vc_column-inner,
+.vc_row-has-fill+.vc_vc_row>.vc_row>.vc_vc_column>.vc_column_container>.vc_column-inner,
+.vc_row-has-fill+.vc_vc_row_inner>.vc_row>.vc_vc_column_inner>.vc_column_container>.vc_column-inner,
+.vc_row-has-fill>.vc_column_container>.vc_column-inner,
+.vc_row-has-fill>.vc_row>.vc_vc_column>.vc_column_container>.vc_column-inner,
+.vc_row-has-fill>.vc_vc_column_inner>.vc_column_container>.vc_column-inner {
+  padding-top: 0;
+}
+
+//  @updated by RA 14 july 2016 - made more generic and added padding-top reset. I've updated the templates that are in the theme
+.vc_row .vc_column-inner  {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+// fix blocks color background z-index over border
+.td-main-sidebar {
+  z-index: 1;
+}

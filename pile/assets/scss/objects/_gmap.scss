@@ -1,0 +1,84 @@
+#gmap {
+
+	.touchevents &:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.touchevents &.is-active:after {
+		display: none;
+	}
+
+	img { max-width: none; }
+	.is--untouchable & { pointer-events: none; }
+}
+
+.map__marker {
+	position: relative;
+	bottom: 100%;
+	left: -50%;
+	top: -12px;
+	background: black;
+	color: white;
+	padding: $u;
+
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		border: 8px solid transparent;
+		border-top-color: black;
+		margin-left: -8px;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		color: white;
+	}
+
+	img {
+		width: auto !important;
+		max-width: none;
+		margin: 0 auto;
+	}
+}
+
+.map__marker-wrap {
+	position: absolute;
+	bottom: 0; left: 0;
+	font-size: 16px;
+
+	@include query-above(340px) {
+		min-width: 20em;
+	}
+
+	@include query-below(340px) {
+		width: calc(100vw - 32px);
+	}
+
+	&.is-empty {
+		width: 0;
+		height: 0;
+		min-width: 0;
+		border-radius: 50%;
+
+		.map__marker {
+			width: 40px;
+			height: 40px;
+			top: auto; left: auto; bottom: auto;
+			padding: 0;
+		    border-radius: 50%;
+		    border-bottom-right-radius: 0;
+		    transform: translateY(-100%) rotate(45deg);
+
+		    &:after {
+		    	display: none;
+		    }
+		}
+	}
+}

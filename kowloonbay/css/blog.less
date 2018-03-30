@@ -1,0 +1,686 @@
+/*------------------------------------------------------------------
+
+[Table of contents]
+
+1. Blog list / ul.blog-list
+	1.1. Blog list item / li.blog-item
+2. Carousel for gallery posts / .carousel-blog-gallery
+	2.1. Nav for hovered carousel / &:hover:not(.carousel-controls-outside) .owl-controls .owl-nav
+		2.1.1. Previous & next / [class*='owl-']
+			2.1.1.1. Symbols for previous & next / &:after
+	2.2. Item image (cover) overlay / .item.img-bg-cover:before
+	2.3. Carousel controls / &:not(.carousel-controls-outside) .owl-controls
+		2.3. Nav / .owl-nav
+			2.3.1. Previous / .owl-prev
+				2.3.1.1. Symbol for previous / &:after
+			2.3.2. Next / .owl-next
+				2.3.2.1. Symbol for next / &:after
+			2.3.3. Previous & next / [class*='owl-']
+				2.3.3.1. Symbols for previous & next / &:after
+3. Image hover effect container / .img-bg-cover-hover-effect-container
+	3.1. Hover state / &:hover
+		3.1.1. Top container for posts / .post-top-container
+			3.1.1.1. Carousel for gallery post & iframe for video posts / .carousel-blog-gallery, iframe
+	3.2. Top container for posts / .post-top-container
+		3.2.1. Carousel for gallery post & iframe for video posts / .carousel-blog-gallery, iframe
+		3.2.2. iframe for video posts when video is playing / &.playing iframe
+4. Top container for posts / .post-top-container
+	4.1. Div tag after top container / & + div
+		4.1.1. Sticky post / .sticky:before
+5. Excerpt / .excerpt
+6. Post infobar / ul.post-info
+	6.1. Infobar item / li
+		6.1.1. Links / a:link, a:visited, a:hover, a:active
+7. Search area / .search
+	7.1. Search form / .blog-search-form
+		7.1.1. Fieldset / fieldset
+		7.1.2. Search field / input.search-field
+		7.1.3. Search button / input[type="submit"]
+			7.1.1.1. Hover state / &:hover
+8. Blog article / article
+	8.1. H2 / h2
+9. Previous & next posts / .prev-next
+	9.1. Links / a:link, a:visited, a:hover, a:active
+10. Post wrapper / .post-wrapper
+	10.1. Div tag inside post wrapper / &>div
+	10.2. Div tag inside post wrapper with no horizontal page padding / &.no-page-padding>div
+11. Post / .post
+	11.1. Post (last child) / &:last-child
+	11.2. Title / .title
+		11.2.1. Link / &>a
+			11.2.1.1. Link states / &:link, &:visited, &:hover, &:active
+	11.3. Post entry / .entry
+		11.3.1. Mini post entry / &.entry-mini
+	11.4. Sticky post / &.sticky
+		11.4.1. Before pseudo elemeent / &:before
+12. Comments / .post-comments
+	12.1. Comment number / h3 .number
+	12.2. Reply / &.reply-to-thread
+		12.2.1. H3 / h3, #qcom-div
+	12.3. Comment list / ol.comment-list, ol.children
+		12.3.1. Comment sublist / li ol
+	12.4. Single comment / li.comment 
+		12.4.1. Comment body / .comment-body
+			12.4.1.1. After pseudo element / &:after
+			12.4.1.2. VCard / .vcard
+				12.4.1.2.1. Citation / cite.fn
+				12.4.1.2.2. Image / img
+				12.4.1.2.3. Says / .says
+		12.4.2. Comment meta data & reply button / .comment-meta, .reply
+		12.4.3. Reply button / .reply
+	12.5. Code / code
+	12.6. Commment right after pingback / li.pingback + li.comment{
+13. Paging / .paging
+	13.1. Page list / ul.pageList
+		13.1.1. Page list item / &>li
+			13.1.1. First item / &:first-child
+				13.1.1.1. Link & text / &>a, &>span
+			13.1.2. Last item / &:last-child
+				13.1.2.1. Link & text / &>a, &>span
+			13.1.3. Link / &>a
+				13.1.3.1. Normal & visited states / &:link, &:visited
+				13.1.3.2. Hover & active states / &:hover, &:active, &.active
+			13.1.4. Text / &>span
+14. Paragraph for tags / p.tags
+15. Tag link / a.tl-tag
+	15.1. Before pseudo element / &:before
+	15.2. Normal & visited states / &:link, &:visited
+	15.3. Hover & active states / &:hover, &:active
+16. Sidebar widget / .sidebar-block
+	16.1. HTML Select / select
+	16.2. First widget / &:first-child
+		16.2.1. H5 / h5
+	16.3. Unordered list / ul
+	16.4. Widgets for recent entries, RSS & menu / &.widget_recent_entries, &.widget_rss, &.widget_nav_menu
+		16.4.1. List item / ul>li
+			16.4.1.1. Before pseudo element / &:before
+	16.5. Post date & RSS date / &.widget_recent_entries .post-date, &.widget_rss .rss-date
+	16.6. Widget for RSS / &.widget_rss
+		16.6.1. RSS widget & date / .rsswidget, .rss-date
+		16.6.2. First RSS widget / .rsswidget:first-child
+		16.6.3. RSS summary / .rssSummary
+		16.6.4. Citation / cite
+	16.7. Widget for tag cloud / &.widget_tag_cloud
+		16.7.1. List item / ul>li
+			16.7.1.1. Tag link / a.tl-tag
+	16.8. Widget for calendar / &.widget_calendar
+		16.8.1. Calendar / #wp-calendar
+			16.8.1.1. Caption / caption
+	16.9. Widget for recent comments / &.widget_recent_comments
+		16.9.1. List item / ul>li
+			16.9.1. Before pseudo element / &:before
+			16.9.2. Link / a
+				16.9.2.1. Break (after break) / br+br
+				16.9.2.2. Break (last child) / br:last-child
+				16.9.2.3. Span tag after link / &+span
+	16.10. Image / img
+-------------------------------------------------------------------*/
+
+
+ul.blog-list{
+	li.blog-item{
+		width: 100%;
+	}
+}
+
+.carousel-blog-gallery{
+	&:hover:not(.carousel-controls-outside) .owl-controls .owl-nav{
+
+		[class*='owl-']{
+			&:after{
+				opacity: 1;
+				.transform(~'translate3d(0,0,0)');
+			}
+		}
+	}
+
+	.item.img-bg-cover:before{
+		display: none;
+	}
+
+	&:not(.carousel-controls-outside) .owl-controls{
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		.transform(~'none');
+
+		.owl-nav{
+			margin-top: 0;
+
+			.owl-prev{
+				float: left;
+
+				&:after{
+					left: 2.2vw;
+					content: '\f104';
+					.transform(~'translate3d(-100%,0,0)');
+				}
+			}
+
+			.owl-next{
+				float: right;
+
+				&:after{
+					right: 2.2vw;
+					content: '\f105';
+					.transform(~'translate3d(100%,0,0)');
+				}
+			}
+
+			[class*='owl-']{
+				position: relative;
+				background-color: transparent;
+				color:transparent;
+				font-size: 0;
+				line-height: 0;
+				margin: 0;
+				padding: 0;
+
+				&:after{
+					display: block;
+					position: absolute;
+					top: 0;
+					font-family: FontAwesome;
+					.text-shadow;
+					font-size: 4vw;
+					opacity: 0;
+					.transition-transform(~' @{transitionDuration}, opacity @{transitionDuration}');
+				}
+			}
+		}
+	}
+}
+
+.img-bg-cover-hover-effect-container{
+	&:hover{
+		.post-top-container{
+			.carousel-blog-gallery, iframe{
+				opacity: 1;
+			}
+		}
+	}
+
+	.post-top-container{
+		position: relative;
+		background-color: @imageHoverOverlayColor;
+
+		.carousel-blog-gallery, iframe{
+			opacity: (1 - @imageHoverOverlayOpacity);
+			.transition(~'opacity @{transitionDuration}');
+		}
+
+		&.playing iframe{
+			opacity: 1;
+		}
+	}
+}
+
+.post-top-container{
+	& + div{
+		.padding-t-1x;
+
+		.sticky:before{
+			top: -@baseLineHeight;
+		}
+	}
+}
+
+.excerpt{
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+ul.post-info{
+	li{
+		margin-left: 10px;
+		margin-right: 10px;
+		.margin-b-half;
+
+		a:link, a:visited, a:hover, a:active{
+			.body-text-color;
+		}
+	}
+}
+
+.search{
+	.blog-search-form{
+		max-width: 400px;
+		margin: 0 auto;
+
+		fieldset{
+			position: relative;
+		}
+
+		input.search-field{
+			display: block;
+			width: 100%;
+			padding-right: @baseLineHeight + 14px;
+		}
+
+		input[type="submit"]{
+			font-family: FontAwesome;
+			font-weight: normal;
+			font-style: normal;
+			display: block;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: @baseLineHeight + 12px;
+			height:  @baseLineHeight + 12px;
+			line-height:  @baseLineHeight;
+			border: none;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+
+			&:hover{
+				border-color: @primaryColor;
+			}
+		}
+	}
+}
+
+article{
+	h2{
+		text-align: center;
+		font-weight: @bodyMediumFontWeight;
+		margin-top: 0;
+		margin-bottom: 20px;
+	}
+}
+
+.prev-next{
+	.body-heavy-font-weight;
+
+	a:link, a:visited, a:hover, a:active{
+		color: @bodyTextColor;
+	}
+}
+
+.post-wrapper{
+	position: relative;
+	overflow: hidden;
+
+	&:not(.no-page-padding)>div{
+		box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
+
+		&:not(:first-child):last-child{
+			box-shadow: inset 0 1px 0 @bgColor, 0 -1px 0 @bgColor, inset 0 0 0 1px rgba(0,0,0,0.1);
+		}
+	}
+
+	&.no-page-padding>div{
+		box-shadow: none;
+	}
+}
+
+.post{
+	position: relative;
+	.margin-b-3x;
+
+	&:last-child{
+		margin-bottom: 0;
+	}
+
+	.title{
+		.margin-t-none;
+		position: relative;
+		width: 100%;
+		line-height: @baseLineHeight * 2;
+		font-size: 18px;
+		line-height: 1.5;
+		.body-font;
+		.body-heavy-font-weight;
+		.body-text-color;
+
+		&>a{
+			&:link, &:visited, &:hover, &:active{
+				.body-text-color;
+			}
+		}
+	}
+
+	.entry{
+		.margin-b-1x;
+
+		&.entry-mini{
+			.margin-b-none;
+		}
+	}
+
+	&.sticky{
+		position: relative;
+		&:before{
+			position: absolute;
+			content: '';
+			display: block;
+			.primary-color-bg;
+			top: -@baseLineHeight*2;
+			left:  -@pagePaddingH;
+			right:  -@pagePaddingH;
+			height: 10px;
+		}
+	}
+}
+
+.post-comments{
+	text-align: left;
+	margin: 0 auto;
+	margin-top: 50px;
+
+	h3 .number{
+		line-height: 36px;
+		height: 36px;
+		min-width: 36px;
+		border-radius: 36px;
+		padding: 0 10px;
+	}
+
+	&.reply-to-thread{
+		margin-top: 28px;
+
+		h3, #qcom-div{
+			display: none;
+		}
+	}
+
+	ol.comment-list, ol.children{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		.margin-t-1x;
+
+		li ol{
+			.padding-l-1x;
+		}
+	}
+
+	li.comment {
+		margin-bottom: @baseLineHeight;
+		font-size: @bodyTextFontSize - 1px;
+
+		.comment-body{
+			position: relative;
+			.light-primary-bg-2;
+			.padding-v-1x;
+			.padding-h-1x;
+			border-radius: 5px;
+
+			&:after{
+				border-color: @lightPrimary2;
+			}
+
+			.vcard{
+				margin-bottom: 3px;
+
+				cite.fn{
+					.title-font;
+					font-style: normal;
+				}
+
+				img{
+					width: 30px;
+					height: auto;
+					margin: 0 auto;
+					border-radius: 30px;
+				}
+
+				.says{
+					display: none;
+				}
+			}
+		}
+
+		.comment-meta, .reply{
+			.margin-b-half;
+			font-size: small;
+			.body-heavy-font-weight;
+		}
+
+		.reply{
+			.margin-b-none;
+		}
+	}
+
+	code{
+		display: block;
+		white-space: normal;
+	}
+
+	li.pingback + li.comment{
+		margin-top: @baseLineHeight;
+	}
+}
+
+.paging{
+	height: @baseLineHeight * 2;
+
+	ul.pageList{
+		list-style-type: none;
+		.margin-t-2x;
+		padding: 0;
+
+		&>li{
+			display: inline-block;
+			text-align: center;
+			vertical-align: middle;
+
+			&:first-child{
+				&>a, &>span{
+					margin-left: 0;
+				}
+			}
+
+			&:last-child{
+				&>a, &>span{
+					margin-right: 0;
+				}
+			}
+
+			&>a{
+				display: inline-block;
+				padding: 5px 10px;
+				margin: 0 5px;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				min-width: 38px;
+				border: 2px solid rgb(204,204,204);
+				.body-heavy-font-weight;
+				.transition(~'all .3s ease');
+
+				&:link, &:visited{
+					color: @bodyTextColor;
+					box-shadow: inset 0 0 0 0 @primaryColor;
+				}
+
+				&:hover, &:active, &.active{
+					box-shadow: inset 0 -50px 0 0 @primaryColor;
+					color: @bgColor;
+					border-color: darken(@primaryColor, 5%);
+				}
+			}
+
+			&>span:not(.dots){
+				display: inline-block;
+				padding: 5px 10px;
+				margin: 0 5px;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				min-width: 38px;
+				border: 2px solid @primaryColor;
+				.body-heavy-font-weight;
+				.primary-color-bg;
+			}
+		}
+	}
+}
+
+p.tags{
+	.title-font;
+	.medium-text;
+}
+
+a.tl-tag{
+	display: inline-block;
+	margin: 0 6px;
+
+	&:before{
+		font-family: FontAwesome;
+		font-weight: normal;
+		font-style: normal;
+		display: inline-block;
+		text-decoration: inherit;
+		content: '\f02b';
+		color: @iconColor;
+		vertical-align: middle;
+		margin-right: 4px;
+		font-size: 18px;
+	}
+
+	&:link, &:visited{
+		color: @bodyTextColor;
+	}
+
+	&:hover, &:active{
+		color: @primaryColor;
+	}
+}
+
+.sidebar-block{
+	margin-bottom: @baseLineHeight * 2;
+
+	select{
+		max-width: 100%;
+	}
+
+	&:first-child{
+		h5{
+			margin-top: 0;
+		}
+	}
+
+	ul{
+		list-style: none;
+		padding-left: 0;
+	}
+
+	&.widget_recent_entries, &.widget_rss, &.widget_nav_menu{
+		ul>li{
+			position: relative;
+			padding-left: 24px;
+
+			&:before{
+				font-family: FontAwesome;
+				font-weight: normal;
+				font-style: normal;
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 24px;
+				height: 24px;
+				line-height: 24.5px;
+				text-decoration: inherit;
+				color: darken(@bgColor, 40%);
+				font-size: 16px;
+				content: '\f0da';
+			}
+		}
+	}
+
+	&.widget_recent_entries .post-date, &.widget_rss .rss-date{
+		font-size: 12px;
+		letter-spacing: 1px;
+	}
+
+	&.widget_rss{
+		.rsswidget, .rss-date{
+			display: block;
+		}
+
+		.rsswidget:first-child{
+			float: left;
+			margin-right: 5px;
+		}
+
+		.rssSummary{
+			.small-text;
+			line-height: 20px;
+			margin: 3px 0;
+			font-style: italic;
+			color: fadeout(@bodyTextColor, 40%);
+		}
+
+		cite{
+			.inline-block;
+			.rss-author;
+			margin-bottom: 10px;
+		}
+	}
+
+	&.widget_tag_cloud{
+		ul>li{
+			margin-right: 12px;
+
+			a.tl-tag{
+				margin-left: 0;
+			}
+		}
+	}
+
+	&.widget_calendar{
+		#wp-calendar{
+			width: 100%;
+			.title-font;
+
+			caption{
+				.margin-t-half;
+				text-align: center;
+			}
+		}
+	}
+
+	&.widget_recent_comments{
+		ul>li{
+			position: relative;
+			padding-left: 28px;
+
+			&:before{
+				font-family: FontAwesome;
+				font-weight: normal;
+				font-style: normal;
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 24px;
+				height: 24px;
+				line-height: 24.5px;
+				text-decoration: inherit;
+				color: darken(@bgColor, 40%);
+				font-size: 16px;
+				content: '\f0e6';
+			}
+
+			a{
+				br+br{
+					display: none;
+				}
+				br:last-child{
+					display: none;
+				}
+
+				&+span{
+					font-size: 12px;
+					letter-spacing: 1px;
+				}
+			}
+		}
+	}
+
+	img{
+		max-width: 100%;
+		height: auto;
+	}
+}

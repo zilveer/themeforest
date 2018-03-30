@@ -1,0 +1,1 @@
+<?php echo wp_oembed_get(get_post_meta($post->ID, '_ebor_the_audio_oembed', 1), array('class' => 'mb0')); ?>

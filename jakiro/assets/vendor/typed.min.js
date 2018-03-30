@@ -1,0 +1,22 @@
+// The MIT License (MIT)
+
+// Typed.js | Copyright (c) 2014 Matt Boldt | www.mattboldt.com
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+!function(a){var b=function(d,c){this.el=a(d);this.options=a.extend({},a.fn.typed.defaults,c);this.isInput=this.el.is("input");this.attr=this.options.attr;this.showCursor=this.isInput?false:this.options.showCursor;this.elContent=this.attr?this.el.attr(this.attr):this.el.text();this.contentType=this.options.contentType;this.typeSpeed=this.options.typeSpeed;this.startDelay=this.options.startDelay;this.backSpeed=this.options.backSpeed;this.backDelay=this.options.backDelay;this.strings=this.options.strings;this.strPos=0;this.arrayPos=0;this.stopNum=0;this.loop=this.options.loop;this.loopCount=this.options.loopCount;this.curLoop=0;this.stop=false;this.cursorChar=this.options.cursorChar;this.build()};b.prototype={constructor:b,init:function(){var c=this;c.timeout=setTimeout(function(){c.typewrite(c.strings[c.arrayPos],c.strPos)},c.startDelay)},build:function(){if(this.showCursor===true){this.cursor=a('<span class="typed-cursor">'+this.cursorChar+"</span>");this.el.after(this.cursor)}this.init()},typewrite:function(c,f){if(this.stop===true){return}var e=Math.round(Math.random()*(100-30))+this.typeSpeed;var d=this;d.timeout=setTimeout(function(){var i=0;var h=c.substr(f);if(h.charAt(0)==="^"){var g=1;if(/^\^\d+/.test(h)){h=/\d+/.exec(h)[0];g+=h.length;i=parseInt(h)}c=c.substring(0,f)+c.substring(f+g)}if(d.contentType==="html"){if(c.substr(f).charAt(0)==="<"){var j="";while(c.substr(f).charAt(0)!==">"){j+=c.substr(f).charAt(0);f++}f++;j+=">"}}d.timeout=setTimeout(function(){if(f===c.length){d.options.onStringTyped(d.arrayPos);if(d.arrayPos===d.strings.length-1){d.options.callback();d.curLoop++;if(d.loop===false||d.curLoop===d.loopCount){return}}d.timeout=setTimeout(function(){d.backspace(c,f)},d.backDelay)}else{if(f===0){d.options.preStringTyped(d.arrayPos)}var k=d.elContent+c.substr(0,f+1);if(d.attr){d.el.attr(d.attr,k)}else{if(d.contentType==="html"){d.el.html(k)}else{d.el.text(k)}}f++;d.typewrite(c,f)}},i)},e)},backspace:function(c,f){if(this.stop===true){return}var e=Math.round(Math.random()*(100-30))+this.backSpeed;var d=this;d.timeout=setTimeout(function(){if(d.contentType==="html"){if(c.substr(f).charAt(0)===">"){var h="";while(c.substr(f).charAt(0)!=="<"){h-=c.substr(f).charAt(0);f--}f--;h+="<"}}var g=d.elContent+c.substr(0,f);if(d.attr){d.el.attr(d.attr,g)}else{if(d.contentType==="html"){d.el.html(g)}else{d.el.text(g)}}if(f>d.stopNum){f--;d.backspace(c,f)}else{if(f<=d.stopNum){d.arrayPos++;if(d.arrayPos===d.strings.length){d.arrayPos=0;d.init()}else{d.typewrite(d.strings[d.arrayPos],f)}}}},e)},reset:function(){var c=this;clearInterval(c.timeout);var d=this.el.attr("id");this.el.after('<span id="'+d+'"/>');this.el.remove();this.cursor.remove();c.options.resetCallback()}};a.fn.typed=function(c){return this.each(function(){var d=a(this),f=d.data("typed"),e=typeof c=="object"&&c;if(!f){d.data("typed",(f=new b(this,e)))}if(typeof c=="string"){f[c]()}})};a.fn.typed.defaults={strings:["These are the default values...","You know what you should do?","Use your own!","Have a great day!"],typeSpeed:0,startDelay:0,backSpeed:0,backDelay:500,loop:false,loopCount:false,showCursor:true,cursorChar:"|",attr:null,contentType:"html",callback:function(){},preStringTyped:function(){},onStringTyped:function(){},resetCallback:function(){}}}(window.jQuery);

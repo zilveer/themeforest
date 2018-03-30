@@ -1,0 +1,321 @@
+/* Shortcode:Audio Player
+-------------------------------------------------------------------- */
+.mk-audio-section {
+  display: block;
+  background-color: #fbb845;
+  height: 100px;
+}
+.mk-audio-section > img {
+  float: left;
+  filter: grayscale(100%);
+  /* Current draft standard */
+  -webkit-filter: grayscale(100%);
+  /* New WebKit */
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  /* Not yet supported in Gecko, Opera or IE */
+  filter: gray;
+  /* IE */
+  -webkit-filter: grayscale(1);
+  /* Old WebKit */
+  opacity: .7;
+}
+.mk-audio-section .mk-audio-author {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+  display: block;
+  color: #ffffff;
+}
+
+
+.mk-audio-shortcode {
+    margin-bottom: 30px;
+    height: 170px !important;
+}
+
+.mk-audio-shortcode .audio-thumb {
+    height: inherit !important;
+}
+
+.mk-audio-shortcode .jp-audio.audio-has-img {
+    margin-left: 170px;
+}
+
+.mk-audio-shortcode .jp-audio div.jp-interface {
+    min-height: 170px !important;
+}
+
+.jp-audio {
+    display: block;
+    direction: ltr;
+    text-align: left;
+}
+
+.jp-audio.audio-has-img {
+    margin-left: 100px;
+}
+
+.jp-interface {
+    position: relative;
+    width: 100%;
+}
+
+.jp-audio .jp-type-single .jp-interface {
+    min-height: 90px;
+}
+
+
+/* @group CONTROLS */
+
+.jp-controls-holder {
+    clear: both;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    top: -8px;
+    /* This negative value depends on the size of the text in jp-currentTime and jp-duration */
+}
+
+.jp-interface ul.jp-controls {
+    list-style-type: none;
+    margin: -14px 0 0 -28px;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.jp-interface ul.jp-controls li {
+    margin: 0;
+}
+
+.jp-interface ul.jp-controls li {
+    display: inline;
+    float: left;
+}
+
+.jp-interface ul.jp-controls a {
+    display: block;
+}
+
+a.jp-play, a.jp-pause {
+    padding: 9px 6px 7px 10px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #252525;
+    border-radius: 50px;
+}
+
+a.jp-play:hover, a.jp-pause:hover {
+    border-color: #ffffff;
+}
+
+a.jp-play:hover svg, a.jp-pause:hover svg{
+    fill: #ffffff;
+}
+
+a.jp-play svg, a.jp-pause svg {
+    height: 16px;
+    fill: #252525;
+    vertical-align: middle;
+}
+
+a.jp-pause {
+    padding: 9px 8px 7px;
+    display: none;
+}
+
+
+/* @end */
+
+
+/* @group progress bar */
+
+.jp-progress {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.jp-audio .jp-progress {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    height: 12px;
+}
+
+.jp-audio .jp-type-single .jp-progress {
+    left: 0;
+    width: 100%;
+}
+
+.jp-seek-bar {
+    width: 0px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.jp-play-bar {
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 0px;
+    height: 100%;
+    position: relative;
+}
+
+
+/* The seeking class is added/removed inside jPlayer */
+
+
+/* @end */
+
+
+/* @group volume controls */
+
+a.jp-mute, a.jp-unmute, a.jp-volume-max {
+    width: 18px;
+    height: 15px;
+    margin-top: 0px;
+}
+
+.jp-volume-bar, .jp-volume-bar-value {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAiCAQAAADragGFAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1RjJBNDk2RjQwRDcxMUUzODhFNUVBRjVCMDg3MjJCMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1RjJBNDk3MDQwRDcxMUUzODhFNUVBRjVCMDg3MjJCMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjVGMkE0OTZENDBENzExRTM4OEU1RUFGNUIwODcyMkIxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjVGMkE0OTZFNDBENzExRTM4OEU1RUFGNUIwODcyMkIxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+S5VOAwAAAHNJREFUSMftksENwDAIA1nGc7E9a6SvSqgiQHGekb93EjIWSJ71CQwmXQkGa0seriWD9SUH11IA76UEPiyNzqOKoCqnnsvMKBzsGuRKr/S7coX2n6vQtuThWlJoX3JwLQXwXkrgw9LoPKoIqnLqucyMosE+NlMGu0fPTasAAAAASUVORK5CYII=) left bottom no-repeat;
+}
+
+.jp-volume-bar {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 26px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.jp-volume-bar svg {
+    position: absolute;
+    top: 0;
+    left: -12px;
+    fill: #252525;
+    height: 16px;
+}
+
+.jp-volume-bar-value {
+    width: 0px;
+    height: 14px;
+}
+
+
+/* @end */
+
+
+/* @group current time and duration */
+
+.jp-audio .jp-time-holder {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.jp-audio .jp-type-single .jp-time-holder {
+    color: #ffffff;
+    font-size: 12px;
+    width: 100%;
+    font-weight: bold;
+}
+
+.jp-current-time, .jp-duration {
+    display: inline-block;
+}
+
+.jp-current-time {
+    float: left;
+}
+
+.jp-duration {
+    float: right;
+}
+
+
+/* @end */
+
+.jp-jplayer audio, .jp-jplayer {
+    width: 0px;
+    height: 0px;
+}
+
+.jp-jplayer {
+    background-color: #000000;
+}
+
+
+/* @group TOGGLES */
+
+
+/* The audio toggles are nested inside jp-time-holder */
+
+ul.jp-toggles {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.jp-audio .jp-type-single ul.jp-toggles {
+    width: 25px;
+}
+
+.jp-audio .jp-type-playlist ul.jp-toggles {
+    width: 55px;
+    margin: 0;
+    position: absolute;
+    left: 325px;
+    top: 50px;
+}
+
+ul.jp-toggles li {
+    display: block;
+    float: right;
+}
+
+ul.jp-toggles li a {
+    display: block;
+    width: 25px;
+    height: 18px;
+    text-indent: -9999px;
+    line-height: 100%;
+    /* need this for IE6 */
+}
+
+
+/* @end */
+
+
+/* @group NO SOLUTION error feedback */
+
+.jp-no-solution {
+    padding: 5px;
+    font-size: .8em;
+    background-color: #eeeeee;
+    border: 2px solid #009be3;
+    color: #000000;
+    display: none;
+}
+
+.jp-no-solution a {
+    color: #000000;
+}
+
+.jp-no-solution span {
+    font-size: 1em;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}

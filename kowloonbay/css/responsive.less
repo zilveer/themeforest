@@ -1,0 +1,343 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Applied only when viewport width is large or equal to 768px / @media (min-width: 768px) 
+	1.1. Ignore horizontal page padding / .no-page-padding
+	1.2. Bootstrap container / body>.container
+		1.2.1. Multi-level menu/ ul.multi-level-menu
+		1.2.2. Header / &>header
+			1.2.2.1. Header content wrapper / .header-wrapper
+				1.2.2.2. Multi-level menu / ul.multi-level-menu
+		1.2.3. Section heading / &>main>section .section-heading
+			1.2.3.1. H2 / h2
+		1.2.4. Footer / &>footer
+	1.3. Two-Column Text / .newspaper-two-cols
+	1.4. Bullets of Slider Revolution in homepage  / html.home .tp-bullets
+	1.5. Portfolio list / ul.portfolio-list
+		1.5.1. Portfolio item / &>li
+		1.5.2. Portfolio item in 2-column layout / &.two-cols>li
+		1.5.3. Portfolio item in 3-column layout / &.three-cols>li
+			1.5.3.1. Portfolio item with 2/3 width / &.width-two-thirds
+		1.5.4. Portfolio item in 4-column layout / &.four-cols>li
+			1.5.4.1. Portfolio item with 2/4 width / &.width-two-fourths
+			1.5.4.2. Portfolio item with 3/4 width / &.width-three-fourths
+	1.6. Portfolio category item / .portfolio-cats>div
+	1.7. Post comment list / .post-comments ol.comment-list li ol, .post-comments ol.children li ol
+	1.8. Title / .post .title
+	1.9. Post comments/ .post-comments
+		1.9.1. Comment / li.comment 
+			1.9.1.1. Comment body / .comment-body
+				1.9.1.1.1. After pseudo element / &:after
+				1.9.1.1.2. VCard / .vcard
+					1.9.1.1.2.1. Image / img
+	1.10. Text aligned to left / .text-left-sm
+	1.11. Text aligned to center / .text-center-sm
+	1.12. Text aligned to right / .text-right-sm
+	1.13. Float to left / .pull-left-sm
+	1.14. Float to right / .pull-right-sm
+	1.15. Wrapper for Bootstrap rows and columns with gutters / .grid-gutters
+		1.15.1. Bootstrap rows / .row>[class*=col-sm-]
+2. Applied only when viewport width between 600px and 991px / @media (min-width: 600px) and (max-width: 991px) 
+	2.1. Team member / .team-member
+		2.1.1. Image (cover) / .img-bg-cover
+			2.1.1.1. Float to right / &.pull-right-sm
+		2.1.2. Text column / .img-bg-cover + .col-sm-6
+3. Applied only when viewport width is large or equal to 992px / @media (min-width: 992px) 
+	3.1. Float to right / .pull-right-md
+	3.2. Carousel / .owl-carousel
+		3.2.1. Carousel (vertical) / &.owl-custom-vertical
+		3.2.2. Carousel (stretch to fill container) / &.owl-custom-stretch
+			3.2.2.1. Stage (outer) / .owl-stage-outer
+				3.2.2.1.1. Stage / .owl-stage
+					3.2.1.1.1.1. Carousel items / .owl-item
+						3.2.1.1.1.1.1. Items/ .item
+	3.3. Blog list / .blog-list
+		3.3.1. Blog item for masonry layout / &.two-cols .blog-item
+	3.4. Team member (equal column height) / .team-member.eq-col-height
+		3.4.1. Image / .img-bg-cover img
+	3.5. Team member (non-equal column height) / .team-member:not(.eq-col-height)
+		3.5.1. Image (cover) / .img-bg-cover
+			3.5.1.1. Float to right / &.pull-right-sm
+		3.5.2. Text column / .img-bg-cover + .col-sm-6
+	3.6. Wrapper for Bootstrap rows and columns with gutters / .grid-gutters
+		3.6.1. Bootstrap rows / .row>[class*=col-md-]
+	3.7. H2 / .hover-effect-move-right>.caption .v-centered>h2
+4. Applied only when viewport width is large or equal to 1200px / @media (min-width: 1200px) 
+	4.1. Float to right / .pull-right-lg
+	4.2. Wrapper for Bootstrap rows and columns with gutters / .grid-gutters
+		4.2.1. Bootstrap rows / .row>[class*=col-lg-]
+
+-------------------------------------------------------------------*/
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+	@PagePaddingH2X: @pagePaddingH * 2;
+	.no-page-padding{
+		width: ~'calc(100% + @{PagePaddingH2X})';
+		left: -@pagePaddingH;
+	}
+
+	body>.container{
+		ul.multi-level-menu{
+			right: @pagePaddingH;
+		}
+
+		&>header{
+			.header-wrapper{
+				ul.multi-level-menu{
+					opacity: 1;
+				}
+			}
+		}
+
+		&>main>section .section-heading{
+			.margin-b-3x;
+
+			h2{
+				font-size: 3em;
+			}
+		}
+
+		&>footer{
+			text-align: right;
+			width: auto;
+		}
+	}
+
+	.newspaper-two-cols{
+		-webkit-column-count: 2; /* Chrome, Safari, Opera */
+		-moz-column-count: 2; /* Firefox */
+		column-count: 2;
+		-webkit-column-gap: 30px; /* Chrome, Safari, Opera */
+		-moz-column-gap: 30px; /* Firefox */
+		column-gap: 30px;
+	}
+
+	html.home .tp-bullets{
+		left: @pagePaddingH !important;
+		bottom: (@pagePaddingV + 7px) !important;
+		.transform(~'none');
+	}
+
+	ul.portfolio-list{
+		&>li{
+			max-height: none;
+		}
+
+		&.two-cols>li{
+			width: 50%;
+		}
+
+		&.three-cols>li{
+			width: 33.33%;
+
+			&.width-two-thirds{
+				width: 66.66%;
+			}
+		}
+
+		&.four-cols>li{
+			width: 25%;
+
+			&.width-two-fourths{
+				width: 50%;
+			}
+
+			&.width-three-fourths{
+				width: 75%;
+			}
+		}
+	}
+
+	.portfolio-cats>div{
+		float: left;
+		min-width: 0;
+	}
+
+	.post-comments ol.comment-list li ol, .post-comments ol.children li ol{
+		.padding-l-2x;
+	}
+
+	.post .title{
+		font-size: 2.2vw;
+		font-size: ~'18px\9';
+	}
+
+	.post-comments{
+		li.comment {
+			.comment-body{
+				margin-left: calc(100px + @baseLineHeight);
+				.arrow;
+				.arrow-left;
+
+				&:after{
+					border-color: @lightPrimary2;
+				}
+
+				.vcard{
+					width: 100px;
+					min-height: 100px;
+					margin-right: @baseLineHeight;
+					position: absolute;
+					top: 50%;
+					left: calc(-100px - @baseLineHeight);
+					text-align: center;
+					.transform(~'translateY(-50%)');
+
+					img{
+						width: 80px;
+						display: block;
+						border-radius: 80px;
+					}
+				}
+			}
+		}
+	}
+
+	.text-left-sm{
+		text-align: left;
+	}
+
+	.text-center-sm{
+		text-align: center;
+	}
+
+	.text-right-sm{
+		text-align: right;
+	}
+
+	.pull-left-sm{
+		float: left;
+	}
+
+	.pull-right-sm{
+		float: right;
+	}
+
+	.grid-gutters{
+		.row>[class*=col-sm-]{
+			border-left: (@gutterWidth / 2) solid @bgColor;
+			border-right: (@gutterWidth / 2) solid @bgColor;
+		}
+	}
+}
+
+@media (min-width: 600px) and (max-width: 991px) {
+	.team-member{
+		.img-bg-cover{
+			.margin-r-2x;
+			.margin-l-none;
+			.margin-b-1x;
+
+			width: 50%;
+			float: left;
+
+			&.pull-right-sm{
+				.margin-l-2x;
+				.margin-r-none;
+
+				float: right;
+			}
+		}
+		.img-bg-cover + .col-sm-6{
+			float: none;
+			width: 100%;
+		}
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+	.pull-right-md{
+		float: right;
+	}
+
+	.owl-carousel{
+		&.owl-custom-vertical{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		&.owl-custom-stretch{
+			height: 100%;
+
+			.owl-stage-outer{
+				height: 100%;
+
+				.owl-stage{
+					height: 100%;
+
+					.owl-item{
+						height: 100%;
+
+						.item{
+							height: 100% !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.blog-list{
+		@halfBaseLineHeight: @baseLineHeight / 2;
+		&.two-cols .blog-item{
+			width: ~'calc(50% - @{halfBaseLineHeight})';
+		}
+	}
+
+	.team-member.eq-col-height{
+		.img-bg-cover img{
+			display: none !important;
+		}
+	}
+
+	.team-member:not(.eq-col-height){
+		.img-bg-cover{
+			.margin-r-2x;
+			.margin-l-none;
+			.margin-b-1x;
+
+			&.pull-right-sm{
+				.margin-l-2x;
+				.margin-r-none;
+			}
+		}
+		.img-bg-cover + .col-sm-6{
+			float: none;
+			width: 100%;
+		}
+	}
+
+	.grid-gutters{
+		.row>[class*=col-md-]{
+			border-left: (@gutterWidth / 2) solid @bgColor;
+			border-right: (@gutterWidth / 2) solid @bgColor;
+		}
+	}
+
+	.hover-effect-move-right>.caption .v-centered>h2{
+		font-size: 1.4vw;
+		font-size: ~'16px\9';
+	}
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+	.pull-right-lg{
+		float: right;
+	}
+
+	.grid-gutters{
+		.row>[class*=col-lg-]{
+			border-left: (@gutterWidth / 2) solid @bgColor;
+			border-right: (@gutterWidth / 2) solid @bgColor;
+		}
+	}
+}

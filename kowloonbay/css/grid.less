@@ -1,0 +1,126 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Full width Bootstrap container / .container.full-width
+	1.1. Full width container in homepage / &.home
+2. Bootstrap rows for columns without gutter / .col-no-gutter
+	2.1. Actual columns / &>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]
+3. Wrapper for Bootstrap rows and columns with gutters / .grid-gutters
+	3.1. Rows / .row
+		3.1.1. Columns / &>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]
+			3.1.1.1 First column / &:first-child
+			3.1.1.2 Last column / &:last-child
+		3.1.2. First columns / &:first-child
+			3.1.2.1. Columns / &>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]
+		3.1.3. Last columns / &:last-child
+			3.1.3.1. Columns / &>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]
+4. Image floating to the left / .img-pull-left
+5. Image floating to the right / .img-pull-right
+6. Figure caption / figcaption
+7. Image / img
+8. 100% height / .height-full
+9. Base height / .height-1x
+10. Base height * 1.5 / .height-1-plus-half-x
+11. Base height * 2 / .height-2x
+12. Base height * 3 / .height-3x
+
+-------------------------------------------------------------------*/
+
+.container.full-width{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	position: relative;
+	min-height: 100%;
+	overflow: hidden;
+
+	&.home{
+		overflow: hidden;
+	}
+}
+
+.col-no-gutter{
+	margin-left: 0;
+	margin-right: 0;
+
+	&>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]{
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+}
+
+.grid-gutters{
+	.row{
+		.col-no-gutter;
+
+		&>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]{
+			border-top: (@gutterWidth / 2) solid @bgColor;
+			border-bottom: (@gutterWidth / 2) solid @bgColor;
+
+			&:first-child{
+				border-left-width: 0;
+			}
+
+			&:last-child{
+				border-right-width: 0;
+			}
+		}
+
+		&:first-child{
+			&>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]{
+				border-top-width: 0;
+			}
+		}
+
+		&:last-child{
+			&>[class*=col-sm-], &>[class*=col-md-], &>[class*=col-lg-]{
+				border-bottom-width: 0;
+			}
+		}
+	}
+}
+
+.img-pull-left{
+	float: left !important;
+	margin-right: @baseLineHeight;
+}
+
+.img-pull-right{
+	float: right !important;
+	margin-left: @baseLineHeight;
+}
+
+figcaption{
+	.title-font;
+	.title-text-color;
+	font-size: 12px;
+	line-height: 20px;
+	padding: 5px 0 10px;
+	margin: 0 auto;
+	text-align: left;
+	letter-spacing: 0;
+}
+
+img{
+	max-width: 100%;
+}
+
+.height-full{
+	height: 100%;
+}
+
+.height-1x{
+	height: @height1x;
+}
+
+.height-1-plus-half-x{
+	height: @height1x * 1.5;
+}
+
+.height-2x{
+	height: @height1x * 2;
+}
+
+.height-3x{
+	height: @height1x * 3;
+}

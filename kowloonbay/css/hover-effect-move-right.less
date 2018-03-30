@@ -1,0 +1,108 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Image hover effect / .hover-effect-move-right
+	1.1. Image (Cover) / &>.img-bg-cover
+	1.2. Caption / &>.caption
+		1.2.1. Caption link / &>a
+		1.2.2. Vertically centered layout / .v-centered
+			1.2.2.1. Heading in caption / &>h2
+			1.2.2.2. Description in caption / &>p
+	1.3. Hover state / &:hover
+		1.3.1. Image (Cover) / &>.img-bg-cover
+		1.3.2. Caption / &>.caption
+			1.3.2.1. Vertically centered layout / .v-centered
+				1.3.2.1.1. Heading and description / &>h2, &>p
+		1.3.3. Description / &>.caption h2+p
+
+-------------------------------------------------------------------*/
+
+.hover-effect-move-right{
+	background-color: @imageHoverOverlayColor;
+	overflow: hidden;
+	position: relative;
+
+	&>.img-bg-cover{
+		height: ~'calc(100% + 2px)';
+		width: ~'calc(100% + 102px)';
+		opacity: (1 - @imageHoverOverlayOpacity);
+		position: relative;
+		top: 50%;
+		left: 50%;
+		.transform(~'translate3d(-50%, -50%, 0) translate3d(-50px, 0, 0)');
+		.transition-transform(~'.4s, opacity .4s');
+	    -ms-transform: translateX(-50%) translateX(-50px) translateY(-50%);
+	}
+
+	&>.caption{
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		color: #fff;
+		text-shadow: 0 0 5px rgba(0,0,0,.5), 0 0 5px rgba(0,0,0,.5);
+
+		&>a{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			z-index: 1;
+		}
+
+		.v-centered{
+			position: relative;
+
+			&>h2{
+				padding: 0 16% 2.5%;
+				margin: 0 10px;
+				opacity: 0;
+				.title-style;
+				color: #fff;
+				font-size: 16px;
+				line-height: 1.5;
+				position: relative;
+				.transform(~'translate3d(0, 40px, 0)');
+				.transition-transform(~'.35s, opacity .35s');
+			}
+
+			&>p{
+				padding: 0 16%;
+				margin: 0 10px;
+				opacity: 0;
+				.letter-spacing;
+				.medium-text;
+				.transform(~'translate3d(0, 40px, 0)');
+				.transition-transform(~'.35s, opacity .35s');
+			}
+		}
+	}
+
+	&:hover{
+		&>.img-bg-cover{
+			opacity: 1;
+			.transform(~'translate3d(-50%, -50%, 0)');
+		    -ms-transform: translateX(-50%) translateY(-50%);
+		}
+
+		&>.caption{
+			.v-centered{
+				&>h2, &>p{
+					opacity: 1;
+					.transform(~'translate3d(0, 0px, 0)');
+				}
+			}
+		}
+
+		&>.caption h2+p{
+			.transition-delay(~'.05s');
+		}
+	}
+
+	
+}

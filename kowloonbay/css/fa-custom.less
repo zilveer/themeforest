@@ -1,0 +1,91 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Icon block / .fa-custom-block
+2. Default icon style / .fa
+3. Icon with left margin / .fa-custom-margin-left
+4. Small icon / .fa-custom-sm
+5. Icon without right margin/ &.fa-custom-no-margin-right
+6. Large icon / .fa-custom-lg
+7. Icon with hover effect/ a.fa-custom-hover-effect
+	7.1. Actual icon / .fa:before
+	7.2. Small icon / .fa.fa-custom-sm
+		7.2.1. Small icon & actual small icon / &,&:before
+	7.3. Large icon / .fa.fa-custom-lg
+		7.3.1. Large icon & actual small icon / &,&:before
+	7.4. Non-current icons / &:not(.current)
+		7.4.1. Hover & active states / &:hover, &:active
+			7.4.1.1. Actual small icon / .fa.fa-custom-sm:before
+			7.4.1.2. Actual large icon / .fa.fa-custom-lg:before
+8. Icon in current link / a.current .fa
+
+-------------------------------------------------------------------*/
+
+.fa-custom-block{
+	width: 100%;
+	margin: @baseLineHeight /  2 0;
+}
+
+.fa{
+	display: inline-block;
+	color: @iconColor;
+	vertical-align: middle;
+	text-align: center;
+	overflow: hidden;
+	margin-right: 8px;
+}
+
+.fa-custom-margin-left{
+	margin-left: 8px;
+	margin-right: 0;
+}
+
+.fa-custom-sm{
+	font-size: @baseLineHeight;
+	line-height: @baseLineHeight;
+	height: @baseLineHeight;
+}
+
+&.fa-custom-no-margin-right{
+	margin-right: 0;
+}
+
+.fa-custom-lg{
+	font-size: @baseLineHeight * 2;
+	line-height: @baseLineHeight * 2 - 2px;
+	height: @baseLineHeight * 2;
+}
+
+a.fa-custom-hover-effect{
+	display: inline-block;
+
+	.fa:before{
+		display: block;
+		.transition-transform(@transitionDuration ease);
+	}
+	.fa.fa-custom-sm{
+		&,&:before{
+			text-shadow: 0 @baseLineHeight 0 @primaryColor;
+		}
+	}
+	.fa.fa-custom-lg{
+		&,&:before{
+			text-shadow: 0 @baseLineHeight * 2 0 @primaryColor;
+		}
+	}
+
+	&:not(.current){
+		&:hover, &:active{
+			.fa.fa-custom-sm:before{
+				.transform(translate3d(0, -@baseLineHeight, 0));
+			}
+			.fa.fa-custom-lg:before{
+				.transform(translate3d(0, -@baseLineHeight * 2, 0));
+			}
+		}
+	}
+}
+
+a.current .fa{
+	.primary-color;
+}

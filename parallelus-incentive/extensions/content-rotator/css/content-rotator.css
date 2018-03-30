@@ -1,0 +1,345 @@
+/* Column/Grid Structure */
+
+.rotator .single-item { display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.rotator .single-item:first-child, .rotator .single-item.first { margin-left: 0; }
+.rotator-wrapper  { width: 100%; *zoom: 1; }
+.rotator-wrapper:before, .rotator-wrapper:after, .rotator-item:before, .rotator-item:after { display: table; line-height: 0; content: ""; }
+.rotator-wrapper:after { clear: both; }
+
+@media (min-width: 768px) {
+
+	.rotator .single-item {
+		float: left;
+		min-height: 30px;
+		margin-left: 4.16666666666667%;
+		*margin-left: 4.113475177304968%;
+	}
+	.rotator-columns-6 .single-item {
+		width: 13.194443%;
+		*width: 13.23877%;
+	}
+	.rotator-columns-5 .single-item {
+		width: 16.66665%;
+		*width: 16.70921%;
+	}
+	.rotator-columns-4 .single-item {
+		width: 21.875%;
+		*width: 21.82180851063829%;
+	}
+	.rotator-columns-3 .single-item {
+		width: 30.55555555555556%;
+		*width: 30.50236406619385%;
+	}
+	.rotator-columns-2 .single-item {
+		width: 47.91666666666667%;
+		*width: 47.86347517730496%;
+	}
+	.rotator-columns-1 .single-item {
+		width: 100%;
+		*width: 99.94680851063829%;
+	}
+
+}
+
+/*
+ * responsive-rotator
+ */
+.rotator {
+	width:100%;
+	min-width:100%;
+	position:relative;
+	margin:0;
+}
+.rotator-item {
+	display:none;
+	width:100%;
+}
+.rotator-active {
+	display:block;
+}
+
+/* Navigation  */
+.rotator-nav { }
+.rotator-nav a {
+	outline: none !important;
+	text-decoration:none;
+	background:#ddd;
+	color:#333;
+	padding:5px;
+	margin:5px 5px 0 0;
+	display:inline-block;
+}
+.rotator-nav a.prev { }
+.rotator-nav a.next { }
+
+
+/* Pagination */
+.rotator-nav-paginated ol {
+	margin:0 4em;
+	padding:0;
+}
+.rotator-nav-paginated li,.rotator-nav-paginated li a {
+	display:inline-block;
+	position:relative;
+}
+.rotator-nav-paginated .rotator-active-page a {
+	background:#333;
+	color:#fff;
+	text-decoration:none;
+}
+
+/* Responsive images */
+.rotator-item img {
+	max-width:100%;
+	height:auto;
+	display:block;
+}
+
+/* Fixes for show/hide on transitions */
+/*.rotator-item,*/ .rotator-slide-reverse .rotator-in, 
+.rotator-slide.after {
+	visibility:hidden; /* hides background moving of slides */
+}
+.rotator-active, .rotator-out, .rotator-in {
+	visibility:visible; /*makes suer current and changing slides are visible*/
+}
+
+/*
+ * Effect: slide transition and positioning
+*/
+.rotator-slide {
+	position:relative;
+	overflow:hidden;
+	-webkit-transform:translate3d(0,0,0);
+	-moz-transform:translate3d(0,0,0);
+	-ms-transform:translate3d(0,0,0);
+	-o-transform:translate3d(0,0,0);
+	transform:translate3d(0,0,0);
+}
+.rotator-slide .rotator-item {
+	position:absolute;
+	left:104%;
+	top:0;
+	width:100%; /* necessary for non-active slides */
+	display:block; /* overrides basic rotator styles */
+	margin:0;
+	z-index:1;
+	-webkit-transition:left .65s ease-in-out;
+	-moz-transition:left .65s ease-in-out;
+	-ms-transition:left .65s ease-in-out;
+	-o-transition:left .65s ease-in-out;
+	transition:left .65s ease-in-out;
+}
+/* Used during drag events */
+.rotator-no-transition .rotator-item {
+	-webkit-transition:none;
+	-moz-transition:none;
+	-ms-transition:none;
+	-o-transition:none;
+	transition:none;
+}
+.rotator-slide .rotator-active {
+	left:0;
+	position:relative;
+	z-index:2;
+}
+.rotator-slide .rotator-in {
+	left:0;
+}
+.rotator-slide-reverse .rotator-out {
+	left:104%;
+}
+.rotator-slide .rotator-out,.rotator-slide-reverse .rotator-in,.rotator-slide-reverse .rotator-item-prev {
+	left:-104%;
+}
+.rotator-slide-reverse .rotator-item,
+.rotator-slide.after .rotator-item {
+	-webkit-transition:left .1s linear;
+	-moz-transition:left .1s linear;
+	-ms-transition:left .1s linear;
+	-o-transition:left .1s linear;
+	transition:left .1s linear;
+}
+.rotator-slide-reverse .rotator-active {
+	left:0;
+}
+
+/**
+ * Effect: fade transitoin
+ */
+.rotator-fade {
+	position:relative;
+	overflow:hidden;
+	-webkit-transform:translate3d(0,0,0);
+	-moz-transform:translate3d(0,0,0);
+	-ms-transform:translate3d(0,0,0);
+	-o-transform:translate3d(0,0,0);
+	transform:translate3d(0,0,0);
+}
+.rotator-fade .rotator-item {
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%; /* necessary for non-active slides */
+	display:block; /* overrides basic rotator styles */
+	-webkit-transition:opacity .5s ease-in-out;
+	-moz-transition:opacity .5s ease-in-out;
+	-ms-transition:opacity .5s ease-in-out;
+	-o-transition:opacity .5s ease-in-out;
+	transition:opacity .5s ease-in-out;
+}
+.rotator-fade .rotator-active {
+	position:relative;
+}
+.rotator-fade .rotator-item,.rotator-fade .rotator-out {
+	opacity:0;
+}
+.rotator-fade .rotator-active,.rotator-fade .rotator-in {
+	opacity:1;
+}
+
+/**
+ * Effect: Flip transition
+ */
+.rotator-flip {
+	position:relative;
+	overflow:visible;
+	-webkit-transform:translate3d(0,0,0);
+	-moz-transform:translate3d(0,0,0);
+	-ms-transform:translate3d(0,0,0);
+	-o-transform:translate3d(0,0,0);
+	transform:translate3d(0,0,0);
+	-webkit-perspective:800;
+	-moz-perspective:800;
+	-ms-perspective:800;
+	-o-perspective:800;
+	perspective:800px;
+}
+.rotator-flip .rotator-item {
+	position:absolute;
+	top:0;
+	width:100%; /* necessary for non-active slides */
+	display:block; /* overrides basic rotator styles */
+	z-index:1;
+	opacity:0;
+	-webkit-transition:-webkit-transform .4s ease-in-out;
+	-moz-transition:-moz-transform .4s ease-in-out;
+	-ms-transition:-ms-transform .4s ease-in-out;
+	-o-transition:-o-transform .4s ease-in-out;
+	transition:transform .4s ease-in-out;
+	-webkit-transform:rotateY(180deg);
+	-moz-transform:rotateY(180deg);
+	-ms-transform:rotateY(180deg);
+	-o-transform:rotateY(180deg);
+	-transform:rotateY(180deg);
+	-webkit-backface-visibility:hidden;
+	-moz-backface-visibility:hidden;
+	-ms-backface-visibility:hidden;
+	-o-backface-visibility:hidden;
+	backface-visibility:hidden;
+}
+.rotator-no-transition .rotator-item {
+	-webkit-transition:none;
+	-moz-transition:none;
+	-ms-transition:none;
+	-o-transition:none;
+	transition:none;
+}
+.rotator-flip .rotator-active {
+	-webkit-transform:rotateY(0deg);
+	-moz-transform:rotateY(0deg);
+	-ms-transform:rotateY(0deg);
+	-o-transform:rotateY(0deg);
+	-transform:rotateY(0deg);
+	position:relative;
+	z-index:2;
+	opacity:1;
+}
+.rotator-flip .rotator-out,.rotator-flip-reverse .rotator-item {
+	-webkit-transform:rotateY(-180deg);
+	-moz-transform:rotateY(-180deg);
+	-ms-transform:rotateY(-180deg);
+	-o-transform:rotateY(-180deg);
+	-transform:rotateY(-180deg);
+}
+.rotator-flip .rotator-in {
+	-webkit-transform:rotateY(0deg);
+	-moz-transform:rotateY(0deg);
+	-ms-transform:rotateY(0deg);
+	-o-transform:rotateY(0deg);
+	-transform:rotateY(0deg);
+	opacity:1;
+}
+.rotator-flip .rotator-top {
+	z-index:3;
+	opacity:1;
+}
+.rotator-flip-reverse .rotator-out {
+	-webkit-transform:rotateY(180deg);
+	-moz-transform:rotateY(180deg);
+	-ms-transform:rotateY(180deg);
+	-o-transform:rotateY(180deg);
+	-transform:rotateY(180deg);
+}
+.rotator-flip-reverse .rotator-in {
+	-webkit-transform:rotateY(0deg);
+	-moz-transform:rotateY(0deg);
+	-ms-transform:rotateY(0deg);
+	-o-transform:rotateY(0deg);
+	-transform:rotateY(0deg);
+}
+
+/* peek effect */
+.rotator.peek {
+	max-width:500px;
+}
+.rotator.peek .rotator-item-prev,.rotator.peek .rotator-item-next {
+	width:50%;
+	display:block;
+	opacity:.5;
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:1;
+	-webkit-transform:scale(.6) rotate(-15deg);
+	-moz-transform:scale(.6) rotate(-15deg);
+	-o-transform:scale(.6) rotate(-15deg);
+	-ms-transform:scale(.6) rotate(-15deg);
+	transform:scale(.6) rotate(-15deg);
+}
+.rotator.peek .rotator-item-next {
+	right:0;
+	left:auto;
+	-webkit-transform:scale(.6) rotate(15deg);
+	-moz-transform:scale(.6) rotate(15deg);
+	-opera-transform:scale(.6) rotate(15deg);
+	-ms-transform:scale(.6) rotate(15deg);
+	transform:scale(.6) rotate(15deg);
+}
+.rotator.peek .rotator-active {
+	width:50%;
+	opacity:1;
+	position:relative;
+	left:25%;
+	z-index:2;
+	box-shadow:.2em .2em .5em #aaa;
+}
+.rotator.peek .rotator-nav {
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:3;
+}
+.rotator.peek .rotator-nav a {
+	width:20%;
+	height:100%;
+	background:#fff;
+	opacity:0;
+	overflow:hidden;
+	position:absolute;
+	left:0;
+}
+.rotator.peek .rotator-nav a.next {
+	left:auto;
+	right:0;
+}

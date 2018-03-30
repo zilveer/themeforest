@@ -1,0 +1,78 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Image (Cover) / .img-bg-cover
+	1.1. Change cover mode to contain mode / &.img-bg-cover-contain
+	1.2. Actual image / img
+	1.3. Anchor / &>a
+	1.4. Caption / .caption
+2. Image (Cover) hover effect container / .img-bg-cover-hover-effect-container
+	2.1. Image (Cover) / .img-bg-cover
+		2.1.1. Before pseudo element / &:before
+		2.1.2. All children *
+	2.2. Hover state / &:hover
+		2.2.1. Before pseudo element / .img-bg-cover:before
+
+-------------------------------------------------------------------*/
+
+.img-bg-cover{
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	position: relative;
+
+	&.img-bg-cover-contain{
+		background-size: contain;
+	}
+
+	img{
+		display: none !important;
+	}
+
+	&>a{
+		display: block;
+		height: 100%;
+	}
+
+	.caption{
+		position: absolute;
+		bottom: 47px;
+		left: 50%;
+		width: 100%;
+		.padding-h-2x;
+		text-align: center;
+		max-width: 600px;
+		.transform(translateX(-50%));
+	}
+}
+
+.img-bg-cover-hover-effect-container{
+	.img-bg-cover{
+		position: relative;
+
+		&:before{
+			display: block;
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: @imageHoverOverlayColor;
+			opacity: @imageHoverOverlayOpacity;
+			.transition(opacity @transitionDuration);
+			z-index: 0;
+		}
+
+		*{
+			position: relative;
+			z-index: 1;
+		}
+	}
+
+	&:hover{
+		.img-bg-cover:before{
+			opacity: 0;
+		}
+	}
+}

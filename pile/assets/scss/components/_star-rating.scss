@@ -1,0 +1,84 @@
+a[class*="star-"] {
+    @extend .#{$fa-css-prefix};
+    @extend .#{$fa-css-prefix}-star;
+    color: $lightest;
+
+    position: relative;
+    text-indent: -999em;
+    float: left;
+
+    &, &:before {
+        width: 1em;
+        height: 1em;
+    }
+
+    &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-indent: 0;
+    }
+
+    .stars span:hover &,
+    .stars.selected & {
+        color: $accent;
+    }
+
+    .stars span:hover &:hover ~ &,
+    .stars.selected .active ~ & {
+        color: $lightest;
+    }
+}
+
+.stars {
+    @extend .clearfix;
+}
+
+.stars.stars a {
+    @extend %fs-24;
+}
+
+.star-rating {
+    @extend %fs-14;
+    width: 7em;
+    height: 1em;
+    letter-spacing: .5em;
+    position: relative;
+
+    @include query-above($lap) {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+$star: unquote($fa-var-star);
+
+.star-rating,
+.star-rating span {
+    text-indent: -999vw;
+    @extend .#{$fa-css-prefix};
+
+    &:before {
+        text-indent: 0;
+        content: "#{$star}#{$star}#{$star}#{$star}#{$star}";
+    }
+}
+
+.star-rating:before,
+.star-rating span,
+.star-rating span:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.star-rating:before {
+    color: $lightest;
+}
+
+.star-rating span:before {
+    color: $accent;
+}

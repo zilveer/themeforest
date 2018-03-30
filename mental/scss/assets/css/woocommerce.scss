@@ -1,0 +1,831 @@
+
+// Core variables and mixins
+@import "../../bootstrap/variables";
+@import "../../bootstrap/mixins";
+
+// Mental Settings
+@import "../../settings";
+
+
+
+/*!========================================================================= *\
+   WooCommerce Theme
+\* ========================================================================= */
+
+
+/*!========================================================================= *\
+   Buttons & Form-controls
+\* ========================================================================= */
+
+/* ======================== Buttons ======================== */
+
+// Button default
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+.woocommerce #review_form #respond .form-submit input,
+.woocommerce-page #review_form #respond .form-submit input,
+.woocommerce a.added_to_cart, .woocommerce-page a.added_to_cart,
+.woocommerce .widget_price_filter .price_slider_amount .button,
+.woocommerce-page .widget_price_filter .price_slider_amount .button,
+.shipping-calculator-button,
+{
+	text-shadow: none; background: none; box-shadow: none;
+
+	display: inline-block; min-height: $input-height-base; margin-bottom: 5px; padding: 7px 20px;
+	font-weight: $btn-font-weight; text-align: center; text-transform: uppercase;
+	border: 2px solid transparent; border-radius: $border-radius-base;
+	font-size: $font-size-base; line-height: $line-height-base;
+	vertical-align: middle; cursor: pointer;  white-space: nowrap; -webkit-font-smoothing: auto;
+
+	@include transition(all 0.2s);
+	@include user-select(none);
+
+	@include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
+
+	&:hover, &:focus {
+		color: $btn-default-color;
+		text-decoration: none;
+		border-color: $gray-lighter;
+		background-color: $gray-lighter;
+	}
+
+	&:active, &:focus, &:active:focus{top:0; outline: none; -webkit-box-shadow: none; box-shadow: none;}
+}
+
+// Button alternative (Primary)
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt,
+.woocommerce #respond input#submit,
+.woocommerce a.added_to_cart, .woocommerce-page a.added_to_cart,
+.woocommerce #review_form #respond .form-submit input,
+.woocommerce-page #review_form #respond .form-submit input,
+.woocommerce a.button.add_to_cart_button,
+.woocommerce input.button[name="save_account_details"],
+.woocommerce input.button[name="save_address"],
+.woocommerce input.button[name="login"],
+.woocommerce input.button[name="register"],
+.woocommerce .lost_reset_password input.button[type="submit"]
+{
+	@include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+	border-color: #444649;
+	-webkit-font-smoothing: auto;
+	&:hover{background-color: #000; border-color: #000;}
+}
+
+.woocommerce .widget_price_filter .price_slider_amount .button,
+.woocommerce-page .widget_price_filter .price_slider_amount .button
+{
+	@include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-small);
+}
+
+
+/* ======================== Form controls ======================== */
+
+.woocommerce input[type="text"],
+.woocommerce input[type="email"],
+.woocommerce input[type="password"],
+.woocommerce textarea,
+.woocommerce select,
+.woocommerce form .form-row .select2-container,
+.woocommerce-cart table.cart td.actions .coupon .input-text,
+#calc_shipping_state,
+#billing_state,
+.woocommerce .quantity .qty
+{
+	display: block; width: 100%; height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+	padding: $padding-base-vertical $padding-base-horizontal;
+	font-size: $font-size-base; line-height: 1em;
+	color: $input-color; background-color: $input-bg; background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+	border: 1px solid $input-border;  border-radius: $input-border-radius;
+	&:focus{outline: none;}
+}
+
+.woocommerce select,
+select#calc_shipping_state,
+select#billing_state {
+	padding-right: 20px;
+	-webkit-appearance: none !important;
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+);
+	background-position: 100% center;
+	background-repeat: no-repeat;
+}
+
+.woocommerce select::-ms-expand,
+select#calc_shipping_state::-ms-expand,
+select#billing_state::-ms-expand {
+	display: none;
+}
+
+.woocommerce form .form-row textarea,
+.woocommerce-page form .form-row textarea,
+.woocommerce textarea
+{height: auto;}
+
+
+/* ======================== Forms blocks ======================== */
+
+.woocommerce form.login,
+.woocommerce form.checkout_coupon,
+.woocommerce form.register,
+.woocommerce-page form.login,
+.woocommerce-page form.checkout_coupon,
+.woocommerce-page form.register
+{
+	border-radius: 0; border-width: 2px;
+}
+
+
+
+/*!========================================================================= *\
+   Products List
+\* ========================================================================= */
+
+
+.woocommerce ul.products li.product a,
+.woocommerce-page ul.products li.product a{
+	.img-eye-hover{
+		width: 100%; margin-bottom: 10px;
+		img{margin-bottom: 0;}
+	}
+}
+
+.woocommerce ul.products li.product .onsale,
+.woocommerce-page ul.products li.product .onsale
+{
+	z-index: 1;
+}
+
+.woocommerce ul.products li.product .price, .woocommerce-page ul.products li.product .price
+{
+	color: $brand-primary;
+}
+
+/*!========================================================================= *\
+   Expanding gallery
+\* ========================================================================= */
+
+.gallery
+{
+	.gl-item-price{margin-bottom: 0; font-size: 20px; text-align: center; color: white;}
+
+	.glp-product-buttons{margin-top: 20px;}
+
+	.glp-product-price{margin: 10px 0; color: $gray-light;}
+
+	.glp-product-rating{
+		.star-rating{float: none;
+			&:before{color: $gray;}
+			span{color: $gray-light;}
+		}
+	}
+}
+
+
+/*!========================================================================= *\
+   Single Product
+\* ========================================================================= */
+
+/* ======================== Price ======================== */
+
+.woocommerce #content div.product p.price,
+.woocommerce #content div.product span.price,
+.woocommerce div.product p.price,
+.woocommerce div.product span.price,
+.woocommerce-page #content div.product p.price,
+.woocommerce-page #content div.product span.price,
+.woocommerce-page div.product p.price,
+.woocommerce-page div.product span.price
+{
+	margin-top: 5px; color: black; font-size: 28px;
+	.price-title{margin-right: 17px; font-size: 16px;}
+	.amount{margin: 0 10px 15px 10px; font-size: 28px;}
+	del{display: inline-block; font-size: 28px; margin-right: 10px;}
+	ins{
+		display:inline-block; white-space: nowrap; text-decoration: none;
+		.amount:first-child{margin-left: 0;}
+	}
+}
+
+/* ======================== Meta (Categories, Tags) ======================== */
+
+.product_meta{margin-top: 25px;}
+
+/* ======================== Rating ======================== */
+
+.woocommerce .woocommerce-product-rating,
+.woocommerce-page .woocommerce-product-rating
+{
+	margin-top: 10px; color: $brand-primary;
+}
+
+/* ======================== Add to cart button ======================== */
+
+.woocommerce #content div.product form.cart,
+.woocommerce div.product form.cart,
+.woocommerce-page #content div.product form.cart,
+.woocommerce-page div.product form.cart
+{
+	margin-top: 35px;
+}
+
+.woocommerce div.product form.cart .single_add_to_cart_button{font-size: 18px; padding: 15px 25px;}
+
+
+/* ======================== Quantity Field ======================== */
+
+.woocommerce .quantity .qty{
+	width: 80px; height: 64px; font-size: 18px;
+}
+
+
+/* ======================== Variable Product ======================== */
+
+.variations{
+	label{color: $gray-darker;}
+	select{margin-bottom: 5px;}
+}
+
+// Table
+.woocommerce div.product form.cart .variations,
+.woocommerce #content div.product form.cart .variations,
+.woocommerce-page div.product form.cart .variations,
+.woocommerce-page #content div.product form.cart .variations
+{
+	width: 100%;
+}
+
+// Label
+.woocommerce div.product form.cart .variations label,
+.woocommerce #content div.product form.cart .variations label,
+.woocommerce-page div.product form.cart .variations label,
+.woocommerce-page #content div.product form.cart .variations label
+{
+	font-size: 16px; font-weight: normal; padding-top: 14px;
+}
+
+// Price
+.woocommerce #content div.product .single_variation .price .amount{margin: 0;}
+
+// Button
+.variations_button{margin-top: 10px;}
+
+
+/* ======================== Thumbnails ======================== */
+
+.woocommerce #content div.product div.thumbnails a,
+.woocommerce div.product div.thumbnails a,
+.woocommerce-page #content div.product div.thumbnails a,
+.woocommerce-page div.product div.thumbnails a
+{
+	width: 23%;
+	margin-right: 2.66%;
+	&:nth-child(4n+0){margin-right: 0;}
+	&:nth-child(4n+1){clear: both;}
+
+	&.last{margin-right: 2.66%;}
+	&.first{clear: none;}
+}
+
+/* ======================== Reviews ======================== */
+
+.woocommerce #reviews #comments ol.commentlist,
+.woocommerce-page #reviews #comments ol.commentlist
+{
+	padding: 20px;
+}
+
+.woocommerce #reviews #comments ol.commentlist li .comment-text,
+.woocommerce-page #reviews #comments ol.commentlist li .comment-text
+{
+	padding-top: 0; margin-left: 70px; border: 0;
+}
+
+.woocommerce #reviews #comments ol.commentlist li img.avatar,
+.woocommerce-page #reviews #comments ol.commentlist li img.avatar
+{
+	width: auto;
+}
+
+/* ======================== Tabs ======================== */
+
+.woocommerce #content div.product .woocommerce-tabs,
+.woocommerce div.product .woocommerce-tabs,
+.woocommerce-page #content div.product .woocommerce-tabs,
+.woocommerce-page div.product .woocommerce-tabs
+{
+	margin-bottom: 45px;
+}
+
+.woocommerce-tabs h2{font-size: $font-size-h4; line-height: 30px;}
+
+/* ======================== Review form ======================== */
+
+.woocommerce-tabs .comment-form{margin-top: 0;}
+.woocommerce-tabs #reply-title{margin-left: 15px !important; margin-bottom: 20px !important; font-size: 21px;}
+
+.woocommerce #review_form #respond .comment-form-rating,
+.woocommerce-page #review_form #respond .comment-form-rating
+{margin-top: 10px;}
+
+.woocommerce #review_form #respond p.stars,
+.woocommerce-page #review_form #respond p.stars
+{
+	display: inline-block; margin-left: 20px;
+}
+
+.woocommerce #reviews #comment,
+.woocommerce-page #reviews #comment
+{
+	height: auto;
+}
+
+
+/* ======================== Upsell ======================== */
+
+.upsells.products h2{font-size: $font-size-h4; line-height: 30px;}
+
+/* ======================== Related Products ======================== */
+
+//.related.products{margin-top: 45px;}
+.related.products .products{margin-top: 20px;}
+
+.woocommerce .related ul li.product,
+.woocommerce .related ul.products li.product,
+.woocommerce .upsells.products ul li.product,
+.woocommerce .upsells.products ul.products li.product,
+.woocommerce-page .related ul li.product,
+.woocommerce-page .related ul.products li.product,
+.woocommerce-page .upsells.products ul li.product,
+.woocommerce-page .upsells.products ul.products li.product
+{
+	@media (min-width: $screen-sm-min) {
+		width: 22.05%;
+	}
+}
+
+.woocommerce ul.products li.product a:hover img,
+.woocommerce-page ul.products li.product a:hover img
+{
+	box-shadow: none;
+}
+
+.woocommerce #content div.product .related.products span.price
+{
+	line-height: 1;
+	.amount{font-size: 18px;}
+	del .amount{margin-left: 0;}
+}
+
+
+
+
+/*!========================================================================= *\
+   Common
+\* ========================================================================= */
+
+.woocommerce-tabs{magrin-bottom: 20px;}
+
+/* ======================== Images ======================== */
+
+.woocommerce #content div.product div.images img,
+.woocommerce div.product div.images img,
+.woocommerce-page #content div.product div.images img,
+.woocommerce-page div.product div.images img,
+.woocommerce ul.products li.product a img,
+.woocommerce-page ul.products li.product a img,
+.woocommerce ul.cart_list li img,
+.woocommerce ul.product_list_widget li img,
+.woocommerce-page ul.cart_list li img,
+.woocommerce-page ul.product_list_widget li img
+{
+	box-shadow: none;
+}
+
+
+/* ======================== Pruducts labels ======================== */
+
+.woocommerce span.onsale,
+.woocommerce-page span.onsale
+{
+	top: 0; left: 0; height: auto; padding: 0 16px; border-radius: 0; background: $brand-primary;
+	box-shadow: none; font-weight: normal; text-transform: uppercase; font-size: 10px;
+}
+
+.woocommerce ul.products li.product .onsale,
+.woocommerce-page ul.products li.product .onsale
+{
+	margin: 0;
+}
+
+/* ======================== Message Boxes ======================== */
+
+.woocommerce .woocommerce-message,
+.woocommerce-page .woocommerce-message,
+.woocommerce .woocommerce-error,
+.woocommerce-page .woocommerce-error,
+.woocommerce .woocommerce-info,
+.woocommerce-page .woocommerce-info
+{
+	padding: 15px 15px 15px 45px !important; border: 0; background: $gray-lighter;
+	border-radius: 0; box-shadow: none; text-shadow: none;
+
+	&:before{content:"\f00c"; display: inline-block; left: 20px; top: 15px; height: auto; margin-right: 10px; padding: 3px 0 0;
+		background: none; vertical-align: middle;
+		font: normal normal normal 18px/1 FontAwesome; color: $brand-primary;
+		text-shadow: none; box-shadow: none;
+	}
+
+	.button.wc-forward{margin-bottom: 0;}
+//	.button.wc-forward{width: auto; height: auto; border: 0; background: none; box-shadow: none; color: $brand-primary; text-shadow: none;}
+}
+
+.woocommerce .woocommerce-error,
+.woocommerce-page .woocommerce-error
+{
+	&:before{content: "\f00d"; color: red;}
+}
+
+.woocommerce .woocommerce-info,
+.woocommerce-page .woocommerce-info
+{
+	&:before{content: "\f129"; color: deepskyblue;}
+}
+
+/* ======================== Fixes ======================== */
+
+table.shop_table .form-group{margin: 0;}
+.woocommerce form .form-row, .woocommerce-page form .form-row{padding: 0;}
+
+
+/*!========================================================================= *\
+   Cart Page
+\* ========================================================================= */
+
+// Table
+.woocommerce table.shop_table,
+.woocommerce-page table.shop_table
+{
+	margin-bottom: 45px;
+	border-radius: 0; border-color: $gray-lighter; border-collapse: collapse;
+}
+
+.woocommerce table.shop_table th,
+.woocommerce-page table.shop_table th
+{
+	padding: 17px 20px;
+}
+
+.woocommerce table.shop_table td,
+.woocommerce-page table.shop_table td
+{
+	padding: 10px 20px; border-color: $gray-lighter;
+}
+
+.woocommerce table.shop_table tbody th,
+.woocommerce table.shop_table tfoot td,
+.woocommerce table.shop_table tfoot th
+{
+	border-color: $gray-lighter;
+}
+
+// Coupon field
+.woocommerce-cart table.cart td.actions .coupon .input-text { border: 0; width: 110px; }
+
+// Columns
+td.product-quantity{
+	text-align: center;
+	.quantity{display: inline-block;}
+}
+td.product-remove{text-align: center;}
+
+.woocommerce table.cart img,
+.woocommerce #content table.cart img,
+.woocommerce-page table.cart img,
+.woocommerce-page #content table.cart img
+{
+	width: auto; max-width: 90px;
+}
+
+// Remove button
+.woocommerce table.cart a.remove,
+.woocommerce #content table.cart a.remove,
+.woocommerce-page table.cart a.remove,
+.woocommerce-page #content table.cart a.remove
+{
+	display: inline-block; color: $gray-darker; font-size: 24px;
+	&:hover{color: red !important; background: none;}
+}
+
+.woocommerce #content table.cart td.actions,
+.woocommerce table.cart td.actions,
+.woocommerce-page #content table.cart td.actions,
+.woocommerce-page table.cart td.actions
+{
+	padding: 20px;
+}
+
+.coupon-submit{height: 42px;}
+
+.woocommerce table.cart input,
+.woocommerce #content table.cart input,
+.woocommerce-page table.cart input,
+.woocommerce-page #content table.cart input
+{
+	line-height: 1.7;
+}
+
+
+/* ======================== Cross sells ======================== */
+
+.cross-sells h2{font-size: $font-size-h4; line-height: 30px;}
+
+/* ======================== Cart Totals ======================== */
+
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce-page .cart-collaterals .cart_totals
+{
+	h2{font-size: $font-size-h4; line-height: 30px;}
+	table{width: 100%;}
+}
+
+.woocommerce .cart-collaterals .cart_totals table th,
+.woocommerce-page .cart-collaterals .cart_totals table th
+{
+//	width: 50%;
+}
+
+.woocommerce .cart-collaterals .cart_totals table,
+.woocommerce-page .cart-collaterals .cart_totals table,
+.woocommerce-cart .cart-collaterals .cart_totals table
+{
+	border-radius: 0; border: 1px solid $gray-lighter; border-collapse: collapse;
+	tr > th, tr > td{padding: 6px 10px;}
+}
+
+
+
+/* ======================== Calculate Shipping ======================== */
+
+.shipping-calculator-button {
+	width: 100%; margin-top: 10px;
+	&:before{ content: "\f1ec"; display: inline-block; margin-right: 10px; font: normal normal normal 18px/1 FontAwesome; color: $brand-primary; }
+}
+
+.shipping-calculator-form{margin-top: 20px;}
+
+.woocommerce .cart-collaterals .shipping_calculator,
+.woocommerce-page .cart-collaterals .shipping_calculator
+{
+	margin-top: 20px;
+	width: 100%;
+//	@media (min-width: $screen-md-min) { width: 30%; }
+}
+
+
+.woocommerce form .form-row.form-row-wide,
+.woocommerce-page form .form-row.form-row-wide{padding: 0; margin-bottom: 20px;}
+
+.shipping-calculator-form button[type="submit"]{width: 100%;}
+
+
+/*!========================================================================= *\
+   Checkout Page
+\* ========================================================================= */
+
+.woocommerce #payment,
+.woocommerce-page #payment
+{
+	border-radius: 0;
+}
+
+.woocommerce #payment ul.payment_methods, .woocommerce-page #payment ul.payment_methods{border-bottom: 0;  }
+.woocommerce #payment div.form-row, .woocommerce-page #payment div.form-row{border-top: 0;}
+
+.woocommerce #payment div.payment_box,
+.woocommerce-page #payment div.payment_box
+{
+	background: white; border: 0; border-radius: 0;
+	box-shadow: none; text-shadow: none;
+	&:after{border-bottom-color: white;}
+}
+
+.woocommerce .order_details, .woocommerce-page .order_details{margin: 2em 0 1.5em;}
+
+.woocommerce form.checkout_coupon .form-row{margin-bottom: 0;}
+
+
+/*!========================================================================= *\
+   Account page
+\* ========================================================================= */
+
+.woocommerce form.login,
+.woocommerce form.register,
+.woocommerce-page form.login,
+.woocommerce-page form.register
+{
+	padding: 0; border: 0;
+}
+
+.woocommerce input.button[name="save_account_details"] { float: right; }
+.woocommerce input.button[name="save_address"] { margin-top: 15px; float: right; }
+.woocommerce #rememberme { margin-left: 10px; }
+.woocommerce .lost_reset_password input.button[type="submit"] { margin-top: 15px; }
+
+
+/*!========================================================================= *\
+   Miscellanious
+\* ========================================================================= */
+
+
+/* ======================== Chosen styles ======================== */
+
+.woocommerce-checkout .form-row .chosen-container-single .chosen-single{height: $input-height-base;}
+
+
+.chosen-container {
+	display: block; width: 100%;
+	.chosen-single{
+		height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+		padding: $padding-base-vertical $padding-base-horizontal;
+		font-size: $font-size-base; line-height: $line-height-base;
+		color: $input-color; background: none; background-color: $input-bg;
+		background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+		border: 1px solid $input-border; border-radius: $input-border-radius;
+		box-shadow: none;
+	}
+	.chosen-single div {
+		background: none; border-left: none; position: absolute; width: 2.5em; height: $input-height-base; display: block; right: 0; top: 0;
+	}
+	.chosen-single div b {
+		background: none; content: ""; display: block; width: 0; height: 0; border: inset 5px; border-color: #aaaaaa transparent transparent transparent;
+		border-top-style: solid; position: absolute; left: 0.9375em; top: 50%; margin-top: -1px;
+	}
+	.chosen-single:hover div b {
+		content: ""; display: block; width: 0; height: 0; border: inset 5px; border-color: #222222 transparent transparent transparent; border-top-style: solid;
+	}
+	.chosen-results li.highlighted {
+		background: #eeeeee; color: black;
+	}
+
+	.chosen-drop{
+		border: 0;
+		background: none; background-color: $input-bg;
+	}
+}
+
+.chosen-container-single {
+	.chosen-single {
+
+	}
+	.chosen-drop {border-radius: 0;}
+	.chosen-search {padding: 6px 3px;}
+	.chosen-single abbr {top: 12px; right: 32px; }
+}
+
+.chosen-results {
+	font-size: 0.875em; padding: 0.25em 2.375em 0.25em 0.375em;
+	min-height: 1.5em; line-height: 1.5em; color: #555555;
+}
+
+.chosen-container .chosen-results li.highlighted{background-color: $gray-light; color: white;}
+
+.chosen-container-active.chosen-with-drop .chosen-single{
+	border: 1px solid $input-border; color: $input-color; background: none; background-color: $input-bg; box-shadow: none;
+}
+
+
+/* ======================== Select 2 Styles ======================== */
+
+.woocommerce form .form-row .select2-container {
+	padding: 0;
+}
+
+.woocommerce form .form-row .select2-container.select2-dropdown-open
+{
+	border-color: $gray-light;
+}
+
+.select2-container .select2-choice{
+	padding: 6px 12px; margin-top: 7px;
+	border: 0; border-radius: 0; background: none;
+}
+
+.select2-drop-active{padding-top: 5px;}
+
+.select2-search input{line-height: 1.2;}
+
+#select2-drop{
+	background-color: #fafafa; border-color: $gray-light;
+	//	@include box-shadow(0px 3px 5px 0px #a6a6a6);
+}
+
+.select2-dropdown-open .select2-choice{
+	box-shadow: none; -webkit-box-shadow: none;
+}
+
+
+/*!========================================================================= *\
+   Widgets
+\* ========================================================================= */
+
+.woocommerce ul.cart_list li img,
+.woocommerce ul.product_list_widget li img,
+.woocommerce-page ul.cart_list li img,
+.woocommerce-page ul.product_list_widget li img
+{
+	float: none; margin: 0; width: auto;
+}
+
+
+.woocommerce ul.cart_list,
+.woocommerce ul.product_list_widget,
+.woocommerce-page ul.cart_list,
+.woocommerce-page ul.product_list_widget
+{
+	li{
+		margin-bottom: 24px; padding: 0;
+		>a{
+			font-weight: normal;
+			>img{
+				float: left; width: 70px; height: 70px; margin-right: 20px; margin-top: 5px;
+			}
+		}
+	}
+}
+
+.woocommerce ul.cart_list li .star-rating,
+.woocommerce ul.product_list_widget li .star-rating,
+.woocommerce-page ul.cart_list li .star-rating,
+.woocommerce-page ul.product_list_widget li .star-rating
+{
+	margin-top: 15px;
+}
+
+.woocommerce.widget_shopping_cart .total,
+.woocommerce .widget_shopping_cart .total,
+.woocommerce-page.widget_shopping_cart .total,
+.woocommerce-page .widget_shopping_cart .total
+{
+	padding: 8px 12px; border: 0; background: $gray-lighter; color: $gray-darker;
+}
+
+.woocommerce .widget_shopping_cart .cart_list li,
+.woocommerce.widget_shopping_cart .cart_list li
+{
+	padding-left: 0;
+}
+
+.woocommerce .widget_shopping_cart .wc-forward,
+.woocommerce.widget_shopping_cart .wc-forward
+{
+	width: 100%;
+}
+
+.woocommerce ul.cart_list li dl,
+.woocommerce ul.product_list_widget li dl,
+.woocommerce-page ul.cart_list li dl,
+.woocommerce-page ul.product_list_widget li dl
+{
+	padding-left: 0; border: 0;
+}
+
+.woocommerce ul.cart_list li dl dd,
+.woocommerce ul.product_list_widget li dl dd,
+.woocommerce-page ul.cart_list li dl dd,
+.woocommerce-page ul.product_list_widget li dl dd
+{
+	padding: 0; margin: 0;
+}
+
+/* ======================== Filter By Price ======================== */
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle,
+.woocommerce-page .widget_price_filter .ui-slider .ui-slider-handle
+{
+	width: 15px; height: 15px; top: -7px; border-radius: 0; border: 0; background: $brand-primary; box-shadow: none;
+	&:last-child{margin-left: -15px;}
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range,
+.woocommerce-page .widget_price_filter .ui-slider .ui-slider-range
+{
+	height: 2px; background: $gray;
+}
+
+.woocommerce .widget_price_filter .price_slider_wrapper .ui-widget-content,
+.woocommerce-page .widget_price_filter .price_slider_wrapper .ui-widget-content
+{
+	height: 2px; border-radius: 0; background: $gray-light;
+}
+
+.woocommerce .widget_layered_nav_filters ul li a,
+.woocommerce-page .widget_layered_nav_filters ul li a,
+.woocommerce .widget_layered_nav ul li.chosen a,
+.woocommerce-page .widget_layered_nav ul li.chosen a
+{
+	padding: 3px 12px; border: 0; border-radius: 0; background: $gray-dark; box-shadow: none;
+}
+

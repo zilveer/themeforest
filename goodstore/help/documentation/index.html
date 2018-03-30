@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=windows-1250" http-equiv="content-type">
+
+        <link rel="shortcut icon" href="IMAGES/favicon-jawhelp-orange.ico">
+
+
+        <style>
+
+
+            body {font-family: 'Open Sans',verdana,helvetica,arial,sans-serif;   /*background: url('http://dev.jawtemplates.com/p1/wp-content/uploads/2013/11/background-shoes.jpg') no-repeat fixed*/;}
+            body pre {font-size: 120%; line-height: 100%;}
+
+            /*div.boxed {width: 1024px; margin-left: auto; margin-right: auto;}*/
+
+
+            /* red style */
+
+            .red h1 {color: #611530;}
+            .red h2 {color: #DE543E;}
+            .red h3 {color: #611530;}
+            .red h4 {color: #521027; margin-bottom: 0.0em;}
+            .red h5 {color: #521027; margin-left: auto; margin-bottom: 0.0em; font-size: 100%;}    
+            .red h5:before {content: url(IMAGES/subchapter-bullet.png);} 
+            .red a:link, .red a:visited {color: #611530;}
+            .red a:hover {color: #DE543E;}    
+            .red a img {opacity:1.0; filter:alpha(opacity=100);}
+            .red a img:hover {opacity:0.8; filter:alpha(opacity=80);}
+
+            /* blue style */
+
+            .blue h1 {color: #00475B;}
+            .blue h2 {color: #DE543E;}
+            .blue h3 {color: #00475B;} 
+            .blue h4 {color: #00475B; margin-bottom: 0.0em;}
+            .blue h5 {color: #00475B; margin-left: auto; margin-bottom: 0.0em; font-size: 100%;}
+            .blue h5:before {content: url(IMAGES/subchapter-bullet.png);} 
+            .blue a:link, .blue a:visited {color: #00475B;}
+            .blue a:hover {color: #DE543E;}
+            .blue a img {opacity:1.0; filter:alpha(opacity=100);}
+            .blue a img:hover {opacity:0.8; filter:alpha(opacity=80);}
+
+
+            /* automatic chapter numbering */
+
+            div.kapitoly body { counter-reset: section; }
+            div.kapitoly h2 {
+                counter-increment: section;
+                counter-reset: sub-section;		
+            }
+            div.kapitoly h2:before { content: counter(section) ". "; }
+            div.kapitoly h3:before { content: counter(section) "." counter(sub-section) " "; }
+            div.kapitoly h3:before {
+                counter-increment: sub-section;
+            }
+
+
+            /* main subitem */     
+
+            .red .h3-like {color: #611530; font-size: 110%; font-weight: bold;}
+            .blue .h3-like {color: #00475B; font-size: 110%; font-weight: bold;}
+
+
+
+            /* numbered list with levels */
+
+            .obsah ol li {font-weight: bold;}
+            .obsah ol ol li {font-weight: normal;}
+
+            .obsah ol { margin-left: -25px; font-size: 90%;} 	  
+            .obsah ol { list-style: none outside none;}
+            .obsah ol { counter-reset: pol; }
+            .obsah li:before {
+                content: counters(pol, ".", decimal);
+                counter-increment: pol;
+            }      
+
+
+            /* div.content {background-color: #F5F5F2;} */
+            .obsah a:link {text-decoration: none; color: #000000;}
+            .obsah a:visited {text-decoration: none; color: #000000;}      
+            .red .obsah ol li a:hover {text-decoration: none; color: #DE543E; font-weight: bold;}
+            .red .obsah ol ol li a:hover {text-decoration: underline; color: #611530; font-weight: normal;}
+            .red .obsah ol ol li a:active {color: #DE543E;}
+            .blue .obsah ol li a:hover {text-decoration: none; color: #DE543E; font-weight: bold;}
+            .blue .obsah ol ol li a:hover {text-decoration: underline; color: #00475B; font-weight: normal;}
+
+
+            /* fixed header with logo above content */
+
+            .logofixed {position: fixed; background-color: #FFFFFF; height: 154px; z-index: 1;}
+            .logofixed img {margin: 0px auto 0px 8px;}
+
+
+            /* table of content placement */
+
+            div.fixed {background-color: #FFFFFF; position: fixed; float: left; width: 270px; height: 99%; overflow: scroll; overflow-x: hidden;}
+
+
+            /* content body placement */
+
+
+            div.body {background-color: none; position: absolute; left:295px; float: right; width: auto; margin-right: 15px; line-height: 140%;}    
+
+
+            /* elements in text */           
+
+            div.body img {margin-bottom: -3px; padding-top: 3px;}
+            div.body hr {color: #E4E4E4; size: 1px;}
+
+
+
+            /* notice */
+
+            div.notice, div.note, div.hint, div.warning, div.important, div.remember {margin: 15px 0 15px 0; padding: 2px 5px 2px 2px; background-color: #929186; color: #FFFFFF; font-size: 100%; }     
+            div.notice a, div.note a, div.hint a, div.warning a, div.important a, div.remember a {color: #FFFFFF; font-decoration: underline;}     
+            div.notice a:link, div.note a:link, div.hint a:link, div.warning a:link, div.important a:link, div.remember a:link {color: #FFFFFF; font-decoration: underline;}     
+            div.notice a:visited, div.note a:visited, div.hint a:visited, div.warning a:visited, div.important a:visited, div.remember a:visited {color: #FFFFFF; font-decoration: underline;}     
+            div.notice a:hover, div.note a:hover, div.hint a:hover, div.warning a:hover, div.important a:hover, div.remember a:hover {color: #e5bfb9; font-decoration: underline;}
+            div.notice ul li, div.note ul li {list-style: url(IMAGES/note_pencil-icon2.png);}
+            div.hint ul li {list-style: url(IMAGES/hint-icon.png);}
+            div.warning ul li {list-style: url(IMAGES/warning-icon.png);}
+            div.important ul li {list-style: url(IMAGES/important-icon.png);}
+            div.remember ul li {list-style: url(IMAGES/remember-icon.png);}
+            /* div.notice, div.note {margin: 15px 0 15px 0; padding: 10px 10px 10px 10px; background-color: #E4E4E4; font-size: 85%; }     */
+            /* div.notice, div.note {margin: 15px 0 15px 0; padding: 10px 10px 10px 10px; background-color: #DE543E; color: #FFFFFF; font-size: 85%; }     */     
+
+
+
+
+            /* image descriptions */
+
+            .popisek {font-size: 75%;}
+
+
+
+        </style>
+        <title>GoodStore Theme Documentation</title>
+    </head>
+    <body class="red">
+        <div class="fixed">
+            <div class="logofixed"> <a target="_blank" href="http://demo.jawtemplates.com/goodstore/"><img style="width: 230px; height: auto; padding-top: 10px; border: none;" src="http://demo.jawtemplates.com/goodstore/wp-content/themes/goodstore/images/logo/logo.png"></a>
+                <h2 style="margin-left: 15px;">Table of Content</h2>
+                <hr noshade="noshade" size="1" width="225"> </div>
+            <div class="obsah" style="position: absolute; top: 154px; ">
+                <!-- "fade out" efekt nad polozkami obsahu -->
+                <div style="position: fixed; height: 2px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 1;"></div>
+                <div style="position: fixed; height: 4px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.9;"></div>
+                <div style="position: fixed; height: 6px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.8;"></div>
+                <div style="position: fixed; height: 8px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.7;"></div>
+                <div style="position: fixed; height: 10px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.6;"></div>
+                <div style="position: fixed; height: 12px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.5;"></div>
+                <div style="position: fixed; height: 14px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.4;"></div>
+                <div style="position: fixed; height: 16px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.3;"></div>
+                <div style="position: fixed; height: 18px; width: 250px; background-color: #FFFFFF; z-index: 1; opacity: 0.2;"></div>		
+
+                <ol>
+                    <li>. <a href="#1">Installing the Theme</a>
+                        <ol>
+                            <li>&nbsp;<a href="#1_1">System Requirements</a></li>
+                            <li>&nbsp;<a href="#1_2">Server Requirements</a></li>
+                            <li>&nbsp;<a href="#1_3">Browser Requiremets</a></li>
+                            <li>&nbsp;<a href="#1_4">Installation Procedure</a></li>
+                            <li>&nbsp;<a href="#1_5">Performance Optimization</a></li>
+                        </ol>
+                    </li>
+                    <li>. <a href="#2">GoodStore Settings </a>
+                        <ol>
+                            <li>&nbsp;<a href="#2_1">General Settings</a></li>
+                            <li>&nbsp;<a href="#2_2">Header Settings</a></li>
+                            <li>&nbsp;<a href="#2_3">Featured Area</a></li>
+                            <li>&nbsp;<a href="#2_4">Footer Settings</a></li>
+                            <li>&nbsp;<a href="#2_5">Blog &amp; Posts</a></li>
+                            <li>&nbsp;<a href="#2_6">Single Post</a></li>
+                            <li>&nbsp;<a href="#2_7">Sidebar Manager</a></li>
+                            <li>&nbsp;<a href="#2_8">Custom Code</a></li>
+                            <li>&nbsp;<a href="#2_9">Styling Options</a></li>
+                            <li>&nbsp;<a href="#2_10">Advertisement</a></li>
+                            <li>&nbsp;<a href="#2_11">Error 404</a></li>
+                            <li>&nbsp;<a href="#2_12">Backup</a></li>
+                            <li>&nbsp;<a href="#2_13">Demo</a></li>
+                            <li>&nbsp;<a href="#2_14">Advanced</a></li>
+                            <li>&nbsp;<a href="#2_15">WooCommerce</a></li>
+                        </ol>
+                    </li>
+                    <li>. <a href="#3">Pages</a><br>
+                        <ol>
+                            <li><a href="#3_1">&nbsp;REVO Composer Page Builder</a></li>
+                            <li>&nbsp;<a href="#3_2">General Settings</a></li>
+                        </ol>
+                    </li>
+                    <li>. <a href="#4">Posts</a><br>
+                        <ol>
+                            <li>&nbsp;<a href="#4_1">General Settings</a></li>
+                            <li>&nbsp;<a href="#4_2">Rating Settings</a></li>
+                        </ol>
+                    </li>
+                    <li>. <a href="#5">Categories</a></li>
+                    <li>. <a href="#6">Portfolio</a>
+                        <ol>
+                            <li>&nbsp;<a href="#6_1">Portfolio Settings</a></li>
+                        </ol>
+                    </li>
+                    <li>. <a href="#7">Team</a></li>
+                    <li>. <a href="#8">Testimonial</a></li>
+                    <li>. <a href="#9">Shortcodes</a></li>
+                    <li>. <a href="#10">Widgets</a></li>
+                    <li>. <a href="#11">Slider</a><br>
+                        <ol>
+                            <li>&nbsp;<a href="#11_1">J&amp;W Slider</a></li>
+                            <li>&nbsp;<a href="#11_2">Revolution Slider</a></li>
+                        </ol>
+                    </li>
+                    <li>. <a href="#12">Typography</a></li>
+                    <li>. <a href="#13">Video Tutorials</a></li>
+                    <li>. <a href="#14">Icons</a></li>
+                <li>. <a href="#15">Sources and Credits</a></li></ol>
+            </div>
+        </div>
+        <div class="body kapitoly" style="z-index: -1;">
+            <h1>The GoodStore Documentation</h1>
+            <p>&nbsp;</p>
+            <hr>
+            <p><strong>Thank you for purchasing the GoodStore theme. If you have any
+                    questions that are beyond the scope of this documentation, please feel
+                    free to ask us at the themeforest.net comments section. You can e-mail
+                    us at <a href="mailto:jaw@jawtemplates.com">jaw(a)jawtemplates.com</a> as well. We also recommend that you follow video tutorials on our <a target="_blank" href="https://www.youtube.com/playlist?list=PLBqRHN6a0RLGb43C40FW_M5Yvn3oSLQ1w">YouTube channel</a>.<br></strong> </p>
+            <hr> <br>
+            <h2 class="doc"><a id="1" name="1"></a>Installing the Theme</h2>
+            <h3><a id="1_1" name="1.1"></a>System Requirements</h3>
+            <p>The GoodStore theme has been tested in WordPress 3.8. However, we
+                strongly recommend that you always use the latest stable version of
+                WordPress to ensure that all known bugs and security fixes are
+                addressed.</p>
+            <h3><a id="1_2" name="1.2"></a>Server Requirements</h3>
+            <p>The recommended minimum requirements are:</p>
+            <ul>
+                <li>PHP 5.3+</li>
+                <li>MySQL 5+</li>
+                <li>Apache 2.0 (2.2+ recommended)</li>
+                <li>mod_mysql</li>
+                <li>mod_xml</li>
+                <li>mod_zlib</li>
+            </ul>
+            <h3><a id="1_3" name="1.3"></a>Browser Requirements</h3>
+            <p>The back-end administration requirements of the GoodStore admin panel
+                in order of preference are as follows:</p>
+            <ul>
+                <li>Firefox 4+</li>
+                <li>Safari 4+</li>
+                <li>Google Chrome 3+</li>
+                <li>Opera 13+</li>
+                <li>Internet Explorer 8+</li>
+            </ul>
+            <h3><a id="1_4" name="1.4"></a>Installation Procedure</h3>Except the theme itself, the GoodStore consists of four other main parts that are installed separately as the theme´s add-ons, as well as of a few optional 3rd party´s plugins. These are the following add-ons:<br>
+            <ul>
+                <li><strong>J&amp;W Custom Posts</strong></li>
+                <strong> </strong>
+                <li><strong>J&amp;W Menu</strong></li>
+                <strong> </strong>
+                <li><strong>J&amp;W Shortcodes</strong></li>
+                <strong> </strong>
+                <li><strong>J&amp;W Widgets</strong></li>
+            </ul>
+            <ul>
+                <li><strong>Contact Form 7</strong></li>
+                <li><span style="font-weight: bold;">Image Widget</span></li>
+                <li><span style=" font-weight: bold;">Wysilja Newsletters<br></span></li>
+                <strong> </strong>
+                <li><strong>Revolution Slider</strong></li>
+                <strong> </strong>
+                <li><strong>WooCommerce solution </strong>(consists of the <em>WooCommerce, WooCommerce New Product Badge, WooCommerce Sold Out Products, YITH WooCommerce Compare, YITH WooCommerce Wishlist</em> plugins)<strong><br></strong></li>
+            </ul>
+            To install the theme and all the necessary add-ons, follow the steps below
+            as well as the messages or recommendations that appear during the installation.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> If you use
+                        a debug mode, be aware that the four J&amp;W widgets listed above will be activated without your permission, as they are the necessary components of the theme.<strong></strong></li>
+                    <li><strong>NOTE:</strong> After installing the theme, all items in the <strong>J&amp;W
+                            Shortcodes</strong> plugin will be ticked automatically, but note that
+                        if any new shortcode will be added in a future update, you will need to
+                        tick this item(s) manually.</li>
+                    <li style="list-style: url(IMAGES/hint-icon.png);"><strong>HINT:</strong> If you have activated the <strong>J&amp;W Menu</strong> plugin but aren´t able to add another menu item, it most likely means that you have reached the maximal limit set on your PHP server. If it happens, add the following part of code to the <strong>
+                            .htaccess</strong> file, please:<br>
+                        <pre># Set Max Input Vars<br>php_value max_input_vars 5000
+                        </pre>
+
+                    </li>
+                </ul>
+            </div>
+
+
+            <h4>Upload the Theme</h4>
+            <p><strong>IMPORTANT:</strong> Make sure you unzip the downloaded file
+                from ThemeForest first (DON'T upload it to your server yet). This file
+                contains the actual theme in zip file called <strong>goodstore.zip</strong>. This is
+                the theme file. Now install the theme by one of the following two
+                methods:</p>
+            <ol>
+            </ol>
+            <ol>
+                <li>Upload the <strong>goodstore.zip</strong> file through the WordPress admin backend
+                    (This will ONLY work if the server that hosts your website allows
+                    upload limits greater than 6 MB. <strong>Please note that the most
+                        hosting providers have only up to 2 MB file upload limit).<br>
+                    </strong><br>
+                    <div style="text-align: center;"><a target="_parent" href="IMAGES/1.4-01x.png"><img title="Uploading the theme" alt="Uploading the theme" src="IMAGES/1.4-01.png"></a><br>
+                    </div>
+                    <br>
+                </li>
+                <li>If you prefer direct access to your folders on server (or uploading
+                    the file using WordPress doesn´t work), use this method. First, unzip
+                    the <strong>goodstore.zip</strong> file, then upload the extracted <strong>goodstore/</strong>
+                    folder to <strong><wordpress install="" directory="">/wp-content/themes/</wordpress></strong>
+                    using your FTP client so that the structure was as follows: <strong>/wp-content/themes/goodstore/</strong>.</li>
+            </ol>
+            <h4>Activate the GoodStore theme</h4>
+            If the upload of theme was successful, you can see the GoodStore in list
+            of the downloaded themes. You can activate it now.<br>
+            <h4>Configure your theme options</h4>
+            To set up your theme, navigate to <strong><em>Appearance &gt; Theme Options</em>
+            </strong>(see the <a href="#2">2. GoodStore Settings</a> chapter below).<br>
+            <h3><a id="1_5" name="1.5"></a>Recommendations to optimize the performance
+                of your website</h3>
+            After you build your site, we recommend that you deactivate all the
+            widgets you don´t use in<em> <strong>Plugins &gt; J&amp;W Widgets, Plugins &gt;
+                    J&amp;W Custom Posts</strong></em> and the unused shortcodes in <strong><em>Plugins &gt; J&amp;W Shortcodes</em></strong>. Remember that loading the unused parts of
+            various add-ons may needlessly slowing down your web.<br>
+            <br>
+            We also recommend use of some PHP OPCache on your hosting - e.g. APC and
+            XCache. On the Wordpress side we recommend installing the W3 Total Cache
+            plugin, in which is advisable to activate combination and minification of
+            CSS and JS scripts and activate cache for clients (Gzip, file cache).<br>
+            <h2><a id="2" name="2"></a> GoodStore Settings</h2>
+            You can customize the overall functionality and look of the theme to your
+            needs. <br>
+            <h3><a id="2_1" name="2.1"></a>General Settings</h3>
+            Here can be set up some of the most basic properties of your site. You can
+            select a theme style, upload your favicon or enable/disable a Top Arrow
+            icon.<br>
+            <br>
+            <div style="text-align: center;"><a target="_parent" href="IMAGES/2.1-01x.png"><img title="General Settings" alt="General Settings" src="IMAGES/2.1-01.png"></a><br>
+            </div>
+            <br>
+            <h4><a id="2_1-Theme_Style" name="2_1-Theme_Style"></a>Theme Style</h4>
+            Select the theme style you prefer.<br>
+            <br>
+            <strong>Full Width</strong> - choose this option to fit header and some
+            other parts of your site to the full width of a browser window.<br>
+            <strong>Boxed</strong> - select this option if you prefer boxed look of
+            your site.<br><br><div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.1-03x.png"><img alt="Full width" src="IMAGES/2.1-03.png"></a><br>Compare the <strong>Full Width</strong> theme style on the example
+                above with the <strong>Boxed</strong> one below<br><br><a target="_parent" href="IMAGES/2.1-04x.png"><img alt="Boxed" src="IMAGES/2.1-04.png"></a></div>
+            <h4>Wide Version</h4>
+            Decide whether or not to use wide version of the theme. Simply try both
+            options to find which one better suits your idea or needs.<br>
+            <h4>Favicon</h4>
+            Click [Upload]<em></em> button and upload your prepared 16px × 16px PNG/GIF image
+            that will represent your website's favicon.<br>
+            <h4><a id="2_1-To_Top_Arrow" name="2_1-To_Top_Arrow"></a>To Top Arrow</h4>
+            Choose whether or not to show the "To Top" arrow. <br><br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.1-02x.png"><img alt="To Top Arrow" src="IMAGES/2.1-02.png"></a><br>This is the <strong>To Top Arrow</strong> hanging in the lower right corner of your browser´s window after <br>you have turned on this option. It enables you to quickly jump to the top of page in any time.</div>
+            <h4>To Top Arrow on Mobile Devices</h4>
+            Choose whether or not to show the "To Top" arrow on mobile devices,
+            independently on the choice above.<br>
+            <h3> <a id="2_2" name="2.2"></a>Header Settings</h3>
+            The following options allow you to customize content and look of the
+            header.<br>
+            <h4>Header Style</h4>
+            Choose one of the preset header styles. We recommend that you try each
+            of them to see how these options affect your page.<br>
+            <h4>Header Widget Area</h4>
+            Choose whether or not to display a Header Widget Area.<br>
+            <h4><a id="2_2-Top_Bar" name="2_2-Top_Bar"></a>Top Bar</h4>
+            This is the color bar at the top of your page. You can set up
+            its content just here.<br>
+            <br>
+            <strong>Top Bar Visible:</strong> Turn on this option if you want to
+            display the topmost bar<br>
+            <strong> Fixed Top Bar:</strong> If turned on, the bar is permanently
+            shown at the top independently on scrolling the page.<br>
+            <strong>Top Bar Span Icon:</strong> Here enter the class of the icon you
+            want to show in the top bar.<br>
+            <strong>Top Bar Span Text:</strong> Fill in this field with the text you
+            want to show next to the icon.<br>
+            <strong> Show Login Button:</strong> Choose whether or not to show login
+            button in the top bar.<br>
+            <strong>Show Wishlist Content:</strong> Choose whether or not to show a
+            wishlist content button in the top bar. Works with the WooCommerce only.<br>
+            <strong>Show Cart Content:</strong> Select the WooCommerce option to show
+            the cart content. To make this option available, you need to have
+            installed the WooCommerce plugin.<br>
+            <strong> Show Search:</strong> Here you can turn on or off a search field
+            in the top bar.<br>
+            <br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.2-01x.png"><img title="Top Bar" alt="Top Bar" src="IMAGES/2.2-01.png"></a><br>
+                This is the Top Bar</div>
+            <h4><a id="2_2_Logo_Settings" name="2_2_Logo_Settings"></a>Logo Settings</h4>
+            <strong>Logo:</strong> Click the [Upload] button to select and upload your own
+            logo.<br>
+            <strong>Logo Margin - Top:</strong> This allows to set the top margin of
+            your logo. Enter a value in pixels.<br>
+            <strong>Logo Margin - Left:</strong> Enter the left margin value in
+            pixels.<br>
+            <strong>Logo Margin - Bottom:</strong> Enter the bottom margin value in
+            pixels.<br>
+            <strong>Retina Ready:</strong> This option allows to display your logo in
+            high quality on the Retina displays.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong><a id="2_2-Retina_Ready" name="2_2-Retina_Ready"></a>NOTE:</strong> Although you can use your
+                        logo with the dimensions you need, let us take our logo as an example to
+                        explain the issue. Size of this logo is 249×69 <xxxxxxxxxxxxxxx>px if
+                        it has not to be retina ready. If you prepare a retina ready logo, you
+                        should create it with double width and height, i. e. 498×138 <xxxxxxxxxxxxxxxx>px.
+                            Remember that if the „Retina Ready“ option is set on, your logo will
+                            be displayed in its half size on non retina displays, so it won´t
+                            affect the actually displayed size. <strong>Make sure you have set
+                                the option off if you use a standard sized logo (</strong></xxxxxxxxxxxxxxxx></xxxxxxxxxxxxxxx><xxxxxxxxxxxxxxx><xxxxxxxxxxxxxxxx><strong>249×69
+                                px), otherwise it couses that the logo will be displayed too small
+                                on both of display types.</strong><span style="text-decoration: underline;"><br>
+                            </span> </xxxxxxxxxxxxxxxx></xxxxxxxxxxxxxxx></li></ul></div>
+            <h4> <a id="2_2-Menu_Bar" name="2_2-Menu_Bar"></a>Menu Bar</h4>
+            <strong>Fixed Menu Bar:</strong> Turn on this option if you want to have
+            the top menu bar permanently displayed, independently on scrolling the
+            page.<br>
+            <strong>Border Menu Bar:</strong> Here you can turn on/off an unobtrusive
+            grey line at the top and bottom of your menu bar.<br>
+            <br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.2-02x.png"><img title="This is the Menu Bar" alt="This is the Menu Bar" src="IMAGES/2.2-02.png"></a><br>
+                The Menu Bar</div>
+            <h3> <a id="2_3" name="2.3"></a>Featured Area</h3>
+            <p>Settings in this section allow you to customize your featured area.</p>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.3-01x.png"><img title="Featured area" alt="Featured area" src="IMAGES/2.3-01.png"></a><br>
+                An example of the Featured Area. You can specify what content to show
+                there and whether <br>
+                to display the area on all your web or on the home page only, or not at
+                all.</div>
+            <p class="h3-like">2.3.1 Settings</p>
+            <h4> <a id="Featured_Area_Placement" name="Featured Area Placement"></a>Featured Area Placement</h4>
+            Choose where to display the featured area, or select the off option if it
+            has not to be used.<br>
+            <h4><a id="2_3_1-Featured_Area_Content_Type" name="2_3_1-Featured_Area_Content_Type"></a>Featured Area Content Type</h4>
+            Here you can choose type of your featured area´s content. <br>
+            <br>
+            <strong>Page ID:</strong> If selected, a page of your choice will be
+            displayed in the featured area. To make it possible, you need to enter a
+            valid ID of the page into the <em>Custom Header Page ID</em> field below.<br>
+            <strong>Revolution Slider:</strong> Select this option, if you want to use
+            the Revolution Slider in your featured area.<br>
+            <strong>JaW Slider:</strong> If you prefer using the bundled J&amp;W Slider,
+            choose this option. Please go to the <strong><a href="#2_3_2">2.3.2 J&amp;W
+                    Slider</a></strong> subchapter to learn how to set up and use the slider.<br>
+            <h4>Slider Options</h4>
+            <strong> Revolution Slider Name:</strong> Use this option if you have
+            chosen the <em>Revolution Slider</em> in the settings above. Select a
+            slider you have created in the <em>Revolution Slider</em> settings from
+            this dropdown list.<br>
+            <h4>Page Options</h4>
+            <strong>Custom Header Page ID:</strong> If you have chosen the <em>Page
+                ID</em> option in the <em>Featured Area Content Type</em> settings
+            above, enter an ID of the page you want to use in your featured area
+            content.
+            <p class="h3-like"><a id="2_3_2">2.3.2 J&amp;W Slider</a></p>
+            Here you find all the options you need to set up the <a href="#11_1">J&amp;W
+                Slider</a> placed in the featured area. To learn how to put the slider to your page, go to the <strong><a href="#11">11.
+                    Slider</a></strong> chapter, please.<br>
+
+            <div class="notice">
+                <ul>
+                    <li>
+                        <strong>NOTE:</strong> The J&amp;W Slider settings below take effect only in the Featured Area either on the <strong>Home Page</strong> or on your <strong>All Web</strong> pages (or not at all) depending on what option you have chosen under the <a href="#Featured_Area_Placement">Featured Area Placement</a> above. However, you can create and add separate sliders with independent settings for each page you want, when you build these pages by using e. g. the <strong><a href="#3_1">REVO Composer</a></strong> page builder.</li></ul></div><h4>
+
+
+                Content
+            </h4>
+            <h5> Slider Full Width Styles</h5>
+            <strong>Off:</strong> Select this option if you don´t want to use the
+            slider in any full width mode.<br>
+            <strong>Boundary Color:</strong> If selected, this option makes your
+            slider as wide as the content underneath, but adds a custom color around
+            the slider. This colored area is expanded to a full width of browser´s
+            window.<br>
+            <strong> Full Width:</strong> Expands your slider to the full width mode.<br>
+            <h5>Post Type</h5>
+            Choose whether to show <strong>posts</strong> or <strong>products</strong>
+            in the slider.<br>
+            <h5><a id="2_3_2-Number_of_Items" name="2_3_2-Number_of_Items"></a>Number of Items</h5>
+            Set number of items you want to have in the slider.<br><br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" title="J&amp;W Slider - Number of Items" href="IMAGES/2.3.2-01x.png"><img alt="J&amp;W Slider - Number of Items" src="IMAGES/2.3.2-01.png"></a><br>The marked array of bullets represents your slider´s items - their number corresponds to the <strong>Number of Items</strong> <br>you have set (the whole slider is animated according to your settings under the <a href="#Animation"><strong>Animation</strong></a> option below)</div>
+            <h5>Post Order</h5>
+            Here you can choose the posts order way you prefer – <strong>ascending</strong>
+            or <strong>descending</strong>.<br>
+            <h5>Post Order by</h5>
+            Order posts by their parameters:<br>
+            <br>
+            <strong>Date:</strong> Order by date <br>
+            <span style="font-weight: bold;">None:</span> No order <br>
+            <span style="font-weight: bold;">ID:</span> Order by post ID <br>
+            <span style="font-weight: bold;">Author:</span> Order by author <br>
+            <strong>Title:</strong> Order by title <br>
+            <strong>Modified:</strong> Order by a last modified date <br>
+            <strong>Parent:</strong> Order by post parent IT <br>
+            <strong>Rand:</strong> Random order <br>
+            <strong>Count:</strong> Order by number of comments<br>
+            <h4>Blog &amp; Posts</h4>
+            <h5>Include Category (optional)</h5>
+            Click into the field/dropdown list to choose all categories you want to
+            fetch posts from.<br>
+            <h5>Include Posts (optional)</h5>
+            Choose just the posts you want to show. Insert their IDs and separate them
+            with coma (like 52, 45, 87 etc.). If you leave this field blank, all posts
+            will be used.<br>
+            <h5>Include Authors (optional)</h5>
+            Select the authors whose posts you want to display. If you leave this
+            field blank, the posts from all authors will be used.<br>
+            <h5>Include Tags (optional)</h5>
+            Specify the tags which the posts you want to fetch have to include.<br>
+            <br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> In case of using the <strong>Include
+                            Category, Include Posts</strong> and <strong>Include Authors</strong> options above, the AND
+                        operator is used (i. e. all of the chosen items are included in the
+                        displayed content).</li></ul></div>
+            <h5>Sticky Posts</h5>
+            Choose how to use your sticky posts:<br>
+            <br>
+            <strong>Use as common posts:</strong> Your posts will be used according to
+            their sticky feature. <br>
+            <strong>Ignore sticky posts:</strong> The posts marked as sticky will be
+            ignored in the slider.<br>
+            <strong>Show only sticky posts:</strong> There will be used just sticky
+            posts in the slider.<br>
+            <h4>Products</h4>
+            <h5>Show only featured products</h5>
+            Set this option on if you want to show just the featured products in your
+            slider. If it is set off, all your products may be displayed.<br>
+            <h5>Include Product Category (optional)</h5>
+            Click into the field/dropdown list to choose all products categories you
+            want to fetch products from.<br>
+            <h5>Include Products (optional)</h5>
+            Choose just the products you want to show. Insert their IDs and separate
+            them with coma (like 52, 45, 87 etc.). If you leave this field blank, all
+            products will be used.<br>
+            <h5>Include Products Tags (optional)</h5>
+            Specify the tags which the products you want to fetch have to include.<br>
+            <h4><a id="Animation" name="Animation"></a>Animation</h4>
+            <h5>Animation latency</h5>
+            Set a speed value of changing slides in your slider.<br>
+            <h5>Animation speed</h5>
+            Depending on this value in milliseconds, slides and their descriptions
+            move more or less slowly and smoothly. This only affects the motion
+            effect, but not an animation latency.<br>
+            <h4>Design</h4>
+            <h5>Info Box Text Color</h5>
+            Click into the field and select or enter the color value you want to set for
+            texts in your slider.<br>
+            <h5>Info Box Color</h5>
+            Select a background color for the info box.<br>
+            <h5>Info Box Opacity</h5>
+            Here you can set an opacity level for the info box.<br><br>
+            <div class="popisek" style="text-align: center;"><a id="2_3_2-Design-Fig"><img alt="J&amp;W Slider - design" src="IMAGES/2.3.2-02x.png"></a><br>Compare the sample color and opacity settings of the slider´s info box with the result<br><img alt="arrow - bottom" src="IMAGES/to_bottom_arrow.png"></div><br>
+            <div style="text-align: center;"><a href="IMAGES/2.3.2-03x.png"><img alt="J&amp;W Slider - design" src="IMAGES/2.3.2-03.png"></a><br></div><br>
+            <h3><a id="2_4" name="2.4"></a>Footer Settings</h3>
+            The following options allow you to customize content and look of the
+            footer.<br>
+            <h4>Footer Featured Area Options</h4>
+            <strong>Footer Featured Area Assignment:</strong> Decide whether or not to
+            display your footer featured area (displayed above the footer) and where
+            to assign it. You can choose between the home page and all the web.<br>
+            <strong>Custom Footer Page ID:</strong> Enter ID of the page you want to
+            use in your featured area content.<br>
+            <h4>Footer Layout</h4>
+            There are several preset layouts divided into various numbers of columns
+            available for your widgets. Select the option which best suits your needs.<br>
+            <h4>Show Copyright</h4>
+            Decide whether or not to display your copyright info in the footer.<br>
+            <br>
+            <div class="popisek" style="text-align: center;"><a id="2_4-Footer_Layout" target="_parent" href="IMAGES/2.4-02x.png"><img alt="Footer" src="IMAGES/2.4-02.png"></a><br>
+                Look at how the chosen four columns layout (fig. above) affects the
+                footer in the example below<br><img alt="arrow icon" src="IMAGES/to_bottom_arrow.png"><br><br>
+                <a target="_parent" href="IMAGES/2.4-01x.png"><img alt="Footer layout" src="IMAGES/2.4-01.png"></a></div>
+            <h3><a id="2_5" name="2.5"></a>Blog &amp; Posts</h3>
+            <p>Here you can find all the options you need to set up your blog and
+                posts.</p>
+            <h4 class="h3-like">2.5.1 Post Settings</h4>
+            <h4> Show Breadcrums</h4>
+            Decide whether or not to show breadcrumb navigation in categories,
+            archives, tags, search, portfolio categories and inside posts. <br>
+            <h4>Category &amp; Tag Bar Type</h4>
+            Choose one of the available category and tag bar types. To see where this
+            setting appears, click the preview icon next to the option title.<br>
+            <h4>Post Boxes Type</h4>
+            Select size of boxes for your posts. If you choose the [Small+Middle]
+            option, only the latest post will be boxed in the middle size box.<br>
+            <h4><a id="Number_of_Posts" name="Number of Posts"></a>Number of Posts</h4>
+            There are several ways to load posts. Here you can set number of posts per
+            page loaded using the Pagination Style you have set in <a href="#Pagination%20style">Pagination
+                Style</a> below. <br>
+            <h4>Hyperlink Post Images</h4>
+            You can specify that post images are hyperlinked as well as the titles
+            are. If this option is set off, only titles are linked to the whole posts.<br>      
+            <h4><a id="Pagination_style" name="Pagination style"></a>Pagination Style</h4>
+            Select the pagination style you prefer from the following options:<br>
+            <br>
+            <strong>ajax:</strong> Gets content in two consecutive batches of posts
+            (their number is determined in <a href="#Number_of_Posts">Number of
+                Posts</a> above) <br>
+            <strong>infinite:</strong> Allows the consecutively automatic loading of
+            all your posts in „flying“ batches when the page is scrolling<br>
+            <strong>infinite with more:</strong> Performs the same, but not
+            automatically – you need to click on the „more“ link after each loaded
+            batch of posts <br>
+            <strong>none:</strong> Fetches just your preset number of posts per page <br>
+            <strong>number:</strong> Gets the same result, moreover with the clickable
+            page numbers at the bottom<br>
+            <strong>wordpress:</strong> Allows the standard Wordpress pagination style<br>
+            <h4>Search/Archive/Category Layout</h4>
+            Here you can choose one of the three preset layouts for your blog search,
+            archive and category result page.<br>
+            <h4> Search/Archive Left Sidebars</h4>
+            You can choose one of the sidebars you have added in the Sidebar Manager
+            section (subchapter <strong><a href="#2_7">2.7 Sidebar Manager</a></strong>).<br>
+            <h4> Search/Archive Right Sidebars</h4>
+            You can choose one of the sidebars you have added in the Sidebar Manager
+            section (subchapter <strong><a href="#2_7">2.7 Sidebar Manager</a></strong>).<br>
+            <h4>Meta Data</h4>
+            Here you can set up what has to be shown in the post preview.<br><br>
+            <div style="text-align: center;"><a target="_parent" href="IMAGES/2.5.1-02x.png"><img alt="Meta Data" src="IMAGES/2.5.1-02.png"></a><br>
+            </div>
+            <p><strong>Meta Post Format Icon:</strong> Choose whether or not to show post type icon. Note, that no icon will be shown in previews of posts in <em>Standard</em> or <em>Quote</em> format.<br><strong>Meta Author:</strong> Choose whether or not to show author´s name.<br><strong>Meta Date: </strong>Choose whether or not to show date.<br><strong>Meta Number of Comments:</strong> Choose whether or not to show number of comments in the post preview.<br><strong>Meta Category:</strong> Choose whether or not to show category in the post preview.<br><strong>Ratings:</strong> Choose whether or not to show ratings.<br>
+                <strong>Post Date Format:</strong> Define the date format for your
+                posts. Please visit the link next to this option to learn how to use the
+                characters convention.</p>
+            <h4 class="h3-like">2.5.2 Main Blog</h4>
+            <h4>Blog Layout Settings</h4>
+            <strong>Blog Page Layout:</strong> Choose one of the available layouts for
+            your blog page. Depending on what layout you choose, the options below
+            will vary.<br>
+            <strong>Blog Left/Right Sidebar:</strong> Select an optional sidebar from
+            the dropdown list of your custom ones you had created in <strong><em>Appearance &gt; Theme Options &gt; Sidebar Manager</em></strong>.<br>
+            <strong>Show Sorting:</strong> Decide whether or not to show sorting on
+            your blog page.<br>
+            <h4>Include Category</h4>
+            Click into the field/dropdown list and choose all categories you want to
+            fetch posts from.<br>
+            <h4>Post Order</h4>
+            Here you can choose the posts order way you prefer – <strong>ascending</strong>
+            or <strong>descending</strong>.<br>
+            <h4>Post Order by </h4>
+            Order posts by their parameters:<br>
+            <br>
+            <strong>Date:</strong> Order by date <br>
+            <span style="font-weight: bold;">None:</span> No order <br>
+            <span style="font-weight: bold;">ID:</span> Order by post ID <br>
+            <span style="font-weight: bold;">Author:</span> Order by author <br>
+            <strong>Title:</strong> Order by title <br>
+            <strong>Modified:</strong> Order by a last modified date <br>
+            <strong>Parent:</strong> Order by post parent IT <br>
+            <strong>Rand:</strong> Random order <br>
+            <strong>Number of comments:</strong> Order by number of comments<br>
+            <div class="explain">
+                <div class="explain">
+                    <h3><a id="2_6" name="2.6"></a>Single Post</h3>
+                    <h4>Post Layout</h4>
+                    There are three preset layouts for your post content. Here you can
+                    choose one of them. Depending on what layout you choose, the options
+                    below will vary.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <h4>Post Left/Right Sidebar</h4>
+                    You can choose one of the sidebars, you have created in the <a href="#2_7">Sidebar
+                        Manager</a> section and add it to the right.<br>
+                    <h4>Share Post Bar</h4>
+                    Choose whether or not to make a bar with various sharing options
+                    available below the posts.<br>
+                    <h4>Related Posts</h4>
+                    Turn this option on if you want to show the latest posts section on
+                    your post page.</div>
+            </div>
+            <h4> Number of Related Posts</h4>
+            Enter a number of related posts you want to show.<br>
+            <h4><a id="2_6-Use_Image_in_Post_as_Featured" name="2_6-Use_Image_in_Post_as_Featured"></a>Use Image in Post as Featured</h4>
+            Turn this option on if you want to use the image you have inserted in post
+            as featured.<br>
+            <br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="file:///D:/CCB/GOODSTORE/IMAGES/2.6-01x.png"><img alt="Image in Post as Featured" src="IMAGES/2.6-01.png"></a><br>
+                <br>
+                The marked image in the example would be displayed in this post´s
+                preview if you turned on<br>
+                the <strong>Use Image in Post as Featured</strong> option, otherwise it
+                would be visible only in the post´s content.</div>
+            <h4><a id="2_6-Use_Featured_ImGaVi_in_Post" name="2_6-Use_Featured_ImGaVi_in_Post"></a>Use Featured Image/Gallery/Video in Post</h4>
+            You can choose whether or not to display a featured image or gallery or
+            video at the top of your post. If the option is set off, only the possible
+            images which you have put into the post content are shown. <br>
+            <div class="notice">
+                <ul>
+                    <li><strong>NOTE:</strong> An image is displayed always
+                        when the featured image has been set. A gallery is taken from the post
+                        if the <strong>Gallery</strong> post format has been set, a gallery is taken
+                        from the link when the <em>Video</em> post format has been set.</li></ul></div>
+            <h4>Use Pretty Photo for Gallery</h4>
+            Turn on this option if you want to use the Pretty Photo effect (similar to
+            the lightbox feature) for your gallery items.<br>
+            <h4>About Author</h4>
+            Choose whether or not to display the author's name with photo and
+            description in a post.<br>
+            <h4>Meta Options</h4>
+            Here you can set up what has to be shown in a single post.<br>
+            <br>
+            <div style="text-align: center;"><a target="_parent" href="IMAGES/2.6-02x.png"><img alt="Meta Options" src="IMAGES/2.6-02.png"></a><br>
+            </div>
+            <p><strong>Meta Post Author:</strong> Decide whether or not to show
+                author´s name.<br>
+                <strong>Meta Post Date: </strong>Decide whether or not to show
+                publishing date.<br><strong>Ratings:</strong> Decide whether or not to show rating in posts.<br><strong>Post Format Icon:</strong> Choose whether or not to show post format icon. Note, that no icon will be shown in posts in Standard or Quote format.<br><strong>Number of Comments:</strong> Decide whether or not to show number of comments in posts.<br><strong>Post Category:</strong> Decide whether or not to show post category.</p><p>
+            </p>
+            <h4>Sharing Options</h4>
+            You can add icons of the most common social networks and services you want
+            the post to be shared on to the <em>Share Post Bar</em>. Choose from <strong>Facebook,
+                Twitter, Google, Pinterest</strong> and <strong>E-mail </strong>items.<br>
+            <br>
+            <div style="text-align: center;"><a target="_parent" href="IMAGES/2.6-03x.png"><img alt="Sharing Options" src="IMAGES/2.6-03.png"></a><br>
+            </div>
+            <h4>Comments</h4>
+            Turn on or off the <strong>Show comments</strong> depending on your
+            choice.<br>
+            <h4>Facebook Comments</h4>
+            Here you can set up your Facebook Comments. To make the options work, you
+            have to enter your Facebook App ID in the <strong><a href="#2_14">Advanced</a></strong>
+            section.<br>
+            <br>
+            <strong>Facebook Comments:</strong> This option gives you choice to toggle
+            between wordpress and facebook comments.<br>
+            <strong>Number of Comments:</strong> Enter a number of comments to
+            display.<br>
+            <h3><a id="2_7" name="2.7"></a>Sidebar Manager</h3>
+            This is the place where you can add your optional sidebars. <br>
+            <h4><a id="2_7-Custom_Sidebars" name="2_7-Custom_Sidebars"></a>Custom Sidebars</h4>Fill in the field with a name you want and click the [Add New Sidebar]
+            button. By the same way you can create all sidebars you need. Clicking the cross <img alt="cross icon" src="IMAGES/cross-icon.png"> removes the chosen sidebar. Once you are done, don´t forget to save your changes.
+            Notice that you find the created sidebars in the Widgets settings and can
+            assign some widgets to them.<br>
+            <br>
+            <div style="text-align: center;"><a target="_parent" href="IMAGES/2.7-01x.png"><img alt="Sidebar Manager" src="IMAGES/2.7-01.png"></a><br>
+            </div>
+            <h4>Sidebars Bar Type</h4>
+            <strong>Box:</strong> Makes titles of your sidebars boxed. To set a color
+            of these boxes, go to <em><strong>Appearance &gt; Styling Options</strong></em> (for
+            details go to <strong><a href="#2_9">2.9. Styling Options</a></strong>
+            subchapter).<br>
+            <strong>Big Title:</strong> Sidebars use a heading style which you can set
+            in <em><strong>Appearance &gt; Styling Options</strong></em>.<br>
+            <h3><a id="2_8" name="2.8"></a>Custom Code</h3>
+            There are several fields for your CSS, javascript and analytics codes, as
+            well as for shortcodes for the footer text. <strong>Custom CSS</strong>
+            allows you to implement your own styles in the selected preset (it will
+            paste the inline css styles in code). Similarly the <strong>Custom
+                Javascript</strong> allows you to implement a javascript. Paste your
+            Google Analytics (or other) tracking code to the <strong>Google Analytics</strong>
+            field to show the desired outputs in the footer of your theme. You can
+            fill in the <strong>Footer Text</strong> field with your own plain or
+            HTML tagged text.<br>
+            <h3><a id="2_9" name="2.9"></a>Styling Options</h3>
+            <p>In this section you can choose some color presets for your theme, as
+                well as customize color variations according to your wishes. Colors can
+                be inputted via the colorchooser popup selector or manually using a hex
+                code in the input field.</p>
+            <div class="popisek" style="text-align: center;"><img alt="Color chooser" src="IMAGES/2.9-01.png"><br>To activate the colorchooser, click into the value field and move both 
+                the right scroll <br>bar and the pointer across the color palette until you 
+                find the color you need.</div>
+            <br>
+            <div class="hint">
+                <ul>
+                    <li><strong>HINT:</strong> As there are lots of
+                        particular color settings for various elements of your site, we
+                        recommend that you follow the explanatory screenshots under the
+                        preview icon <img title="Color preview icon" alt="Color preview icon" src="IMAGES/color_preview-icon.png"> next to some of the styling
+                        options to be able to better understand the settings looking at where
+                        they appear on your web.<strong><br>
+                        </strong></li></ul></div>
+            <h4>Template Background Settings</h4>
+            <strong>Background Image:</strong> Click [Upload] button to upload your
+            background image.<br>
+            <strong>Background Texture:</strong> These boxes allow you to choose a
+            background texture. If you select the cross filled box, no texture will be
+            used.<br>
+            <strong>Background Color:</strong> Pick a color from the palette or enter
+            a hex code.<br>
+            <strong>Box Background Color:</strong> This color is applied just to a box
+            with the main content, but not to the whole window of a browser. Pick a
+            color from the palette or enter a hex code.<br>
+            <h4>Template Color Settings</h4>
+            <strong>Load Color Scheme:</strong> Choose a color scheme you want to use.
+            These colors affect all the main graphic elements of the theme, but you
+            can also modify many of individual elements by using the following
+            settings.<br>
+            <div class="warning">
+                <ul>
+                    <li> <strong>WARNING:</strong> Selecting an color scheme
+                        will cause loss of the existing color settings. After selecting an item
+                        you will be informed about this and asked whether to continue. </li></ul></div>
+            <h4>Main Color Settings</h4>
+            Here you can define custom colors of some groups of elements on your web.<br>
+            <br>
+            <strong>Template Main Color 1:</strong> This color affects the main
+            elements like bars, titles etc.<br>
+            <strong>Template Main Color 2:</strong> Affects lines, borders and similar
+            elements on your site.&nbsp;&nbsp;&nbsp; <br>
+            <strong>Template Main Color 3:</strong> This setting affects especially
+            background of various text elements like boxes, comments etc.<br>
+            <h4>Font Color Settings</h4>
+            These options allow you to set font colors for paragraphs and links. For
+            details, see the related descriptions.<br>
+            <h4>Page Title Color Settings</h4>
+            Define color settings of titles. For details, see the related
+            descriptions.<br>
+            <h4>Header Color Settings</h4>
+            Use these options to define colors of various header´s elements. For
+            details, see the related descriptions and/or click the preview icon. <br>
+            <h4>Menu Color Settings</h4>
+            Here are several settings available to define colors of your menu items.
+            For details, see the related descriptions and/or click the preview icon.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="note">
+                <ul>
+                    <li><strong>NOTE:</strong> The menu color settings work only
+                        with the Small header style. </li></ul></div>
+            <h4>Submenu Color Settings</h4>
+            Define colors for submenu items. For details, see the related descriptions
+            and/or click the preview icon. <br>
+            <h4>Footer Color Settings</h4>
+            There are several footer color settings which makes you be able to
+            precisely define colors of various elements in the footer according to
+            your needs. For details, see the related descriptions.<br>
+            <h4> Post Font Color Settings</h4>
+            All these settings are related to the text content of posts and to their
+            titles. For details, see the related descriptions.<br>
+            <h4>WooCommerce Color Settings</h4>
+            In this section you can see a lot of settings related to the elements of
+            your e-shop carried on using the WooCommerce solution. For details, see
+            the related descriptions. These settings work only with the WooCommerce
+            plugin installed and activated.<br>
+            <h4>Message Color Settings</h4>
+            Here you can define colors of your choice for various kinds of messages.
+            For details, see the related descriptions.<br>
+            <h4>Comments Color Settings</h4>
+            There are a few color settings for comments. For details, see the related
+            descriptions.<br>
+            <h4>Template Fonts Settings</h4>
+            <strong>Title Font: </strong>Here you can change the title font. This
+            doesn´t affect the font size, both the typeface and color remain standard.<br>
+            <strong>Paragraph Font:</strong> Paste your paragraph font name into the
+            field and choose a size, style, and color from the dropdown lists.<br>
+            <h4>Other Styling Settings</h4>
+            <strong>Rating Color:</strong> This is a color of the rating stars.<br>
+            <strong>Big Title Font Size:</strong> Set font size for the Big type of
+            titles.<br>
+            <h3><a id="2_10" name="2.10"></a>Advertisement</h3>
+            The GoodStore theme allows you to display and manage several kinds of
+            banner ads on your web. You can configure and use your banner positions.<br>
+            <h4 class="h3-like"><a id="2_10_1-Banner-Background" name="2_10_1-Banner_Background"></a>2.10.1 Banner - Background</h4>
+            This special kind of ads allows you to utilize a free space around the
+            main content for advertisement in the form of background image. To prepare
+            or get such ad which will exactly fit your site, we recommend respecting
+            the fact that a central 1040 pixels wide column of the image/ad won´t be
+            visible because of hide behind the main content. On the other hand, both
+            the left and right side of the background image should be designed for
+            advertising. You can set their behaviour just here.<br>
+            <h4>Show Banner</h4>
+            Decide whether or not to show banner background ads.<br>
+            <h4>Background Banner Image</h4>
+            Click the [Upload] button to select your prepared background ad.<br>
+            <h4>Target Link on Left Side</h4>
+            Put a target URL for the left side of your banner background into this
+            field.<br>
+            <h4>Width of Area for a Target Link on Left Side</h4>
+            Enter a width of the left side banner´s area which has to be an active
+            link.<br>
+            <h4>Target Link on Right Side</h4>
+            Put a target URL for the right side of your banner background into this
+            field.<br>
+            <h4>Width of Area for a Target Link on Right Side</h4>
+            Enter a width of the right side banner´s area which has to be an active
+            link.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h4 class="h3-like">2.10.2 Banner - Leaderboard</h4>
+            The options below allow you to manage the top banner position. <br><br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.10-01x.png"><img alt="Banners 1" src="IMAGES/2.10-01.png"></a><br>The <strong>Leaderboard</strong> and <strong>Skyscraper</strong> banner positions placement on a sample blog page<br>
+            </div><br><div class="notice">
+                <ul>
+                    <li><strong>NOTE:</strong> Depending on whether or not you
+                        have chosen a wide version of the theme (in <strong><em>Theme Options &gt;
+                                General Settings</em></strong>), the recommended widths of this ad are 1175px
+                        or 960px.</li></ul></div>
+            <h4> Show Banner</h4>
+            Decide whether or not to show ad.<br>
+            <h4>Banner Type</h4>
+            Select the banner type you prefer from the dropdown list. You can choose
+            between image and Google ads.<br>
+            <h4>Banner Image<br>
+            </h4>
+            Click the [Upload Image] button to select and upload your banner
+            or select the [Remove] option that appears, if you want to remove
+            this banner.
+            <h4>Target Link</h4>
+            Insert a target URL for the Leaderboard banner into this field.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.<br>
+            <h4>Google Ads Code</h4>
+            Insert the Google Ads Code. <span style="font-weight: bold;">Notice: You
+                can use maximally 3 Google ads on one page.</span><br>
+            <h4 class="h3-like">2.10.3 Banner - Skyscraper Right</h4>
+            Here you can manage the right lateral ad position.<br>
+            <h4>Show Banner</h4>
+            Decide whether or not to show ad.<br>
+            <h4>Banner Type</h4>
+            Select the banner type you prefer from the dropdown list. You can choose
+            between image and Google ads.<br>
+            <h4>Banner Image<br>
+            </h4>
+            Click the [Upload Image] button to select and upload your banner
+            or select the [Remove] option that appears, if you want to remove
+            this banner.
+            <h4>Target Link</h4>
+            Insert a target URL for the banner into this field.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.<br>
+            <h4>Google Ads Code</h4>
+            Insert the Google Ads Code. <span style="font-weight: bold;">Notice: You
+                can use maximally 3 Google ads on one page.</span><br>
+            <h4 class="h3-like">2.10.4 Banner - Skyscraper Left</h4>
+            The options below allow you to manage the right lateral ad position.<br>
+
+            <div class="notice">
+                <ul>
+                    <li>
+                        <strong>NOTE:</strong>&nbsp; The recommended size of a Skyscraper banner is 160×600 pixels.</li></ul></div>
+
+            <h4>Show Banner</h4>
+            Decide whether or not to show ad.<br>
+            <h4>Banner Type</h4>
+            Select the banner type you prefer from the dropdown list. You can choose
+            between image and Google ads.<br>
+            <h4>Banner Image<br>
+            </h4>
+            Click the [Upload image] button to select and upload your banner
+            or select the [Remove] option that appears, if you want to remove
+            this banner.
+            <h4>Target Link</h4>
+            Insert a target URL for the banner into this field.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.<br>
+            <h4>Google Ads Code</h4>
+            Insert the Google Ads Code. <span style="font-weight: bold;">Notice: You
+                can use maximally 3 Google ads on one page.</span><br>
+            <h4 class="h3-like">2.10.5 <a id="2_10_5" name="2.10.5"></a>Banner In Post - Top</h4>
+            Here you can manage the top banner position in posts.<br><br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.10.5-01x.png"><img alt="Banners in post" src="IMAGES/2.10.5-01.png"></a><br>An example of post with both the <strong>Banner In Post - Top</strong> and the <strong>Banner In Post - Bottom</strong> positions occupied</div>
+            <h4>Show Banner</h4>
+            Decide whether or not to show ad.<br>
+            <h4>Banner Type</h4>
+            Select the banner type you prefer from the dropdown list. You can choose
+            between image and Google ads.<br>
+            <h4>Banner Image<br>
+            </h4>
+            Click the [Upload Image]<em></em> button to select and upload your banner
+            or select the [Remove]<em></em> option that appears, if you want to remove
+            this banner. <br>
+            <h4>Target Link</h4>
+            Insert a target URL for the banner into this field.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.<br>
+            <h4>Google Ads Code</h4>
+            Insert the Google Ads Code. <span style="font-weight: bold;">Notice: You
+                can use maximally 3 Google ads on one page.</span><br>
+            <h4 class="h3-like">2.10.6 Banner In Post - Bottom</h4>
+            This is the bottom banner position in posts. Set up and manage it in the
+            same way as the <a href="#2_10_5">Banner In Post - Top</a> above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h4>Show Banner</h4>
+            Decide whether or not to show ad.<br>
+            <h4>Banner Type</h4>
+            Select the banner type you prefer from the dropdown list. You can choose
+            between image and Google ads.<br>
+            <h4>Banner Image<br>
+            </h4>
+            Click the [Upload Image]<em></em> button to select and upload your banner
+            or select the [Remove] option that appears, if you want to remove
+            this banner. <br>
+            <h4>Target Link</h4>
+            Insert a target URL for the banner into this field.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.<br>
+            <h4>Google Ads Code</h4>
+            Insert the Google Ads Code. <span style="font-weight: bold;">Notice: You
+                can use maximally 3 Google ads on one page.</span><br>
+            <h4 class="h3-like"><a id="2_10_7" name="2.10.7"></a>2.10.7 Banner -
+                Custom 1</h4>
+            Besides the common ad positions (see the settings above), you can use two
+            custom banners with the J&amp;W - Custom Banner Widget (chapter <strong>10.
+                Widgets </strong>- <a href="#JaW_-_Custom_Banner_Widget">J&amp;W -
+                Custom Banner Widget</a>). Here is the place where to set up and
+            manage the first of them.<br><br>
+            <div class="popisek" style="text-align: center;"><a target="_parent" href="IMAGES/2.10.7-01x.png"><img alt="Banner - custom 1 + 2" src="IMAGES/2.10.7-01.png"></a><br>An example of the <strong>Banner - Custom 1</strong> and <strong>Custom 2</strong> ads placement</div>
+
+            <div class="notice">
+                <ul>
+                    <li>
+                        <strong>NOTE:</strong> Depending on whether or not you have chosen the wide version of the theme (in <strong><em>Theme Options &gt; General Settings</em></strong>), the recommended widths of this ad are 275px or 250px.
+                    </li></ul></div>
+
+
+            <h4>Show Banner</h4>
+            Decide whether or not to show ad.<br>
+            <h4>Banner Type</h4>
+            Select the banner type you prefer from the dropdown list. You can choose
+            between image and Google ads.<br>
+            <h4>Banner Image<br>
+            </h4>
+            Click the [Upload Image] button to select and upload your banner
+            or select the [Remove] option that appears, if you want to remove
+            this banner. <br>
+            <h4>Target Link</h4>
+            Insert a target URL for the banner into this field.<br>
+            <h4>Banner Link Target</h4>
+            Specify where to open an advertiser´s link.<br>
+            <h4>Google Ads Code</h4>
+            Insert the Google Ads Code. <span style="font-weight: bold;">Notice: You
+                can use maximally 3 Google ads on one page.</span><br>
+            <h4 class="h3-like"><a id="2_10_8" name="2_10_8"></a>2.10.8 Banner - Custom 2</h4>
+            Set up and manage this banner position in the same way as the <a href="#2_10_7">Banner
+                - Custom 1</a> above.<br>
+            <h3><a id="2_11" name="2.11"></a>Error 404</h3>
+            Here you can create your own custom html 404 Page. Simply enter the HTML
+            code you want to appear instead of common browser´s page when the 404
+            error occurs. <br><br>
+            <div class="popisek" style="text-align: center;"><a id="2_11_Error_404" target="_parent" href="IMAGES/2.11-01x.png"><img alt="Error 404" src="IMAGES/2.11-01.png"></a><br>Look at how the sample HTML code (fig. above) appears when the <strong>404 error</strong> occurs<br><img alt="arrow icon" src="IMAGES/to_bottom_arrow.png"><br><a target="_parent" href="IMAGES/2.11-02x.png"><img alt="Error 404" src="IMAGES/2.11-02.png"></a></div>
+            <h3><a id="2_12" name="2.12"></a>Backup</h3>
+            <h4>Backup and Restore Options</h4>
+            Here you can backup your current options, and then restore them back at a
+            later time. This is useful if you want to experiment on the options but
+            would like to keep the old settings in case you need it back. Click the [Backup Options] button to backup your current saved options in the
+            <strong><em>Category, Menus</em></strong> and <strong><em>Theme Options</em></strong>. If you need to restore the options,
+            click the [Restore Options]. Please read carefully the warning
+            message which will appear.<br>
+            <h4>Backup to Google Drive</h4>
+            You can easily backup your settings to the Google Drive. To do it, click
+            the button. All the setting will be encoded and uploaded to your Google
+            Drive.<br>
+            <h4>Transfer Theme Options Data</h4>
+            You can transfer the entire saved Theme Options data between different
+            installations by copying the text inside the text box. To import data from
+            another installation, replace the data in the text box with the one from
+            another install and click the [Import Theme Options].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="hint">
+                <ul>
+                    <li> <strong>HINT:</strong> You can simply copy the data
+                        from the box to some txt file and keep it as backup.</li></ul></div>
+            <h4>Transfer Menu Options Data</h4>
+            To import data from another installation, replace the data in the text box
+            with the one from another install and click the [Import Menu Options].<br>
+            <h4>Transfer Category Options Data</h4>
+            To import category options data from another installation, replace the
+            data in the text box with the one from another install and click the [Import
+            Category Options].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h4>Transfer PageBuilder Presets Data</h4>
+            In the same way as all the options data above, you can also transfer your
+            saved PageBuilder presets data between different installations by copying
+            the text inside the text box. To import data from another installation,
+            replace the data in the text box with the one from another install and
+            click the [Import PageBuilder Presets]. <br>
+            <h3><a id="2_13" name="2.13"></a>Demo</h3>
+            If you need or would like to upload the sample data to make your website
+            look like our demo, click the thumbnail of the demo site you prefer.<br>
+            <div class="important">
+                <ul>
+                    <li><strong>IMPORTANT:</strong> When uploading the demo
+                        content you may lose your data. Please don´t forget to back-up your
+                        database before you choose an option.</li></ul></div>
+            <h3><a id="2_14" name="2.14"></a>Advanced</h3>
+            There are several special options which you can choose and set up for your
+            page.<br>
+            <h4>Right to Left</h4>
+            Turn on this option if you want to enable support for RTL (Right-To-Left)
+            languages.<br>
+            <h4>Notification of New Updates</h4>
+            If you want to be informed about new available updates, turn this option
+            on.<br>
+            <h4>Social Plugins Language</h4>
+            Here you can select the language of your choice for the social plugins.
+            Please visit the link at this option to get the language codes list.<br>
+            <h4>Modal Window on Start</h4>
+            You can enable a modal window and set a page that has to be shown in this
+            window when visitor opens your site first time.<br>
+            <br>
+            <strong>Show Modal Window on Start</strong> - turn on or off this option
+            depending on whether or not you want to enable this window.<br>
+            <span style="font-weight: bold;">Modal Window Page ID</span> - insert ID
+            of the page you want to show as content of your modal window.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> If you create a page for your
+                        modal window by using the <a href="#3_1">REVO Composer page builder</a>,
+                        you can only use an eight-columns design. </li></ul></div>
+            <h4>Facebook API</h4>
+            <strong>Facebook App ID</strong>: You have to enter your Facebook App ID
+            to be able to share your site and to make a Facebook commentary.<br>
+            <span style="font-weight: bold;">FB Comment Moderation Area</span>: If you
+            are a moderator, you will see notifications within facebook.com. If you
+            don't want to have moderator status or want to see all comments in one
+            area, use the Comment Moderation Area link.<br>
+            <h4>Twitter API</h4>
+            To be able to set up and use your latest tweets from the Twitter on your
+            site, you need to enter your Twitter API´s keys - <strong>API Key</strong>,
+            <strong>API Secret</strong>, <strong>Access Token</strong> and <strong>Access
+                Token Secret</strong>. To get them, please visit <a target="_blank" href="https://dev.twitter.com/apps/new">https://dev.twitter.com/apps/new</a>.<br>
+            <h4>Instagram API</h4>
+            To get all the necessary keys for use of your Instagram account with your
+            site, follow the next steps below, please:<br>
+            <ol>
+                <li>Create a new aplication <a target="_blank" href="http://instagram.com/developer/clients/manage/#">here</a>.
+                    Set the <em>Required URI</em> item to the generated link. Get both
+                    the <strong>App Client ID</strong> and the <strong>App Client Secret</strong>
+                    keys and paste them into the appropriate fields. Click the [Save
+                    All Changes] button and refresh the page (Ctrl+F5).</li>
+                <li><strong>Instagram App</strong>: Click the <em>Get Instagram Access
+                        Token</em> link, save your changes and refresh the page again.<br>
+                    <br>
+                    When you set up your <a href="#J&amp;W%20-%20Social%20Widget">J&amp;W
+                        - Social Widget</a>, you need to fill in the User ID item. To
+                    get this ID, please click <a target="_blank" href="http://jelled.com/instagram/lookup-user-id">here</a>.</li>
+            </ol>
+            <h4>Comments Antispam Question</h4>
+            Here you can manage an antispam solution for comments on your site.<br>
+            <br>
+            <strong>Enable an Antispam Question:</strong> Turn the option on to enable
+            an antispam question <br>
+            <strong>Comments Antispam Question:</strong> Fill in the field with an
+            easy question to be answered by user before inserting comment.<br>
+            <strong>Comments Antispam Answer:</strong> Insert a proper answer to the
+            question.<br>
+            <h4>Animation</h4>
+            The options below allow you to globally set up behaviour of images on your
+            pages when the animation feature has been enabled for them. <br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> To set an animation effect
+                        and some other options for each image separately, open the page/s (<strong><em>Pages &gt; your page or Add New</em></strong>), activate the <a href="#3_1">REVO
+                            Composer</a> tab and use the settings tool at the header of each frame
+                        of images which have to be animated (or click the Image icon to add new
+                        image to your layout and then use the settings tool). Click the
+                        Animation tab in the opened settings window and make settings you need.
+                    </li></ul></div>
+            <strong>Animate Image:</strong> Turn on or off the option depending on
+            whether or not to apply an animation effect to your images with a global
+            effectiveness.<br>
+            <span style="font-weight: bold;">Animation Style:</span> Click into the
+            field/dropdown list and select one from the available styles.<br>
+            <strong>Animation Direction:</strong> Select a direction. This option
+            takes effect just on some animation styles.<br>
+            <strong>Animation Speed:</strong> Set animation speed in miliseconds.<br>
+            <strong>Animation Easing:</strong> Select the easing effect you prefer. To
+            learn more about the available effects, visit this <a href="http://jqueryui.com/resources/demos/effect/easing.html">help</a>
+            link.<br>
+            <h3><a id="2_15" name="2.15"></a>WooCommerce</h3>
+            If you have installed the third party´s WooCommerce 2.1+ plugin, you can
+            improve its integration with the GoodStore theme by the settings below.<br>
+            <h4>Product Box Style</h4>
+            Specify a look of your product boxes selecting one from the four available
+            styles:<br>
+            <br>
+            <strong>Light:</strong> A light style without product description, border
+            or any other kind of highlight. <br>
+            <strong>Color: </strong>Some main elements of your product boxes are in a
+            main template color (set this color in<strong> <em>Appearance &gt; Theme Options &gt; Styling Options</em></strong>).<br>
+            <strong>Boxed: </strong>This option makes look of your product boxes
+            similar to when you use the Light option, but with frame around.<br>
+            <strong>Small:</strong> The product boxes look similar to the Light style
+            above, but are smaller.<br>
+            <h4>Product Box Image Animation</h4>
+            You can choose a behavior of images in your product boxes when mouse is
+            moved over them.<br>
+            <br>
+            <strong>Off:</strong> Takes no effect when you move mouse over a product.
+            <br>
+            <span style="font-weight: bold;">Simple Hover:</span> Another image from
+            the product gallery appears (always the first one of all images in your
+            product galleries). <br>
+            <strong>Fade:</strong> Like the Simple Hover option, but with a smooth
+            transition effect.<br>
+            <h4>Show Breadcrumbs</h4>
+            Decide whether or not to show a breadcrumb navigation in product
+            categories and inside products.<br>
+            <h4>Product Category &amp; Tag Bar Type</h4>
+            There are two styles of category titles. Select the one you prefer.<br>
+            <h4>Product Page</h4>
+            Here you can set up a look of your product page.<br>
+            <br>
+            <strong>Product Page Layout:</strong> Select a main content and sidebar
+            alignment. Depending on what layout you choose, the options below will
+            vary.<br>
+            <strong>Product Left/Right Sidebars:</strong> Select an optional sidebar
+            from the dropdown list of your custom ones you had created in <strong><em>Appearance &gt; Theme Options &gt; Sidebar Manager</em></strong>.<br>
+            <strong>Number of Related Products:</strong> Set number of related
+            products.<br>
+            <h4><strong>Related Product Box Style</strong></h4>
+            <strong>Light:</strong> A light style without product description, border
+            or any other kind of highlight. <br>
+            <strong>Color: </strong>Some main elements of your product boxes are in a
+            main template color (set this color in <strong><em>Appearance &gt; Theme Options &gt; Styling Options</em></strong>).<br>
+            <strong>Boxed: </strong>This option makes look of your product boxes
+            similar to when you use the Light option, but with frame around.<br>
+            <h4>Product Category</h4>
+            Set up your product categories properties.<br>
+            <br>
+            <strong>Product Category Layout:</strong> Select a main content and
+            sidebar alignment. Depending on what layout you choose, the options below
+            will vary.<br>
+            <strong>Product Category Left/Right Sidebars:</strong> Select an optional
+            sidebar from the dropdown list of your custom ones you had created in <strong><em>Appearance &gt; Theme Options &gt; Sidebar Manager</em></strong>.<br>
+            <h4>Product Tag</h4>
+            You can set up your product tag pages in the same way as the product
+            categories above. Choose one of the available layouts and if need be,
+            select a custom sidebar.<br>
+            <br>
+            <!--
+                  <h3>Easy Digital Downloads</h3>      If you use the Easy Digital Downloads e-commerce solution, you can improve      its integration with the GoodStore theme by the settings below.<br>      <h4>Product Box Style</h4>      Specify a look of your product boxes selecting one from the four available      styles:<br>      <strong><br>        Light:</strong> A light style without product description, border or any      other kind of highlight. <br>      <strong>Color: </strong>Some main elements of your product boxes are in a      main template color (set this color in <em>Appearance -&gt; Theme Options        -&gt; Styling Options</em>).<br>      <strong>Boxed: </strong>This option makes look of your product boxes      similar to when you use the Light option, but with frame around.<br>      <h4>Show Breadcrumbs</h4>      Decide whether or not to show a breadcrumb navigation in product      categories and inside products.<br>      <h4>Easy Digital Download Product Detail</h4>      <br>      <strong>Show Share Buttons:</strong> Make share buttons available or turn      them off.<br>      <strong>Show Author Section:</strong> Decide whether or not to show an      author section in a product detail.<br>      <strong>EDD Product Layout:</strong> Select a main content and sidebar      alignment. Depending on what layout you choose, the options below will      vary.<br>      <strong>EDD Product Left/Right Sidebars:</strong> Select an optional      sidebar from the drop-down list of your custom ones you had created in <em>Appearance        -&gt; Theme Options -&gt; Sidebar Manager</em>.<br>      <h4>Product Category</h4>      Set up your product categories properties.<br>      <br>      <strong>Product Category Layout:</strong> Select a main content and      sidebar alignment. Depending on what layout you choose, the options below      will vary.<br>      <strong>Product Category Left/Right Sidebars:</strong> Select an optional      sidebar from the drop-down list of your custom ones you had created in <em>Appearance        -&gt; Theme Options -&gt; Sidebar Manager</em>.<br>            -->
+            <h2><a id="3" name="3"></a>Pages</h2>
+            <h3><a id="3_1" name="3.1"></a>REVO Composer Page Builder</h3>
+            This is an advanced solution to build your pages easily and intuitively.
+            Thanks to its visual conception, the REVO Composer makes you be able to
+            create your pages much faster, comfortable and efficiently than in a
+            common way. The GoodStore theme gives you possibility to choose between
+            using of <a href="#6">shortcodes</a> and this advanced page builder.<br>
+            <h4>How to start</h4>
+            To start using of the REVO Composer, you first need to create a new page.
+            After you choose the Add New Page option (or open an already created one),
+            you will find the <strong>REVO Composer</strong> tab added above the content editor´s
+            tools. Click the tab and get started.<br><br>
+            <div style="text-align: center;"><img alt="REVO Composer tab" src="IMAGES/3.1-01.png"><br></div>
+            <br>
+            Now, you can see an empty <strong>page content area</strong> divided into
+            12 columns and several <strong>groups of tools - page elements</strong>,
+            which you can add to the page, compose and set up them, while the elements
+            arrangement is visualized. Moreover, there is a live preview option to
+            make you be able to see result of your work before you publish it.<br>
+            <h4>Using of the REVO Composer</h4>
+            To <strong>add an element</strong> to your page, simply click the
+            appropriate icon. Depending on type of element, it will align with a
+            various number of columns in default. You can <strong>change width of the
+                element</strong> clicking the left or right arrow in its header (the
+            Size option <img title="Size" alt="Size" src="IMAGES/size-icons.png"> ).
+            Besides the <img title="close" alt="close" src="IMAGES/close-icon.png">
+            cross icon for removing the element, there is a group of four tool icons
+            in each element frame´s header: <br>
+            <br>
+            <img title="Settings" alt="Settings" src="IMAGES/Settings-icon.png"> <strong><em>Settings:</em></strong>
+            Use this tool to set up the main properties of the element.<br>
+            <img title="Preview" alt="Preview" src="IMAGES/preview-icon.png"> <strong><em>Preview</em>:
+            </strong>The live preview option. Allows you to see a real content of the
+            element. Be aware of that depending on a content, the live preview may
+            slow down work with the page builder.<br>
+            <img title="Copy" alt="Copy" src="IMAGES/copy-icon.png"> <strong><em>Copy</em>:
+            </strong>Click this icon to make a copy of the element, including its
+            setting. <br>
+            <img title="Save" alt="Save" src="IMAGES/save-icon.png"> <strong><em>Save</em>:</strong>
+            Use this option to save the element´s settings as a preset for this kind
+            of element for the page you are working with. If you then add another
+            instance of the element to your page, it will take the saved presets.<br>
+            <br>
+            Each element box contains a <strong>title field</strong> to be filled in
+            or renamed. All elements can be rearranged by a drag ´n drop method.
+            Simply move your mouse over the element until a cross appears. Then move
+            the box to the position where you want to place the element.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> Every new element will be
+                        automatically put below the previously inserted ones. Then you can
+                        easily rearrange it. </li></ul></div>
+            <p class="h3-like">3.1.1 Page Layouts</p>
+            The REVO Composer allows you to work not only with the page content, but also with the entire layout. Simply click the <strong>Page Layout</strong> tab and choose the layout that best suits your needs. To assign your sidebars to the chosen layout, click the <img alt="Setting icon" src="IMAGES/Settings-icon.png"> settings icon and follow the appropriate descriptions. Also refer to <strong><a href="#2_7">2.7 Sidebar Manager</a></strong> subchapter.<br><br>
+            <div style="text-align: center;"><img alt="Page Layouts" src="IMAGES/3.1.1-01.png"><br></div><br>
+            <p class="h3-like">3.1.2 Presets</p>The GoodStore theme offers you through the REVO Composer several page presets you can use to instantly start creating your pages. Moreover, you are allowed to create or improve your own preset.<br><br>
+            <div class="popisek" style="text-align: center;"><img alt="Presets" src="IMAGES/3.1.2-01.png"><br>Select any of the available presets or create a new one clicking the [ + ] button</div><br>You can manage your preset items by using the tools that are available on each of these preset´s buttons (see the figure below).<br><br>
+            <div style="text-align: center;"><img alt="Presets - buttons" src="IMAGES/3.1.2-02.png"><br></div><br><strong>Load this preset:</strong> Selecting this option you load the preset. <strong>WARNING: </strong>All unsaved actions in your layout will be lost and overwritten by the selected preset.<br><strong>Save to this preset:</strong> Saves your changes to the selected preset.<br><strong>Delete this preset:</strong> This option deletes the preset.<br><strong>Add new preset:</strong> Click the [ + ] button to create a new empty preset to that you can save your actual preset.<br><br>
+            <h3><a id="3_2" name="3.2"></a>General Settings</h3>
+            Besides of all the settings related to the REVO Composer, you can enable
+            or disable the <strong>Page Title Bar</strong> and <strong>Breadcrums</strong>
+            on each your page by using the options below the main content of each new
+            added or existed page. Simply turn on or off these options depending on
+            your needs.<br>
+            <h2><a id="4" name="4"></a>Posts</h2>
+            <h3><a id="4_1" name="4.1"></a>General Settings</h3>
+            Posts probably represent the most common content on your web. Here you can
+            easily set up some special features for all your posts and for the each
+            one of them separately. After you create a new post (<strong><em>Posts &gt; Add
+                    New</em></strong>), you can see the mentioned options placed below the main
+            content field. Obviously, there are the same settings available when you
+            edit the posts you have already created.<br>
+            <h4>Page Layout</h4>
+            This option allows you to choose one of the preset layouts for your page,
+            with a sidebar on the left or on the right, or without it. The <strong>Default
+                Page Layout</strong> option uses the Post Layout set in <strong><em>Theme
+                    Options &gt; Single Post</em></strong>.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> Depending on what layout you
+                        choose, the options below will vary or disappears. </li></ul></div>
+            <h4> Blog Left/Right Sidebars</h4>
+            Select an optional sidebar from the dropdown list of your custom ones you
+            had created in <strong><em>Appearance &gt; Theme Options &gt; Sidebar Manager</em></strong>.<br>
+            <h4><a id="4_1-Use_Featured_ImGaVi_in_Post" name="4_1-Use_Featured_ImGaVi_in_Post"></a>Use Featured Image/Gallery/Video in Post</h4>
+            You can choose whether or not to display a featured image or gallery or
+            video (depending on a selected post format) at the top of your post page. If the switch is off, only the
+            possible images which you have put into the post content are shown.<br>
+            <h4>Associate Product</h4>
+            Click into the field and select a product to be associated with the post
+            page.&nbsp;&nbsp;&nbsp; <br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> The dropdown list includes
+                        just the products offered via the Woocommerce solution. </li></ul></div>
+            <h3> <a id="4_2" name="4.2"></a>Rating Settings</h3>
+            <h4>Rating Title</h4>
+            This is a label text of your ratings box. Fill in the field with your
+            version.<br>
+            <h4>Show Rating</h4>
+            Tick the box or let it unchecked depending on whether or not you want to
+            show rating.<br>
+            <h4><a id="rat_criteria" name="rat_criteria"></a>Rating Criteria</h4>
+            Here you can set up user´s and your rating criteria. Click "Add" to make
+            your (administrator´s) rating criteria options available and fill in the
+            fields. The first value represents your own rating (insert a number from 0
+            to 1 with the decimal point), the second one is a number of ratings.
+            Notice, that the users ratings values are filled automatically.<br><br>
+            <div class="popisek" style="text-align: center;"><img alt="Rating Criteria" src="IMAGES/4.2-01.png"><br>Look at how the <strong>Rating Criteria</strong> settings appear in the sample post (fig. below)<br><img alt="arrow icon" src="IMAGES/to_bottom_arrow.png"><br><a target="_parent" href="IMAGES/4.2-02x.png"><img alt="Ratings" src="IMAGES/4.2-02.png"></a></div><br>
+            <h4>Show Rating Description</h4>
+            Tick the box if you want to show your description in the ratings box.<br>
+            <h4>Rating Description</h4>
+            This is the field which you can fill in with the text you want to display
+            in the ratings box (if the Show Rating Description option above is
+            ticked).<br>
+            <h4>Overall Rating</h4>
+            Here you can choose whether or not to show an overall rating. If yes, tick
+            the box.<br>
+            <h4>Enable User Rating</h4>
+            Tick the option if you want allow users to rate a post.<br>
+            <h4>Include User Rating in Total Ratings</h4>
+            Tick the option if user´s rating has to be included in total ratings.<br>
+            <h2><a id="5" name="5"></a>Categories</h2>
+            The GoodStore theme gives you some extra options for your categories of
+            posts. Navigate to <strong><em>Posts &gt; Categories</em></strong> and set up a new
+            category, or choose any added one you need to edit.<br>
+            <h4>Category Layout</h4>
+            <div class="explain">Choose one of the preset layouts for your Category.</div>
+            <h4>Category Left/Right Sidebars</h4>
+            Select optional sidebars from the dropdown list of your custom ones you
+            had created in<strong> <em>Appearance &gt; Theme Options &gt; Sidebar Manager</em></strong>.<br>
+            <h4 class="heading">Category Posts Layout</h4>
+            Choose one of the preset layouts for posts in the category.<br>
+            <h4>Category Posts Left/Right Sidebars</h4>
+            Select optional sidebars for posts in the category from the dropdown list
+            of your custom ones you had created in <strong><em>Appearance &gt; Theme Options &gt; Sidebar Manager</em></strong>.<br>
+            <h2><a id="6" name="6"></a>Portfolio</h2>
+            At first you need to create a category for your portfolio. Navigate to <strong><em>Portfolio &gt; Categories</em></strong> and add your new category or categories (e.g.
+            Photography, Videography etc.).<br>
+            <br>
+            Than go to <strong><em>Portfolio &gt; Add New</em></strong>. Here you create a portfolio
+            item which type can be defined selecting an desired option in the <strong>Portfolio
+                Type</strong> dropdown list below the content field.<br>
+            <h3><a id="6_1" name="6.1"></a>Portfolio Settings</h3>
+            These are the settings you can find below the content field of each new or
+            already created portfolio. <br>
+            <h4>Portfolio Type</h4>
+            Define a type of your portfolio selecting the desired one in the dropdown
+            list. You can choose from the <strong>Image, Gallery, Video, Audio, Link</strong>
+            options. Note that the next related option(s) varies depending on the
+            portfolio type you have selected.<br>
+            <br>
+            Tick the <strong>Categories</strong> which you want the portfolio item to
+            associate with. If you need, set the other options and click [Preview] or [Publish] button.
+            <div class="notice">
+                <ul>
+                    <li style="list-style: url(IMAGES/remember-icon.png);"><strong>REMEMBER:</strong> Never put an image to the
+                        content field since it won´t be shown. You have to add it and set up as
+                        Featured Image (the option at the bottom right corner).</li>
+                    <li style="list-style: url(IMAGES/hint-icon.png);"><strong>TIP for a video thumbnail:</strong> If you want to use an
+                        thumbnail of your choice instead of that generated from your video URL,
+                        you can set your own featured image for this video.</li></ul></div>
+            <h2><a id="7" name="7"></a>Team</h2>
+            The theme allows you to create and manage your teams/categories and their
+            member´s profile cards. Navigate to the <strong><em>Team</em></strong> item in main menu
+            and get started.<br>
+            <br>
+            To create a new <strong>team category</strong> or modify an existing one,
+            navigate to <strong><em>Team &gt; Categories</em></strong> and fill in the empty fields
+            or select the categories to be edited while following the appropriate
+            descriptions.<br>
+            <br>
+            To add a new member of team, select the <strong><em>Team &gt; Add New</em></strong> item
+            and fill in the member´s name, description and the <strong>Team Settings</strong>
+            (the member´s profile card).<br>
+            <h2><a id="8" name="8"></a>Testimonial</h2>
+            Positive testimonials are a good way to increase sales. This theme allows
+            you to add and keep testimonials on your page. <br>
+            <br>
+            To create a new <strong>testimonial category</strong> or modify an
+            existing one, navigate to <strong><em>Testimonial &gt; Categories</em></strong> and fill
+            in the empty fields or select the categories to be edited while following
+            the appropriate descriptions.<br>
+            <br>
+            To add a new testimonial, select the <strong><em>Testimonial &gt; Add New</em></strong>
+            item and fill in the testimonial text field and the person´s data. You can
+            also insert the person´s photograph.<br>
+            <h2><a id="9" name="9"></a>Shortcodes</h2>
+            WordPress Shortcodes are a simple set of functions for creating macro
+            codes to be used in post and page content. To creating pages, we recommend
+            using our new advanced <a href="#3_1">REVO Composer page builder</a>
+            which makes your work more comfortable. However, a decision about whether
+            to use shortcodes or the page builder depends on your preferences.<br>
+            <br>
+            The GoodStore theme comes with a number of shortcodes allowing you to
+            easily add styled content to your site. Some of them allow you to
+            completely redefine the post or page content. Some shortcodes can embed
+            files or create objects, some others can change the layout of the content.
+            Conveniently, the available shortcodes have been included under the
+            dropdown button in the WYSIWYG content editor which you can use when you
+            add or edit the Posts or Pages.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> In case of pair shortcodes
+                        you always need to put the part of your content which you wish to be
+                        affected, between the two bracketed code elements. Use the following
+                        syntax: [shortcode]Your text...[/shortcode]. </li></ul></div>
+            Click the <img title="Shortcode icon" alt="Shortcode icon" src="IMAGES/shortcode-icon.png">
+            shortcode button to open up a dropdown list of the available shortcodes
+            and their settings.<br>
+            <br><div style="text-align: center;"><img alt="Shortcodes" src="IMAGES/9-01.png"><br></div>
+            <br>
+            <strong>Columns:</strong> Choose this item if you want to wrap your
+            paragraph into some of the offered variants of columns.<br>
+            <strong>Content:</strong> You can add several content elements or parts of
+            content like images, buttons, dividers, lists etc. into your content.<br>
+            <strong>Social &amp; Media:</strong> You can embed both Youtube and Vimeo
+            video content as well as add social icons of your choice.<br>
+            <strong>Text Content:</strong> Here you find some text elements and
+            typography tools such are accordion, block quote, "call to action" button,
+            info box. etc.<br>
+            <strong>Features:</strong> There are several useful features you can add
+            to your content (gallery, maps, comments, countdown, pricing table, QR
+            code etc.)<br>
+            <strong>Post Types:</strong> You can add FAQ, Portfolio, Team and
+            Testimonial post type.<br>
+            <strong>Carousels:</strong> Choose and put the type of carousel element
+            you prefer into your content.<br>
+            <strong>Sliders:</strong> Add a slider to your content.<br>
+            <h2><a id="10" name="10"></a>Widgets</h2>
+            Apart from the standard widgets included in Wordpress and from the
+            WooCommerce (or some other 3rd party´s add-ons that you may use), the
+            GoodStore theme gives you seven custom <strong>J&amp;W widgets</strong>.
+            You find them in <strong><em>Appearance &gt; Widgets</em></strong>. Widgets can be placed
+            into the <strong>Header Widget Area, Header Widget Area 2, Footers 1 - 4,
+                Shortcode-menu, Widget menu areas 1 - 4,</strong> as well as into all
+            your custom sidebar positions you have created in <strong><em>Theme Options &gt;
+                    Sidebar Manager</em></strong> section. Simply move the chosen widget to the
+            position you need by drag´n drop method. Then open the widget´s dropdown
+            options and set up all you need.<br>
+            <h4><a id="JaW_-_Custom_Banner_Widget" name="J&amp;W - Custom Banner Widget"></a>J&amp;W
+                - Custom Banner Widget</h4>
+            This widget allows you to display one of your custom banners (see
+            subchapter <strong><a href="#2_9_7">2.9.7 Banner - Custom 1</a></strong>).<br>
+            <h4>J&amp;W - Latest Posts Widget</h4>
+            Use this widget to fetch latest posts from the selected categories.<br>
+            <h4>J&amp;W - Login Widget</h4>
+            The theme-based login window. You can insert your titles before and after
+            login.<br><br>
+            <div style="text-align: center;"><img alt="J&amp;W - Login Widget" src="IMAGES/10-03ax.png"><br>Look at where the sample content of the fields in the <strong>J&amp;W - Login Widget</strong> <br>settings (fig. above) appears on the page before and after you log in.<br><br><img alt="arrow - to buttom" src="IMAGES/to_bottom_arrow.png"><br><br><img alt="Login - content before" src="IMAGES/10-03bx.png"><img style="margin-bottom: 144px; margin-left: 10px;" alt="Login - content after" src="IMAGES/10-03cx.png"></div>
+            <h4>J&amp;W - Rating Widget</h4>
+            You can show posts with ratings by using this widget. Just fill in the
+            widget´s title, enter number of posts to be shown and select the
+            categories to fetch the posts from.<br>
+            <h4><a id="JaW_-_Social_Widget" name="J&amp;W - Social Widget"></a>J&amp;W
+                - Social Widget</h4>
+            Here you can simply add links to your social profiles at <strong>Google+,
+                Twitter, Facebook, Instagram, Youtube, Vimeo,</strong> as well as a link
+            to <strong>RSS</strong> chanel. You can also decide whether or not to
+            animate the content.<br>
+            <h4>J&amp;W - Tab Posts Widget</h4>
+            This widget allows you to set up a number and selection of <strong>popular</strong> and
+            <strong>      recent</strong> posts and <strong>comments</strong> previews, and a number of tags as well. This
+            content is sorted to the tabs which labels you can (re)name in this widget
+            too. The widget looks like the one you can see at the following picture
+            from our demo site.<br>
+            <br><div class="popisek" style="text-align: center;"><img alt="J&amp;W - Tab Posts Widget" src="IMAGES/10-06.png"><br>An example of how the <strong>J&amp;W - Tab Posts Widget </strong><br>can look like on page<br>
+            </div><br><h4>J&amp;W - Twitter Widget</h4>
+            This theme-based widget allows you to set up your latest tweets from the
+            Twitter. You can place it e.g. in a footer area.<br>
+            <br>
+            First, you have to fill in the Twitter API´s keys in <strong><em>Appearance &gt;
+                    Theme Options &gt; Advanced &gt; Twitter API</em></strong> section. To get
+            them, please visit <a target="_blank" href="https://dev.twitter.com/apps/new">https://dev.twitter.com/apps/new</a>.<br><br>
+
+            <div class="popisek" style="text-align: center">
+
+
+                <img alt="J&amp;W - Twitter Widget" src="IMAGES/10-07x.png"><img style="margin-left: 15px; margin-right: 15px;" alt="arrow - right" src="IMAGES/to_right_arrow.png"><img alt="J&amp;W - Twitter Widget on page" src="IMAGES/10-08x.png"><br>Look at how the sample<strong> J&amp;W - Twitter Widget</strong> settings appear on page<br>
+
+            </div>
+
+            <h2><a id="1_1" name="11"></a>Slider</h2>
+            Depending on your preferences, you can use both our <strong>J&amp;W
+                Slider</strong> and the third party´s <strong>Revolution Slider</strong>
+            and combine use of them across your web assigning the first type of slider
+            to some your pages and the second one to other pages of your choice.<br>
+            <br>
+            We recommend that you put a chosen slider to your page by using the <a href="#3_1">REVO
+                Composer</a> page builder. However, if you prefer work with <a href="#9">shortcodes</a>,
+            you can choose this way.<br>
+            <div class="notice">
+                <ul>
+                    <li> <strong>NOTE:</strong> Be aware that the <em>J&amp;W
+                            Slider</em> is installed as a separate plugin with the theme, but the
+                        Revolution Slider is added as part of the<em> J&amp;W Shortcodes</em>
+                        plugin supplied with the theme as well. </li></ul></div>
+            <h3><a id="11_1" name="11.1"></a>Setting up the J&amp;W Slider</h3>
+            To set up and manage the J&amp;W Slider, navigate to <strong><em>Appearance &gt;
+                    Theme Options &gt; Featured Area &gt; J&amp;W Slider</em></strong> and set the
+            particular options according to the attached descriptions or read the
+            related <strong><a href="#2_3_2">2.3.2 J&amp;W Slider</a></strong> subchapter to learn
+            more about the options.<br>
+            <h3><a id="11_2" name="11.2"></a>Revolution Slider</h3>
+            To learn how to set up and manage this slider, refer to the Revolution
+            Slider plugin´s documentation or select the [Revolution Slider]
+            item in the Wordpress admin menu to work with the slider settings.<br>
+            <h2> <a id="12" name="12"></a>Typography</h2>
+            Get inspired of some prestyled typography in our <a target="_blank" href="http://demo.jawtemplates.com/goodstore">demo</a>.<br>
+            <h2><a id="13" name="13"></a>Video Tutorials</h2>We recommend that you follow us on our <a target="_blank" href="https://www.youtube.com/playlist?list=PLBqRHN6a0RLGb43C40FW_M5Yvn3oSLQ1w">YouTube channel</a>, as there are clearly explained some issues you may need help with. <br>
+            <h2><a id="14" name="14"></a>Icons</h2>Please follow this link <a target="_blank" href="http://support.jawtemplates.com/goodstore/jaw-icon-goodstore/">Icons</a><br>
+            <h2><a id="15" name="15"></a>Sources and Credits</h2>
+            <ul>
+                <li><a target="_blank" href="http://angularjs.org/">AngularJS</a></li>
+                <li><a target="_blank" href="https://github.com/buberdds/angular-bootstrap-colorpicker">Angular colorpicker.module</a></li>
+                <li><a target="_blank" href="http://angular-ui.github.io/bootstrap/">Angular ui.bootstrap</a></li>
+                <li><a target="_blank" href="http://harvesthq.github.io/chosen/">Bootstrap</a></li>
+                <li><a target="_blank" href="http://harvesthq.github.io/chosen/">Bootstrap-colorpicker.js</a></li>
+                <li><a target="_blank" href="http://www.chartjs.org/">jQuery chart</a></li>
+                <li><a target="_blank" href="http://harvesthq.github.io/chosen/">Chosen</a></li>
+                <li><a target="_blank" href="http://wordpress.org/plugins/facebook-comments-plugin/">Facebook
+                        comments</a></li>
+                <li><a target="_blank" href="https://github.com/paulirish/infinite-scroll">Infinite
+                        Scroll</a></li>
+                <li><a target="_blank" href="http://isotope.metafizzy.co/">Isotope<br></a></li>
+                <li><a target="_blank" href="https://github.com/marioestrada/jQuery-gMap">jQuery</a></li>
+                <li><a target="_blank" href="https://github.com/marioestrada/jQuery-gMap">jQuery cookie</a></li>
+                <li><a target="_blank" href="https://github.com/marioestrada/jQuery-gMap">jQuery countTo</a></li>
+                <li><a target="_blank" href="https://github.com/mathiasbynens/jquery-placeholder">jQuery
+                        gMap - Google Maps API V3</a></li>
+                <li><a target="_blank" href="http://www.appelsiini.net/projects/lazyload">jQuery lazyLoad</a></li>
+                <li><a target="_blank" href="https://github.com/mathiasbynens/jquery-placeholder">jquery-placeholder
+                        v 1.8.7</a></li>
+                <li><a target="_blank" href="http://larsjung.de/qrcode/">jQuery qrcode</a></li>
+                <li><a target="_blank" href="http://benalman.com/projects/jquery-resize-plugin/">jQuery resize</a></li>
+                <li><a target="_blank" href="http://www.zurb.com/">jQuery Reveal Plugin 1.1</a></li>
+                <li><a target="_blank" href="http://lcdsantos.github.io/jQuery-Selectric/demo.html">jQuery selectric</a></li>
+                <li><a target="_blank" href="http://lexxus.github.io/jq-timeTo/">jQuery timeTo</a></li>
+                <li><a target="_blank" href="https://jqueryui.com/">jQuery UI</a></li>
+                <li><a target="_blank" href="https://jqueryui.com/sortable/">jQuery UI Sortable plugin</a></li>
+                <li><a target="_blank" href="http://www.modernizr.com/download/#-touch-mq-cssclasses-addtest-teststyles-prefixes-ie8compat-load">Modernizr
+                        (Custom Build) | MIT &amp; BSD</a></li>
+                <li><a target="_blank" href="https://icomoon.io/">icoMoon</a></li>
+                <li><a target="_blank" href="http://www.ingimage.com/index.cfm">ingimage</a></li>
+                <li><a target="_blank" href="http://www.no-margin-for-errors.com/">prettyPhoto</a></li>
+                <li><a target="_blank" href="http://www.purtylabs.com/">A Purty Labs
+                        Production</a></li>
+                <li><a target="_blank" href="https://github.com/syamilmj/Options-Framework">Slightly
+                        Modded Options Framework</a></li>
+                <li><a target="_blank" href="http://wordpress.org/plugins/social-connect/">Social
+                        Connect</a></li>
+                <li><a target="_blank" href="http://subtlepatterns.com/">Subbtle
+                        Patterns</a></li>
+                <li><a target="_blank" href="http://wordpress.org/plugins/tabbed-login/">Tabbed
+                        Login Widget</a></li>
+                <li><a target="_blank" href="http://w-shadow.com/">Theme Update Checker
+                        Library 1.2</a></li>
+                <li><a target="_blank" href="http://wordpress.org/plugins/widget-settings-importexport/">Widget
+                        Data - Setting Import/Export Plugin</a></li>
+            </ul>
+            <br>
+            <hr>
+            <div class="popisek" style="text-align: center;"> Copyright © 2014 <br>
+                <a href="http://www.jawtemplate.com" target="_blank">jawtemplates.com</a></div>
+            <br>
+        </div>
+        --&gt;
+    </body></html>

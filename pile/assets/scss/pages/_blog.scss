@@ -1,0 +1,147 @@
+.blog,
+.category,
+.tag,
+.search {
+	background: #F8F8F8;
+}
+
+.page__header {
+	text-align: center;
+	padding: 24px 0;
+
+	@include query-above($lap) {
+		padding: 48px 0;
+	}
+	@include query-above($desk) {
+		padding: 96px 0;
+	}
+}
+
+.post__header {
+	text-align: center;
+}
+
+.page__title {
+	margin-bottom: 0;
+}
+
+.post__title {
+	margin-top: 0;
+	margin-bottom: 24px;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+
+	&:after {
+		display: block;
+		font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+		text-rendering: auto; // optimizelegibility throws things off #1094
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		content: $fa-var-anchor;
+		margin-top: 24px;
+	}
+
+	@include query-above($lap) {
+		margin-bottom: 48px;
+
+		&:after { margin-top: 48px; }
+	}
+}
+
+.page__subtitle {
+	color: $dark;
+	margin-top: 1em;
+
+	ul {
+		list-style: none;
+	}
+
+	li {
+		display: inline-block;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	li + li:before {
+		content: "/";
+		padding: 0;
+		padding-right: .2em;
+	}
+}
+
+.article__wrap {
+	padding: 36px 24px;
+	display: block;
+	background: white;
+	text-align: center;
+}
+
+.article__link {
+	display: block;
+	color: inherit;
+}
+
+.article__image {
+	position: relative;
+
+	img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		width: 100%;
+	}
+}
+
+.article__date:before {
+	content: "\2022";
+	padding-right: .5em;
+	padding-left: .2em;
+}
+
+.article__date:first-child:before {
+	content: "";
+}
+
+.article__title {
+	@extend %fs-30;
+	margin-top: 18px;
+	margin-bottom: 12px;
+	line-height: 1.33;
+
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+}
+
+.article__more {
+	@extend .meta;
+	font-size: 10px;
+	color: $primary;
+	// text-transform: uppercase;
+	// letter-spacing: 0.08em;
+	border-bottom: 1px solid currentColor;
+
+	.article__meta + a & {
+		font-weight: 400;
+	}
+}
+
+#infinite-handle {
+	position: absolute;
+	top: auto !important;
+	bottom: 0 !important;
+	left: 50% !important;
+	transform: translateX(-50%);
+
+	z-index: 100;
+
+	span button {
+		@extend %btn;
+	}
+
+	.infinity-end & {
+		display: none;
+	}
+}

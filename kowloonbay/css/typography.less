@@ -1,0 +1,278 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Heading / h1, h2, h3, h4, h5, h6
+2. Styled h5 / .h5-style
+3. Code / code
+4. Paragraph / p
+	4.1. Last paragraph / &:last-child
+5. Figure caption & caption / figcaption, .caption
+6. Drop-cap in paragraph / p.drop-cap:first-letter
+7. Small text / .small-text
+8. Medium text / .medium-text
+9. Quote / .quote-style
+10. Body font / .body-font
+11. Body text color / .body-text-color
+12. Light body font weight / .body-light-font-weight
+13. Medium body font weight / .body-medium-font-weight
+14. Heavy body font weight / .body-heavy-font-weight
+15. Uppercase / .uppercase
+16. Letter spacing / .letter-spacing
+17. Title font / .title-font
+18. Title text color / .title-text-color
+19. Medium title font weight / .title-medium-font-weight
+20. Heavy title font weight / .title-heavy-font-weight
+21. Title style / .title-style
+22. Icon color / .icon-color
+23. Text shadow / .text-shadow
+24. Tag & author of RSS feed / .tag:not(body), .rss-author
+	24.1. Last tag or last author / &:last-child
+	24.2. Inline block / &.inline-block
+		24.2.1. Last inline block / &:last-child
+25. Inline block / .inline-block
+26. Blockquote / blockquote
+	26.1. Paragraph / p
+	26.2. Footer / footer
+27. Number / .number
+28. Link (normal, visited, button link) / a:not(.btn):link, a:not(.btn):visited, .btn-link
+29. Link (hover & active state) / a:not(.btn):hover, a:not(.btn):active, .btn-link:hover, .btn-link:active
+30. Link (hover, active & focus state)/ a:hover, a:active, a:focus
+31. End mark / .ending-indicator
+	31.1 Last paragraph / p:last-of-type:after
+32. Selection / ::selection 
+33. Selection (Firefox) / ::-moz-selection 
+34. Body / body
+
+-------------------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6{
+	padding: 0;
+	margin: 0;
+	color: @titleTextColor;
+	font-weight: @titleHeavyFontWeight;
+	font-family: @titleTextFontFamily;
+	margin-top: @baseLineHeight * 2;
+	margin-bottom: @baseLineHeight;
+	line-height: 1.5;
+}
+
+.h5-style{
+	.light-primary-bg-3;
+	height: @baseLineHeight * 2;
+	line-height: @baseLineHeight * 2;
+	padding: 0 10px;
+}
+
+code{
+	.light-primary-bg-2;
+	.padding-h-half;
+	.padding-v-half;
+	border-radius: 0;
+	color: @primaryColor;
+}
+
+p{
+	margin-top: 0;
+	margin-bottom: @baseLineHeight;
+
+	&:last-child{
+		margin-bottom: 0;
+	}
+}
+
+figcaption, .caption{
+	.small-text;
+	.body-heavy-font-weight;
+	.title-text-color;
+	text-align: center;
+}
+
+p.drop-cap:first-letter{
+	// Drop cap
+	// http://css-tricks.com/snippets/css/drop-caps/
+	float: left;
+	color: @titleTextColor;
+	font-size: 75px;
+	line-height: 60px;
+	padding-top: 4px;
+	padding-right: 8px;
+	padding-left: 3px;
+}
+
+.small-text{
+	font-size: @bodyTextFontSize - 2px;
+}
+
+.medium-text{
+	font-size: @bodyTextFontSize - 1px;
+}
+
+.quote-style{
+	font-family: Georgia;
+	font-style: italic;
+}
+
+.body-font{
+	font-family: @bodyTextFontFamily;
+}
+
+.body-text-color{
+	color: @bodyTextColor;
+}
+
+.body-light-font-weight{
+	font-weight: @bodyLightFontWeight;
+}
+
+.body-medium-font-weight{
+	font-weight: @bodyMediumFontWeight;
+}
+
+.body-heavy-font-weight{
+	font-weight: @bodyHeavyFontWeight;
+}
+
+.uppercase{
+	text-transform: uppercase;
+}
+
+.letter-spacing{
+	letter-spacing: 1px;
+}
+
+.title-font{
+	font-family: @titleTextFontFamily;
+}
+
+.title-text-color{
+	color: @titleTextColor;
+}
+
+.title-medium-font-weight{
+	font-weight: @titleHeavyFontWeight;
+}
+
+.title-heavy-font-weight{
+	font-weight: @titleHeavyFontWeight;
+}
+
+.title-style{
+	.uppercase;
+	.letter-spacing;
+	.title-font;
+	.title-heavy-font-weight;
+	.title-text-color;
+}
+
+.icon-color{
+	color: @iconColor;
+}
+
+.text-shadow{
+	color: @bgColor;
+	text-shadow: 0 0 5px #000;
+}
+
+.tag:not(body), .rss-author{
+	text-align: center;
+	padding: 0 @baseLineHeight/2;
+	color: #fff;
+	border-radius: @baseLineHeight;
+	line-height: @baseLineHeight;
+	margin: 2px 0 0;
+	color: @primaryColor;
+	font-size: 12px;
+	background-color: @lightPrimary3;
+
+	&:last-child{
+		margin-bottom: 10px;
+	}
+
+	&.inline-block{
+		margin-bottom: 1px;
+
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+}
+
+.inline-block{
+	display: inline-block;
+}
+
+blockquote{
+	.padding-v-1x;
+	.padding-h-2x;
+	.margin-b-1x;
+	border: none;
+	font-size: @bodyTextFontSize;
+	position: relative;
+
+	p{
+		.quote-style;
+	}
+
+	footer{
+		.body-font;
+		.margin-t-2x;
+		font-style: normal;
+		text-align: right;
+	}
+}
+
+.number{
+	display: inline-block;
+	border-radius: @baseLineHeight;
+	line-height: @baseLineHeight;
+	min-width: @baseLineHeight;
+	height: @baseLineHeight;
+	text-align: center;
+	.light-primary-bg-3;
+	.body-heavy-font-weight;
+	color: @primaryColor;
+	padding: 0 5px;
+}
+
+a:not(.btn):link, a:not(.btn):visited, .btn-link{
+	color: @linkColor;
+	.transition(~'color @{transitionDuration} ease');
+}
+
+a:not(.btn):hover, a:not(.btn):active, .btn-link:hover, .btn-link:active{
+	color: @linkHoverColor;
+}
+
+a:hover, a:active, a:focus{
+	text-decoration: none;
+	outline: none;
+}
+
+.ending-indicator{
+	&>p:last-of-type:after{
+		display: inline;
+		content: ' \f04d';
+		font-family: FontAwesome;
+		color: @primaryColor;
+	}
+}
+
+::selection {
+  background: @primaryColor; /* WebKit/Blink Browsers */
+  color: @bgColor;
+}
+::-moz-selection {
+  background: @primaryColor; /* Gecko Browsers */
+  color: @bgColor;
+}
+
+body{
+	background-color: @bgColor;
+	font-family: @bodyTextFontFamily;
+	color: @bodyTextColor;
+	font-size: @bodyTextFontSize;
+	font-weight: @bodyMediumFontWeight;
+	line-height: @baseLineHeight;
+	-webkit-font-smoothing: @webkitFontSmoothing;
+	letter-spacing: @bodyTextLetterSpacing;
+}

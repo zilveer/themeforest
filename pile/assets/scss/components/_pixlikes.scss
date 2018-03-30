@@ -1,0 +1,188 @@
+//*------------------------------------*\
+//   $METABOX
+//*------------------------------------*/
+
+
+// Pixlikes, Add This
+
+.metabox{
+	@extend %fs-14;
+	display: inline-block;
+	margin-right: $u;
+
+	text-transform: uppercase;
+
+	color: $dark;
+
+	i{
+		margin-right: $u/4;
+	}
+}
+
+
+
+
+
+//*------------------------------------*\
+//   $PIXLIKES
+//*------------------------------------*/
+
+.pixlikes-box{
+    position: relative;
+
+    cursor: default;
+
+	transition: all .3s linear;
+
+    &.likeable{
+        cursor: pointer;
+    }
+
+    &.animate{
+        background: $dark;
+
+        .likes-text{
+            &:before{
+                opacity: 1;
+            }
+
+			&:after{
+				animation: fill 1s;
+				-webkit-animation: fill 1s;
+			}
+        }
+    }
+
+	&.liked{
+		i{
+			color: $accent;
+		}
+	}
+
+    span{
+       	transition: all .3s linear;
+    }
+
+    .likes-count{
+        color: $dark;
+    }
+
+    .likes-text{
+
+        color: $light;
+
+        &:before{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+			z-index: 10;
+
+            content: "Don't move!";
+
+            line-height: 24px;
+			font-size: 10px;
+			font-weight: bold;
+            text-align: center;
+
+            color: white;
+
+            opacity: 0;
+            transition: all .3s linear;
+        }
+
+		&:after{
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+
+			content: "";
+
+			background: $accent;
+			z-index: 5;
+		}
+    }
+
+	&:hover .likes-text{
+		color: $dark;
+	}
+}
+
+.complete i{
+	animation: bounce 1s;
+	-webkit-animation: bounce 1s;
+}
+
+@keyframes fill {
+	0% { width: 0; opacity: 0; }
+	3% { width: 3%; opacity: 1; }
+	100% { width: 100%; opacity: 1; }
+}
+
+@-webkit-keyframes fill {
+	0% { width: 0; opacity: 0; }
+	3% { width: 3%; opacity: 1; }
+	100% { width: 100%; opacity: 1; }
+}
+
+@-moz-keyframes fill {
+	0% { width: 0; opacity: 0; }
+	3% { width: 3%; opacity: 1; }
+	100% { width: 100%; opacity: 1; }
+}
+
+/*
+* Bounce animation for completed state
+*/
+@keyframes bounce {
+	0% {
+		transform: scale(1.1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.5);
+		opacity: .7;
+	}
+	60% {
+		transform: scale(0.6);
+		opacity: 1;
+	}
+	80% { transform: scale(1.1) }
+	100% { transform: scale(1) }
+}
+
+@-webkit-keyframes bounce {
+	0% {
+		-webkit-transform: scale(1.1);
+		opacity: 1;
+	}
+	50% {
+		-webkit-transform: scale(1.5);
+		opacity: .7;
+	}
+	60% {
+		-webkit-transform: scale(0.6);
+		opacity: 1;
+	}
+	80% { -webkit-transform: scale(1.1) }
+	100% { -webkit-transform: scale(1) }
+}
+
+@-moz-keyframes bounce {
+	0% {
+		-moz-transform: scale(1.1);
+		opacity: 1;
+	}
+	50% {
+		-moz-transform: scale(1.5);
+		opacity: .7;
+	}
+	60% {
+		-moz-transform: scale(0.6);
+		opacity: 1;
+	}
+	80% { -moz-transform: scale(1.1) }
+	100% { -moz-transform: scale(1) }
+}

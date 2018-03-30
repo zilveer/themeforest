@@ -1,0 +1,179 @@
+.most-popular {
+	@media screen and (max-width: 768px) {
+		margin-top: 15px;
+	}
+
+	&.full-width {
+		background: #222;
+
+		.popular-title {
+			display: none;
+		}
+		.popular-slider {
+			width: 100%;
+			height: 160px;
+		}
+	}
+
+	&.no-title {
+		.popular-title {
+			display: none;
+		}
+		.popular-slider {
+			width: 100%;
+			height: 160px;
+		}
+	}
+
+	.popular-title {
+		width: 160px;
+		background: #222;
+		height: 160px;
+		position: relative;
+		float: left;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			bottom: 15px;
+			left: 15px;
+			@include border-top-radius(50%);
+			@include border-bottom-radius(50%);
+			border: 1px solid #888;
+		}
+
+		> span {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			@include transform(translate(-50%, -50%));
+			color: #fff;
+			font-family: $proxima-bold;
+			color: #fff;
+			font-size: 22px;
+			text-transform: uppercase;
+			line-height: 22px;
+
+			> span {
+				color: #de1525;
+				display: block;
+				font-family: $proxima-light;
+			}
+		}
+	}
+
+	.popular-slider {
+		width: calc(100% - 160px);
+		background: #222;
+		float: left;
+		counter-reset: section;
+		margin-bottom: 0;
+
+		.slick-list, .slick-track {
+			height: 100%;
+		}
+
+		.single {
+			height: 100%;
+
+
+			.image {
+				width: 50%;
+				height: 100%;
+				float: left;
+				background-color: #444;
+				background-size: cover;
+				background-position: center center;
+				position: relative;
+
+				@media screen and (max-width: 480px) {
+					display: none;
+				}
+
+				&:before {
+					content: "";
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					background: rgba($theme-color, .5);
+					@include opacity(0);
+					@include transition(all .25s);
+				}
+
+				&:hover {
+					&:before {
+						@include opacity(1);
+					}
+				}
+			}
+
+			.info {
+				width: 50%;
+				height: 100%;
+				float: left;
+				position: relative;
+
+				@media screen and (max-width: 480px) {
+					width: 100%;
+				}
+
+				a {
+					position: absolute;
+					top: 15px;
+					left: 15px;
+					right: 15px;
+					color: #fff;
+					font-size: 16px;
+					line-height: 16px;
+
+					&:before {
+						counter-increment: section;
+						content: "0"counter(section);
+						pointer-events: none;
+						display: block;
+						margin-bottom: 15px;
+						font-size: 11px;
+						font-family: $proxima-xbold;
+					}
+
+					&:hover {
+						color: $theme-color;
+					}
+				}
+			}
+		}
+
+		.slick-prev, .slick-next {
+			bottom: 0;
+			top: auto;
+			left: auto;
+			right: 0;
+			margin: 0;
+			width: 35px;
+			height: 35px;
+			background: $theme-color;
+
+			&:before {
+				font-family: $fa;
+			}
+		}
+
+		.slick-prev {
+			right: 36px;
+
+			&:before {
+				content: "\f104";
+			}
+		}
+
+		.slick-next {
+			&:before {
+				content: "\f105";
+			}
+		}
+	}
+}

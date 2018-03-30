@@ -1,0 +1,98 @@
+// Search
+
+.search-panel {
+  @extend %background-primary-color;
+  z-index: 1001;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .1s linear;
+  height: 80px;
+  box-shadow: 0px 2px 0 rgba(0, 0, 0, 0.1) inset;
+
+  button {
+    background: none;
+    border: none;
+  }
+}
+.search-panel__form {
+  padding: 20px 0;
+
+  // Webkit Browsers
+  input::-webkit-input-placeholder {
+    color: rgba(0,0,0,0.3);
+  }
+
+  // Mozzila Firefox 19+
+  input::-moz-placeholder {
+    color: rgba(0,0,0,0.3);
+    opacity: 1;
+  }
+
+  // Internet Explorer 10+
+  input:-ms-input-placeholder {
+    color: rgba(0,0,0,0.3);
+  }
+
+  .form-control {
+    @extend %background-primary-color;
+    display: inline;
+    color: $light-color;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    width: 90%;
+    height: 40px;
+    margin: 0 0 20px 20px;
+    font-size: 24px;
+
+    &:focus {
+      @extend %background-primary-color;
+    }
+  }
+
+  .glyphicon-search {
+    font-size: 30px;
+    color: rgba(0,0,0,0.3);
+    display: inline-block;
+  }
+}
+.search-panel__close {
+  padding: 25px 0;
+  margin: -2px 0;
+
+  .glyphicon-remove {
+    color: $default-color;
+    transition: all .1s linear;
+
+    &:hover {
+      color: $light-color;
+      border-color: $light-color;
+    }
+  }
+}
+
+/* class .search-mode is added to the <body> */
+.search-mode {
+  .search-panel,
+  .search-mode__overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Overlay
+.search-mode__overlay {
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0,0,0,0.5);
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all .1s linear;
+  transform: translateZ(0);
+}

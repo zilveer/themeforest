@@ -1,0 +1,241 @@
+/* control wrapper (default white) */
+.td-wrapper-pulldown-filter {
+  display: inline-block;
+  float: right;
+
+
+  .clearfix();
+
+  .td-pulldown-filter-display-option {
+     color: #444444;
+     border: 1px solid @td_grid_border_color;
+
+    // hover for pulldown
+    &:hover {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      ul {
+        display: block;
+      }
+    }
+  }
+
+  .td-pulldown-filter-list {
+    background-color: rgba(255, 255, 255, 0.95);
+     border: 1px solid @td_grid_border_color;
+  }
+
+  .td-pulldown-filter-link {
+     color: #444;
+  }
+}
+
+/* hide the filter category name on 1 column on portrait tablet only on blocks */
+.td-pb-span4 {
+  .td_block_wrap {
+    .td-pulldown-filter-display-option {
+      /* responsive portrait tablet */
+      @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+        padding: 0 5px;
+      }
+
+      span {
+        /* responsive portrait tablet */
+        @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+          display: none;
+        }
+      }
+
+      i {
+        /* responsive portrait tablet */
+        @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
+/*open the list (default white)*/
+.td-pulldown-filter-list-open {
+  .td-pulldown-filter-list {
+    display: block;
+  }
+
+  .td-pulldown-filter-display-option {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.95);
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+
+// filter siblings fix hide cats until all is loaded
+.td-js-loaded .td-category-siblings {
+  opacity: 1;
+  .transition(opacity 0.3s);
+}
+
+
+
+/*  ----------------------------------------------------------------------------
+    common code
+*/
+
+/*text selected to display*/
+.td-pulldown-filter-display-option {
+  background-color: rgba(255, 255, 255, 0.95);
+  position: relative;
+  right: 0;
+  cursor: pointer;
+  padding: 0 10px 0 14px;
+  margin: 0 19px 21px 0;
+
+  /* responsive portrait tablet */
+  @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+    margin: 0 17px 17px 0;
+  }
+
+  /* responsive portrait phone */
+  @media (max-width: @responsive_p_phone_max) {
+    margin: 0 10px 17px 0;
+  }
+
+  height: 20px;
+  font-family: @font1;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 18px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  white-space:nowrap;
+
+  &:hover {
+    color: @td_theme_color;
+  }
+
+  i {
+    font-size: 9px;
+    padding-left: 8px;
+    color: #444;
+  }
+}
+
+// fix margin bottom overwritten by VC
+.wpb_wrapper .td_block_wrap {
+  .td-pulldown-filter-display-option {
+    margin: 0 19px 20px 0;
+
+    /* responsive portrait tablet */
+    @media (min-width: @responsive_p_tablet_min) and (max-width: @responsive_p_tablet_max) {
+      margin: 0 16px 17px 0;
+    }
+
+    /* responsive portrait phone */
+    @media (max-width: @responsive_p_phone_max) {
+      margin: 0 10px 17px 0;
+    }
+  }
+}
+
+
+/*the list with options*/
+.td-pulldown-filter-list {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: -1px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.95);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-right-radius: 0;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topright: 0;
+  border-radius: 3px;
+  border-top-right-radius: 0;
+  padding: 5px 0 7px 0;
+  text-align: left;
+}
+
+
+/*li - list item*/
+.td-pulldown-filter-item {
+  list-style: none;
+}
+
+/*a - link*/
+.td-pulldown-filter-link {
+  font-family: @font1;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 24px;
+  white-space:nowrap;
+  display: block;
+  padding: 0 30px 0 16px;
+
+  &:hover {
+    color: @td_theme_color;
+  }
+}
+
+
+.td-pulldown-filter-list {
+  -webkit-animation-duration:0.3s;
+  -moz-animation-duration:0.3s;
+  -ms-animation-duration:0.3s;
+  -o-animation-duration:0.3s;
+  animation-duration:0.3s;
+}
+
+.td_block_inner {
+  -webkit-animation-duration:0.5s;
+  -moz-animation-duration:0.5s;
+  -ms-animation-duration:0.5s;
+  -o-animation-duration:0.5s;
+  animation-duration:0.5s;
+}
+
+
+
+
+
+/*  ----------------------------------------------------------------------------
+    category pull-down filter
+*/
+
+
+.td-category-pulldown-filter {
+  &.td-wrapper-pulldown-filter {
+    position: absolute;
+    top: 14px;
+    right: 0;
+  }
+
+  .td-pulldown-filter-list {
+    z-index: 2;
+  }
+
+  /*a - link*/
+  a.td-pulldown-category-filter-link {
+    color: #444;
+    font-family: @font1;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 24px;
+    white-space:nowrap;
+    display: block;
+    padding: 0 30px 0 16px;
+
+    &:hover {
+      color: @td_theme_color;
+    }
+  }
+}

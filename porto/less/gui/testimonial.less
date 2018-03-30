@@ -1,0 +1,77 @@
+// Testimonial
+
+.testimonial {
+    blockquote {
+        background: lighten(@color-primary, 5%);
+    }
+
+    .testimonial-arrow-down {
+        border-top-color: lighten(@color-primary, 5%);
+    }
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+    @color-inverse:  extract(@value, 3);
+
+    .testimonial-@{name} {
+        blockquote {
+            background: lighten(@color, 5%);
+        }
+
+        .testimonial-arrow-down {
+            border-top-color: lighten(@color, 5%);
+        }
+    }
+
+}
+}
+
+.testimonial {
+    &.testimonial-with-quotes {
+        blockquote {
+            &:before {
+                color: @body_color;
+            }
+        }
+    }
+    &.testimonial-style-2,
+    &.testimonial-style-5,
+    &.testimonial-style-6 {
+        blockquote {
+            p {
+                color: @body_color;
+            }
+        }
+    }
+    &.testimonial-style-3,
+    &.testimonial-style-4,
+    &.testimonial-style-5 {
+        blockquote {
+            p {
+                font-family: @body_font_family;
+            }
+        }
+    }
+    &.testimonial-style-3,
+    &.testimonial-style-4 {
+        blockquote {
+            &:before,
+            &:after,
+            p {
+                color: @body_color;
+            }
+        }
+    }
+    &.testimonial-with-quotes {
+        blockquote {
+            &:after,
+            &:before,
+            p {
+                color: @body_color;
+            }
+        }
+    }
+}

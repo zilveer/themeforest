@@ -1,0 +1,1 @@
+.nivo-directionNav a { background-image:url(<?php echo THEME_BASE_URI; ?>/pagebuilder/elements/TH_NivoSlider/assets/k-nivo-nav.png); }

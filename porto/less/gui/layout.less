@@ -1,0 +1,271 @@
+
+body {
+    font-family: @body_font_family;
+    font-weight: @body_font_weight;
+    font-size: @body_font_size;
+    line-height: @body_line_height;
+    color: @body_color;
+
+    @media (max-width: 479px) {
+        font-size: @body_font_size * @body_mobile_font_size_scale;
+        line-height: @body_line_height * @body_mobile_line_height_scale;
+    }
+
+    background-color: @body_bg_color;
+    background-repeat: @body_bg_repeat;
+    background-size: @body_bg_size;
+    background-attachment: @body_bg_attachment;
+    background-position: @body_bg_position;
+    background-image: @body_bg_image;
+    .gradient(@body_bg_from, @body_bg_to, @body_bg_gradient);
+}
+
+.color-body {
+    color: @body_color;
+
+    a,
+    a:hover,
+    a:focus {
+        color: @body_color;
+    }
+}
+
+h1 {
+    font-family: @h1_font_family;
+    font-weight: @h1_font_weight;
+    font-size: @h1_font_size;
+    line-height: @h1_line_height;
+    color: @h1_color;
+
+    &.big {
+        font-size: @h1_font_size * 1.6154;
+        line-height: @h1_line_height * 1.2273;
+    }
+    &.small {
+        font-size: @h1_font_size * 0.8462;
+        line-height: @h1_line_height * 0.9545;
+        font-weight: 600;
+    }
+
+    @media (max-width: 479px) {
+        font-size: @h1_font_size * @body_mobile_font_size_scale;
+        line-height: @h1_line_height * @body_mobile_line_height_scale;
+        &.big {
+            font-size: @h1_font_size * @body_mobile_font_size_scale * 1.6154;
+            line-height: @h1_line_height * @body_mobile_line_height_scale * 1.2273;
+        }
+    }
+}
+
+h2 {
+    font-family: @h2_font_family;
+    font-weight: @h2_font_weight;
+    font-size: @h2_font_size;
+    line-height: @h2_line_height;
+    color: @h2_color;
+
+    @media (max-width: 479px) {
+        font-size: @h2_font_size * @body_mobile_font_size_scale;
+        line-height: @h2_line_height * @body_mobile_line_height_scale;
+    }
+}
+
+h3 {
+    font-family: @h3_font_family;
+    font-weight: @h3_font_weight;
+    font-size: @h3_font_size;
+    line-height: @h3_line_height;
+    color: @h3_color;
+
+    @media (max-width: 479px) {
+        font-size: @h3_font_size * @body_mobile_font_size_scale;
+        line-height: @h3_line_height * @body_mobile_line_height_scale;
+    }
+}
+
+h4 {
+    font-family: @h4_font_family;
+    font-weight: @h4_font_weight;
+    font-size: @h4_font_size;
+    line-height: @h4_line_height;
+    color: @h4_color;
+
+    @media (max-width: 479px) {
+        font-size: @h4_font_size * @body_mobile_font_size_scale;
+        line-height: @h4_line_height * @body_mobile_line_height_scale;
+    }
+}
+
+h5 {
+    font-family: @h5_font_family;
+    font-weight: @h5_font_weight;
+    font-size: @h5_font_size;
+    line-height: @h5_line_height;
+    color: @h5_color;
+
+    @media (max-width: 479px) {
+        font-size: @h5_font_size * @body_mobile_font_size_scale;
+        line-height: @h5_line_height * @body_mobile_line_height_scale;
+    }
+}
+
+h6 {
+    font-family: @h6_font_family;
+    font-weight: @h6_font_weight;
+    font-size: @h6_font_size;
+    line-height: @h6_line_height;
+    color: @h6_color;
+
+    @media (max-width: 479px) {
+        font-size: @h6_font_size * @body_mobile_font_size_scale;
+        line-height: @h6_line_height * @body_mobile_line_height_scale;
+    }
+}
+
+p {
+    //color: @body_color;
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+
+    .heading-@{name},
+    .lnk-@{name},
+    .text-color-@{name} {
+        color: @color !important;
+    }
+
+    .heading.heading-@{name} {
+        h1, h2, h3, h4, h5, h6 {
+            border-color: @color;
+        }
+    }
+}
+}
+
+// Inverted
+.inverted {
+    background-color: @color-primary;
+}
+
+html {
+    .for(@colors-list); .-each(@value) {
+    @name:  extract(@value, 1);
+    @color:  extract(@value, 2);
+
+    .inverted-@{name} {
+        background-color: @color;
+    }
+}
+}
+
+.alternative-font {
+    font-family: @alt_font_family;
+    font-weight: @alt_font_weight;
+}
+
+#banner-wrapper.banner-wrapper-boxed {
+    .calcContainerWidth(@calc_banner_width);
+}
+
+#main.main-boxed {
+    .calcContainerWidth(@calc_content_width);
+}
+
+#main {
+    background-color: @content_bg_color;
+    background-repeat: @content_bg_repeat;
+    background-size: @content_bg_size;
+    background-attachment: @content_bg_attachment;
+    background-position: @content_bg_position;
+    background-image: @content_bg_image;
+    .gradient(@content_bg_from, @content_bg_to, @content_bg_gradient);
+}
+
+#main .content-bottom-wrapper {
+    background-color: @content_bottom_bg_color;
+    background-repeat: @content_bottom_bg_repeat;
+    background-size: @content_bottom_bg_size;
+    background-attachment: @content_bottom_bg_attachment;
+    background-position: @content_bottom_bg_position;
+    background-image: @content_bottom_bg_image;
+    .gradient(@content_bottom_bg_from, @content_bottom_bg_to, @content_bottom_bg_gradient);
+    padding-top: @content_bottom_padding_top;
+    padding-bottom: @content_bottom_padding_bottom;
+}
+
+body.boxed {
+
+    .page-wrapper {
+        border-top-color: @skinColor;
+        .containerBoxedWidth();
+    }
+}
+
+body.boxed {
+    @media (min-width: (@container_width + @grid_gutter_width)) {
+        .vc_row[data-vc-stretch-content],
+        .ult-vc-hide-row {
+            max-width: @container_width + @grid_gutter_width;
+        }
+    }
+}
+
+#main.main-boxed {
+    .vc_row[data-vc-stretch-content],
+    .ult-vc-hide-row {
+        .calcContainerWidth(@calc_content_width);
+    }
+}
+
+body.boxed {
+    @media (min-width: (@container_width + @grid_gutter_width)) {
+        #header {
+            &.sticky-header {
+                .header-main.sticky,
+                .main-menu-wrap {
+                    max-width: @container_width + @grid_gutter_width;
+                }
+            }
+        }
+    }
+
+    @media (min-width: (@container_width + @grid_gutter_width * 2 + 256px)) {
+        &.body-side {
+            .page-wrapper.side-nav .page-top.fixed-pos {
+                left: auto;
+                right: auto;
+                width: 100%;
+                max-width: @container_width + @grid_gutter_width;
+            }
+        }
+    }
+}
+
+@media (min-width: (@container_width + @grid_gutter_width)) {
+    body.boxed,
+    #header-boxed {
+        #header {
+            &.sticky-header {
+                .header-main.sticky,
+                .main-menu-wrap {
+                    max-width: @container_width + @grid_gutter_width;
+                }
+            }
+        }
+    }
+}
+
+.mobile-sidebar .sidebar-toggle {
+    color: @body_color;
+
+    &:hover {
+        color: @skinColor;
+    }
+}
+
+.sidebar-content .filter-title {
+    color: @skinColor;
+}

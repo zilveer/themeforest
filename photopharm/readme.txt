@@ -1,0 +1,1 @@
+Help file available online at http://themolitor.com/help/photopharm

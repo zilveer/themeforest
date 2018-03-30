@@ -1,0 +1,1 @@
+<div class="mk-toggle-pane"><?php echo str_replace( ']]>', ']]&gt;', apply_filters( 'the_content', get_the_content() ) ); ?></div>

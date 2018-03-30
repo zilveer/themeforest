@@ -1,0 +1,557 @@
+.header {
+	background: transparent;
+	width: 100%;
+	z-index: 101;
+	height: 90px;
+	padding: 0 35px;
+	@include translateZ(0);
+	@extend .transition;
+	
+	&.row {
+		max-width: 100%;
+	}
+	@media only screen and (max-width: $break-small) {
+		position: relative;
+		background: #fff;
+		height: auto;
+		padding: 0;
+		top: 0 !important;
+		
+		.logo {
+			border-bottom: 1px solid $color2;
+		}
+	}
+	svg {
+		@extend .transition;
+	}
+	.columns {
+		@include max-break($break-small) {
+			padding: 0;	
+		}
+	}
+	&:hover,
+	&.hover,
+	&.style2 {
+		background: #fff;	
+	}
+	&.style2 {
+		position: relative;
+		&.left-logo {
+			.logo {
+				justify-content: center;
+				@include min-break($break-small) {
+					justify-content: flex-start;
+				}
+			}
+			.menu-holder {
+				justify-content: center;
+				display: none;
+				
+				@include min-break($break-large) {
+					display: flex;
+				}
+			}
+			.account-holder {
+				.mobile-toggle {
+					display: inline-flex;
+					@include min-break($break-large) {
+						display: none;
+					}
+				}
+			}
+			#nav .thb_mega_holder > .sub-menu {
+				max-width: 1240px;
+			}
+			#nav .sf-menu > li:last-child > a {
+				margin-right: 0;
+			}
+		}
+		
+		.account-holder {
+			font-size: 14px;
+			line-height: 1;
+			.mobile-toggle {
+				@include min-break($break-small) {
+					display: none;
+					font-size: 14px;
+				}
+			}
+			.secondary-menu-holder {
+				ul li a {
+					margin: 0 12px;	
+					padding: 0;
+					
+					@include min-break($break-medium) {
+						margin-right: 0;
+						margin-left: 20px;
+					}
+				}
+			}
+			svg {
+				@include min-break($break-small) {
+					@include scale(0.8);
+				}
+			}
+			#quick_cart {
+				#cart-icon {
+					@include min-break($break-small) {
+						display: none;
+					}
+				}
+				.cart_text {
+					display: none;
+					
+					@include min-break($break-small) {
+						display: inline;	
+					}
+				}
+			}
+		}
+	}
+	&.style1 {
+		@include min-break($break-small) {
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+		@extend .admin-style;
+		
+		#nav .sf-menu > li > a {
+			text-transform: uppercase;	
+		}
+		.background--dark & {
+			
+			@include min-break($break-small) {
+				#nav .sf-menu > li > a,
+				.account-holder ul li a,
+				.account-holder > a,
+				.menu-holder > a  {
+					color: #fff;
+				}
+				&.style1 .account-holder .float_count {
+					color: $color1;
+				}
+				.account-holder ul li a {
+					border-left-color: #fff;
+				}
+				#nav .sf-menu > li.current-menu-item > a:after {
+					background: #fff;
+				}
+				.logo .logoimg.bg--dark {
+					display: inline-block;
+				}
+				.logo .logoimg.bg--light {
+					display: none;
+				}
+				.account-holder #cart-icon .icon-fill,
+				.account-holder svg {
+					fill: #fff;
+				}
+				&.hover,
+				&:hover {
+					#nav .sf-menu > li > a,
+					.account-holder ul li a,
+					.account-holder > a,
+					.account-holder .float_count,
+					.menu-holder > a {
+						color: $color1;
+					}
+					&.style1 .account-holder .float_count {
+						color: #fff;
+					}
+					.account-holder ul li a {
+						border-left-color: $color1;
+					}
+					#nav .sf-menu > li.current-menu-item > a:after {
+						background: $color1;
+					}
+					
+					.logo .logoimg.bg--dark {
+						display: none;
+					}
+					.logo .logoimg.bg--light {
+						display: inline-block;
+					}
+					.account-holder #cart-icon .icon-fill,
+					.account-holder svg {
+						fill: $color1;
+					}
+				}
+			}
+		}
+		.account-holder {
+			.mobile-toggle {
+				display: none;
+				
+				@media only screen and (max-width: $break-small) {
+					display: inline-flex;
+				}
+			}
+		}
+		&.left-menu {
+			.logo {
+				justify-content: center;
+				@include min-break($break-small) {
+					justify-content: flex-start;
+				}
+			}
+			.left-menu-holder {
+				display: flex;
+				justify-content: flex-end;
+				
+				.menu-holder {
+					.mobile-toggle {
+						padding: 0 12px;
+					}
+				}
+				.account-holder {
+					display: flex;
+					width: 100%;
+					
+					@include min-break($break-small) {
+						width: auto;	
+					}
+				}
+			}
+		}
+	}
+	.menu-holder {
+		display: flex;
+		align-items: stretch;
+		justify-content: flex-start;
+		@media only screen and (max-width: $break-small) {
+			display: none;
+		}
+		#nav {
+			@media only screen and (max-width: $break-large) {
+				display: none;
+			}
+		}
+		.mobile-toggle {
+			display: none;
+			align-items: center;
+			color: $color1;
+			@media only screen and (max-width: $break-large) {
+				display: inline-flex;
+			}
+		}
+		&.mobile-view {
+			#nav { display: none; }
+			.mobile-toggle { display: inline-flex; }
+		}
+	}
+	.logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 70px;
+		
+		@include min-break($break-small) {
+			min-height: 10px;	
+		}
+		.logolink {
+			display: inline-flex;
+			vertical-align: middle;	
+			max-width: 100%;
+			padding: 10px 0;
+			
+			@include min-break($break-small) {
+				padding: 0;	
+			}
+		}
+		.logoimg {
+			display: inline-block;
+			max-height: 50px;
+			
+			&.bg--dark {
+				display: none;
+			}
+			
+			@media only screen and (max-width: $break-medium) {
+				max-height: 44px;
+			}
+		}
+	}
+}
+#nav {
+	display: inline-flex;
+	vertical-align: middle;
+	@media only screen and (max-width: $break-small) {
+		display: none;
+	}
+	
+	.sf-menu {
+		display: flex;
+		list-style: none;
+		margin: 0;
+
+		a {
+			
+			white-space: nowrap;
+		}
+		i {
+			margin-right: 10px;
+			vertical-align: middle;
+			display: inline-block;
+			.rtl & {
+				margin-right: 0;
+				margin-left: 10px;
+			}
+		}
+		li {
+			margin: 0;	
+		}
+		&>li {
+			display: inline-flex;
+			align-items: center;
+			position: relative;
+			&.current-menu-item>a{
+				&:after {
+					@include scale(1,1);
+				}
+			}
+			&>a {
+				display: flex;
+				padding: 0;
+				margin: 0 40px 0 0;
+				font-weight: 500;
+				color: $color1;
+				z-index: 10;
+				font-size: 14px;
+				position: relative;
+				
+				&:after {
+					content: '';
+					display: block;
+					position: absolute;
+					height: 2px;
+					width: 100%;
+					background: $color1;
+					bottom: -1px;
+					left: 0;
+					@include scale(0,1);
+					@extend .transition;
+					
+				}
+				
+				&:hover {
+					color: $color3;
+				}
+			}
+			&.sfHover>a {
+				&:after {
+					display: block;
+				}
+			}
+		}
+	}
+	.sub-menu {
+		display: none;
+		list-style: none;
+		text-align: left;
+		position: absolute;
+		overflow: hidden;
+		left: -35px;
+		top: calc(100% - 10px);
+		background: #fff;
+		padding: 25px 0;
+		@include box-shadow(0 0 1px 0 rgba(0,0,0,0.3));
+		@extend .reset;
+		.rtl & {
+			text-align: right;
+		}
+		li {
+			display: block;
+			min-width: 250px;
+			position: relative;
+			padding: 0 35px;
+			a {
+				display: block;
+				padding: 10px 0;
+				color: $color1;
+				line-height: 1;
+				font-size: 12px;
+				font-weight: 500;
+				text-transform: none;
+				@extend .quick-transition;
+				will-change: transform;
+				&:not(.menu-image):hover {
+					@include translateX(4px);	
+				}
+				&.menu-image:hover {
+					opacity: 0.9;
+				}
+				img {
+					display: block;
+					max-width: 300px;	
+				}
+			}
+			.sub-menu:not(.thb_mega_submenu) {
+				position: absolute;
+				left: calc(100% - 10px);
+				top: -25px;
+				height: auto !important;
+			}
+			&.menu-item-has-children {
+				position: relative;
+				&:after {
+					content: '+';
+					position: absolute;
+					top: 5px;
+					right: 20px;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+	.thb_mega_holder {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: #fff;
+		padding: 0;
+		width: 100vw;
+		@include box-shadow(0 1px 1px 0 rgba(0,0,0,0.3));
+		overflow: hidden;
+		.sub-menu {
+			padding: 25px 0;
+			display: flex;
+			position: static;
+			@include box-shadow(none);
+			
+			li {
+				padding: 0;
+				min-width: 0;	
+				flex-direction: column;
+				.sub-menu {
+					display: block;
+					position: static;
+					flex-direction: column;
+				}
+				&.menu-item-has-children {
+					&:after {
+						display: none;
+					}	
+				}
+			}
+			.thb_mega_submenu {
+				padding: 0;
+			}
+		}
+		&>.sub-menu {
+			padding: 15px 35px 25px;
+			margin: 0 auto;
+			&>li {
+				padding: 0 .9375rem;
+			}
+		}
+		.megamenu-title {
+			border-bottom: 1px solid $color2;
+			padding-bottom: 5px;
+			margin-bottom: 10px;
+			a {
+				font-weight: 700;
+				text-transform: uppercase;	
+			}
+		}
+	}
+	&.left {
+		float: left;
+	}
+}
+.account-holder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 60px;
+	border-bottom: 1px solid $color2;
+	@include min-break($break-small) {
+		height: auto;
+		justify-content: flex-end;
+		border-bottom: 0;
+	}
+	&>a {
+		display: inline-flex;
+		vertical-align: middle;
+		color: $color1;
+		margin: 0 12px;
+		@include min-break($break-medium) {
+			margin-right: 0;
+			margin-left: 20px;
+		}
+
+	}
+	#quick_cart {
+		position: relative;
+		
+		@include min-break($break-medium) {
+			&:hover {
+				#cart-icon .handle {
+					@include translateY(-8px);
+				}
+			}
+		}
+	}
+	#cart-icon {
+		overflow: visible;
+		@include transition(none);
+		.handle {
+			@include translateY(-6px);
+		}
+		.icon-fill {
+			@extend .transition;
+		}
+	}
+	.float_count {
+		
+		.style1 & {
+			position: absolute;
+			display: block;
+			width: 19px;
+			text-align: center;
+			left: 0;
+			top: 1px;
+			color: #fff;
+			font-weight: 600;
+			font-size: 12px;
+		}
+		.style2 & {
+			@include max-break($break-small) {
+				position: absolute;
+				display: block;
+				width: 19px;
+				text-align: center;
+				left: 0;
+				top: 4px;
+				color: #fff;
+				font-weight: 600;
+				font-size: 12px;
+			}
+		}
+	}
+	
+	ul {
+		display: none;
+		list-style: none;
+		text-align: right;
+		@extend .reset;
+		@include min-break($break-large) {
+			display: inline-flex;
+		}
+		li {
+			display: inline-flex;
+			margin: 0;
+			a {
+				font-size: 14px;
+				color: $color1;
+				padding:0 15px;
+				border-left: 1px dotted rgba(0,0,0,0.6);	
+			}
+			&:first-child a {
+				border-left: 0;
+				padding-left: 0;
+			}
+		}
+	}
+}

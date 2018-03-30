@@ -1,0 +1,9 @@
+/*
+ * @package Gather - Event Landing Page Wordpress Theme
+ * @author Cththemes - http://themeforest.net/user/cththemes
+ * @date: 10-8-2015
+ *
+ * @copyright  Copyright ( C ) 2014 - 2015 cththemes.com . All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+*/
+jQuery(function(){"use strict";jQuery("#subscribeform").submit(function(e){e.preventDefault()}).validate({rules:{email:{required:!0,email:!0}},messages:{email:subscribe_ajax.email_validate},submitHandler:function(e){jQuery("#js-subscribe-btn").attr("disabled",!0);var s=jQuery("#subscribeform").data("redirect"),r=!1;("none"==s||""==s||null==s)&&(r=!0),jQuery("#js-subscribe-result").fadeIn("slow").html('<p class="help-block">'+subscribe_ajax.pl_w+"</p>");var u=jQuery("#js-subscribe-result").data("success-msg"),a=jQuery("#js-subscribe-result").data("error-msg"),l=jQuery(e).serialize();return l+="&action=cth_mailchimp_subscribe",jQuery.ajax({type:"POST",data:l,url:subscribe_ajax.url,cache:!1,success:function(e){console.log(e),jQuery(".form-group").removeClass("has-success"),"success"==e?r?jQuery("#js-subscribe-result").fadeIn("slow").html('<p class="help-block text-success">'+u+"</p>").delay(3e3).fadeOut("slow"):window.location.href=s:jQuery("#js-subscribe-result").fadeIn("slow").html('<p class="help-block text-danger">'+a+"</p>").delay(3e3).fadeOut("slow"),jQuery("#js-subscribe-btn").attr("disabled",!1)}}),!1}})});

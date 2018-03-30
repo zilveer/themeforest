@@ -1,0 +1,267 @@
+.kl-slideshow-css3panels {position: relative;}
+
+.css3panels-container {overflow:hidden; position:relative; z-index:0; min-height:150px; }
+.css3panels-container.css3panel--hasSkew {margin-left: -62px; margin-right: -62px;}
+
+.kl-slideshow-css3panels .css3panels-container {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+		-ms-flex-direction: row;
+			flex-direction: row;
+	-webkit-flex-wrap: nowrap;
+		-ms-flex-wrap: nowrap;
+			flex-wrap: nowrap;
+}
+
+/* Panels */
+.css3panel {float:left;  position: relative; z-index: 0; min-height:150px;}
+@media (min-width:1200px){
+	.css3panel--hasSkew.css3panels--resize .css3panel {margin: 0 -1px;}
+}
+
+.kl-slideshow-css3panels .css3panel {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+		-ms-flex: 1;
+			flex: 1;
+	/* Chrome Hacks */
+	-webkit-backface-visibility:hidden;
+}
+.css3panel:hover {z-index: 1;}
+.css3panel:hover .css3panel-inner {box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.25);}
+.css3panel--hasBorder .css3panel:hover .css3panel-inner {box-shadow: 0 0 0 2px #FFF, 0 0 50px 20px rgba(0, 0, 0, 0.25);}
+.css3panel--hasBorder.is-dark .css3panel:hover .css3panel-inner {box-shadow: 0 0 0 2px #000, 0 0 50px 20px rgba(0, 0, 0, 0.25);}
+
+.kl-slideshow-css3panels .css3panels--resize .css3panel {
+	will-change: transform;
+	-webkit-transition: all .5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	transition: all .5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+.css3panels--resize .css3panel-inner {
+	-webkit-transition: box-shadow .2s ease-out;
+			transition: box-shadow .2s ease-out;
+}
+.kl-slideshow-css3panels .css3panels--resize .css3panel:hover {
+	-webkit-box-flex: 1.3;
+	-webkit-flex: 1.3;
+		-ms-flex: 1.3;
+			flex: 1.3;
+}
+
+/* Inner panel */
+.css3panel-inner { position:relative; -webkit-backface-visibility:hidden; overflow: hidden; -webkit-transition: box-shadow .2s ease-out; transition: box-shadow .2s ease-out; height:100%; position: absolute; width: 100%;}
+.css3panel--hasSkew .css3panel-inner {-webkit-transform: skewX(-10deg); -ms-transform: skewX(-10deg); transform: skewX(-10deg);}
+@media (min-width:1200px){
+	.css3panel--hasSkew .css3panel-inner {margin: 0 -1px;}
+}
+.css3panel--hasBorder .css3panel-inner {box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.7);}
+.css3panel--hasBorder.is-dark .css3panel-inner {box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.7);}
+
+/* Image */
+.css3panel-mainimage-wrapper {position: relative; -webkit-backface-visibility: hidden; height:100%;}
+.css3panel--hasSkew .css3panel-mainimage-wrapper {margin-left: -60px; margin-right: -60px; -webkit-transform-style: preserve-3d; transform-style: preserve-3d; -webkit-transform: skewX(10deg); -ms-transform: skewX(10deg); transform: skewX(10deg); }
+.css3panel-mainimage {position:absolute; top:-2px; left:-2px; right:-2px; bottom:-2px; }
+.css3panel-mainimage-img {height: 100%; -webkit-backface-visibility:hidden; -webkit-transition: .2s ease-out; transition: .2s ease-out;}
+.css3panel-mainimage--stretch .css3panel-mainimage-img {position:absolute; width:100%;}
+.css3panel-mainimage--noStretch {text-align:center}
+
+.css3panel-mainimage--noStretch .css3panel-mainimage-effect { -webkit-transform: translateY(-100%); -ms-transform: translateY(-100%); transform: translateY(-100%);}
+
+ /* Image overlay */
+.css3p-overlay {position:absolute; left:0; top:0; right:0; bottom:0; -webkit-transition:opacity .15s ease-out; transition:opacity .15s ease-out;}
+.css3panel:hover .css3p-overlay {opacity:0; }
+.css3p-overlay--gradient { opacity: 0.5; top: 50%; background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1))); background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%); }
+/* Image animations */
+.css3panel-mainimage-img.anim--grayscale {
+	-webkit-filter:grayscale(100%);
+	filter:grayscale(100%);
+	-webkit-transition: opacity .15s ease-out; transition: opacity .15s ease-out;
+}
+.css3panel:hover .css3panel-mainimage-img.anim--grayscale {
+	opacity:0;
+}
+.css3panel-mainimage-img.anim--blur {
+	-webkit-filter:blur(9px);
+	filter:blur(9px);
+	-webkit-transition: opacity .15s ease-out; transition: opacity .15s ease-out;
+}
+.css3panel:hover .css3panel-mainimage-img.anim--blur {
+	opacity:0;
+}
+.css3panel-mainimage-img.anim--grayscale.anim--blur {
+	-webkit-filter:grayscale(100%) blur(9px);
+	filter:grayscale(100%) blur(9px);
+	-webkit-transition: opacity .15s ease-out; transition: opacity .15s ease-out;
+}
+.css3panel:hover .css3panel-mainimage-img.anim--grayscale.anim--blur {
+	opacity:0;
+}
+
+.css3panel-caption {position: absolute; bottom: 90px; color: #FFFFFF; z-index: 1; width: 100%;}
+.css3panel--hasSkew .css3panel-caption.text-right {padding-right:50px;}
+.css3panel--hasSkew .css3panel-caption.text-left {padding-left:50px;}
+.css3panel--hasSkew .css3panel:first-child .css3panel-caption {padding-left: 80px;}
+.css3panel--hasSkew .css3panel:last-child .css3panel-caption {padding-right:80px;}
+.css3panel-caption.css3caption--middle {bottom:auto; top:50%; -webkit-transform:translateY(-50%); -ms-transform:translateY(-50%); transform:translateY(-50%); }
+/* Fading in Caption */
+.cssp-capt-fadein .css3panel-title,
+.cssp-capt-fadein .css3panel-text,
+.cssp-capt-fadein .css3panel-btn-area {opacity:0; visibility: hidden; -webkit-transition:opacity .15s ease-out, visibility .15s ease-out; transition:opacity .15s ease-out, visibility .15s ease-out;}
+.cssp-capt-fadein .css3panel:hover .css3panel-title,
+.cssp-capt-fadein .css3panel:hover .css3panel-text,
+.cssp-capt-fadein .css3panel:hover .css3panel-btn-area {opacity:1; visibility: visible;}
+/* Fading Out Caption */
+.cssp-capt-fadeout .css3panel-title,
+.cssp-capt-fadeout .css3panel-text,
+.cssp-capt-fadeout .css3panel-btn-area {opacity:1; visibility: visible; -webkit-transition:opacity .15s ease-out, visibility .15s ease-out; transition:opacity .15s ease-out, visibility .15s ease-out;}
+.cssp-capt-fadeout .css3panel:hover .css3panel-title,
+.cssp-capt-fadeout .css3panel:hover .css3panel-text {opacity:0; visibility: hidden;}
+.cssp-capt-fadeout .css3panel:hover .css3panel-btn-area {}
+/* Slide in Caption */
+.cssp-capt-slidein .css3panel-title,
+.cssp-capt-slidein .css3panel-text,
+.cssp-capt-slidein .css3panel-btn-area {opacity:0; visibility: hidden; -webkit-transform:translateX(200px); -ms-transform:translateX(200px); transform:translateX(200px); -webkit-transition:opacity .15s ease-out, visibility .15s ease-out, -webkit-transform .15s ease-out; transition:opacity .15s ease-out, visibility .15s ease-out, transform .15s ease-out;}
+.cssp-capt-slidein .css3panel:hover .css3panel-title,
+.cssp-capt-slidein .css3panel:hover .css3panel-text,
+.cssp-capt-slidein .css3panel:hover .css3panel-btn-area {opacity:1; visibility: visible; -webkit-transform:translateX(0); -ms-transform:translateX(0); transform:translateX(0); }
+/* Slide Out Caption */
+.cssp-capt-slideout .css3panel-title,
+.cssp-capt-slideout .css3panel-text,
+.cssp-capt-slideout .css3panel-btn-area {opacity:1; visibility: visible; -webkit-transform:translateX(0); -ms-transform:translateX(0); transform:translateX(0); -webkit-transition:opacity .15s ease-out, visibility .15s ease-out, -webkit-transform .15s ease-out; transition:opacity .15s ease-out, visibility .15s ease-out, transform .15s ease-out;}
+.cssp-capt-slideout .css3panel:hover .css3panel-title,
+.cssp-capt-slideout .css3panel:hover .css3panel-text {opacity:0; visibility: hidden; -webkit-transform:translateX(200px); -ms-transform:translateX(200px); transform:translateX(200px); }
+@media (min-width: 1200px){
+	.cssp-capt-slideout .css3panel:hover .css3panel-btn-area {-webkit-transform:translateY(40px) translateX(-10px); -ms-transform:translateY(40px) translateX(-10px); transform:translateY(40px) translateX(-10px); -webkit-transition-duration:.3s !important;transition-duration:.3s !important;  -webkit-transition-delay:.1s !important;transition-delay:.1s !important;}
+}
+.cssp-capt-slideout .css3panel:hover .css3p-overlay {opacity:0; }
+/* Delay individually */
+.cssp-capt-animated .css3panel-title {-webkit-transition-delay:.1s;transition-delay:.1s;}
+.cssp-capt-animated .css3panel-text {-webkit-transition-delay:.2s;transition-delay:.2s;}
+.cssp-capt-animated .css3panel-btn-area {-webkit-transition-delay:0s;transition-delay:0s;}
+.cssp-capt-animated .css3panel:hover .css3panel-btn-area {-webkit-transition-delay:.3s;transition-delay:.3s;}
+.cssp-capt-animated .css3p-overlay {-webkit-transition-delay:.1s;transition-delay:.1s;}
+
+/* Css Title */
+.css3panel-title { position: relative; font-size: 28px; line-height: 1.3; font-weight: 600; color: #FFF; margin:0;}
+.css3panel-title.title-size-bigger {font-size: 70px; line-height: 1.1; text-shadow: 1px 1px 50px rgba(0,0,0,.4); letter-spacing: -2px; } /* deprecated */
+.css3panel--hasSkew .css3panel:last-child .css3panel-title {margin-right: 10px;}
+/* Panel text*/
+.css3panel-text { font-size: 16px; color:#fff; font-weight: 300; margin-top:20px; line-height: 1.6; /*clear: both; float: right;*/}
+.css3panel--hasSkew {margin-right: 20px;}
+/* Title presets */
+.captiontitle--wbg,
+.captiontitle--dbg {padding: 13px 0px 13px 45px;}
+.captiontitle--wbg:before,
+.captiontitle--dbg:before {content: ""; position: absolute; height: 100%; border-radius: 4px; padding-right: 35px; display: block; right: -35px; bottom: 0; left: 0; top: 0; z-index: -1;
+-webkit-transform-style: preserve-3d; transform-style: preserve-3d;
+-webkit-transform: skew(-10deg) translate3d(0,0,0); -ms-transform: skew(-10deg) translate3d(0,0,0); transform: skew(-12deg) translate3d(0,0,0);
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(80%,rgba(0,0,0,0.45)));
+background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.45) 80%);
+background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.45) 80%);
+}
+.captiontitle--wbg:before {background: rgba(255,255,255,0.9);
+background: -webkit-gradient(linear, left top, right top, color-stop(40%,rgba(255,255,255,0.25)), color-stop(100%,rgba(255,255,255,0)));
+background: -webkit-linear-gradient(left,  rgba(255,255,255,0.25) 40%,rgba(255,255,255,0) 100%);
+background: linear-gradient(to right,  rgba(255,255,255,0.25) 40%,rgba(255,255,255,0) 100%);}
+
+/* Btn area */
+.css3panel-btn-area {clear:both; float:right; margin-top:30px; margin-right: 20px;}
+.css3panel-btn-area .btn {margin-left:20px;margin-bottom: 10px;}
+
+@media (max-width: 1440px) {
+	.css3panel .css3panel-title {font-size: 18px;}
+	.css3panel .css3panel-text {font-size: 13px;}
+	.css3panel .css3panel-btn-area .btn {margin-bottom: 10px; display: block}
+
+	.css3panel .css3panel-title.title-size-bigger {font-size: 30px;}
+
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+	.kl-slideshow-css3panels .css3panel:first-child,
+	.kl-slideshow-css3panels .css3panel:last-child {-webkit-box-flex:1.15; -webkit-flex-grow:1.15; -ms-flex-positive:1.15; flex-grow:1.15; }
+
+	.css3panel--hasSkew .css3panel:first-child .css3panel-caption {padding-left: 80px;}
+	.css3panel--hasSkew .css3panel:last-child .css3panel-caption {padding-right:80px;}
+}
+
+/* Fixes CSS3 Panels */
+@media (max-width: 1199px) {
+	.kl-slideshow-css3panels .css3panels-container {margin-left: 0; margin-right: 0;}
+	.kl-slideshow-css3panels .css3panel-inner,
+	.kl-slideshow-css3panels .css3panel-mainimage-wrapper {-webkit-transform: skewX(0); -ms-transform: skewX(0); transform: skewX(0); margin-left: 0; margin-right: 0;}
+
+	.kl-slideshow-css3panels .css3panel .css3panel-caption,
+	.kl-slideshow-css3panels .css3panel:first-child .css3panel-caption,
+	.kl-slideshow-css3panels .css3panel:last-child .css3panel-caption {padding-left: 20px; padding-right:20px;}
+
+	.kl-slideshow-css3panels .css3panel-caption {text-align: center;}
+	.kl-slideshow-css3panels .css3panel-btn-area {float:none;}
+
+	.kl-slideshow-css3panels .css3panel-title,
+	.kl-slideshow-css3panels .css3panel-title.title-size-bigger,
+	.kl-slideshow-css3panels .css3panel-text,
+	.kl-slideshow-css3panels .css3panel-btn-area,
+	.kl-slideshow-css3panels .css3panel-btn-area .btn {margin-left: 0; margin-right: 0;}
+	.kl-slideshow-css3panels .css3panel-btn-area .btn {margin-bottom: 10px;}
+
+	.kl-slideshow-css3panels .css3panel:hover .css3panel-title,
+	.kl-slideshow-css3panels .css3panel:hover .css3panel-text {opacity: 0; visibility: hidden; -webkit-transform: translateX(0); -ms-transform: translateX(0); transform: translateX(0); }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+
+	.kl-slideshow-css3panels .css3panels--resize .css3panel:hover {-webkit-box-flex:2; -webkit-flex:2; -ms-flex:2; flex:2;}
+
+	.kl-slideshow-css3panels .css3panel-title ,
+	.kl-slideshow-css3panels .css3panel-title.title-size-bigger {font-size: 18px;}
+	.kl-slideshow-css3panels .css3panel-text {font-size: 13px; }
+	.kl-slideshow-css3panels .css3panel-btn-area .btn {font-size:12px; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+	.kl-slideshow-css3panels .css3panels--resize .css3panel:hover {-webkit-box-flex:2.2; -webkit-flex:2.2; -ms-flex:2.2; flex:2.2;}
+
+	.kl-slideshow-css3panels .css3panel-title,
+	.kl-slideshow-css3panels .css3panel-title.title-size-bigger {font-size: 16px; }
+	.kl-slideshow-css3panels .css3panel-text {display: none;}
+	.kl-slideshow-css3panels .css3panel-btn-area {margin-top:40px;}
+	.kl-slideshow-css3panels .css3panel-btn-area .btn {margin-bottom: 10px;}
+	.kl-slideshow-css3panels .css3panel-btn-area .btn {font-size:12px;}
+}
+
+@media (max-width: 767px) {
+
+	.kl-slideshow-css3panels .css3panels-container { height: auto !important; margin-left: 0; margin-right: 0;}
+
+	.kl-slideshow-css3panels .css3panels-container {-webkit-box-orient: vertical; -webkit-box-direction: normal; -webkit-flex-direction: column; -ms-flex-direction: column; flex-direction: column; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; }
+
+	.kl-slideshow-css3panels .css3panel {float:left; overflow:hidden; position: relative; z-index: 0; box-shadow: 0 0 0 3px #fff; padding-top: 30px; padding-bottom: 30px;}
+
+	.kl-slideshow-css3panels .css3panel{-webkit-box-flex:1;-webkit-flex: 1; -ms-flex: 1;flex: 1; min-height: 300px;}
+
+	.kl-slideshow-css3panels .css3panels--resize .css3panel:first-child:hover,
+	.kl-slideshow-css3panels .css3panels--resize .css3panel:last-child:hover,
+	.kl-slideshow-css3panels .css3panels--resize .css3panel:hover {min-height: 600px;}
+
+	.kl-slideshow-css3panels .css3panel-mainimage-img {position: absolute; left: 0; top: 0; bottom: 0; right: 0; width: 100%;}
+
+	.kl-slideshow-css3panels .css3panel-inner {position:absolute; top: 0; width: 100%; height: 100% !important; }
+	.kl-slideshow-css3panels .css3panel-mainimage-wrapper {height: 100% !important;}
+
+	.kl-slideshow-css3panels .css3panel-caption {bottom: 20px; }
+
+	.kl-slideshow-css3panels .css3panel-title,
+	.kl-slideshow-css3panels .css3panel-title.title-size-bigger {font-size: 18px;}
+	.kl-slideshow-css3panels .captiontitle--wbg,
+	.kl-slideshow-css3panels .captiontitle--dbg {padding: 10px 0 10px 25px; }
+	.kl-slideshow-css3panels .css3panel-text {font-size: 14px;}
+	.kl-slideshow-css3panels .css3panel-btn-area {clear: none; float: none; max-width: 100%; margin-top: 25px; margin-right: 0; }
+	.kl-slideshow-css3panels .css3panel-btn-area .btn:first-child { margin-bottom:15px; }
+}

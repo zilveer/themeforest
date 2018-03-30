@@ -1,0 +1,145 @@
+#scroll-to-top,
+#feedback,
+#toggle-style-switcher {
+	display: block;
+	width  : 25px !important;
+	height : 22px !important;
+	line-height: 22px !important;
+	font-size  : 20px !important;
+	padding    : 4px;
+	margin-left: 2px;
+	font-family: "icomoon";
+
+	text-align: center;
+	cursor: pointer;
+	z-index: 9998;
+	border: none !important;
+	position: relative;
+
+	background: @accent-color-1;
+	text-shadow: 0 -1px 0 darken(@accent-color-1, 10%);
+	color: @accent-color-8 !important;
+	.border-radius(3px 0 0 3px);
+
+	&:hover {
+		padding-right: 6px;
+		text-decoration: none;
+		margin-left: 0;
+		color: @accent-color-8 !important;
+	}
+}
+
+#style-switcher {
+	position: fixed !important;
+	z-index: 900000 !important;
+	top: @header-height + 70px;
+	left: 0;
+	right: auto;
+
+	#toggle-style-switcher {
+		position: absolute;
+		top: 0;
+		right: -35px !important;
+		border-radius: 0 3px 3px 0;
+		margin-left: 0;
+		margin-right: 2px;
+
+		&:after {
+			border-right-color: @accent-color-1 !important;
+		}
+
+		&:before {
+			content: icon(theme-brush);
+			font-family: theme;
+		}
+
+		&:hover {
+			padding-right: 4px;
+		}
+	}
+
+	&.open #toggle-style-switcher,
+	&:hover #toggle-style-switcher {
+		padding-left: 6px !important;
+		margin-right: 0 !important;
+		opacity: 1;
+	}
+
+	body.admin-bar & {
+		top: @header-height + 70px + 33px;
+	}
+}
+
+#ss-teaser .close {
+	content: icon(cancel);
+}
+
+
+/*--------------------------------------------------------------------------
+Meta Icons + Feedback + Scroll to Top
+--------------------------------------------------------------------------*/
+
+/* Scroll to Top */
+#scroll-to-top {
+	position: fixed;
+	bottom: 69px;
+	right: 0px;
+	z-index: -1;
+	.border-radius(3px 0 0);
+	opacity: 0;
+	&:hover {
+		opacity: 0;
+	}
+
+	&.visible {
+		opacity: 1;
+		z-index: 200;
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+/* Feedback Button + Sliding Box */
+#feedback-wrapper {
+	position: fixed;
+	bottom: 75px;
+	right: -250px;
+	z-index: 999900;
+	background: @accent-color-2;
+	width: 250px;
+	min-height: 84px;
+	color: @accent-color-8 !important;
+	.border-radius(3px 0 0 0);
+	.transition(right .4s);
+
+	#feedback {
+		position: absolute;
+		bottom: 0;
+		right: 250px;
+	}
+
+	&.expanded {
+		right: 0;
+		#feedback {
+			opacity: 1;
+			padding-right: 6px;
+		}
+	}
+
+	h4, h4 a {
+		color: @accent-color-8 !important;
+		margin-bottom: 0px;
+	}
+	h4 {
+		border: none;
+		padding: @small-padding/2 @element-padding;
+	}
+	section {
+		margin: @small-padding / 2;
+	}
+	.widget {
+		padding: 0;
+		border: none !important;
+	}
+}

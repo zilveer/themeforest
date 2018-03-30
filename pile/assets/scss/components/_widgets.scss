@@ -1,0 +1,326 @@
+.widget {
+	padding-bottom: 2.5*$u;
+
+	@include query-below($lap) {
+		padding-bottom: 1.5*$u;
+	}
+
+	img {
+		max-width: 100%;
+	}
+
+	+ .widget {
+		padding-top: 1.5*$u;
+		border-top: 1px solid $borders;
+		margin-top: -1px;
+
+		@include query-below($lap) {
+			padding-top: $u;
+		}
+	}
+
+	a {
+		color: black;
+
+		&:hover {
+			color: $accent;
+		}
+	}
+
+	ul {
+		@extend .list--unstyled;
+		@extend %fs-16;
+	}
+
+	li {
+		margin-bottom: $u/2;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	select {
+		max-width: 100%;
+	}
+
+	.post-date {
+		@extend %fs-13;
+		display: block;
+		margin-top: $u/4;
+		font-style: italic;
+		color: $borders;
+	}
+}
+
+.widget .widget__title {
+	@extend %alpha;
+	@extend %fs-16;
+	margin-bottom: $u;
+	margin-top: 0;
+}
+
+
+
+
+
+//*------------------------------------*\
+//   $CALENDAR
+//*------------------------------------*/
+
+.widget_calendar {
+
+	table {
+		width: 100%;
+		color: $borders;
+		text-align: center;
+	}
+
+	th {
+		text-align: center;
+		@include rhythm(padding-bottom, 1);
+	}
+
+	tr{
+		border: 0;
+	}
+
+	tfoot {
+		@include rhythm(padding, 1);
+	}
+
+	caption {
+		color: $gray;
+		@include rhythm(padding-bottom, 1);
+		@include rhythm(padding-top, 1);
+	}
+
+	a {
+		color: $black;
+
+		&:hover {
+			color: $black;
+			text-decoration: underline;
+		}
+	}
+
+	thead {
+		color: $black;
+	}
+
+	tfoot {
+
+		a {
+			color: $gray;
+		}
+
+		td {
+			border-bottom: 0;
+		}
+	}
+}
+
+
+
+
+//*------------------------------------*\
+//   $RECENT COMMENTS
+//*------------------------------------*/
+
+.recentcomments{
+	color: $borders;
+
+	a {
+		color: $black;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+#recentcomments {
+	@include fs(14px);
+	font-weight: bold;
+
+	a:last-child {
+		font-weight: normal;
+	}
+
+	li {
+		@include rhythm(margin-bottom, 2);
+	}
+}
+
+.widget_recent_entries {
+
+	li {
+		margin-bottom: $u/2;
+	}
+
+	.post-date {
+		display: block;
+		@include fs(13px, -1/2);
+		font-style: italic;
+	}
+}
+
+
+
+
+
+//*------------------------------------*\
+//   $RECENT ENTRIES
+//*------------------------------------*/
+
+.widget_rss{
+	li{
+		margin-bottom: $u;
+	}
+
+	cite{
+		display: block;
+		margin-top: $u/4;
+	}
+}
+
+.rsswidget{ //rss entry title
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.rss-date{
+	&:before{
+		content: '-';
+
+		display: inline-block;
+		margin: 0 3px;
+	}
+}
+
+.widget_rss_links a{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+// @todo revision
+.widget_categories,
+.widget_pages,
+.widget_meta,
+.widget_archive {
+
+	> ul {
+		@extend %grid;
+
+		> li {
+			@extend %grid__item;
+
+			width: 50%;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+
+			a {
+				display: inline;
+			}
+		}
+
+		// hide sub-categories
+		ul {
+			display: none;
+		}
+
+		//
+	}
+}
+
+
+
+
+
+.widget_blog_subscription{
+	@include rhythm(padding, 2);
+
+	background-color: $dark;
+	color: white;
+
+	input{ @include fs(16px, 0, 0); transform: none; }
+
+	input[type='text']{
+		@include rhythm(padding, 0.5);
+		width: 100%;
+
+		border: 1px solid $lightest;
+		background: transparent;
+		color: white;
+	}
+
+	input[type='submit']{
+		border: 1px solid $accent;
+		color: $accent;
+
+		padding: $u/4 $u/2;
+	}
+}
+
+
+
+
+
+//*------------------------------------*\
+//   $LATEST COMMENTS
+//*------------------------------------*/
+
+.widget--latest-comments {
+	padding-bottom: 0;
+}
+
+.latest-comments__list {
+	@extend .media;
+	@extend %fs-13;
+
+	&:last-child {
+		margin-bottom: 0;
+
+		.latest-comments__body {
+			border-bottom: 0;
+		}
+	}
+}
+
+.latest-comments__author {
+	text-transform: uppercase;
+	color: $dark;
+	margin-right: 3px;
+}
+
+.latest-comments__avatar {
+	@extend .media__img;
+	margin-right: $u/2;
+}
+
+.latest-comments__body {
+	@extend .media__body;
+}
+
+.latest-comments__title {
+//	@extend .article__title;
+
+	margin-left: 3px;
+
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+}
+
+.latest-comments__content {
+	font-style: italic;
+	margin-top: $u/2;
+	line-height: 1.4;
+}

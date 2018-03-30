@@ -1,0 +1,89 @@
+/*=========================================
+general
+===========================================*/
+.mk-animated-columns {
+  /*.animated-column-holder {} moved to atoms fully*/
+  /*.animated-column-icon {} moved to atoms fully*/
+  /*.s_title {} moved to atoms fully*/
+  /*.animated-column-btn {} moved to atoms fully*/
+}
+
+.animated-column-icon {
+  display: block !important;
+}
+
+.mk-animated-columns .s_item {
+  transition: background 0.2s ease-out;
+  border-style: solid;
+}
+.mk-animated-columns .s_desc {
+  padding: 20px 30px 50px 30px;
+}
+
+/* Add border to last item to cover last row which might be not full */
+.mk-animated-columns.has-border .s_item:last-of-type {  border-right-width: 1px; }
+/* Add border for each row closing */
+@media handheld, only screen and (min-width: 961px) {
+  .mk-animated-columns.has-border.a_8col .s_item:nth-of-type(8n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_7col .s_item:nth-of-type(7n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_6col .s_item:nth-of-type(6n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_5col .s_item:nth-of-type(5n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_4col .s_item:nth-of-type(4n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_3col .s_item:nth-of-type(3n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_2col .s_item:nth-of-type(2n) { border-right-width: 1px; }
+  .mk-animated-columns.has-border.a_1col .s_item:nth-of-type(1n) { border-right-width: 1px; }
+}
+
+@media handheld, only screen and (max-width: 960px) {
+  /* Fattah responsive atoms pointers are the same for mobile and tablet so we have wierd stuff like o2col o3col assigned on the same element, 
+  later we expect to have different and not overriding properities - this needs explicit resets as kind of "switch". It is really messy, "enjoy" */
+
+  /* if should be 100% width */
+  .mk-animated-columns.has-border .s_item { border-right-width: 1px; }
+  .mk-animated-columns .s_item { width: 100%; }
+  /* if should be 50% width */
+  .mk-animated-columns.has-border.o2col .s_item { border-right-width: 0; }
+  .mk-animated-columns.has-border.o2col .s_item:nth-of-type(2n) { border-right-width: 1px; }
+  .mk-animated-columns.o2col .s_item { width: 50%; }
+  /* if should be 33% width */
+  .mk-animated-columns.has-border.o3col .s_item { border-right-width: 0; }
+  .mk-animated-columns.has-border.o2col.o3col .s_item:nth-of-type(2n) { border-right-width: 0; }
+  .mk-animated-columns.has-border.o2col.o3col .s_item:nth-of-type(3n) { border-right-width: 1px; }
+  .mk-animated-columns.o3col .s_item { width: 33.33%; }
+
+  /* Need to rewrite it after resets */
+  .mk-animated-columns.has-border .s_item:last-of-type {  border-right-width: 1px; }
+
+  /* NOTE: extremely fragile, refactor with caution. */
+}
+@media handheld, only screen and (max-width: 767px) {
+  .mk-animated-columns.has-border .s_item {  border-right-width: 1px !important; }
+  .mk-animated-columns .s_item { width: 100% !important; }
+}
+
+/*=========================================
+full-style
+===========================================*/
+.mk-animated-columns.full-style .s_title:after {
+  position: absolute;
+  content: '';
+  display: block;
+  bottom: -10px;
+  left: 50%;
+  margin-left: -15px;
+  height: 2px;
+  width: 30px;
+}
+/*=========================================
+simple-style
+===========================================*/
+.mk-animated-columns.simple-style .s_title {
+  top: -100%;
+}
+
+/*=========================================
+simple-style
+===========================================*/
+.mk-animated-columns .animated-column-item .mk-button-container {
+  margin-right: 0 !important;
+}

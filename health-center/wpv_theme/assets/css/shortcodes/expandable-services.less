@@ -1,0 +1,73 @@
+.services.has-more {
+	position: relative;
+	padding: 0;
+	z-index: 2000;
+
+	.image-wrapper {
+		padding: 20px;
+		text-align: center;
+
+		img {
+			display: inline-block;
+			vertical-align: bottom;
+		}
+	}
+
+	.services-content-wrapper {
+		padding: 20px;
+
+		> .row {
+			margin: 0;
+		}
+	}
+
+	.open {
+		width: 100%;
+		position: absolute;
+		top: 100%;
+		.border-box();
+
+		p:first-child {
+			margin-top: 0;
+		}
+
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.closed {
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	&.expandable-animation-3d {
+		.open {
+			.transform-origin(top);
+			.transform(rotateX(-90deg));
+			.transform-style(preserve-3d);
+			-webkit-backface-visibility: hidden;
+		}
+
+		.closed {
+			-webkit-backface-visibility: hidden;
+			-webkit-transform: translate3d(0,0,0);
+		}
+	}
+
+	&.expandable-animation-2d {
+		.open {
+			.transform(none);
+			height: 0;
+			overflow: hidden;
+		}
+	}
+
+	html.touch & {
+		.open {
+			.transform(none);
+			position: relative;
+			top: 0;
+		}
+	}
+}

@@ -1,0 +1,48 @@
+/*------------------------------------------------------------------
+[Table of contents]
+
+1. Links with bracket animation / a.link-bracket
+	1.1. Before and after pseudo elements / &:before, &:after
+	1.2. Before pseudo elements / &:before
+	1.3. After pseudo elements / &:after
+	1.4. Hover and active state / &:hover, &:active
+		1.4.1. Before and after pseudo elements / &:before, &:after
+		1.4.2. Before pseudo element / &:before
+		1.4.3. After pseudo element / &:after
+
+-------------------------------------------------------------------*/
+
+a.link-bracket{
+	display: inline-block;
+	position: relative;
+
+	&:before, &:after{
+		display: inline-block;
+		opacity: 0;
+		.transition-transform(~'.2s ease, opacity .2s ease');
+		position: relative;
+		z-index: -1;
+	}
+
+	&:before{
+		content: '[';
+		.transform(~'translate3d(10px, 0, 0)');
+	}
+
+	&:after{
+		content: ']';
+		.transform(~'translate3d(-10px, 0, 0)');
+	}
+
+	&:hover, &:active{
+		&:before, &:after{
+			opacity: 1;
+		}
+		&:before{
+			.transform(~'translate3d(-10px, 0, 0)');
+		}
+		&:after{
+			.transform(~'translate3d(10px, 0, 0)');
+		}
+	}
+}

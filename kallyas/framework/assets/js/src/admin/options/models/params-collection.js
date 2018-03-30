@@ -1,0 +1,1 @@
+module.exports = Backbone.Collection.extend( { model: require('./param-model') } );

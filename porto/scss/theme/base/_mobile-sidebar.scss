@@ -1,0 +1,106 @@
+
+.mobile-hide-sidebar {
+    @media #{$screen-normal} {
+        display: none;
+    }
+}
+
+.mobile-sidebar {
+    background: if-light(#fff, $dark-bg);
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    top: 0;
+    botom: 0;
+    #{$left}: 0;
+    z-index: 9000;
+    @include transform(translate(if-ltr(-260px, 260px)));
+    @include transition(transform 0.2s ease-in-out 0s);
+
+    .sidebar-toggle {
+        display: none;
+        cursor: pointer;
+        background: if-light(#fff, $dark-bg);
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        #{$right}: -40px;
+        top: 0;
+        bottom: 40px;
+        margin: auto;
+        font-size: 17px;
+        line-height: 38px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: corner-values(0 $border-medium $border-medium 0);
+        border: 1px solid $input-border-color;
+        border-#{$left}-width: 0;
+        @include transition(all 0.2s ease-in-out 0s);
+
+        i {
+            &:before {
+                content: if-ltr($fa-var-chevron-right, $fa-var-chevron-left);
+            }
+        }
+
+        &:hover {
+            color: $color-dark;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        @media #{$screen-normal} {
+            display: block;
+        }
+    }
+
+    .sidebar-content {
+        display: block;
+        padding: 15px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 100%;
+    }
+}
+
+.sidebar-overlay {
+    opacity: 0;
+
+    &.active {
+        background: #000;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 8999;
+        min-height: 100vh;
+        opacity: .35;
+        @include transition(opacity 0.2s ease-in-out 0s);
+    }
+}
+
+html.sidebar-opened {
+    body {
+        > * {
+            z-index: 0;
+        }
+
+        .mobile-sidebar {
+            z-index: 9000;
+            @include transition(transform 0.3s ease-in-out 0s);
+            @include transform(translate(0px));
+
+            .sidebar-toggle {
+                i {
+                    &:before {
+                        content: $fa-var-close;
+                    }
+                }
+            }
+        }
+    }
+
+    #wpadminbar {
+        z-index: 8000;
+    }
+}

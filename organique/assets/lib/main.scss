@@ -1,0 +1,290 @@
+/*------------------------------------*\
+    Organique - HTML template
+\*------------------------------------*/
+
+/**
+ * TABLE OF CONTENTS
+ *
+ * 01. Project variables..Imported variables
+ * 02. Tags...............Like <body>, <h1> etc.
+ * 03. Helpers............The general styles like .push-down-15 etc.
+ * 04. Components.........Imported files, like partials, Compass etc.
+ * 05. Accessibility overrides, usually with help of JS.
+ */
+/*------------------------------------*\
+    Project variables
+\*------------------------------------*/
+
+@import "vars";
+@import "sass-bootstrap/lib/variables";
+
+/*------------------------------------*\
+    Tags
+\*------------------------------------*/
+
+body {
+  position: relative;
+}
+
+a {
+  @extend %color-primary-color;
+
+  &:active {
+    @extend %background-tertiary-color;
+    color: $lighter-color;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+%heading-margin-top {
+  margin-top: 36px;
+}
+
+h1 {
+  @extend %heading-margin-top;
+  margin-bottom: 30px;
+}
+
+h2 {
+  @extend %heading-margin-top;
+  margin-bottom: 24px;
+
+  a {
+    @extend %color-secondary-color;
+
+    &:hover {
+      @extend %color-secondary-color;
+    }
+  }
+}
+
+h3 {
+  @extend %heading-margin-top;
+  margin-bottom: 22px;
+
+  a {
+    @extend %color-secondary-color;
+
+    &:hover {
+      @extend %color-secondary-color;
+    }
+  }
+}
+
+h4 {
+  @extend %heading-margin-top;
+  margin-bottom: 18px;
+}
+
+h5 {
+  @extend %heading-margin-top;
+  margin-bottom: 15px;
+}
+
+h6 {
+  @extend %heading-margin-top;
+  margin-bottom: 12px;
+  font-family: $secondary-font;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+pre {
+  border: 1px solid $light-color;
+  color: $text-color;
+}
+
+del {
+  font-weight: normal;
+  font-size: 90%;
+}
+
+/*------------------------------------*\
+    Helpers
+\*------------------------------------*/
+
+// generates styles: .push-down-5 {margin-bottom: 5px;}, .push-down-10 {margin-bottom: 10px;} etc. to 60px
+@for $i from 0 through 12 {
+  $i5 : $i*5;
+  .push-down-#{$i5} {
+    margin-bottom: 5px * $i;
+  }
+}
+
+// make bold text light, mostly used for headings
+.light {
+  font-weight: 400;
+}
+
+.semibold {
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+del,
+.line-through {
+  text-decoration: line-through;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.secondary-link {
+  @extend %color-primary-color;
+
+  &:hover {
+    @extend %color-primary-color;
+  }
+}
+
+// .wp-post-image {
+//   border-radius: 2px;
+//   width: 100%;
+//   height: auto;
+// }
+
+.text {
+  @extend %color-secondary-color;
+  text-align: left;
+  line-height: 23px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.text-highlight  {
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+  color: $text-color;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+.text-dark {
+  @extend %color-secondary-color;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.primary-color {
+  @extend %color-primary-color;
+}
+
+.secondary-color {
+  @extend %color-secondary-color;
+}
+
+.tertiary-color,
+.warning {
+  @extend %color-tertiary-color;
+}
+
+.glyphicon.glyphicon-circle {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 28px;
+  border: 2px solid $default-color;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.form-control {
+  border: none;
+  box-shadow: none !important;
+  background: $default-color;
+
+  &:focus {
+    background: $lighter-color;
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .text-shrink {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+
+.form-control:focus {
+  border-color: $light-color;
+}
+
+/*------------------------------------*\
+    Components
+\*------------------------------------*/
+
+// General parts
+@import "components/top";
+@import "components/header";
+@import "components/navigation";
+@import "components/search";
+@import "components/cart";
+@import "components/jumbotron";
+@import "components/breadcrumbs";
+@import "components/footer";
+
+// Elements
+@import "components/banners";
+@import "components/alerts";
+@import "components/tabs";
+@import "components/buttons";
+@import "components/tables";
+@import "components/maps";
+@import "components/bars";
+@import "components/gallerys";
+@import "components/toggles";
+@import "components/divider";
+@import "components/pagination";
+@import "components/social-icons";
+
+// Advanced elements
+@import "components/opening-time";
+@import "components/sidebar-menu-affix";
+@import "components/products";
+@import "components/testimonials";
+@import "components/contact-forms";
+@import "components/team";
+@import "components/motivational-stories";
+@import "components/widgets";
+@import "components/comments";
+
+// Pages
+@import "components/404";
+@import "components/single-product";
+@import "components/blog";
+@import "components/features";
+@import "components/checkout";
+@import "components/shop";
+
+// Icons
+@import "components/zocial-icons";
+
+// Plugins, like Isotope, jQuery UI ...
+@import "components/plugins";
+@import "components/_wp";
+/*------------------------------------*\
+    Accessibility overrides, usually with
+    help of JS
+\*------------------------------------*/
+
+/*------------------------------------*\
+    The end :)
+\*------------------------------------*/

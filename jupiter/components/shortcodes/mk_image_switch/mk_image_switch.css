@@ -1,0 +1,63 @@
+.mk-image-switch {
+  overflow: hidden;
+}
+.mk-image-switch img {
+  display: block;
+}
+.mk-image-switch .image__container {
+  position: relative;
+  display: inline-block;
+}
+.mk-image-switch .first__image {
+  position: relative;
+  z-index: 2;
+}
+.mk-image-switch .second__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.mk-image-switch.align-left {
+  text-align: left;
+}
+.mk-image-switch.align-center {
+  text-align: center;
+}
+.mk-image-switch.align-right {
+  text-align: right;
+}
+
+/* Without animation 
+   For hidding image we prefer visibility:hidden over display:none as first image also stretch container and needs to stay in a regular document flow
+*/
+.mk-image-switch.without-fading-animation .image__container .first__image {
+  visibility: visible;
+}
+.mk-image-switch.without-fading-animation .image__container .second__image {
+  visibility: hidden;
+}
+.mk-image-switch.without-fading-animation .image__container:hover .first__image {
+  visibility: hidden;
+}
+.mk-image-switch.without-fading-animation .image__container:hover .second__image {
+  visibility: visible;
+}
+
+/* Animated */
+.mk-image-switch.fading-animation .image__container .first__image,
+.mk-image-switch.fading-animation .image__container .second__image {
+  transition: opacity .2s linear, visibility .2s linear;
+}
+.mk-image-switch.fading-animation .image__container .first__image {
+  opacity: 1;
+}
+.mk-image-switch.fading-animation .image__container .second__image {
+  opacity: 0;
+}
+.mk-image-switch.fading-animation .image__container:hover .first__image {
+  opacity: 0;
+}
+.mk-image-switch.fading-animation .image__container:hover .second__image {
+  opacity: 1;
+}

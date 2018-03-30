@@ -1,0 +1,476 @@
+/**
+ * Navigation
+ *
+ * Guest, Account (header), Primary, Account (page), Footer
+ */
+
+
+/** Primary */
+
+.main-navigation,
+.tertiary-navigation {
+	background-color: #fff;
+	position: relative;
+	z-index: 50;
+}
+
+.tertiary-navigation {
+	z-index: 1;
+}
+
+.navigation-bar-toggle,
+.main-navigation .search-overlay-toggle {
+	padding: 10px 0;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.navigation-bar-toggle {
+	float: left;
+}
+
+ul.nav-menu [class^="ion"]:before,
+.nav-menu [class^="ion"]:before {
+	font-size: 20px;
+	vertical-align: middle;
+	margin-right: 7px;
+	margin-top: -5px;
+}
+
+.main-navigation .mega-category-list-wrapper,
+.primary-header .nav-menu.primary {
+	display: none;
+	vertical-align: middle;
+}
+
+.nav-menu ul,
+.nav-menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.navigation-bar-toggle {
+	vertical-align: middle;
+	font-size: 15px;
+
+	i {
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+}
+
+.navigation-bar-toggle i,
+.main-navigation .search-overlay-toggle {
+	font-size: 25px;
+}
+
+.main-navigation .search-overlay-toggle {
+	float: right;
+}
+
+.main-navigation .search-overlay .search-overlay-toggle {
+	font-size: 16px;
+	top: 13px;
+	padding: 0;
+	right: 15px;
+	float: none;
+}
+
+.site-header .nav-menu-container,
+.site-header .menu {
+	display: inline-block;
+}
+
+/** Expanded mobile menu */
+
+.navigation-bar-wrapper {
+	display: block;
+	position: absolute;
+	padding: 0;
+	top: 100%;
+	left: 10px;
+	right: 10px;
+	z-index: 99999;
+	border-radius: 4px;
+	box-shadow: rgba(0, 0, 0, .06) 0 0 0 3px;
+	background: #fff;
+	display: none;
+}
+
+.site-header .navigation-bar-wrapper {
+	z-index: 110;
+}
+
+.navigation-bar-wrapper.active {
+	display: block;
+}
+
+.navigation-bar-wrapper:before,
+.navigation-bar-wrapper:after {
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 0 10px 10px 10px;
+	border-color: transparent transparent #fff transparent;
+	content: ' ';
+	position: absolute;
+	top: -10px;
+	left: 14px;
+	z-index: 10;
+}
+
+.navigation-bar-wrapper:before {
+	border-color: transparent transparent rgba(0, 0, 0, .06) transparent;
+	border-width: 0 11px 11px 11px;
+	top: -14px;
+	left: 13px;
+	z-index: 7;
+}
+
+.nav-menu {
+	padding: 2em;
+	border-bottom: 1px solid #e9edf2;
+}
+
+.nav-menu:last-child {
+	border-bottom: 0;
+}
+
+ul.nav-menu li > a,
+.nav-menu li > a {
+	padding: 6px 0;
+	font-size: 125%;
+	display: inline-block;
+}
+
+.nav-menu ul ul {
+	padding-left: 1em;
+	border-left: 1px solid #e9edf2;
+}
+
+.nav-menu ul .category-list {
+	top: auto;
+	padding: 0;
+	border: 0;
+}
+
+.nav-menu ul .category-list select,
+.nav-menu ul .category-list .select {
+	width: 100%;
+}
+
+.nav-menu ul ul a {
+	font-size: 105%;
+}
+
+.nav-menu li#categories-mega-menu {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+
+@include bp(md) {
+
+	.navigation-bar-wrapper,
+	.main-navigation .mega-category-list-wrapper {
+		display: block;
+	}
+
+	.primary-header .nav-menu.primary {
+		display: table-cell;
+	}
+
+	.navigation-bar-toggle,
+	.navigation-bar-wrapper .primary,
+	.category-list .postform-wrapper,
+	.main-navigation .search-form,
+	.main-navigation .search-overlay-toggle,
+	.navigation-bar-wrapper:before,
+	.navigation-bar-wrapper:after {
+		display: none;
+	}
+
+	.navigation-bar-wrapper {
+		position: inherit;
+		top: auto;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		background: none;
+		box-shadow: none;
+		padding: 0;
+	}
+
+	/**
+	 * Standard Menu
+	 *
+	 * The same format is used for primary, secondary, and tertiary
+	 */
+
+	.nav-menu,
+	ul.nav-menu {
+		padding: 0;
+		border: 0;
+
+		&.secondary,
+		&.tertiary {
+			li:hover ul ul {
+				right: auto;
+				left: 195px;
+
+				&:after,
+				&:before {
+					right: auto;
+					left: -10px;
+					top: 8px;
+					border-width: 10px 10px 10px 0;
+					border-color: transparent #fff transparent transparent;
+				}
+
+				&:before {
+					border-width: 11px 11px 11px 0;
+					border-color: transparent rgba(0, 0, 0, .06) transparent transparent;
+					top: 7px;
+					right: auto;
+					left: -14px;
+				}
+			}
+		}
+
+		// top level menu item
+		li {
+			display: inline-block;
+			margin-right: 25px;
+			position: relative;
+
+			// top level link
+			a {
+				font-size: 100%;
+				padding: 18px 0;
+				display: inline-block;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
+
+			&:hover {
+				> ul,
+				> ul > ul {
+					display: block;
+					z-index: 101;
+
+					li {
+						display: block;
+						margin-right: 0;
+					}
+				}
+
+				ul ul {
+					top: 0;
+					margin-top: 0;
+					right: 195px;
+					left: auto;
+					border-radius: 6px;
+
+					&:after,
+					&:before {
+						right: -10px;
+						top: 6px;
+						border-width: 10px 0 10px 10px;
+						border-color: transparent transparent transparent #fff;
+					}
+
+					&:before {
+						border-width: 11px 0 11px 11px;
+						border-color: transparent transparent transparent rgba(0, 0, 0, .06);
+						top: 5px;
+						right: -14px;
+					}
+				}
+			}
+
+			&#categories-mega-menu {
+				margin-top: 0;
+				margin-bottom: 0;
+				position: inherit;
+			}
+
+			&[class^=ion] {
+				> a {
+					margin-left: -22px;
+					padding-left: 22px;
+				}
+
+				&:before {
+					margin-top: -2px;
+				}
+			}
+
+			&.menu-item-has-children:after {
+				@include ionicon;
+				font-size: 20px;
+				vertical-align: middle;
+				margin-left: 5px;
+				margin-top: -1px;
+				content: "\f3d0";
+			}
+		}
+
+		.sub-menu,
+		.children {
+			display: none;
+			position: absolute;
+			padding: 10px 0;
+			top: 95%;
+			right: -16px;
+			z-index: 99999;
+			border-radius: 4px;
+			width: 200px;
+			box-shadow: rgba(0, 0, 0, .06) 0 0 0 3px;
+			background: #fff;
+			border: 0;
+
+			ul {
+				left: 0;
+				right: auto;
+			}
+
+			li:last-child {
+				border-bottom: 0;
+			}
+
+			li.menu-item-has-children:after {
+				display: none;
+			}
+
+			// submenu link
+			a {
+				margin: 0;
+				padding: 6px 22px;
+				display: inline-block;
+			}
+
+			li[class^=ion] {
+				padding-left: 22px;
+				
+				> a {
+					margin-left: 0;
+					padding-left: 0;
+				}
+			}
+
+			&:before,
+			&:after {
+				width: 0px;
+				height: 0px;
+				border-style: solid;
+				border-width: 0 10px 10px 10px;
+				border-color: transparent transparent #fff transparent;
+				content: ' ';
+				position: absolute;
+				top: -10px;
+				right: 13px;
+				z-index: 10;
+			}
+
+			&:before {
+				border-color: transparent transparent rgba(0, 0, 0, .06) transparent;
+				border-width: 0 11px 11px 11px;
+				top: -14px;
+				right: 12px;
+				z-index: 7;
+			}
+
+			// category mega menu
+			&.category-list {
+				left: 0;
+				right: 0;
+				width: 100%;
+				max-height: 500px;
+				overflow-y: auto;
+				position: absolute;
+				box-shadow: rgba(0, 0, 0, 0.1) 2px 1px 0;
+				background: #f0f3f6;
+				border-radius: 0;
+				padding: 30px 0;
+				z-index: 10;
+
+				&:before,
+				&:after,
+				.children:before,
+				.postform,
+				.select {
+					display: none;
+				}
+
+				a {
+					padding: 12px 0;
+                    display: block;
+				}
+
+				.container {
+					position: relative;
+
+					&:before {
+						width: 0px;
+						height: 0px;
+						border-style: solid;
+						border-width: 10px 10px 0 10px;
+						border-color: #fff transparent transparent transparent;
+						content: ' ';
+						position: absolute;
+						top: -30px;
+						left: 28px;
+						z-index: 10;
+					}
+				}
+
+				.category-count {
+					font-size: 11px;
+					border-radius: 2px;
+					margin-right: 8px;
+					padding: 4px;
+					display: inline-block;
+					min-width: 30px;
+					text-align: center;
+				}
+
+				.mega-category-list-wrapper {
+					max-width: 75%;
+				}
+
+				li {
+					width: 23%;
+					float: left;
+					margin-right: 2%;
+				}
+			}
+		}
+	}
+
+	.current-account-user-info {
+		font-size: 90%;
+		border-bottom: 1px solid #eee;
+		padding: 0 20px 10px;
+		word-wrap: break-word;
+		margin-bottom: 10px;
+	}
+
+
+	/** Account Menu */
+
+	.nav-menu.primary {
+		text-align: right;
+		padding-left: 4em;
+	}
+
+	.nav-menu.primary ul ul {
+		text-align: left;
+	}
+
+	.nav-menu .account-avatar > a {
+		padding: 8px 0;
+	}
+}

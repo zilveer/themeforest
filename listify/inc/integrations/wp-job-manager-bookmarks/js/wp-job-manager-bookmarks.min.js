@@ -1,0 +1,2 @@
+!function(a){"use strict";var b={cache:{$document:a(document),$window:a(window)},bindEvents:function(){var b=this;this.cache.$document.on("ready",function(){a(".site").on("click",".bookmark-notice",function(c){c.preventDefault(),b.openModal(a(this))})})},openModal:function(b){var c=b,d=c.parent().parent();a.magnificPopup.open({type:"inline",fixedContentPos:!1,fixedBgPos:!0,overflowY:"scroll",items:{src:'<div class="popup"><h2 class="popup-title">'+b.text()+"</h2>"+d.prop("outerHTML")+"</div>"}})}};b.bindEvents()}(jQuery);
+//# sourceMappingURL=wp-job-manager-bookmarks.min.map

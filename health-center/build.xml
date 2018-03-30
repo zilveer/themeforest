@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vamtam-theme" default="build" basedir=".">
+	<property name="basedir" value="${phing.dir}" />
+	<property name="docsdir" value="${phing.dir}/documentation/api" />
+	<property name="utilsdir" value="${basedir}/utils" />
+	<property name="phing_custom" value="${utilsdir}/phing" />
+
+	<path id="project.class.path">
+	    <pathelement dir="${phing_custom}/tasks/"/>
+	</path>
+
+	<fileset id="src.php" dir=".">
+		<patternset>
+			<include name="**/*.php"/>
+			<exclude name="vamtam/plugins/*/**"/>
+			<exclude name="style_switcher/**"/>
+			<exclude name="vendor/**"/>
+			<exclude name="utils/**"/>
+			<exclude name="vamtam/classes/plugin-activation.php"/>
+			<exclude name="vamtam/admin/helpers/updates/class-pixelentity-theme-update.php"/>
+			<exclude name="vamtam/admin/helpers/updates/class-envato-protected-api.php"/>
+		</patternset>
+	</fileset>
+
+	<!-- =========================================================================================================== -->
+
+	<target name="phpmd" description="Perform project mess detection using PHPMD">
+		<phpmd rulesets="codesize,design,naming">
+			<fileset refid="src.php" />
+		</phpmd>
+	</target>
+
+	<target name="documentation">
+		<echo msg="Generating documentation..." />
+
+		<delete dir="${docsdir}"/>
+		<mkdir dir="${docsdir}"/>
+
+		<phpdoc2
+			title="David &amp; Goliath"
+			destdir="${docsdir}">
+			<fileset refid="src.php" />
+		</phpdoc2>
+	</target>
+</project>

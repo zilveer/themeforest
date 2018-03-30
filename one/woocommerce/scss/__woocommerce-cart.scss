@@ -1,0 +1,339 @@
+// -----------------------------------------------------------------------------
+// $Header layout commons
+// -----------------------------------------------------------------------------
+
+.header-layout-a,
+.header-layout-b {
+	.thb-mini-cart-icon-wrapper {
+		display: table-cell;
+		width: 32px + $gutter;
+		height: 100%;
+		vertical-align: top;
+
+		.thb-mini-cart-icon {
+			display: block;
+			margin-left: $gutter;
+			position: relative;
+
+			#thb-cart-trigger {
+				display: block;
+				margin-top: $baseline*1.5;
+				padding: 0 0 $baseline*1.5;
+				@include size(32px 28px);
+			}
+		}
+	}
+
+// -----------------------------------------------------------------------------
+// $Scrolled
+// -----------------------------------------------------------------------------
+
+	.scrolled {
+		.thb-mini-cart-icon-wrapper {
+			.thb-mini-cart-icon #thb-cart-trigger {
+				margin-top: 20px;
+				padding-bottom: 20px;
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// $Layout B
+// -----------------------------------------------------------------------------
+
+.header-layout-b {
+	.thb-mini-cart-icon-wrapper {
+		width: 32px + $gutter/2;
+
+		.thb-mini-cart-icon {
+			margin-left: $gutter/2;
+		}
+
+	}
+
+	&.logo-right {
+		.thb-mini-cart-icon-wrapper {
+			width: 32px + $gutter/2;
+			right: auto;
+			left: 0;
+
+			.thb-mini-cart-icon {
+				margin-right: $gutter/2;
+				margin-left: 0;
+			}
+
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// $Layout A
+// -----------------------------------------------------------------------------
+
+.header-layout-a {
+	&.logo-right {
+		.thb-mini-cart-icon-wrapper .thb-mini-cart-icon {
+			margin-right: $gutter;
+			margin-left: 0;
+		}
+
+		.thb_mini_cart_wrapper {
+			right: auto;
+			left: 0;
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+.thb-product-numbers {
+	@include position(absolute, -4px null null -6px);
+	@extend %highlight_background_color;
+	color: #fff;
+	text-align: center;
+	line-height: 1;
+	border-radius: 10px;
+	font-size: 11px;
+	padding: 3px 6px;
+	z-index: 10;
+}
+
+.logo-right {
+	.thb-product-numbers {
+		left: auto;
+		right: -6px;
+	}
+}
+
+#thb-cart-trigger {
+	position: relative;
+	font-size: 0;
+	line-height: 0;
+
+	&:after {
+		@include size(32px 28px);
+		@extend %icon;
+		content: "J";
+		font-size: 20px;
+		line-height: 28px;
+		text-align: center;
+	}
+}
+
+.thb_mini_cart_wrapper {
+	@extend %border_box;
+	@include transform(translate3d(0,0,0));
+	display: none;
+	@include opacity(0);
+	// @include transition(opacity .05s linear);
+	width: 260px;
+	@include position(absolute, 100% 0px null null);
+	z-index: 10;
+	padding: $baseline/2;
+	border: 1px solid $grey;
+	background: $white;
+	@include box-shadow( 0 10px 30px rgba(0,0,0,.1) );
+	color: $grey_dark;
+
+	a {
+		color: $black;
+
+		&:hover {
+			@extend %highlight_color;
+		}
+	}
+}
+
+.thb-mini-cart-active {
+	.thb_mini_cart_wrapper {
+		@include opacity(100);
+	}
+
+	#thb-cart-trigger {}
+}
+
+.widget_shopping_cart_content,
+.thb_mini_cart_wrapper {
+	.total {
+		border-top: 1px solid $grey;
+		padding-top: $baseline/2;
+		margin-top: $baseline/2;
+		font-weight: bold;
+		clear: both;
+		text-transform: uppercase;
+		font-size: 16px;
+	}
+
+	.buttons {
+		margin-top: $baseline/2;
+
+		.button {
+			@extend %btn;
+			@extend %border_box;
+			@include transform(translate3d(0,0,0));
+			display: block;
+			float: left;
+			text-align: center;
+			width: 48%;
+
+			&.checkout {
+				@extend %btn_fill;
+				color: #8cc151;
+				border-color: #8cc151;
+				float: right;
+
+				&:after {
+					background-color: #8cc151;
+				}
+
+				&:hover {
+					color: $white;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// $Cart sidebar
+// -----------------------------------------------------------------------------
+
+#header {
+	ul.cart_list,
+	ul.product_list_widget {
+		li {
+			@extend %clearfix;
+			display: block;
+			float: none !important;
+			padding: $baseline/4 $baseline/2;
+			margin-left: -($baseline/2) !important;
+			margin-right: -($baseline/2) !important;
+			margin-bottom: 0;
+			position: relative;
+
+			.remove {
+				@include position(absolute, 8px null null (($baseline/2) + 2px));
+				display: block;
+				width: 16px;
+				height: 16px;
+				background-color: #e9573f;
+				color: #fff;
+				z-index: 10;
+				text-align: center;
+				line-height: 16px;
+			}
+
+			a {
+				padding: 0;
+				display: block;
+				text-transform: none;
+				font-weight: normal;
+				font-size: 14px;
+				float: none !important;
+				margin-bottom: 0;
+				line-height: 1.25;
+
+				&:hover {
+					&:before {
+						display: none;
+					}
+				}
+			}
+
+			span {
+				font-size: 14px;
+				width: auto;
+			}
+		}
+	}
+}
+
+ul.cart_list,
+ul.product_list_widget {
+
+	li {
+		list-style-type: none;
+		@extend %clearfix;
+		margin-bottom: $baseline;
+		padding-top: 0;
+
+		a {
+			display: block;
+			font-weight: bold;
+			font-size: 16px;
+			margin-bottom: $baseline/3;
+			border-bottom: none;
+		}
+
+		&.empty {
+			margin-bottom: 0;
+			text-transform: none;
+			font-size: 14px;
+		}
+
+		.wp-post-image {
+			position: relative;
+			display: block;
+			float: left;
+			text-decoration: none;
+			margin-bottom: 0;
+			height: auto;
+			width: 54px;
+			overflow: hidden;
+			margin-right: $baseline/2;
+
+			img {
+				width: 100%;
+				height: auto;
+			}
+		}
+
+		.amount {
+			font-weight: bold;
+			color: #333;
+		}
+
+		.from,
+		del .amount {
+			color: #999;
+		}
+
+		ins {
+			text-decoration: none;
+		}
+
+		.variation {
+			@extend %clearfix;
+			display: block;
+			font-size: 12px;
+			color: #333;
+			overflow: hidden;
+
+			dt {
+				float: left;
+				clear: both;
+				display: block;
+
+				&:before {
+					content: "-";
+					display: inline-block;
+					float: left;
+					margin-right: 4px;
+				}
+			}
+
+			dd {
+				float: left;
+				display: block;
+			}
+		}
+
+		.star-rating {
+			float: none;
+			display: block;
+			margin-bottom: 5px;
+			font-size: .8em;
+		}
+	}
+}

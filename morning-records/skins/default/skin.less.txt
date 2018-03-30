@@ -1,0 +1,110 @@
+In the skin.less you can use some variables and mixins
+to insert font parameters and color values from color schemes:
+===============================================================
+
+
+Fonts
+---------------------------------------------------------------
+Each variable and mixin can start from one of the next slugs (put it instead @xxx in the variable names below):
+@h1 ... @h6	- headers
+@p			- plain text
+@link		- links
+@info		- info blocks (Posted 15 May, 2015 by John Doe)
+@menu		- main menu
+@submenu	- dropdown menus
+@logo		- logo text
+@button		- button's caption
+@input		- input fields
+
+// Font variables:
+@xxx_ff 	- insert 'font-family' parameter in the rule
+@xxx_fs 	- insert 'font-size'
+@xxx_lh 	- insert 'line-height'
+@xxx_fw 	- insert 'font-weight'
+@xxx_fl 	- insert 'font-style'
+@xxx_td 	- insert 'text-decoration'
+@xxx_mt 	- insert 'margin-top'
+@xxx_mb 	- insert 'margin-bottom'
+
+.xxx_font()		- mixin to insert rule with all font's parameters for specified slug
+.xxx_margins()	- mixin to insert rule with margins for specified slug
+
+
+Colors
+---------------------------------------------------------------
+Each mixin below can receive one of the next color slugs:
+
+// Accented elements
+accent1			- theme accented color 1
+accent1_hover	- theme accented color 1 (hover state)
+accent2			- theme accented color 2
+accent2_hover	- theme accented color 2 (hover state)		
+accent3			- theme accented color 3
+accent3_hover	- theme accented color 3 (hover state)		
+
+// Headers, text and links
+text			- main content
+text_light		- post info
+text_dark		- headers
+inverse_text	- text on accented background
+inverse_light	- post info on accented background
+inverse_dark	- headers on accented background
+inverse_link	- links on accented background
+inverse_hover	- hovered links on accented background
+
+// Block's border and background
+bd_color		- border for the entire block
+bg_color		- background color for the entire block
+
+// Alternative colors - highlight blocks, form fields, etc.
+alter_text		- text on alternative background
+alter_light		- post info on alternative background
+alter_dark		- headers on alternative background
+alter_link		- links on alternative background
+alter_hover		- hovered links on alternative background
+alter_bd_color	- alternative border
+alter_bd_hover	- alternative border for hovered state or active field
+alter_bg_color	- alternative background
+alter_bg_hover	- alternative background for hovered state or active field 
+
+
+// Color mixins:
+
+// All mixins .scheme_*() apply css rules to selector INSIDE class .scheme_xxx (not for selector with class .scheme_xxx)
+// For example:
+// <div class="wrapper scheme_dark">
+// 		<div class="insider"></div>
+// </div>
+// .wrapper { .scheme_bg_color(accent1); }		// Apply default accent1 color from parent color scheme (not from scheme_dark)
+// .insider { .scheme_bg_color(accent1); }		// Apply accent1 color from scheme_dark
+
+.scheme_color(slug)				- set 'color' parameter for current rule. For example: .scheme_color(accent1);
+.scheme_color(slug, opacity)	- set 'color' with opacity (0.0 - 1.0)
+
+.scheme_bd_color(slug)			- set 'border-color'
+.scheme_bdt_color(slug)			- set 'border-top-color'
+.scheme_bdb_color(slug)			- set 'border-bottom-color'
+.scheme_bdr_color(slug)			- set 'border-left-color'
+.scheme_bdl_color(slug)			- set 'border-right-color'
+
+.scheme_bg_color(slug)			- set 'background-color'
+.scheme_bg_color(slug, opacity)	- set 'background-color' with opacity (0.0 - 1.0)
+.scheme_bg(slug)				- set 'background' with specified color
+
+.scheme_bg_image()				- set 'background' with image and image2 from scheme 
+.scheme_alter_bg_image()		- set 'background' with alternative background image from scheme 
+
+.scheme_box_shadow(slug, rules)	- set 'box-shadow' with specified color and shadow parameters. You can use %c for color insertion or %r, %g, %b for it rgb components.
+									For example:
+									.scheme_box_shadow(accent1_hover, ~'inset 0 0 0 110px %c');
+									.scheme_box_shadow(accent1_hover, ~'inset 0 0 0 110px rgba(%r, %g, %b, 0.8)');
+
+// All mixins .self_*() apply css rules to selector WITH class .scheme_xxx
+// For example:
+// <div class="wrapper scheme_dark">
+// 		<div class="insider"></div>
+// </div>
+// .wrapper { .self_bg_color(accent1); }		// Apply accent1 color from scheme_dark
+// .insider { .self_bg_color(accent1); }		// Not apply rules!!!
+
+.self_bg_color(slug)			- set 'background-color' to selector itself

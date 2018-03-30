@@ -1,0 +1,5863 @@
+/*
+Theme Name: Jobseek
+Description: Job Board WordPress Theme
+Author: coffeecream 
+Theme URI: http://themeforest.net/user/coffeecream/portfolio
+Author URI: http://themeforest.net/user/coffeecream
+Version: 2.2
+License: ThemeForest Regular License
+License URI: http://themeforest.net/licenses/regular
+
+-------------------------------------------------------------------
+
+[Color codes]
+
+Body background:        #fff (white)
+Brand color:            #df9124 (orange)
+Text:                   #888 (gray)
+Header h1-h6:           #222 (dark gray)
+Main nav background:    #df9124 (orange)
+Footer background:      #222 (dark gray)
+
+a (standard):           #df9124 (orange)
+a (visited):            #df9124 (orange)
+a (active):             #df9124 (orange)
+a (hover):              #a0205f (darker orange)
+
+-------------------------------------------------------------------
+
+[Table of contents]
+
+1. Less CSS viariables
+	1.1. Colors
+	1.2. Gradients
+	1.3. Fonts
+	1.4. Animations
+	1.5. Shadows
+	1.6. Clear
+2. Common elements
+	2.1. Headers
+	2.2. Paragraphs
+	2.3. Lists
+	2.4. Links
+	2.5. Buttons
+	2.6. Tables
+	2.7. Quotes
+	2.8. Tabs
+	2.9. Text aligning
+	2.10. Form elements
+	2.11. Loader
+	2.12. Images
+	2.13. Iframe
+3. Navigation
+4. Content
+	4.1. Page title
+	4.2. Jobs
+		4.2.1. Job listings
+		4.2.2. Job filters
+		4.2.3. Featured jobs
+		4.2.4. Categories
+		4.2.5. Job overview
+		4.2.6. Job company
+		4.2.7. Job dashboard
+		4.2.8. Job alerts
+		4.2.9. Job packages
+		4.2.10. Single job
+		4.2.11. Job Preview
+		4.2.12. Home page search
+		4.2.13. Job applicsations
+		4.2.14. Pagination
+		4.2.15. Indeed & ZipRecruiter jobs
+		4.2.16. Info boxes
+	4.3. Candidates
+		4.3.1. Candidate listings
+		4.3.2. Cancidate dashboard
+		4.3.3. Single resume
+		4.3.4. Resume Preview
+		4.3.5. Past applications
+	4.4. Companies
+		4.4.1. Companies list
+		4.4.2. Company profile
+	4.5. Carousels
+	4.6. Testimonials
+	4.7. Newsletter
+	4.8. Counter
+	4.9. Hero section
+	4.10. Blog
+		4.10.1. Recent posts
+		4.10.2. Posts list
+		4.10.3. Posts navigation
+		4.10.4. Single post
+		4.10.5. Comments
+	4.11. Sidebar widgets
+	4.12. Shop
+		4.12.1. Cart & checkout
+		4.12.2. Login & register
+		4.12.3. My account
+	4.13. Popups
+	4.14. Job / Resume search
+	4.15. Message boxes
+	4.16. Call to action
+	4.17. Share widget
+	4.18. Price tables
+	4.19. Alternative colors
+5. Footer
+	5.1. Prefooter
+	5.2. Credits
+	5.3. Widgets
+	5.4. Social icons
+6. Mobile styles
+	6.1. Desktops
+	6.2. Regular tablets
+	6.3. Small tablets
+		6.3.1. Mobile navigation
+	6.4. Smartphones
+
+------------------------------------------------------------------- */
+
+/* 1. Less CSS viariables
+------------------------------------------------------------------- */
+
+	/* 1.1. Colors
+	--------------------------------------------------------------- */
+
+	@color-brand: #df9124;
+	@color-white: #fff;
+	@color-gray: #888;
+	@color-black: #000;
+	@color-border: #e4e4e4;
+	@color-full-time: #7dab1b;
+	@color-part-time: #e59914;
+	@color-temporary: #dc4d15;
+	@color-freelance: #38a6c1;
+	@color-internship: #da4081;
+	@color-warning: #ce1414;
+	@color-applied: #2ca015;
+	@color-error: #d01717;
+	@color-message: #2392ad;
+
+	/* 1.2. Gradients
+	--------------------------------------------------------------- */
+
+	@color-start: #fd677d;
+	@color-end: #df9124;
+
+	.horizontal-gradient {
+	 	background-color: @color-start;
+		background-image: -webkit-gradient(linear, left top, right top, from(@color-start), to(@color-end));
+		background-image: -webkit-linear-gradient(left, @color-start, @color-end);
+		background-image: -moz-linear-gradient(left, @color-start, @color-end);
+		background-image: -ms-linear-gradient(left, @color-start, @color-end);
+		background-image: -o-linear-gradient(left, @color-start, @color-end);
+	}
+
+	.vertical-gradient {
+	 	background-color: @color-start;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(@color-start), to(@color-end));
+		background-image: -webkit-linear-gradient(top, @color-start, @color-end);
+		background-image: -moz-linear-gradient(top, @color-start, @color-end);
+		background-image: -ms-linear-gradient(top, @color-start, @color-end);
+		background-image: -o-linear-gradient(top, @color-start, @color-end);
+	}
+
+	/* 1.3. Fonts
+	--------------------------------------------------------------- */
+
+	@font-body: "Roboto", Arial, sans-serif;
+	@font-headers: "Montserrat", Arial, sans-serif;
+
+	/* 1.4. Transitions
+	--------------------------------------------------------------- */
+
+	@name: all;
+	@duration: 0.3s;
+	@ease: ease;
+
+	.transition {
+		-webkit-transition: @name @duration @ease;
+		-moz-transition: @name @duration @ease;
+		-ms-transition: @name @duration @ease;
+		transition: @name @duration @ease;
+	}
+
+	/* 1.5. Shadows
+	--------------------------------------------------------------- */
+
+	@shadow-x: 0;
+	@shadow-y: 5px;
+	@shadow-blur: 5px;
+	@shadow-spread: 0;
+	@shadow-alpha: 0.2;
+
+	.box-shadow {
+		-webkit-box-shadow:	@shadow-x @shadow-y @shadow-blur @shadow-spread rgba(0, 0, 0, @shadow-alpha);
+		-moz-box-shadow:	@shadow-x @shadow-y @shadow-blur @shadow-spread rgba(0, 0, 0, @shadow-alpha);
+		box-shadow:		@shadow-x @shadow-y @shadow-blur @shadow-spread rgba(0, 0, 0, @shadow-alpha);
+	}
+
+	/* 1.6. Clear
+	--------------------------------------------------------------- */
+
+	.clear {
+		clear: both;
+		content: "";
+		display: table;
+		width: 100%;
+	}
+
+	/* 1.7. Border radius
+	--------------------------------------------------------------- */
+
+	@border-radius: 3px;
+
+/* 2. Common elements
+------------------------------------------------------------------- */
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: @color-white;
+	color: @color-gray;
+	font-family: @font-body;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1.75em;
+	margin: 0;
+	padding-top: 60px;
+}
+
+strong {
+	color: @color-black;
+	font-weight: normal;
+}
+
+.container {
+	margin: 0 auto;
+	width: 960px;
+}
+
+.row {
+	margin: 0 -15px;
+
+	&:after,
+	&:before {
+		.clear;
+	}
+
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+	/* 2.1. Headers
+	--------------------------------------------------------------- */
+
+	h1, h2, h3, h4, h5, h6 {
+		color: @color-black;
+		font-family: @font-headers;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		margin: 0 0 1em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		font-size: 2em;
+		font-weight: 100;
+	}
+
+	h2 {
+		font-size: 1.5em;
+	}
+
+	h3 {
+		font-size: 1.25em;
+	}
+
+	h4 {
+		font-size: 1.1em;
+	}
+
+	h5 {
+		font-size: 1em;
+	}
+
+	h6 {
+		font-size: 0.9em;
+	}
+
+	.section-title {
+		margin-bottom: 2em;
+		padding-bottom: 0.75em;
+		position: relative;
+
+		&:after {
+			bottom: 0;
+			content: "";
+			background: @color-brand;
+			display: block;
+			height: 3px;
+			left: 0;
+			position: absolute;
+			width: 40px;
+		}
+
+		&.black-underline {
+			&:after {
+				background: @color-black;
+			}
+		}
+
+		&.white-underline {
+			&:after {
+				background: @color-white;
+			}
+		}
+		
+		h2, h5 {
+			margin: 0 0 0.2em;
+		}
+
+		h5 {
+			color: @color-brand;
+			font-family: @font-body;
+			text-transform: none;
+		}
+
+	}
+
+	.text-center .section-title:after,
+	.text-center.section-title:after {
+		left: 50%;
+		margin-left: -20px;
+	}
+
+	/* 2.2. Paragraphs
+	--------------------------------------------------------------- */
+
+	p {
+		margin: 0 0 2em;
+	}
+
+	/* 2.3. Lists
+	--------------------------------------------------------------- */
+
+	ul {
+		list-style: none;
+		margin: 0 0 2rem;
+		padding: 0;
+
+		li {
+			padding-left: 1em;
+			position: relative;
+
+			&:before {
+				color: @color-brand;
+				content: "\e914";
+				font-family: "icomoon";
+				font-size: 0.5em;
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+
+		}
+
+	}
+
+	ol {
+		margin: 0 0 2em;
+
+		li {
+			margin: 0;
+		}
+
+	}
+
+	/* 2.4. Links
+	--------------------------------------------------------------- */
+
+	a {
+		color: @color-brand;
+		cursor: pointer;
+		text-decoration: none;
+		.transition;
+
+		&:hover {
+			color: darken(@color-brand, 10%);
+		}
+
+	}
+
+	/* 2.5. Buttons
+	--------------------------------------------------------------- */
+
+	.btn,
+	.load_more_jobs,
+	.load_more_resumes,
+	.button,
+	[type=button],
+	[type=submit],
+	.bookmark-notice,
+	.resume_file_button,
+	.job-manager-alerts tfoot a,
+	.job-applications-download-csv,
+	.paging a {
+		background: @color-white;
+		border: 1px solid @color-brand;
+		border-radius: @border-radius;
+		box-shadow: none;
+		color: @color-brand;
+		cursor: pointer;
+		display: inline-block;
+		font-family: @font-body;
+		font-size: 1em;
+		font-weight: normal;
+		line-height: 1;
+		padding: 1em;
+		position: relative;
+		top: 0;
+		.transition;
+
+		&:hover {
+			top: -5px;
+			.box-shadow;
+		}
+
+		&.btn-lg {
+			padding: 1.5em;
+		}
+
+		&.btn-default {
+			background: @color-black;
+			border: 1px solid @color-black;
+			color: @color-white;
+		}
+
+		&.btn-primary {
+			border: none;
+			color: @color-white;
+			.horizontal-gradient;
+		}
+
+	}
+
+	.load_more_jobs,
+	.load_more_resumes,
+	.bookmark-notice,
+	.resume_contact_button,
+	[type=submit],
+	.application_button,
+	.job-manager-alerts tfoot a,
+	.job-applications-download-csv,
+	input.import-from-linkedin {
+		border: 0;
+		color: @color-white !important;
+		.horizontal-gradient;
+
+		&:hover {
+			color: @color-white;
+			.horizontal-gradient;
+		}
+
+		strong {
+			color: @color-white;
+			font-weight: normal;
+		}
+
+	}
+
+	.resume_contact_button {
+		margin-bottom: 1em;
+	}
+
+	.resume_contact_button,
+	.resume_file_button,
+	.bookmark-notice {
+		text-align: center;
+		width: 100%;
+	}
+
+	/* 2.6. Tables
+	--------------------------------------------------------------- */
+
+	table {
+		border-collapse: collapse;
+		margin-bottom: 2em;
+		width: 100%;
+
+		th,
+		td {
+			border: 0;
+			padding: 0.5em 1em;
+		}
+
+		thead,
+		tbody {
+
+			tr {
+
+				th {
+					border-bottom: 1px solid darken(@color-border, 15%);
+					color: @color-black;
+					font-weight: 400;
+					text-align: left;
+				}
+
+			}
+
+		}
+
+		tbody {
+
+			tr {
+
+				td {
+					border-bottom: 1px solid @color-border;
+				}
+
+			}
+
+			tr:nth-child(even) {
+
+				td {
+					background: #f8f8f8;
+				}
+
+			}
+
+		}
+
+	}
+
+	.stacktable {
+		width: 100%;
+
+		&.large-only {
+			display: table;
+		}
+
+		&.small-only {
+			display: none;
+		}
+
+		tr {
+
+			&:nth-child(2) {
+
+				.st-head-row {
+					padding: 0;
+				}
+
+			}
+
+		}
+
+	}
+
+	.st-head-row {
+		padding-top: 4em;
+
+		.st-head-row-main {
+			font-size: 1.5em;
+			padding-top: 0;
+		}
+
+	}
+
+	.st-key,
+	.st-val {
+		width: 49%;
+		padding-right: 1%;
+	}
+
+	/* 2.7. Quotes
+	--------------------------------------------------------------- */
+
+	/* 2.8. Tabs
+	--------------------------------------------------------------- */
+
+	.vc_tta-tabs {
+
+		&.vc_tta-tabs-position-top {
+
+			.vc_tta-tabs-container {
+				margin: 0 !important;
+			}
+
+			.vc_tta-tabs-list {
+				border-bottom: 1px solid @color-border;
+				overflow: visible !important;
+
+				li {
+					border-bottom: 1px solid @color-border;
+					border-radius: @border-radius;
+					position: relative;
+					top: 1px;
+
+					&:before {
+						display: none;
+					}
+
+					a {
+						background: @color-white;
+						color: @color-brand;
+						font-family: @font-headers;
+						text-transform: uppercase;
+					}
+
+					&.vc_active {
+						border: 1px solid @color-border;
+						border-bottom: 1px solid @color-white;
+						a {
+							color: @color-black;
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	.vc_tta.vc_general {
+		.vc_tta-panel-body {
+			padding: 2em 0 !important;
+		}
+	}
+
+	/* 2.9. Text aligning
+	--------------------------------------------------------------- */
+
+	.left {
+		text-align: left;
+	}
+
+	.center {
+		text-align: center;
+
+		.section-title:after {
+			left: 50%;
+			margin-left: -20px;
+		}
+
+	}
+
+	.right {
+		text-align: right;
+
+		.section-title:after {
+			left: auto;
+			right: 0;
+		}
+
+	}
+
+	/* 2.10. Form elements
+	--------------------------------------------------------------- */
+
+	fieldset {
+		border: 0;
+		margin: 0 0 2em;
+		padding: 0;
+
+		br {
+			display: none;
+		}
+		
+	}
+
+	label {
+		color: @color-black;
+		font-weight: normal;
+	}
+
+	[type=text],
+	[type=email],
+	[type=password],
+	[type=search],
+	[type=tel],
+	[type=url],
+	[type=number],
+	[type=date],
+	[type=datetime],
+	[type=time],
+	[type=file],
+	textarea,
+	select {
+		appearance: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		background: #fafafa;
+		border: 1px solid @color-border;
+		border-radius: @border-radius;
+		color: @color-gray;
+		display: block;
+		font-family: @font-body;
+		font-size: 1em;
+		font-weight: normal;
+		height: auto;
+		padding: 1em;
+		width: 100%;
+	}
+
+	.color-alternative {
+
+		[type=text],
+		[type=email],
+		[type=password],
+		[type=search],
+		[type=tel],
+		[type=url],
+		[type=number],
+		[type=date],
+		[type=datetime],
+		[type=time],
+		[type=file],
+		textarea,
+		select {
+			background: @color-white;
+			border: 0;
+		}
+
+		.chosen-container-multi,
+		.chosen-container-single {
+
+			.chosen-choices,
+			.chosen-drop {
+				background: @color-white;
+				border: 0;
+			}
+
+		}
+
+	}
+
+	textarea {
+		min-height: 8em;
+	}
+
+	.chosen-container-multi,
+	.chosen-container-single {
+		font-size: 1em;
+
+		.chosen-search {
+
+			input[type=text] {
+				background: none !important;
+			}
+
+		}
+
+		.chosen-choices,
+		.chosen-drop {
+			background: #fafafa;
+			border: 1px solid @color-border;
+			border-radius: @border-radius;
+			box-shadow: none;
+			color: @color-gray;
+
+			li {
+				padding: 1em;
+
+				&:before {
+					display: none;
+				}
+
+				&.search-field {
+					padding: 1em;
+
+					input[type=text] {
+						color: @color-gray;
+						font-family: @font-body;
+						margin: 0;
+						padding: 0;
+					}
+
+				}
+
+				&.highlighted {
+					background: #f4f4f4;
+					color: @color-gray;
+				}
+
+			}
+
+		}
+
+	}
+
+	.chosen-container-single {
+
+		.chosen-single {
+			background: #fafafa;
+			border: 1px solid @color-border;
+			border-radius: @border-radius;
+			box-shadow: none;
+			color: @color-gray;
+			height: auto;
+			line-height: 2em;
+			padding: 10px 20px;
+
+			div {
+				height: 18px;
+				right: 14px;
+				top: 10px;
+				width: 18px;
+
+				b {
+					background: none;
+
+					&:after {
+						content: "\e906";
+						font-family: "icomoon";
+						font-weight: normal;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	.chosen-container-active.chosen-with-drop .chosen-single {
+		border: 1px solid @color-border;
+	}
+
+	.wp-editor-container {
+		border: 1px solid @color-border;
+		border-radius: @border-radius;
+
+		.mce-panel {
+			background: #fafafa;
+		}
+
+	}
+
+	.job-manager-form {
+
+		h2 {
+			border-top: 5px solid @color-border;
+			margin-bottom: 2em;
+			padding-top: 2em;
+		}
+
+		.account-sign-in {
+			background: lighten(@color-brand, 57%);
+			border: 1px solid @color-brand;
+			border-radius: @border-radius;
+			color: @color-brand;
+			padding: 30px;
+
+			&:after {
+				.clear;
+			}
+
+			.button {
+				.horizontal-gradient;
+				color: @color-white;
+				float: right;
+				margin: 0 0 0 2em;
+			}
+
+		}
+
+	}
+
+	/* 2.11. Loader
+	--------------------------------------------------------------- */
+
+	#loader {
+		.horizontal-gradient;
+		height: 100%;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 10000;
+
+		.fa {
+			color: @color-white;
+			left: 50%;
+			margin: -0.5em 0 0 -0.5em;
+			position: absolute;
+			top: 50%;
+		}
+
+	}
+
+	/* 2.12. Images
+	--------------------------------------------------------------- */
+
+	img {
+		height: auto;
+		max-width: 100%;
+	}
+
+	/* 2.13. Iframe
+	--------------------------------------------------------------- */
+
+	iframe {
+		border: 1px solid @color-border;
+	}
+
+/* 3. Navigation
+------------------------------------------------------------------- */
+
+.admin-bar {
+	#header {
+		top: 32px;
+	}
+}
+
+#header {
+	.horizontal-gradient;
+	height: 60px;
+	left: 0;
+	line-height: 60px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 100;
+
+	nav {
+		display: block;
+		float: right;
+
+		/* Level 1 Nav */
+
+		#main-nav {
+			list-style: none;
+			padding: 0;
+		
+			li {
+				float: left;
+				padding: 0;
+				position: relative;
+
+				&:before {
+					display: none;
+				}
+		
+				a {
+					background: none;
+					color: @color-white;
+					display: block;
+					height: 60px;
+					font-size: 14px;
+					font-weight: bold;
+					line-height: 60px;
+					padding: 0 15px;
+					text-shadow: none;
+					text-transform: uppercase;
+					.transition;
+
+					&:hover {
+						color: @color-white;
+					}
+
+				}
+
+				&:hover,
+				&.current-menu-item,
+				&.current-menu-parent {
+					background: @color-black;
+					color: @color-white !important;
+				}
+
+				&.highlight a {
+					color: @color-black;
+
+					&:hover {
+						color: @color-white;
+					}
+				}
+
+				/* Level 2 Nav */
+
+				ul {
+					background: @color-black;
+					box-shadow: none;
+					display: none;
+					left: 0;
+					min-width: 200px;
+					padding: 0;
+					position: absolute;
+					top: 100%;
+					white-space: nowrap;
+					z-index: 1;
+
+					li {
+						display: block;
+						float: none;
+						position: relative;
+
+						a {
+							border-bottom: 1px solid rgba(255,255,255,0.15);
+							display: block;
+							font-size: 16px;
+							font-weight: normal;
+							height: auto;
+							line-height: 1;
+							padding: 15px 15px 15px 30px;
+							position: relative;
+							line-height: 100%;
+							text-transform: none;
+
+							&:before {
+								content: "\e914";
+								font-family: "icomoon";
+								font-size: 0.5em;
+								font-weight: normal;
+								left: 15px;
+								position: absolute;
+								top: 15px;
+							}
+
+							&:hover {
+								background: rgba(0,0,0,.1);
+							}
+
+						}
+
+						&.current-menu-item a {
+							background: rgba(0,0,0,.1);
+						}
+
+						/* Level 3 Nav */
+
+						ul {
+							display: none;
+							left: 100%;
+							top: 0;
+						}
+
+					}
+
+				}
+
+				&:hover {
+
+					ul {
+						display: block;
+
+						li {
+
+							ul {
+								display: none;
+							}
+
+							&:hover {
+
+								ul {
+									display: block;
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+				/* Submenu Indicators */
+
+				&.menu-item-has-children > a {
+					padding-right: 30px;
+
+					&:after {
+						content: "\e928";
+						font-family: "icomoon";
+						font-size: 0.5em;
+						font-weight: normal;
+						margin-left: 1em;
+						position: absolute;
+						right: 15px;
+						top: 0;
+					}
+
+				}
+
+				.menu-item-has-children > a {
+
+					&:after {
+						display: none;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	#logo {
+		float: left;
+
+		a {
+
+			img {
+				display: block;
+				padding: 16px 0;
+			}
+
+		}
+
+	}
+
+}
+
+/* 4. Content
+------------------------------------------------------------------- */
+
+#content {
+	padding: 60px 0;
+}
+
+.page-template-page-no-title #content {
+	padding: 0 0 60px;
+}
+
+.home.page-template-page-no-title #content {
+	padding: 0;
+}
+
+	/* 4.1. Page title
+	--------------------------------------------------------------- */
+
+	#title {
+		background: #f8f8f8;
+		padding: 50px 0;
+		text-align: center;
+
+		h1 {
+			margin: 0;
+		}
+
+		h2 {
+			margin: 0;
+		}
+
+		h4 {
+			margin: 0;
+		}
+
+	}
+
+	/* 4.2. Jobs
+	--------------------------------------------------------------- */
+
+		/* 4.2.1. Job listings
+		----------------------------------------------------------- */
+
+		ul.job_listings {
+			list-style: none;
+			margin: 0 0 30px;
+			padding: 0; 
+
+			li {
+				border-bottom: 1px solid @color-border;
+				display: table;
+				padding: 0;
+				width: 100%;
+
+				&:before {
+					display: none;
+				}
+
+				&:nth-child(even) {
+					background: #f8f8f8;
+				}
+
+				a {
+					color: @color-gray;
+					display: block;
+					padding: 30px;
+
+					&:hover {
+						background: lighten(@color-brand, 45%);
+					}
+
+					&:after {
+						.clear;
+					}
+
+					.image {
+						background: @color-white;
+						border: 1px solid @color-border;
+						display: table-cell;
+						height: 100px;
+						padding: 15px;
+						position: relative;
+						vertical-align: middle;
+						width: 100px;
+
+						img {
+							left: 50%;
+							max-height: 70px;
+							max-width: 70px;
+							position: absolute;
+							top: 50%;	
+							transform: translateX(-50%) translateY(-50%);
+						}
+
+					}
+
+					.description {
+						display: table-cell;
+						padding-left: 30px;
+						vertical-align: middle;
+
+						h3 {
+							font-size: 1em;
+							margin-bottom: 0.5em;
+
+							.job-manager-applications-applied-notice {
+								background: @color-applied;
+								border-radius: @border-radius;
+								color: @color-white;
+								display: inline;
+								float: none;
+								font-size: 12px;
+								font-weight: normal;
+								line-height: 1;
+								margin: 0 0 0 10px;
+								padding: 7px 10px;
+								position: relative;
+								text-transform: uppercase;
+								top: -4px;
+
+								&:before {
+									display: none;
+								}
+
+							}
+
+						}
+
+						ul {
+							list-style: none;
+							margin: 0;
+							padding: 0;
+
+							li {
+								border: 0;
+								display: inline-block;
+								margin-right: 1em;
+								width: auto;
+
+								&:nth-child(even) {
+									background: none;
+								}
+
+								&:before {
+									color: lighten(@color-gray, 15%);
+									display: inline;
+									font-family: "icomoon";
+									font-size: 0.8em;
+									margin-right: 0.5em;
+									position: relative;
+								}
+
+								&.job-type {
+
+									&:before {
+										border-radius: 50%;
+										color: @color-white;
+										content: "";
+										display: inline-block;
+										height: 15px;
+										position: relative;
+										top: 1px;
+										width: 15px;
+									}
+
+									&.full-time:before {
+										background: @color-full-time;
+									}
+
+									&.part-time:before {
+										background: @color-part-time;
+									}
+
+									&.temporary:before {
+										background: @color-temporary;
+									}
+
+									&.freelance:before {
+										background: @color-freelance;
+									}
+
+									&.internship:before {
+										background: @color-internship;
+									}
+
+								}
+
+								&.company:before {
+									content: "\e90b";
+								}
+
+								&.location:before {
+									content: "\e90f";
+								}
+
+								&.rate:before {
+									content: "\e92f";
+								}
+
+								&.salary:before {
+									content: "\e930";
+									font-size: 1em;
+									top: 2px;
+								}
+
+								&.date {
+									margin: 0;
+
+									&:before {
+										content: "\e90c";
+									}
+
+								}
+
+								&.application-deadline:before {
+									color: @color-gray;
+									content: " / ";
+									font-family: @font-body;
+									margin: 0;
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+				&.job_position_featured {
+					overflow: hidden;
+					position: relative;
+
+					&:before {
+						background: @color-brand;
+						content: "";
+						display: block;
+						height: 70px;
+						left: -35px;
+						position: absolute;
+						width: 70px;
+						top: -35px;
+						transform: rotate(45deg);
+					}
+
+					&:after {
+						color: @color-white;
+						content: "\e92c";
+						font-family: "icomoon";
+						left: 5px;
+						position: absolute;
+						top: 2px;
+					}
+
+				}
+
+				&.no_job_listings_found {
+					border: 0;
+					color: @color-black;
+					text-align: center;
+				}
+
+			}
+
+		}
+
+		.hidden-date {
+
+			ul.job_listings {
+
+				li {
+
+					a {
+
+						.description {
+
+							ul {
+
+								li {
+
+									&.date,
+									&.application-deadline {
+										display: none;
+									}
+
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		.slider-title {
+
+			h1 {
+				margin: 0;
+			}
+
+		}
+
+		/* 4.2.2. Job Filters
+		----------------------------------------------------------- */
+
+		.job_filters,
+		.resume_filters {
+			margin-bottom: 60px;
+
+			.search_jobs,
+			.search_resumes {
+				background: #f8f8f8;
+				border: 1px solid @color-border;
+				padding: 15px;
+
+				&:after,
+				&:before {
+					.clear;
+				}
+
+				.search_keywords,
+				.search_location,
+				.search_categories {
+					float: left;
+					padding: 15px;
+					width: 33.3333%;
+
+					label {
+						display: none;
+					}
+
+					input {
+						background: @color-white;
+						display: block;
+						width: 100%;
+					}
+
+				}
+
+				.search_categories {
+
+					.chosen-container {
+						display: block;
+						width: 100% !important;
+
+						.chosen-choices {
+							background: @color-white;
+							border: 1px solid @color-border;
+							border-radius: @border-radius;
+							padding: 0;
+
+							li {
+								padding: 0;
+
+								&.search-choice {
+									background: #fafafa;
+									border: 1px solid @color-border;
+									border-radius: @border-radius;
+									display: block;
+									float: left;
+									padding: 10px 22px 10px 10px;
+
+									.search-choice-close {
+										top: 11px;
+									}
+
+								}
+
+							}
+
+							.search-field {
+								width: 100%;
+
+								input[type=text] {
+									color: @color-gray;
+									display: block;
+									font-family: @font-body;
+									font-size: 1em;
+									line-height: 2em;
+									margin: 0;
+									padding: 10px 20px;
+									width: 100% !important;
+								}
+
+							}
+
+						}
+
+						.chosen-single {
+							background: @color-white;
+						}
+
+					}
+
+				}
+
+				.search_location {
+					position: relative;
+
+					.gjm-filter,
+					.grm-filter {
+						font-style: normal;
+						right: 30px;
+						position: absolute;
+						top: 30px;
+
+						&:before {
+							font-family: "icomoon";
+							font-size: 1em;
+						}
+
+						&.gjm-icon-target {
+							cursor: pointer;
+
+							&:before {
+								content: "\e92d";
+							}
+
+						}
+
+						&.gjm-icon-spin-thin {
+							-webkit-animation:spin 4s linear infinite;
+							-moz-animation:spin 4s linear infinite;
+							animation:spin 4s linear infinite;
+							display: none;
+
+							&:before {
+								content: "\e92e";
+							}
+
+						}
+
+					}
+
+				}
+
+				.gjm-filters-wrapper,
+				.grm-filters-wrapper {
+					clear: both;
+					margin: 0 -15px;
+					padding: 0 15px 15px;
+
+					&:after,
+					&:before {
+						.clear;
+					}
+
+					.gjm-filter-wrapper,
+					.grm-filter-wrapper {
+						float: left;
+						padding: 15px !important;
+						position: relative;
+
+						&.gjm-filters-count-1,
+						&.grm-filters-count-1 {
+							width: 100%;
+						}
+
+						&.gjm-filters-count-2,
+						&.grm-filters-count-2 {
+							width: 50%;
+						}
+
+						&.gjm-filters-count-3,
+						&.grm-filters-count-3 {
+							width: 33.3333%;
+						}
+
+						select {
+							background: @color-white; 
+							width: 100%;
+							-webkit-appearance: none;
+						}
+
+						&:after {
+							content: "\e906";
+							font-family: "icomoon";
+							position: absolute;
+							right: 30px;
+							top: 30px;
+						}
+
+					}
+
+				}
+
+			}
+
+			.job_types {
+				border: 1px solid rgba(0,0,0,0.1);
+				border-top: 0;
+				list-style: none;
+				margin: 0;
+				padding: 10px 0;
+
+				&:after {
+					.clear;
+				}
+
+				li {
+					float: left;
+					padding: 5px 30px;
+					width: 25%;
+
+					&:before {
+						display: none;
+					}
+
+					label {
+						font-weight: normal;
+						margin: 0;
+
+						input {
+							margin: 0 5px 0 0;
+							position: relative;
+							top: -2px;
+						}
+
+					}
+
+				}
+
+			}
+
+			.showing_jobs,
+			.showing_resumes {
+				border: 1px solid @color-border;
+				border-top: 0;
+				padding: 15px 30px;
+
+				&:after {
+					.clear;
+				}
+
+				a {
+					background: none !important;
+					float: right;
+					margin-left: 30px;
+
+					&:hover {
+						background: none !important;
+					}
+
+					&:after {
+						font-family: "FontAwesome";
+						margin-left: 7px;
+					}
+
+					&.rss_link:after {
+						content: "\f09e";
+					}
+
+					&.reset {
+						color: @color-warning;
+
+						&:after {
+							content: "\f00d";
+						}
+
+						&:hover {
+							color: darken(@color-warning, 10%);
+						}
+
+					}
+
+				}
+
+			}
+
+			.filter_by_tag {
+				padding: 0 15px 15px;
+
+				.filter_by_tag_cloud {
+
+					a {
+						background: rgba(0,0,0,0.05);
+						border-radius: @border-radius;
+						color: @color-gray;
+						display: inline-block;
+						font-size: 0.9em !important;
+						margin: 0 0 0.25em;
+						padding: 0 0.5em;
+
+						&:hover {
+							color: @color-black;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		.tax-job_listing_category {
+
+			.job_filters {
+
+				.search_jobs {
+
+					.search_keywords,
+					.search_location,
+					.search_categories {
+						width: 50%;
+					}
+
+				}
+
+			}
+		}
+
+		/* 4.2.3. Featured jobs
+		----------------------------------------------------------- */
+
+		.featured-jobs {
+
+			.owl-item {
+				color: @color-gray;
+			}
+
+			.image {
+				background: @color-white;
+				border: 1px solid @color-border;
+				height: 130px;
+				margin-bottom: 30px;
+				position: relative;
+
+				img {
+					left: 50%;
+					max-height: 80px;
+					max-width: 180px;
+					position: absolute;
+					top: 50%;
+					transform: translateX(-50%) translateY(-50%);
+				}
+
+			}
+
+			h4 {
+				margin: 0;
+				position: relative;
+
+				a {
+					color: @color-black;
+				}
+
+				.job-manager-applications-applied-notice {
+					display: none;
+				}
+
+			}
+
+			ul {
+				margin: 15px 0;
+
+				li {
+					padding: 0 0 0 22px;
+
+					&:before {
+						color: lighten(@color-gray, 15%);
+						display: inline;
+						font-family: "icomoon";
+						font-size: 0.8em;
+						left: 0;
+						position: absolute;
+						top: 0;
+					}
+
+					&.job-type {
+
+						&:before {
+							border-radius: 50%;
+							color: @color-white;
+							content: "";
+							display: inline-block;
+							height: 15px;
+							top: 5px;
+							width: 15px;
+						}
+
+						&.full-time:before {
+							background: @color-full-time;
+						}
+
+						&.part-time:before {
+							background: @color-part-time;
+						}
+
+						&.temporary:before {
+							background: @color-temporary;
+						}
+
+						&.freelance:before {
+							background: @color-freelance;
+						}
+
+						&.internship:before {
+							background: @color-internship;
+						}
+
+					}
+
+					&.company:before {
+						content: "\e90b";
+					}
+
+					&.location:before {
+						content: "\e90f";
+					}
+
+					&.rate:before {
+						content: "\e92f";
+					}
+
+					&.salary:before {
+						content: "\e930";
+						font-size: 1em;
+						top: 2px;
+					}
+
+					&.date {
+						margin: 0;
+
+						&:before {
+							content: "\e90c";
+						}
+
+					}
+
+					&.application-deadline:before {
+						color: @color-gray;
+						content: " / ";
+						font-family: @font-body;
+						margin: 0;
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.2.4. Categories
+		----------------------------------------------------------- */
+
+		.category-groups {
+			margin: 0 -15px;
+			padding: 0 0 3em 0;
+
+			&:after {
+				.clear;
+			}
+
+			h3 {
+				margin: 0 15px 1em;
+
+				a {
+					color: @color-black;
+				}
+
+			}
+
+			ul {
+				float: left;
+				margin: 0;
+
+				li {
+					padding: 0 15px;
+
+					&:before {
+						display: none;
+					}
+
+					a {
+						border-bottom: 1px solid @color-border;
+						display: block;
+						padding: 1em 2em 1em 0;
+						position: relative;
+						text-align: left;
+
+						span {
+							border: 1px solid @color-border;
+							border-radius: 10px;
+							color: @color-gray;
+							display: block;
+							font-size: 12px;
+							font-weight: bold;
+							line-height: 20px;
+							padding: 0 7px;
+							position: absolute;
+							right: 0;
+							top: 2em;
+						}
+
+					}
+
+				}
+
+			}
+
+			&.columns-2 ul {
+				width: 50%;
+			}
+
+			&.columns-3 ul {
+				width: 33.3333%;
+			}
+
+			&.columns-4 ul {
+				width: 25%;
+			}
+
+		}
+
+		.color-alternative {
+
+			.category-groups {
+
+				ul {
+
+					li {
+
+						a {
+							border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+							color: @color-white;
+
+							span {
+								border: 1px solid @color-brand;
+								color: @color-brand;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.2.5. Job overview
+		----------------------------------------------------------- */
+
+		.widget.job-overview {
+			background: #f8f8f8;
+			border-radius: @border-radius;
+			padding: 30px;
+
+			ul {
+				margin-bottom: 30px;
+				padding: 0;
+
+				li {
+					color: @color-gray;
+					margin-bottom: 15px;
+					padding-top: 0;
+
+					&:before {}
+
+					strong,
+					label {
+						color: @color-black;
+						display: block;
+						font-weight: normal;
+					}
+
+					a {
+						color: @color-brand;
+					}
+
+				}
+
+			}
+
+			.btn,
+			[type=button] {
+				display: block;
+				margin-top: 15px;
+				width: 100%
+			}
+
+			.application_details {
+				display: none;
+			}
+
+		}
+
+		/* 4.2.6. Job company
+		----------------------------------------------------------- */
+
+		.company-info {
+			display: table;
+
+			.image {
+				background: @color-white;
+				border: 1px solid @color-border;
+				display: table-cell;
+				height: 150px;
+				position: relative;
+				vertical-align: middle;
+				width: 150px;
+
+				img {
+					left: 50%;
+					max-height: 110px;
+					max-width: 110px;
+					position: absolute;
+					top: 50%;
+					transform: translateX(-50%) translateY(-50%);
+				}
+
+			}
+
+			.company-details {
+				display: table-cell;
+				padding-left: 30px;
+				vertical-align: middle;
+
+				h4 {
+					display: inline;
+					margin: 0;
+				}
+
+				.company-tagline {
+					color: @color-gray;
+					font-family: @font-headers;
+					font-size: 1.1em;
+					margin-left: 0.5em;
+				}
+
+				.company-website,
+				.company-twitter {
+					margin-right: 1em;
+
+					&:before {
+						font-family: "icomoon";
+						margin-right: 0.25em;
+					}
+
+				}
+
+				.company-website:before {
+					content: "\e90a";
+				}
+
+				.company-twitter:before {
+					content: "\e911";
+				}
+
+			}
+
+		}
+
+		/* 4.2.7. Job dashboard
+		----------------------------------------------------------- */
+
+		.job-dashboard-actions {
+			font-size: 0.8em;
+			margin: 0;
+
+			li {
+				display: inline;
+				margin-right: 1em;
+				padding: 0;
+
+				&:before {
+					display: none;
+				}
+
+				.job-dashboard-action-edit,
+				.job-dashboard-action-mark_filled,
+				.job-dashboard-action-duplicate,
+				.job-dashboard-action-delete {
+					color: lighten(@color-gray, 15%);
+					display: inline-block;
+					height: 1em;
+					position: relative;
+					text-indent: -9999px;
+					width: 1em;
+
+					&:hover {
+						color: darken(@color-gray, 15%);
+					}
+
+					&:after {
+						left: 0;
+						font-family: "icomoon";
+						position: absolute;
+						text-indent: 0;
+						top: 0;
+					}
+
+				}
+
+				.job-dashboard-action-edit:after {
+					content: "\e909";
+				}
+
+				.job-dashboard-action-mark_filled:after {
+					content: "\e907";
+				}
+
+				.job-dashboard-action-duplicate:after {
+					content: "\e90e";
+				}
+
+				.job-dashboard-action-delete:after {
+					content: "\e908";
+				}
+
+			}
+
+		}
+
+		/* 4.2.8. Job alerts
+		----------------------------------------------------------- */
+
+		.job-manager-alerts {
+
+			.job-alert-actions {
+				font-size: 0.8em;
+				margin: 0;
+
+				li {
+					display: inline;
+					margin-right: 1em;
+					padding: 0;
+
+					&:before {
+						display: none;
+					}
+
+					.job-alerts-action-view,
+					.job-alerts-action-email,
+					.job-alerts-action-edit,
+					.job-alerts-action-toggle_status,
+					.job-alerts-action-delete {
+						color: lighten(@color-gray, 15%);
+						display: inline-block;
+						height: 1em;
+						position: relative;
+						text-indent: -9999px;
+						width: 1em;
+
+						&:hover {
+							color: darken(@color-gray, 15%);
+						}
+
+						&:after {
+							left: 0;
+							font-family: "icomoon";
+							position: absolute;
+							text-indent: 0;
+							top: 0;
+						}
+
+					}
+
+					.job-alerts-action-view:after {
+						content: "\e905";
+					}
+
+					.job-alerts-action-email:after {
+						content: "\e912";
+					}
+
+					.job-alerts-action-edit:after {
+						content: "\e909";
+					}
+
+					.job-alerts-action-delete:after {
+						content: "\e908";
+					}
+
+				}
+
+			}
+
+			.alert-disabled {
+				opacity: 0.5;
+
+				.job-alert-actions {
+
+					li {
+
+						.job-alerts-action-toggle_status:after {
+							content: "\e900";
+						}
+
+					}
+
+				}
+
+			}
+
+			.alert-enabled {
+
+				.job-alert-actions {
+
+					li {
+
+						.job-alerts-action-toggle_status:after {
+							content: "\e90d";
+						}
+
+					}
+
+				}
+
+			}
+
+			small {
+				display: block;
+			}
+
+			tfoot {
+
+				a {
+					margin-top: 1em;
+				}
+
+			}
+
+		}
+
+		/* 4.2.9. Job packages
+		----------------------------------------------------------- */
+
+		#job_package_selection {
+
+			.job_listing_packages_title {
+				background: none;
+				padding: 0 0 1em;
+
+				input {
+					float: right;
+				}
+
+			}
+
+			.job_listing_packages {
+
+				.job_packages,
+				.resume_packages {
+					margin: 0;
+
+					.package-section {
+						display: none;
+					}
+
+					.job-package,
+					.resume-package {
+						background: #f8f8f8;
+						border-radius: @border-radius;
+						cursor: pointer;
+						margin-bottom: 0.5em;
+						padding: 1em;
+						.transition;
+
+						&:hover {
+							background: #f4f4f4;
+						}
+
+						&.active {
+							color: @color-white;
+							.horizontal-gradient;
+						}
+
+						br {
+							display: none;
+						}
+
+						&:before {
+							display: none;
+						}
+
+						[type="radio"] {
+							position: absolute;
+							visibility: hidden;
+						}
+
+						label {
+							display: block;
+							font-family: @font-headers;
+							letter-spacing: 0.05em;
+							position: relative;
+							text-transform: uppercase;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.2.10. Single job
+		----------------------------------------------------------- */
+
+		.single-job_listing {
+
+			#title {
+				text-align: left;
+
+				.container {
+					position: relative;
+				}
+
+				h1 {
+					margin-right: 33.333%;
+				}
+
+				.job-type {
+					border-radius: @border-radius;
+					color: @color-white;
+					display: inline-block;
+					font-size: 12px;
+					line-height: 1;
+					margin: 15px 0 0;
+					padding: 7px 10px;
+					position: relative;
+					text-transform: uppercase;
+
+					&.full-time {
+						background: @color-full-time;
+					}
+
+					&.part-time {
+						background: @color-part-time;
+					}
+
+					&.temporary {
+						background: @color-temporary;
+					}
+
+					&.freelance {
+						background: @color-freelance;
+					}
+
+					&.internship {
+						background: @color-internship;
+					}
+
+				}
+
+				a {
+					display: inline-block;
+					line-height: 1;
+					margin-bottom: 15px;
+				}
+
+				.job-manager-form {
+					position: absolute;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+
+				.bookmark-buttons,
+				.wp-job-manager-bookmarks-form {
+					margin-top: 0;
+					padding-left: 15px;
+					position: absolute;
+					right: 0;
+					text-align: center;
+					top: 50%;
+					transform: translateY(-50%);
+					width: 33.3333%;
+				}
+
+				.bookmark-details {
+					display: none;
+				}
+
+			}
+
+		}
+
+		.single_job_listing {
+			border-top: 1px solid @color-border;
+			margin-top: 2em;
+			padding-top: 2em;
+
+			.company_video {
+				height: 0;
+				margin-bottom: 2em;
+				padding-bottom: 56.25%;
+				position: relative;
+
+				iframe {
+					height: 100%;
+					left: 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
+				}
+
+			}
+
+			.gjm-map-wrapper {
+				margin-bottom: 2em;
+			}
+
+			.gjm-map-wrapper:last-child {
+				margin-bottom: 0;
+			}
+
+			strong {
+				color: @color-black;
+				font-weight: normal;
+			}
+
+		}
+
+		.job_tags {
+			border-top: 1px solid @color-border;
+			padding: 2em 0 0 1.5em;
+			position: relative;
+
+			&:before {
+				color: @color-brand;
+				content: "\e913";
+				font-family: "icomoon";
+				left: 0;
+				position: absolute;
+				top: 2em;
+			}
+
+		}
+
+		.bookmark-notice {
+			margin: 0;
+			white-space: nowrap;
+
+			&:before {
+				content: "\e915";
+				font-family: "icomoon";
+				margin-right: 0.5em;
+			}
+		}
+
+		/* 4.2.11. Job Preview
+		----------------------------------------------------------- */
+
+		#job_preview {
+
+			.job-overview ul {
+				margin-bottom: 0;
+			}
+
+			.job-overview li:last-child {
+				border: none;
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+
+			.job_listing_preview_title {
+
+				h2 {
+					margin: 0;
+				}
+
+				input {
+					float: right;
+					margin-left: 1em;
+					margin-top: -0.5em;
+				}
+			}
+		}
+
+		/* 4.2.12. Home page search
+		----------------------------------------------------------- */
+
+		.job_resume_search {
+
+			#search_keywords,
+			#search_location {
+				background-color: #fff;
+				background-position: 1em center;
+				background-repeat: no-repeat;
+			}
+
+			#search_keywords {
+				background-image: url(img/search.png);
+				background-size: 20px 20px;
+				padding-left: 3em;
+			}
+
+			#search_location {
+				background-image: url(img/pin.png);
+				background-size: 17px 20px;
+				padding-left: 2.6em;
+			}
+
+		}
+
+		@media (-webkit-min-device-pixel-ratio: 2), 
+		(min-resolution: 192dpi) {
+
+			.job_resume_search {
+
+				#search_keywords,
+				#search_location {
+					background-color: #fff;
+					background-position: 1em center;
+					background-repeat: no-repeat;
+				}
+
+				#search_keywords {
+					background-image: url(img/search@2x.png);
+					background-size: 20px 20px;
+				}
+
+				#search_location {
+					background-image: url(img/pin@2x.png);
+					background-size: 17px 20px;
+				}
+
+			}
+
+		}
+
+		/* 4.2.13. Job applications
+		----------------------------------------------------------- */
+
+		#job-manager-job-applications {
+
+			.job-manager-applications-applied-notice {
+				display: none;
+			}
+
+			.job-applications-download-csv {
+				float: right;
+			}
+
+		}
+
+		.job-applications {
+			margin: 0;
+
+			.filter-job-applications {
+				border-top: 1px solid @color-border;
+				padding-top: 30px;
+
+				&:after {
+					.clear;
+				}
+
+				p {
+					float: left;
+					margin-right: 0.5em;
+				}
+
+			}
+
+			li {
+				padding: 0;
+
+				&:before {
+					display: none;
+				}
+
+				&.job-application {
+					border: 1px solid @color-border;
+					margin-bottom: 30px;
+
+					header {
+						padding: 30px;
+
+						&:after {
+							.clear;
+						}
+
+						img {
+							float: left;
+							padding-right: 30px;
+							width: 100px;
+						}
+
+						h3 {
+							font-size: 1em;
+							margin-bottom: 0.25em;
+						}
+
+						.job-application-rating {
+							display: block;
+							float: left;
+							height: 1em;
+							line-height: 1;
+							position: relative;
+							width: 5em;
+
+							&:before {
+								color: #ddd;
+								content: "\e931\e931\e931\e931\e931";
+								font-family: "icomoon";
+								position: absolute;
+								left: 0;
+								top: 0;
+							}
+
+							span {
+								display: block;
+								overflow: hidden;
+
+								&:before {
+									background: @color-white;
+									color: @color-brand;
+									content: "\e931\e931\e931\e931\e931";
+									display: block;
+									font-family: "icomoon";
+									height: 1em;
+									line-height: 1;
+									position: relative;
+									width: 5em;
+								}
+
+							}
+
+						}
+
+					}
+
+					section {
+						border-top: 1px solid @color-border;
+						padding: 30px;
+
+						.hide_section:before {
+							content: "\e908";
+							font-family: "icomoon";
+							font-size: 0.8em;
+							font-weight: normal;
+							margin-right: 0.5em;
+						}
+
+						.delete_job_application {
+							display: block;
+							float: right;
+							line-height: 1;
+							padding: 1em 0;
+						}
+
+						p:last-child {
+							margin: 0;
+						}
+
+						.job-application-notes-list {
+							margin-bottom: 0;
+
+							li {
+								border: 1px solid @color-border;
+								border-radius: @border-radius;
+								display: block;
+								margin: 15px 0;
+								padding: 15px;
+
+								.job-application-note-meta {
+									color: lighten(@color-gray, 30%);
+									min-height: 1.75em;
+
+									.delete_note {
+										float: right;
+									}
+
+								}
+
+							}
+
+						}
+
+						.job-application-meta {
+
+							dt {
+								color: @color-black;
+								float: left;
+								padding-right: 30px;
+								width: 20%;
+							}
+
+							dd {
+								float: left;
+								margin: 0 0 0.5em;
+								width: 80%;
+
+								&:after {
+									.clear;
+								}
+
+							}
+
+						}
+
+					}
+
+					footer {
+						background: #f8f8f8;
+						border-top: 1px solid @color-border;
+						padding: 15px 30px;
+
+						&:after {
+							.clear;
+						}
+
+						.meta {
+							float: left;
+							margin: 0;
+
+							li {
+								display: inline-block;
+								margin-right: 0.5em;
+
+								&:first-child {
+									color: @color-black;
+								}
+							}
+
+						}
+
+						.actions {
+							float: right;
+							margin: 0;
+							text-align: right;
+
+							li {
+								display: inline-block;
+								float: none;
+								margin-left: 0.5em;
+								width: 1em;
+
+								a {
+									display: inline-block;
+									height: 1.1em;
+									overflow: hidden;
+									position: relative;
+									text-align: left;
+									text-indent: -9999px;
+									width: 1.1em;
+
+									&:after {
+										font-family: "icomoon";
+										left: 1px;
+										line-height: 1;
+										position: absolute;
+										text-indent: 0;
+										top: 1px;
+									}
+
+								}
+
+								&.edit a:after {
+									content: "\e909";
+								}
+
+								&.notes a:after {
+									content: "\e934";
+								}
+
+								&.email a:after {
+									content: "\e912";
+								}
+
+								&.resume a:after {
+									content: "\e932";
+								}
+
+								&.content a:after {
+									content: "\e933";
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.2.14. Pagination
+		----------------------------------------------------------- */
+
+		.job-manager-pagination {
+
+			ul {
+				margin: 3em 0 0;
+
+				&:after {
+					.clear;
+				}
+
+				li {
+					float: left;
+					margin: 0 10px 10px 0;
+					padding: 0;
+
+					&:before {
+						display: none;
+					}
+
+					a,
+					.current {
+						border-radius: @border-radius;
+						display: block;
+						line-height: 1;
+						padding: 12px 16px;
+						border: 1px solid @color-border;
+					}
+
+					a {
+						border: 1px solid @color-border;
+						color: lighten(@color-gray, 15%);
+
+						&:hover {
+							border: 1px solid @color-brand;
+							color: @color-white;
+							.horizontal-gradient;
+						}
+
+					}
+
+					.current {
+						color: @color-black;
+
+						&:hover {
+							background: none;
+							border: 1px solid @color-border;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.2.15. Indeed & ZipRecruiter jobs
+		----------------------------------------------------------- */
+
+		ul.job_listings {
+
+			.indeed_job_listing,
+			.ziprecruiter_job_listing {
+
+				a {
+					padding: 15px;
+
+					img,
+					.position,
+					.location,
+					.meta {
+						float: left;
+						padding: 15px;
+					}
+
+					img {
+						width: 15%;
+					}
+
+					.position {
+						width: 35%;
+
+						h3 {
+							font-size: 1em;
+							margin: 0;
+						}
+
+						.company {
+
+							&:before {
+								content: "\e90b";
+								color: #aeaeae;
+								display: inline;
+								font-family: "icomoon";
+								font-size: 0.8em;
+								margin-right: 0.5em;
+								position: relative;
+							}
+
+							strong {
+								color: @color-gray;
+							}
+
+							small {
+								display: none;
+							}
+
+						}
+
+					}
+
+					.location {
+						width: 25%;
+
+						&:before {
+							content: "\e90f";
+							color: #aeaeae;
+							display: inline;
+							font-family: "icomoon";
+							font-size: 0.8em;
+							margin-right: 0.5em;
+							position: relative;
+						}
+
+					}
+
+					.meta {
+						background: none;
+						color: @color-gray;
+						margin: 0;
+						width: 25%;
+
+						li {
+							border: 0;
+							background: none;
+
+							&:nth-child(even) {
+								background: none;
+							}
+
+							&.date:before {
+								content: "\e90c";
+								color: #aeaeae;
+								display: inline;
+								font-family: "icomoon";
+								font-size: 0.8em;
+								margin-right: 0.5em;
+								position: relative;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.2.16. Info boxes
+		----------------------------------------------------------- */
+
+		.position-filled,
+		.applications-closed {
+			background: lighten(@color-error, 52%);
+			border: 1px solid @color-error;
+			border-radius: @border-radius;
+			color: @color-error;
+			display: block;
+			margin-bottom: 30px;
+			padding: 20px 30px;
+
+			&:before {
+				content: "\e908";
+				font-family: "icomoon";
+				margin-right: 15px;
+			}
+
+		}
+
+	/* 4.3. Candidates
+	--------------------------------------------------------------- */
+
+		/* 4.3.1. Candidate listings
+		----------------------------------------------------------- */
+
+		ul.resumes {
+
+			li {
+				border-bottom: 1px solid @color-border;
+				border-left: 1px solid transparent;
+				border-right: 1px solid transparent;
+				padding: 0;
+
+				&:before {
+					display: none;
+				}
+
+				&:nth-child(even) {
+					background: rgba(0,0,0,0.02);
+				}
+
+				a {
+					color: @color-gray;
+					display: block;
+					padding: 15px;
+
+					&:hover {
+						background: lighten(@color-brand, 45%);
+					}
+
+					&:after {
+						.clear;
+					}
+
+					img,
+					.candidate-column,
+					.candidate-location-column,
+					.resume-posted-column {
+						float: left;
+						padding: 15px;
+					}
+
+					img {
+						width: 10%;
+					}
+
+					.candidate-column {
+						width: 30%;
+
+						h3 {
+							font-size: 1em;
+							margin: 0;
+						}
+
+						.candidate-title {
+
+							strong {
+								color: @color-black;
+								font-weight: normal;
+							}
+
+						}
+
+					}
+
+					.candidate-location-column {
+						padding-left: 38px;
+						position: relative;
+						width: 30%;
+
+						&:before {
+							color: lighten(@color-gray, 15%);
+							content: "\e90f";
+							font-family: "icomoon";
+							left: 15px;
+							position: absolute;
+							top: 15px;
+						}
+					}
+
+					.resume-posted-column {
+						width: 30%;
+
+						date,
+						.resume-category {
+							padding-left: 30px;
+							position: relative;
+
+							&:before {
+								color: lighten(@color-gray, 15%);
+								font-family: "icomoon";
+								left: 0;
+								position: absolute;
+								top: 0;
+							}
+
+						}
+
+						date {
+							display: block;
+
+							&:before {
+								content: "\e90c";
+							}
+
+						}
+
+						.resume-category {
+
+							&:before {
+								content: "\e913";
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.3.2. Candidate dashboard
+		----------------------------------------------------------- */
+
+		.candidate-dashboard-actions {
+			font-size: 0.8em;
+			margin: 0;
+
+			li {
+				display: inline;
+				margin-right: 1em;
+				padding: 0;
+
+				&:before {
+					display: none;
+				}
+
+				.candidate-dashboard-action-edit,
+				.candidate-dashboard-action-hide,
+				.candidate-dashboard-action-publish,
+				.candidate-dashboard-action-delete {
+					color: lighten(@color-gray, 15%);
+					display: inline-block;
+					height: 1em;
+					position: relative;
+					text-indent: -9999px;
+					width: 1em;
+
+					&:hover {
+						color: darken(@color-gray, 15%);
+					}
+
+					&:after {
+						left: 0;
+						font-family: "icomoon";
+						position: absolute;
+						text-indent: 0;
+						top: 0;
+					}
+
+				}
+
+				.candidate-dashboard-action-edit:after {
+					content: "\e909";
+				}
+
+				.candidate-dashboard-action-hide:after {
+					content: "\e90d";
+				}
+
+				.candidate-dashboard-action-publish:after {
+					content: "\e900";
+				}
+
+				.candidate-dashboard-action-delete:after {
+					content: "\e908";
+				}
+
+			}
+
+		}
+
+		/* 4.3.3. Single resume
+		----------------------------------------------------------- */
+
+		.single-resume {
+
+			#title {
+				text-align: left;
+
+				.container {
+					position: relative;
+
+					.job-manager-form {
+						margin-top: 1em;
+					}
+
+					.bookmark-details {
+						display: none;
+					}
+
+					.bookmark-buttons,
+					.wp-job-manager-bookmarks-form {
+						margin-top: 0;
+						padding-left: 15px;
+						position: absolute;
+						right: 0;
+						text-align: center;
+						top: 50%;
+						transform: translateY(-50%);
+						width: 33.3333%;
+					}
+
+				}
+
+			}
+
+			.resume-card {
+
+				.skills,
+				.resume_links {
+					margin-bottom: 2em;
+
+					h4 {
+						margin: 0;
+					}
+
+					a {
+						margin-right: 1em;
+
+						&:before {
+							font-family: "icomoon";
+							margin-right: 0.25em;
+						}
+
+					}
+
+				}
+
+				.skills a:before {
+					content: "\e913";
+					position: relative;
+					top: 3px;
+				}
+
+				.resume_links {
+
+					a:before {
+						content: "\e90a";
+					}
+
+					a[href*="youtube"]:before {
+						content: "\e916";
+					}
+
+					a[href*="xing"]:before {
+						content: "\e917";
+					}
+
+					a[href*="vimeo"]:before {
+						content: "\e918";
+					}
+
+					a[href*="tumblr"]:before {
+						content: "\e919";
+					}
+
+					a[href*="stackoverflow"]:before {
+						content: "\e91a";
+					}
+
+					a[href*="soundcloud"]:before {
+						content: "\e91b";
+					}
+
+					a[href*="skype"]:before {
+						content: "\e91c";
+					}
+
+					a[href*="linkedin"]:before {
+						content: "\e91d";
+					}
+
+					a[href*="instagram"]:before {
+						content: "\e91e";
+					}
+
+					a[href*="plus.google"]:before {
+						content: "\e91f";
+					}
+
+					a[href*="github"]:before {
+						content: "\e920";
+					}
+
+					a[href*="flickr"]:before {
+						content: "\e921";
+					}
+
+					a[href*="facebook"]:before {
+						content: "\e922";
+					}
+
+					a[href*="dribbble"]:before {
+						content: "\e923";
+					}
+
+					a[href*="behance"]:before {
+						content: "\e924";
+					}
+
+					a[href*="twitter"]:before {
+						content: "\e911";
+					}
+					
+				}
+
+				.resume_contact_details {
+					display: none;
+				}
+
+			}
+
+			.experience {
+				border-top: 1px solid @color-border;
+				margin-top: 3em;
+				padding-top: 3em;
+			}
+
+			.resume-row {
+				border: none;
+				border-top: 1px solid @color-border;
+				margin: 3em 0;
+			}
+
+			.work-experience {
+				border-left: 1px solid @color-border;
+				margin-left: 1em;
+				padding: 0 0 2em 1em;
+				position: relative;
+
+				&:before {
+					background: @color-white;
+					border: 2px solid @color-border;
+					border-radius: 50%;
+					content: "";
+					display: block;
+					height: 7px;
+					left: -6px;
+					position: absolute;
+					top: 0.5em;
+					width: 7px;
+				}
+
+				&:last-child {
+					padding-bottom: 0;
+				}
+
+				h4,
+				p {
+					margin: 0;
+				}
+
+				strong {
+					font-weight: normal;
+				}
+
+			}
+
+			.video-wrapper {
+					float: right;
+					padding-left: 2em;
+					width: 50%;
+
+				.candidate-video {
+					height: 0;
+					margin-bottom: 2em;
+					padding-bottom: 56.25%;
+					position: relative;
+
+					iframe {
+						height: 100%;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100%;
+					}
+
+				}
+
+			}
+
+			.grm-map-wrapper {
+				margin-bottom: 2em;
+			}
+
+			.grm-map-wrapper:last-child {
+				margin-top: 2em;
+				margin-bottom: 0;
+			}
+
+		}
+
+		/* 4.3.4. Resume preview
+		----------------------------------------------------------- */
+
+		#resume_preview {
+
+			.resume_preview_title {
+				padding-bottom: 2em;
+				margin-bottom: 2em;
+				border-bottom: 1px solid #e4e4e4;
+
+				h2 {
+					margin: 0;
+				}
+
+				input {
+					float: right;
+					margin-left: 1em;
+					margin-top: -0.5em;
+				}
+
+			}
+
+		}
+
+		/* 4.3.5. Past applications
+		----------------------------------------------------------- */
+
+		.job-manager-past-applications {
+
+			.application-message {
+				width: 50%;
+			}
+
+			p {
+				margin: 0;
+			}
+
+		}
+
+	/* 4.4. Companies
+	--------------------------------------------------------------- */
+
+		/* 4.4.1. Companies list
+		----------------------------------------------------------- */
+
+		.company-letters {
+			border-bottom: 1px solid @color-border;
+			font-family: @font-headers;
+			margin-bottom: 30px;
+			text-align: center;
+
+			&:after {
+				.clear;
+			}
+
+			a {
+				color: @color-black;
+				display: inline-block;
+				padding: 1em 0.5em;
+
+				&:hover {
+					color: @color-brand;
+				}
+
+			}
+
+		}
+
+		.companies-overview {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				padding: 0 0 45px;
+				width: 25%;
+
+				&:before {
+					display: none;
+				}
+
+				.company-letter {
+					border-bottom: 2px solid @color-border;
+					color: @color-black;
+					font-family: @font-headers;
+					margin: 0 1em;
+					padding: 0.5em 0;
+				}
+
+				ul {
+					margin: 0;
+					padding: 0;
+
+					li {
+						padding: 0 1em;
+						width: 100%;
+
+						a {
+							border-bottom: 1px solid @color-border;
+							display: block;
+							padding: 0.5em;
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.4.2. Company profile
+		----------------------------------------------------------- */
+
+		#title.company-title {
+			text-align: left;
+
+			.container {
+				display: table;
+
+				.image {
+					background: @color-white;
+					border: 1px solid @color-border;
+					display: table-cell;
+					height: 150px;
+					position: relative;
+					vertical-align: middle;
+					width: 150px;
+
+					img {
+						left: 50%;
+						max-height: 110px;
+						max-width: 110px;
+						position: absolute;
+						top: 50%;
+						transform: translateX(-50%) translateY(-50%);
+					}
+
+				}
+
+				.company-details {
+					display: table-cell;
+					padding-left: 30px;
+					vertical-align: middle;
+
+					.company-website,
+					.company-twitter {
+						margin-right: 1em;
+
+						&:before {
+							font-family: "icomoon";
+							margin-right: 0.25em;
+						}
+
+					}
+
+					.company-website:before {
+						content: "\e90a";
+					}
+
+					.company-twitter:before {
+						content: "\e911";
+					}
+
+				}
+
+			}
+
+		}
+
+	/* 4.5. Carousels
+	--------------------------------------------------------------- */
+
+	.owl-carousel {
+		display: none;
+		position: relative;
+		width: 100%;
+		z-index: 1;
+		-webkit-tap-highlight-color: transparent;
+
+		.owl-stage {
+			position: relative;
+			-ms-touch-action: pan-Y;
+
+			&:after {
+				.clear;
+			}
+
+		}
+
+		.owl-stage-outer {
+			position: relative;
+			overflow: hidden;
+			/* fix for flashing background */
+			-webkit-transform: translate3d(0px, 0px, 0px);
+		}
+	
+		.owl-item {
+			position: relative;
+			min-height: 1px;
+			float: left;
+			-webkit-backface-visibility: hidden;
+			-webkit-tap-highlight-color: transparent;
+			-webkit-touch-callout: none;
+
+			img {
+				-webkit-transform-style: preserve-3d;
+
+				&.owl-lazy {
+					-webkit-transform-style: preserve-3d;
+					transform-style: preserve-3d;
+				}
+			}
+
+			.owl-lazy {
+				opacity: 0;
+				transition: opacity 400ms ease;
+			}
+
+		}
+	
+		.owl-nav.disabled,
+		.owl-dots.disabled {
+			display: none;
+		}
+
+		.owl-nav .owl-prev,
+		.owl-nav .owl-next,
+		.owl-dot {
+			cursor: pointer;
+			cursor: hand;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		&.owl-loaded {
+			display: block;
+		}
+
+		&.owl-loading {
+			opacity: 0;
+			display: block;
+		}
+	
+		&.owl-hidden {
+			opacity: 0;
+		}
+	
+		&.owl-refresh .owl-item {
+			display: none;
+		}
+		
+		&.owl-drag .owl-item {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+		
+		&.owl-grab {
+			cursor: move;
+			cursor: grab;
+		}
+		
+		&.owl-rtl {
+			direction: rtl;
+
+			.owl-item {
+				float: right;
+			}
+
+		}
+
+		.animated {
+			-webkit-animation-duration: 1000ms;
+			animation-duration: 1000ms;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+		}
+
+		.owl-animated-in {
+			z-index: 0;
+		}
+
+		.owl-animated-out {
+			z-index: 1;
+		}
+
+		.fadeOut {
+			-webkit-animation-name: fadeOut;
+			animation-name: fadeOut;
+		}
+
+		.owl-video-wrapper {
+			position: relative;
+			height: 100%;
+			background: #000;
+		}
+
+		.owl-video-play-icon {
+			position: absolute;
+			height: 80px;
+			width: 80px;
+			left: 50%;
+			top: 50%;
+			margin-left: -40px;
+			margin-top: -40px;
+			background: url("owl.video.play.png") no-repeat;
+			cursor: pointer;
+			z-index: 1;
+			-webkit-backface-visibility: hidden;
+			transition: -webkit-transform 100ms ease;
+			transition: transform 100ms ease;
+
+			&:hover {
+				-webkit-transform: scale(1.3, 1.3);
+				-ms-transform: scale(1.3, 1.3);
+				transform: scale(1.3, 1.3);
+			}
+
+		}
+
+		.owl-video-playing .owl-video-tn,
+		.owl-video-playing .owl-video-play-icon {
+			display: none;
+		}
+
+		.owl-video-tn {
+			opacity: 0;
+			height: 100%;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			transition: opacity 400ms ease;
+		}
+
+		.owl-video-frame {
+			position: relative;
+			z-index: 1;
+			height: 100%;
+			width: 100%;
+		}
+
+		.owl-controls {
+
+			margin-top: 30px;
+
+			.owl-nav {
+
+				text-align: center;
+
+				.owl-prev,
+				.owl-next {
+					display: inline-block;
+					height: 1.5em;
+					margin: 0 15px;
+					opacity: 0.5;
+					overflow: hidden;
+					position: relative;
+					width: 1em;
+					text-indent: -9999px;
+					.transition;
+
+					&:before {
+						font-family: "icomoon";
+						left: 0;
+						position: absolute;
+						text-indent: 0;
+						top: 0;
+					}
+
+					&:hover {
+						opacity: 1;
+					}
+
+				}
+
+				.owl-prev:before {
+					content: "\e927";
+				}
+
+				.owl-next:before {
+					content: "\e926";
+				}
+
+			}
+
+		}
+
+	}
+
+	.no-js .owl-carousel {
+		display: block;
+	}
+
+	.owl-height {
+		transition: height 500ms ease-in-out;
+	}
+
+	@-webkit-keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+		/* 4.5.1. Logos carousel
+		----------------------------------------------------------- */
+
+		.logo-carousel {
+
+			.owl-item {
+				height: 100px;
+
+				div {
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+		}
+
+	/* 4.6. Testimonials
+	--------------------------------------------------------------- */
+
+	.testimonial {
+		border-bottom: 1px solid @color-border;
+		margin-bottom: 2em;
+		padding-bottom: 2em;
+		text-align: center;
+
+		&:last-child {
+			border: 0;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+
+		img {
+			border-radius: 50%;
+			display: inline-block;
+			height: 80px;
+			width: 80px;
+		}
+
+		blockquote {
+			border: 0;
+			font-size: 1.25em;
+			font-style: italic;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 1em 10%;
+
+			p {
+				margin: 0 0 1em;
+			}
+
+			footer {
+				font-size: 0.75em;
+				font-style: normal;
+
+				cite {
+					font-style: normal;
+				}
+
+			}
+
+		}
+
+	}
+
+	.home-reviews {
+		background: #000;
+
+		.vc_parallax-inner {
+			opacity: 0.3333;
+		}
+
+		.testimonial {
+			border-bottom: 0;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+
+	}
+
+	/* 4.7. Newsletter
+	--------------------------------------------------------------- */
+
+	.newsletter {
+		background: #000;
+
+		.vc_parallax-inner {
+			opacity: 0.3333;
+		}
+
+		input {
+			border: 0;
+			margin: 10px;
+
+			&[type=submit] {
+				padding: 11px 30px;
+				top: -2px;
+
+				&:hover {
+					box-shadow: none;
+					top: -7px;
+				}
+
+			}
+
+			&[type=email] {
+				padding-left: 55px;
+				position: relative;
+			}
+
+		}
+
+		.wpcf7-form-control-wrap {
+			position: relative;
+
+			&:after {
+				color: lighten(@color-gray, 20%);
+				content: "\e912";
+				font-family: "icomoon";
+				font-size: 1.5em;
+				left: 25px;
+				position: absolute;
+				top: -2px;
+			}
+
+		}
+
+	}
+
+	/* 4.8. Counter
+	--------------------------------------------------------------- */
+
+	.counter-container {
+		display: table;
+		margin: 30px 0 60px;
+		table-layout: fixed;
+		width: 100%;
+
+		.counter {
+			display: table-cell;
+
+			.number {
+				color: @color-white;
+				font-family: "Montserrat", sans-serif;
+				font-size: 60px;
+				font-weight: 100;
+				line-height: 1em;
+			}
+
+			.description {
+				color: @color-black;
+				font-size: 24px;
+			}
+
+		}
+
+	}
+
+	/* 4.9. Hero section
+	--------------------------------------------------------------- */
+
+	.hero {
+		background: #000;
+		color: @color-white;
+		padding: 100px 0;
+
+		.section-title {
+			padding-bottom: 0;
+
+			&:after {
+				display: none;
+			}
+
+			h2 {
+				color: @color-white;
+			}
+
+		}
+
+		.vc_parallax-inner {
+			opacity: 0.3333;
+		}
+	}
+
+	/* 4.10. Blog
+	--------------------------------------------------------------- */
+
+		.content {
+			float: left;
+			padding: 0 15px;
+			width: 66.6666%;
+		}
+
+		/* 4.10.1. Recent posts
+		----------------------------------------------------------- */
+
+		.recent-blog-posts {
+
+			.post-thumbnail {
+				display: block;
+				margin: 30px 0;
+			} 
+
+			.date {
+				color: lighten(@color-gray, 15%);
+			}
+
+			h4 {
+
+				a {
+					color: @color-black;
+				}
+
+			}
+
+			p {
+				margin-bottom: 30px;
+			}
+
+		}
+
+		/* 4.10.2. Posts list
+		----------------------------------------------------------- */
+
+		.blog,
+		.archive {
+
+			article {
+				border-bottom: 1px solid @color-border;
+				margin-bottom: 3em;
+				padding-bottom: 3em;
+
+				.post-image {
+					background: @color-black;
+					margin-bottom: 2em;
+
+					a {
+						display: block;
+						overflow: hidden;
+						position: relative;
+
+						img {
+							display: block;
+							width: 100%;
+							.transition;
+						}
+
+						&:after {
+							.horizontal-gradient;
+							border-radius: 50%;
+							color: @color-white;
+							content: "\e900";
+							display: block;
+							font-family: 'icomoon';
+							font-size: 2em;
+							height: 80px;
+							left: 50%;
+							line-height: 80px;
+							margin: -40px 0 0 -40px;
+							opacity: 0;
+							position: absolute;
+							text-align: center;
+							top: 100%;
+							width: 80px;
+							.transition;
+						}
+
+						&:hover {
+
+							img {
+								opacity: 0.8;
+							}
+
+							&:after {
+								opacity: 1;
+								top: 50%;
+							}
+
+						}
+
+					}
+
+				}
+
+				.post-title {
+					margin: 0;
+
+					a {
+						color: @color-black;
+
+						&:hover {
+							color: lighten(@color-black, 10%);
+						}
+
+					}
+
+				}
+
+				.meta {
+					color: lighten(@color-gray, 15%);
+					margin-bottom: 1em;
+
+					.date {
+						border-left: 1px solid @color-border;
+						border-right: 1px solid @color-border;
+						margin: 0 0.5em;
+						padding: 0 0.5em;
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.10.3. Posts navigation
+		----------------------------------------------------------- */
+
+		.pagination {
+			text-align: center;
+
+			h2 {
+				display: none;
+			}
+
+			.page-numbers {
+				border: 1px solid @color-border;
+				border-radius: @border-radius;
+				color: lighten(@color-gray, 15%);
+				display: inline-block;
+				margin: 0 2px;
+				padding: 0.5em 1em;
+
+				&:hover {
+					border: 1px solid @color-brand;
+					color: @color-white;
+					.horizontal-gradient;
+				}
+
+				&.current {
+					color: @color-black;
+
+					&:hover {
+						background: none;
+						border: 1px solid @color-border;
+					}
+
+				}
+
+			}
+
+		}
+
+		.paging {
+			margin: 3em 0 0;
+
+			&:after {
+				.clear;
+			}
+
+			li {
+				padding: 0;
+
+				&:before {
+					display: none;
+				}
+
+				&.prev {
+					float: left;
+
+					a:before {
+						content: "\e927";
+						font-family: "icomoon";
+						margin-right: 0.5em;
+					}
+
+				}
+
+				&.next {
+					float: right;
+
+					a:after {
+						content: "\e926";
+						font-family: "icomoon";
+						margin-left: 0.5em;
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.10.4. Single post
+		----------------------------------------------------------- */
+
+		.post-title {
+			margin: 0;
+		}
+
+		.meta {
+			color: lighten(@color-gray, 15%);
+			margin-bottom: 2em;
+		}
+
+		.post-image {
+			margin-bottom: 2em;
+
+			img {
+				display: block;
+				width: 100%;
+			}
+
+		}
+
+		.author-bio {
+			border-top: 1px solid @color-border;
+			margin-top: 3em;
+			min-height: 8em;
+			padding: 3em 0 0 7em;
+			position: relative;
+
+			img {
+				left: 0;
+				position: absolute;
+				top: 3em;
+			}
+
+			h5,
+			p {
+				margin: 0;
+			}
+
+		}
+
+		.tags {
+			background: #f8f8f8;
+			margin: 3em 0 0;
+			padding: 1em;
+
+			&:before {
+				font-family: 'icomoon';
+				content: "\e913";
+				margin-right: 1em;
+			}
+
+			li {
+				display: inline;
+				margin-right: 1em;
+				padding: 0;
+
+				&:before {
+					display: none;
+				}
+
+				a {
+					color: @color-gray;
+
+					&:hover {
+						color: darken(@color-gray, 15%)
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.10.5. Comments
+		----------------------------------------------------------- */
+
+		#comments {
+
+			h2 {
+				border-top: 1px solid @color-border;
+				margin: 2em 0;
+				padding-top: 2em;
+			}
+
+			ol {
+				list-style: none;
+				padding: 0;
+
+				li {
+					margin-bottom: 3em;
+					padding-left: 80px;
+					position: relative;
+
+					ol {
+						margin-top: 3em;
+					}
+
+					img {
+						left: 0;
+						position: absolute;
+						top: 0;
+					}
+
+					p {
+						margin: 0;
+					}
+
+					.comment-author {
+						color: @color-black;
+
+						b {
+							font-weight: 400;
+
+							a {
+								color: @color-brand;
+
+								&:hover {
+									color: darken(@color-brand, 15%);
+								}
+
+							}
+
+						}
+
+						cite {
+							font-style: normal;
+
+							a {
+								color: @color-black;
+
+								&:hover {
+									color: @color-black;
+								}
+
+							}
+
+						}
+
+					}
+
+					.comment-meta {
+						margin-bottom: 1em;
+
+						a {
+							color: lighten(@color-gray, 15%);
+
+							&:hover {
+								color: darken(@color-gray, 15%);
+							}
+
+						}
+
+					}
+
+					.reply {
+						position: absolute;
+						right: 0;
+						top: 0;
+
+						a {
+							background: #f8f8f8;
+							border-radius: @border-radius;
+							color: lighten(@color-gray, 15%);
+							display: block;
+							padding: 5px 15px;
+
+							&:hover {
+								background: #f4f4f4;
+								color: darken(@color-gray, 15%);
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+			#respond {
+				border-top: 1px solid @color-border;
+				margin-top: 3em;
+				padding-top: 3em;
+
+				h2 {
+					display: none;
+				}
+
+				input[type=text] {
+					max-width: 400px;
+				}
+
+			}
+
+		}
+
+	/* 4.11. Sidebar widgets
+	--------------------------------------------------------------- */
+
+	.sidebar {
+		float: left;
+		padding: 0 15px;
+		width: 33.3333%;
+	}
+
+	.widget {
+		margin-bottom: 3em;
+
+		ul {
+			margin: 0;
+
+			li {
+				border-bottom: 1px solid @color-border;
+				padding: 0.75em 0;
+
+				&:before {
+					display: none;
+				}
+
+				a {
+					color: lighten(@color-gray, 10%);
+
+					&:hover {
+						color: darken(@color-gray, 10%);
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	#searchform {
+		position: relative;
+
+		[type=text] {
+			padding-right: 3em;
+
+		}
+
+		&:after {
+			content: "\e905";
+			font-family: "icomoon";
+			position: absolute;
+			right: 1em;
+			top: 0.9em;
+		}
+
+	}
+
+	/* 4.12. Shop
+	--------------------------------------------------------------- */
+
+		/* 4.12.1. Cart & checkout
+		----------------------------------------------------------- */
+
+		.woocommerce {
+
+			table {
+
+				&.shop_table {
+					border-collapse: collapse;
+
+					tbody,
+					tfoot {
+
+						th,
+						td {
+							border-bottom: 0;
+							border-top: 1px solid @color-border;
+
+						}
+
+						:nth-child(even) {
+
+							td {
+								background: none;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+			#respond input#submit.alt,
+			a.button.alt,
+			button.button.alt,
+			input.button.alt,
+			input#submit,
+			a.button,
+			button.button,
+			input.button {
+				color: @color-white;
+				font-weight: normal;
+				line-height: 1;
+				padding: 1em;
+				.horizontal-gradient;
+
+				&:hover,
+				&.disabled,
+				&:disabled,
+				&:disabled[disabled] {
+					color: @color-white;
+					font-weight: normal;
+					line-height: 1;
+					padding: 1em;
+					.horizontal-gradient;
+				}
+
+			}
+
+			.select2-container {
+
+				.select2-choice {
+					background: #fafafa;
+					border: 1px solid @color-border;
+					color: @color-gray;
+					line-height: 1;
+					padding: 1em; 
+				}
+
+			}
+
+			form {
+
+				&.checkout_coupon {
+					border: 1px solid @color-border;
+				}
+
+			}
+
+			.woocommerce-info,
+			.woocommerce-message {
+				border-top-color: @color-brand;
+
+				&:before {
+					color: @color-brand;
+				}
+
+			}
+
+		}
+
+		#add_payment_method,
+		.woocommerce-cart,
+		.woocommerce-checkout {
+
+			#payment {
+				background: #f8f8f8;
+
+				ul {
+
+					&.payment_methods {
+						border-bottom: 1px solid @color-border;
+					}
+
+				}
+
+				div {
+
+					&.payment_box {
+						background: #f0f0f0;
+
+						&:before {
+							border-bottom: 1em solid #f0f0f0;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		.woocommerce #content table.cart td.actions .input-text,
+		.woocommerce table.cart td.actions .input-text,
+		.woocommerce-page #content table.cart td.actions .input-text,
+		.woocommerce-page table.cart td.actions .input-text,
+		#add_payment_method table.cart td.actions .coupon .input-text,
+		.woocommerce-cart table.cart td.actions .coupon .input-text,
+		.woocommerce-checkout table.cart td.actions .coupon .input-text {
+				border: 1px solid @color-border;
+				height: 3em;
+				line-height: 3em;
+				padding: 0 1em;
+				width: 150px;
+			}
+
+		.woocommerce-billing-fields,
+		.woocommerce-shipping-fields {
+			padding-bottom: 4em;
+		}
+
+		.select2-drop,
+		.select2-drop-active {
+			border: 1px solid @color-border;
+			border-top: 0;
+		}
+
+		.select2-results {
+
+			li {
+
+				&:before {
+					left: 0.5em;
+					top: 0.5em;
+				}
+
+			}
+
+		}
+
+		/* 4.12.2. Login & register
+		----------------------------------------------------------- */
+
+		.woocommerce {
+
+			#customer_login {
+
+				.login,
+				.register {
+					border: 0;
+					padding: 0;
+				}
+
+				&.col2-set {
+
+					.col-1 {
+						padding-right: 30px;
+						width: 50%;
+					}
+
+					.col-2 {
+						border-left: 1px solid @color-border;
+						padding-left: 30px;
+						width: 50%;
+					}
+
+				}
+
+			}
+
+		}
+
+		/* 4.12.3. My account
+		----------------------------------------------------------- */
+
+		.woocommerce-account {
+
+			.woocommerce-MyAccount-navigation {
+				padding-right: 30px;
+
+				ul {
+					background: #f8f8f8;
+					border-radius: @border-radius;
+					margin-bottom: 4em;
+					overflow: hidden;
+
+					li {
+						padding: 0;
+
+						&:before {
+							display: none;
+						}
+
+						a {
+							border-bottom: 1px solid @color-border;
+							color: @color-black;
+							display: block;
+							padding: 1em 1em 1em 2em;
+							position: relative;
+
+							&:hover {
+								background: #f0f0f0;
+							}
+
+							&:before {
+								color: @color-brand;
+								content: "\e914";
+								font-family: "icomoon";
+								font-size: 0.5em;
+								left: 2em;
+								position: absolute;
+								top: 2em;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	/* 4.13. Popups
+	--------------------------------------------------------------- */
+
+	.mfp-wrap {
+
+		.mfp-container {
+
+			.mfp-content {
+				background: @color-white;
+				margin: 80px 0;
+				padding: 30px 30px 0;
+				position: relative;
+				width: 500px;
+
+				.mfp-close {
+					background: none;
+					position: absolute;
+					right: 0;
+					top: 0;
+
+					&:hover {
+						box-shadow: none;
+						top: 0;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/* 4.14. Job / resume search
+	--------------------------------------------------------------- */
+
+	.job_resume_search {
+		padding: 0 0 2em;
+
+		input,
+		select {
+			margin-bottom: 1em;
+		}
+
+		[type=submit] {
+			text-align: center;
+			width: 100%;
+		}
+	}
+
+	/* 4.15. Message boxes
+	--------------------------------------------------------------- */
+
+	.job-manager-applications-applied-notice,
+	div.wpcf7-mail-sent-ok {
+		border: 0;
+		color: @color-applied;
+		display: block;
+		margin-bottom: 2em;
+		margin-left: 0;
+		margin-right: 0;
+		min-height: 40px;
+		padding: 0 0 0 50px;
+		position: relative;
+
+		&:before {
+			background: @color-white;
+			border: 1px solid @color-applied;
+			border-radius: 50%;
+			content: "\e907";
+			font-family: "icomoon";
+			height: 40px;
+			left: 0;
+			line-height: 40px;
+			position: absolute;
+			text-align: center;
+			top: 0;
+			width: 40px;
+		}
+
+	}
+
+	.job-manager-error {
+		background: lighten(@color-error, 50%);
+		border: 1px solid @color-error;
+		border-radius: @border-radius;
+		color: @color-error;
+		display: block;
+		margin-bottom: 2em;
+		padding: 1em 1em 1em 3em;
+		position: relative;
+
+		&:before {
+			content: "\e92b";
+			font-family: "icomoon";
+			left: 1em;
+			position: absolute;
+			top: 1em;
+		}
+
+	}
+
+	.job-manager-message {
+		background: lighten(@color-message, 50%);
+		border: 1px solid @color-message;
+		border-radius: @border-radius;
+		color: @color-message;
+		display: block;
+		margin-bottom: 2em;
+		padding: 1em 1em 1em 3em;
+		position: relative;
+
+		&:before {
+			content: "\e92a";
+			font-family: "icomoon";
+			left: 1em;
+			position: absolute;
+			top: 1em;
+		}
+	
+	}
+
+	/* 4.16. Call to action
+	--------------------------------------------------------------- */
+
+	.brand-background {
+		.horizontal-gradient;
+
+		.vc_parallax-inner {
+			opacity: 0.1;
+		}
+
+		.section-title:after {
+			background: @color-black;
+		}
+
+	}
+
+	/* 4.17. Share widget
+	--------------------------------------------------------------- */
+
+	body div.sharedaddy {
+
+		h3.sd-title {
+			display: block;
+			font-size: 1em;
+			font-weight: normal;
+			line-height: 1.75em;
+			margin: 0;
+
+			&:before {
+				display: none;
+			}
+
+		}
+
+		ul {
+
+			li {
+				border: 0;
+
+				&:before {
+					display: none;
+				}
+			}
+
+		}
+
+	}
+
+	/* 4.18. Price tables
+	--------------------------------------------------------------- */
+
+	.pricing {
+
+		ul {
+			margin: 55px 0;
+
+			li {
+				background: #f8f8f8;
+				border-bottom: 1px solid @color-border;
+				padding: 10px 30px;
+				text-align: center;
+
+				&:before {
+					display: none;
+				}
+
+				&.title {
+					background: @color-black;
+					border: 0;
+					color: @color-white;
+					padding: 10px 30px;
+				}
+
+				&.price {
+					border: 0;
+					color: @color-white;
+					font-size: 4em;
+					font-weight: 100;
+					line-height: 2em;
+					.horizontal-gradient;
+				}
+
+				&:last-child {
+					border: 0;
+					padding: 30px;
+				}
+
+			}
+
+			&.popular {
+				margin: 15px 0;
+
+				li {
+
+					&.title {
+						padding: 30px;
+					}
+
+					&:last-child {
+						padding: 30px 30px 60px 30px;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/* 4.19. Alternative colors
+	--------------------------------------------------------------- */
+
+	.color-alternative {
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		blockquote,
+		strong {
+			color: @color-white;
+		}
+
+	}
+
+/* 5. Footer
+------------------------------------------------------------------- */
+
+footer {
+
+	/* 5.1. Prefooter
+	--------------------------------------------------------------- */
+
+	#prefooter {
+		background: lighten(@color-black, 10%);
+		padding: 80px 0;
+
+		h2 {
+			color: @color-white;
+			font-size: 1em;
+		}
+
+	}
+
+	/* 5.2. Credits
+	--------------------------------------------------------------- */
+
+	#credits {
+		background: darken(@color-black, 3%);
+		padding: 30px 0;
+		text-align: center;
+	}
+
+	/* 5.3. Widgets
+	--------------------------------------------------------------- */
+
+	.widget {
+
+		&.widget_nav_menu {
+
+			ul {
+
+				li {
+					border: 0;
+					padding: 0;
+
+					a {
+						border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+						color: @color-gray;
+						display: block;
+						padding: 0.5em 0.5em 0.5em 1.5em;
+						position: relative;
+
+						&:hover {
+							background: rgba(255, 255, 255, 0.02);
+							color: @color-white;
+						}
+
+						&:before {
+							color: @color-brand;
+							content: "\e914";
+							font-family: "icomoon";
+							font-size: 0.5em;
+							left: 1em;
+							position: absolute;
+							top: 1em;
+						}
+						
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/* 5.4. Social icons
+	--------------------------------------------------------------- */
+
+	[class^="icon-"],
+	[class*=" icon-"] {
+		border: 1px solid @color-brand;
+		border-radius: 50%;
+		display: inline-block;
+		font-size: 1.25em;
+		height: 40px;
+		line-height: 40px;
+		margin: 0 0.25em 1em 0.25em;
+		text-align: center;
+		width: 40px;
+	}
+
+}
+
+/* 6. Mobile styles
+------------------------------------------------------------------- */
+
+	@media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 144dpi) {
+		.chosen-container .chosen-results-scroll-down span,
+		.chosen-container .chosen-results-scroll-up span,
+		.chosen-container-multi .chosen-choices .search-choice .search-choice-close,
+		.chosen-container-single .chosen-search input[type=text],
+		.chosen-container-single .chosen-single abbr,
+		.chosen-container-single .chosen-single div b,
+		.chosen-rtl .chosen-search input[type=text] {
+			background: none!important;
+		}
+	}
+
+	/* 6.1. Desktop
+	--------------------------------------------------------------- */
+	@media (min-width: 1200px) {
+
+		.container {
+			width: 1160px;
+		}
+
+		.job_filters .job_types li {
+			width: 16.6666%;
+		}
+
+	}
+
+	/* 6.2. Regular tablets
+	--------------------------------------------------------------- */
+	@media (max-width: 991px) {
+
+		.container {
+			width: 720px;
+		}
+
+		.stacktable.large-only {
+			display: none;
+		}
+
+		.stacktable.small-only {
+			display: table;
+		}
+
+		.st-head-row-main {
+			display: none;
+		}
+
+		.companies-overview {
+			li {
+				width: 50%;
+			}
+		}
+
+		.job_filters .job_types li {
+			width: 33.3333%;
+		}
+
+		.job-dashboard-actions li,
+		.candidate-dashboard-actions li {
+			margin: 0 1em;
+		}
+
+		.job-dashboard-action-edit,
+		.job-dashboard-action-mark_filled,
+		.job-dashboard-action-duplicate,
+		.job-dashboard-action-delete,
+		.candidate-dashboard-action-edit,
+		.candidate-dashboard-action-hide,
+		.candidate-dashboard-action-publish,
+		.candidate-dashboard-action-delete {
+			font-size: 1.25em;
+			line-height: 3em;
+		}
+
+		.single-job_listing {
+
+			#title {
+
+				h1 {
+					margin-right: 0;
+				}
+
+				.job-manager-form {
+					margin-top: 1em;
+					position: relative;
+					right: auto;
+					top: auto;
+					transform: none;
+				}
+
+				.bookmark-buttons,
+				.wp-job-manager-bookmarks-form {
+					margin-top: 1em;
+					padding-left: 0;
+					position: relative;
+					right: auto;
+					text-align: left;
+					top: auto;
+					transform: none;
+					width: 100%;
+				}
+
+			}
+
+		}
+
+		.single-resume {
+
+			.video-wrapper {
+				float: none;
+				padding-left: 0;
+				width: 100%;
+			}
+
+			#title {
+
+				.container {
+
+					.bookmark-buttons,
+					.wp-job-manager-bookmarks-form {
+						margin-top: 1em;
+						padding-left: 0;
+						position: relative;
+						right: auto;
+						text-align: left;
+						top: auto;
+						transform: none;
+						width: 100%;
+					}
+
+				}
+
+			}
+
+		}
+
+		.pricing {
+
+			ul {
+				
+				li {
+
+					&.price {
+						font-size: 2em;
+					}
+
+				}
+
+			}
+			
+		}
+
+		.job-applications {
+
+			li {
+
+				&.job-application {
+
+					section {
+
+						.job-application-meta {
+
+							dt {
+								width: 30%;
+							}
+
+							dd {
+								width: 70%;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/* 6.3. Small tablets
+	--------------------------------------------------------------- */
+	@media (max-width: 767px) {
+
+		.container {
+			margin: 0 5%;
+			width: 90%;
+		}
+
+		.admin-bar #header {
+			top: 46px;
+		}
+
+		ul.job_listings {
+
+			li {
+
+				a {
+
+					.image {
+						display: none;
+					}
+
+					.description {
+						padding: 0;
+					}
+
+				}
+
+			}
+
+			.indeed_job_listing,
+			.ziprecruiter_job_listing {
+
+				a {
+
+					img {
+						display: none;
+					}
+
+					.position,
+					.location,
+					.meta {
+						float: none;
+						padding: 0 15px;
+						width: 100%;
+					}
+
+				}
+
+			}
+
+		}
+
+		.counter-container {
+			display: block;
+			margin: 0;
+
+			.counter {
+				display: block;
+				margin: 30px 0;
+			}
+
+		}
+
+		footer {
+
+			#prefooter {
+				padding: 30px 0;
+
+				aside {
+					padding: 30px 0;
+				}
+
+			}
+
+		}
+
+		.companies-overview {
+			li {
+				width: 100%;
+			}
+		}
+
+		ul.resumes {
+
+			li {
+
+				a {
+
+					img {
+						display: none;
+					}
+
+					.candidate-column,
+					.candidate-location-column,
+					.resume-posted-column {
+						float: none;
+						padding: 0;
+						width: 100%;
+					}
+
+					.candidate-location-column {
+						padding-left: 23px;
+
+						&:before {
+							left: 0;
+							top: 0;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		.job_filters {
+
+			.search_jobs {
+
+				.search_keywords,
+				.search_location,
+				.search_categories {
+					float: none;
+					width: 100%;
+				}
+
+				.gjm-filters-wrapper {
+
+					.gjm-filter-wrapper {
+						float: none;
+
+						&.gjm-filters-count-1,
+						&.gjm-filters-count-2,
+						&.gjm-filters-count-3 {
+							width: 100%;
+						}
+
+					}
+
+				}
+
+			}
+
+			.job_types li {
+				width: 50%;
+			}
+
+			.showing_jobs {
+
+				a {
+					display: inline-block;
+					float: none;
+					margin: 0 15px 0 0;
+				}
+
+				span {
+					display: block;
+				}
+
+			}
+
+		}
+
+		.home-reviews {
+
+			.owl-carousel .owl-item {
+
+				blockquote {
+					padding: 1em 0;
+
+				}
+
+			}
+
+		}
+
+		.job-manager-form {
+
+			.account-sign-in {
+
+				.button {
+					display: block;
+					float: none;
+					margin: 1em 0 0;
+					text-align: center;
+				}
+
+			}
+
+		}
+
+		.content,
+		.sidebar {
+			float: none;
+			width: 100%;
+		}
+
+		.job_filters,
+		.resume_filters {
+			margin-bottom: 30px;
+
+			.search_jobs,
+			.search_resumes {
+
+				.search_keywords,
+				.search_location,
+				.search_categories {
+					float: none;
+					width: 100%;
+				}
+
+				.gjm-filters-wrapper,
+				.grm-filters-wrapper {
+
+					.gjm-filter-wrapper,
+					.grm-filter-wrapper {
+						float: none;
+
+						&.gjm-filters-count-1,
+						&.grm-filters-count-1,
+						&.gjm-filters-count-2,
+						&.grm-filters-count-2,
+						&.gjm-filters-count-3,
+						&.grm-filters-count-3 {
+							width: 100%;
+						}
+
+					}
+
+				}
+
+			}
+
+			.showing_jobs,
+			.showing_resumes {
+
+				span {
+					display: block;
+					width: 100%;
+				}
+
+				a {
+					float: left;
+					margin: 0 30px 0 0;
+				}
+
+			}
+
+		}
+
+		#job_package_selection {
+
+			.job_listing_packages_title {
+
+				input {
+					float: none;
+					margin-bottom: 1em;
+				}
+
+			}
+		}
+
+		.woocommerce {
+
+			#customer_login {
+
+				&.col2-set {
+
+					.col-1 ,
+					.col-2 {
+						border: 0;
+						float: none;
+						padding: 0 0 4em;
+						width: 100%;
+					}
+
+
+				}
+
+			}
+
+		}
+
+		.woocommerce-account {
+
+			.woocommerce-MyAccount-navigation,
+			.woocommerce-MyAccount-content {
+				float: none;
+				padding: 0;
+				width: 100%;
+			}
+
+		}
+
+		.category-groups {
+
+			&.columns-2 ul,
+			&.columns-3 ul,
+			&.columns-4 ul {
+				float: none;
+				width: 100%;
+			}
+
+		}
+
+		#title.company-title {
+			text-align: center;
+
+			.container {
+				display: block;
+
+				.image {
+
+					display: block;
+					height: 120px;
+					margin: 0 auto 30px auto;
+					width: 120px;
+
+					img {
+						max-height: 80px;
+						max-width: 80px;
+					}
+
+				}
+
+				.company-details {
+					display: block;
+					padding-left: 0;
+
+					.company-website,
+					.company-twitter {
+						margin: 0 0.5em;
+					}
+
+				}
+
+			}
+
+		}
+
+		.company-info {
+			display: block;
+
+			.image {
+				display: block;
+				margin: 0 0 30px;
+			}
+
+			.company-details {
+				display: block;
+				padding-left: 0;
+
+				h4,
+				.company-tagline {
+					display: block;
+				}
+
+			}
+
+		}
+
+		/* 6.3.1. Mobile navigation
+		----------------------------------------------------------- */
+
+		#header {
+
+			#logo {
+				float: none;
+			}
+
+			nav {
+				float: none;
+				margin: 0 -30px;
+
+				.menu-collapser {
+					cursor: pointer;
+					display: block;
+					height: 30px;
+					overflow: hidden;
+					position: fixed;
+					right: 30px;
+					text-indent: -9999px;
+					top: 15px;
+					width: 30px;
+
+					.collapse-button {
+						display: block;
+						position: absolute;
+						right: 0;
+						text-indent: 0;
+						top: 0;
+
+						.icon-bar {
+							background: @color-white;
+							display: block;
+							height: 3px;
+							margin: 5px 0;
+							width: 30px;
+						}
+
+					}
+
+				}
+
+				#main-nav {
+					max-height: 240px;
+					overflow-y: auto;
+
+					li {
+						float: none;
+						position: relative;
+
+						a {
+							background: @color-black;
+							padding: 0 75px 0 30px;
+
+							&:after {
+								display: none;
+							}
+
+						}
+
+						&.highlight a {
+							color: @color-brand;
+						}
+
+						.sub-toggle {
+							background: rgba(255, 255, 255, 0.1);
+							cursor: pointer;
+							display: block;
+							height: 60px;
+							line-height: 60px;
+							position: absolute;
+							right: 0;
+							text-align: center;
+							top: 0;
+							width: 60px;
+
+							&:after {
+								content: "\e928";
+								font-family: "icomoon";
+								font-weight: normal;
+							}
+
+						}
+
+						.sub-menu {
+							display: block;
+							margin: 0;
+							position: relative;
+
+							li {
+
+								a {
+									line-height: 60px;
+									padding: 0 75px 0 30px;
+
+									&:before {
+										top: 0;
+									}
+
+								}
+
+								ul {
+									left: 0;
+
+									li {
+
+										a {
+											padding: 0 75px 0 60px;
+
+											&:before {
+												left: 45px;
+											}
+
+										}
+
+									}
+
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		.admin-bar {
+
+			#header {
+
+				nav {
+
+					.menu-collapser {
+						top: 61px;
+					}
+
+				}
+
+			}
+
+		}
+
+		.pricing {
+
+			ul {
+				margin: 15px 0;
+			}
+
+		}
+
+
+		#job-manager-job-applications {
+
+			.job-applications-download-csv {
+				float: none;
+				margin-bottom: 1em;
+			}
+
+		}
+
+		.job-applications {
+
+			li {
+
+				&.job-application {
+
+					section {
+
+						.job-application-notes-list {
+
+							li {
+
+								.job-application-note-meta {
+
+									.delete_note {
+										display: block;
+										float: none;
+									}
+
+								}
+
+							}
+
+						}
+
+						.job-application-meta {
+
+							dt {
+								float: none;
+								padding: 0;
+								width: 100%;
+							}
+
+							dd {
+								float: none;
+								margin: 0 0 0.5em;
+								width: 100%;
+							}
+
+						}
+
+					}
+
+					footer {
+
+						.meta {
+							float: none;
+							margin: 0 0 1em;
+						}
+
+						.actions {
+							float: none;
+							font-size: 1.5em;
+							text-align: left;
+
+							li {
+								margin-left: 0;
+								margin-right: 0.5em;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/* 6.4. Smartphones
+	--------------------------------------------------------------- */
+	@media (max-width: 480px) {
+
+		.job_filters .job_types li {
+			width: 100%;
+		}
+
+	}

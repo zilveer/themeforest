@@ -1,0 +1,1 @@
+<input class="thb-number" type="number" placeholder="<?php echo $placeholder; ?>" step="<?php echo $step; ?>" min="<?php echo $min; ?>" max="<?php echo $max; ?>" name="<?php echo $field_name; ?>" value="<?php echo $field_value; ?>">

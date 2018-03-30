@@ -1,0 +1,459 @@
+//*------------------------------------*\
+//   $MAIN NAVIGATION
+//*------------------------------------*/
+
+.site-navigation {
+	@extend %fs-13;
+	font-weight: bold;
+	text-transform: uppercase;
+
+	.no-touchevents {
+		a:hover { color: $accent; }
+		li:hover > a { color: $accent; }
+	}
+}
+
+.site-navigation > * { flex: 1 1 200px; }
+.site-navigation > .nav--main { flex: 0 1 auto; }
+
+.site-navigation > :last-child {
+	display: flex;
+	flex-wrap: wrap;
+    align-items: center;
+
+	@include query-below($lap) {
+		position: relative;
+		margin-left: 12px;
+		margin-right: 12px;
+	}
+
+    @include query-above($lap) {
+    	justify-content: flex-end;
+    }
+}
+
+.nav--main {
+	@extend %beta;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin: 0 auto;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+
+	ul {
+		display: none;
+	}
+
+	li {
+		letter-spacing: .2em;
+		position: relative;
+
+		li li:before {
+			position: absolute;
+			content: "";
+			width: 2em;
+			top: 0; left: -1em;
+			display: block;
+			height: 100%;
+		}
+
+		&:hover > ul { display: block; }
+		.touchevents &:hover > ul { display: none; }
+	}
+
+	a {
+		display: inline-block;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+
+	ul {
+		text-align: left;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		list-style: none;
+		margin: 0;
+		padding: 20px 0;
+		display: none;
+		width: 192px;
+		z-index: 10;
+		background: white;
+		color: $dark;
+
+		box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.20);
+		border-radius: 2px;
+
+		margin-top: 20px;
+
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 0;
+			bottom: 100%;
+			width: 100%;
+			height: 20px;
+		}
+
+		ul {
+			top: 0;
+			left: 100%;
+			margin-top: -20px;
+
+			&:before { display: none; }
+		}
+	}
+
+	@include query-below($lap) {
+		text-align: center;
+
+		li a {
+			font-size: 32px;
+			font-weight: 700;
+			text-transform: none;
+		}
+
+		.sub-menu {
+			display: block;
+			margin: 0;
+			padding: 0;
+
+			color: white;
+			background: none;
+			text-align: center;
+
+			box-shadow: none;
+		}
+	}
+}
+
+.sub-menu-toggle {
+	display: none;
+	padding-left: 0.5em;
+
+	&:after {
+		display: inline-block;
+		width: 1em;
+		text-align: center;
+		content: "+";
+	}
+
+	&.is-toggled:after {
+		content: "-";
+	}
+}
+
+@include query-above($lap) {
+
+	.touchevents .site-navigation .menu-item-has-children > a {
+		padding-right: 0;
+
+		> .sub-menu-toggle {
+			display: inline-block;
+			padding-right: 24px;
+		}
+	}
+}
+
+@include query-below($lap) {
+	.touchevents .site-navigation .sub-menu {
+		display: block !important;
+	}
+}
+
+
+
+//*------------------------------------*\
+//   $SOCIAL ICONS
+//*------------------------------------*/
+
+.social-container {
+	width: auto;
+	position: relative;
+	float: right;
+
+	.cart-widget, .nav {
+		display: inline-block;
+	}
+
+	.cart-widget {
+		margin-left: 12px;
+	}
+
+	@include query-below($lap) {
+		float: left;
+		margin-left: 16px;
+
+		.cart-widget {
+			display: none;
+		}
+	}
+}
+
+ul.nav--social-icons,
+.nav--social-icons ul.menu {
+	display: flex;
+
+	@include query-below($lap) {
+		margin-top: 24px;
+	}
+
+	ul {
+		display: none !important;
+	}
+
+	li {
+		display: flex;
+		white-space: nowrap;
+	}
+
+	a {
+		width: 2em;
+		padding-left: 2em;
+		overflow: hidden;
+		position: relative;
+		display: inline-block;
+
+		&:before {
+			display: inline;
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+			font-family: FontAwesome;
+			-webkit-font-smoothing: antialiased;
+			text-align: center;
+		}
+
+		// default share icon used as a fallback
+		&:before                        {content: $fa-var-share-alt;}
+		// now for the social services that are in FA
+		// we will match the href to them - left them looser so we don't have complaints
+		&[href*="mailto:"]:before,
+		&[href*="mail"]:before          {content: $fa-var-envelope;}
+		&[href*="feed"]:before,
+		&[href*="rss"]:before  			{content: $fa-var-rss;}
+		&[href*="behance"]:before       {content: $fa-var-behance;}
+		&[href*="delicious"]:before     {content: $fa-var-delicious;}
+		&[href*="deviantart"]:before    {content: $fa-var-deviantart;}
+		&[href*="digg"]:before          {content: $fa-var-digg;}
+		&[href*="dribbble"]:before      {content: $fa-var-dribbble;}
+		&[href*="facebook"]:before      {content: $fa-var-facebook;}
+		&[href*="flickr"]:before        {content: $fa-var-flickr;}
+		&[href*="foursquare"]:before    {content: $fa-var-foursquare;}
+		&[href*="github"]:before        {content: $fa-var-github;}
+		&[href*="plus.google"]:before   {content: $fa-var-google-plus;}
+		&[href*="instagram"]:before     {content: $fa-var-instagram;}
+		&[href*="linkedin"]:before      {content: $fa-var-linkedin;}
+		&[href*="pinterest"]:before     {content: $fa-var-pinterest;}
+		&[href*="reddit"]:before        {content: $fa-var-reddit;}
+		&[href*="skype"]:before         {content: $fa-var-skype;}
+		&[href*="soundcloud"]:before    {content: $fa-var-soundcloud;}
+		&[href*="spotify"]:before       {content: $fa-var-spotify;}
+		&[href*="stumbleupon"]:before   {content: $fa-var-stumbleupon;}
+		&[href*="tumblr"]:before        {content: $fa-var-tumblr;}
+		&[href*="twitter"]:before       {content: $fa-var-twitter;}
+		&[href*="vimeo"]:before         {content: $fa-var-vimeo-square;}
+		&[href*="vine"]:before          {content: $fa-var-vine;}
+		&[href*="vk.com"]:before        {content: $fa-var-vk;}
+		&[href*="weibo"]:before         {content: $fa-var-weibo;}
+		&[href*="xing"]:before          {content: $fa-var-xing;}
+		&[href*="yahoo"]:before         {content: $fa-var-yahoo;}
+		&[href*="youtube"]:before       {content: $fa-var-youtube;}
+		&[href*="angel.co"]:before       {content: $fa-var-angellist;}
+		&[href*="yelp"]:before       {content: $fa-var-yelp;}
+		&[href*="last.fm"]:before       {content: $fa-var-lastfm;}
+		&[href*="slideshare"]:before       {content: $fa-var-slideshare;}
+		&[href*="twitch.tv"]:before       {content: $fa-var-twitch;}
+	}
+
+	@include query-below($lap) {
+		text-align: center;
+		width: 100%;
+
+		a {
+			font-size: 25px;
+			padding-left: 2.2em !important;
+		}
+	}
+}
+
+.nav--social-icons a {
+	padding-left: 2em !important;
+	padding-right: 0 !important;
+}
+
+.navigation-toggle {
+	background: transparent;
+	border-color: transparent;
+	padding: 24px 12px;
+	padding-right: 0;
+	cursor: pointer;
+	text-align: center;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	letter-spacing: 0.1em;
+	margin-left: auto;
+
+	@include query-above($lap) {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	i {
+		font-size: 22px;
+		padding-left: 0.1em;
+	}
+
+	span {
+		font-size: 15px;
+		position: relative;
+		top: -2px;
+	}
+}
+
+
+
+
+
+//*------------------------------------*\
+//   $MOBILE NAVIGATION
+//*------------------------------------*/
+
+@include query-above($lap) {
+	.nav-close-button {
+		display: none;
+	}
+}
+
+@include query-below($lap) {
+
+	body .site-navigation {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10000;
+
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+
+		padding: 50px;
+		width: 100%;
+		overflow-y: auto;
+
+		text-align: left;
+
+		color: white;
+		background-color: #000000;
+
+		opacity: 0;
+		pointer-events: none;
+
+		transition: all .3s ease-in-out;
+		//-webkit-overflow-scrolling: touch;
+
+		.nav--is-visible & {
+			opacity: 1 !important;
+			pointer-events: auto;
+		}
+
+		& > * {
+			flex: 0 0 100%;
+		}
+
+		& > .container {
+			padding: 0 12px;
+		}
+
+		.container, .flexbox, .flexbox__item {
+			display: block;
+			height: auto;
+		}
+
+		.nav {
+			display: block;
+
+			ul { position: static; }
+			li { display: block; }
+		}
+
+		ul ul {
+			width: auto;
+			padding-left: 12px;
+		}
+
+		.nav--social-icons {
+
+			li {
+				display: inline-block;
+			}
+		}
+
+		.cover {
+			position: static;
+		}
+	}
+
+	.nav-close-button {
+		position: fixed;
+		top: 5px;
+		right: 0;
+
+		padding: 20px;
+
+		font-size: 30px;
+		color: white;
+		border: 0;
+		background-color: transparent;
+
+		&:before {
+			content: "";
+
+			width: 20px;
+			height: 20px;
+			display: block;
+
+			background: url('assets/images/mobile-close.svg') center center no-repeat;
+			background-size: 100% 100%;
+		}
+	}
+}
+
+.nav-close-button { @include wp-offset(); }
+.admin-bar .site-navigation {
+	@include query-below($lap) {
+        top: 46px;
+	}
+}
+
+//*------------------------------------*\
+//   $POST NAVIGATION
+//*------------------------------------*/
+
+.post-navigation {
+	padding-bottom: 60px;
+	text-align: center;
+	color: $dark;
+
+	@include query-above($lap) {
+		padding-bottom: 100px;
+	}
+}
+
+.nav--main {
+	.current-menu-ancestor,
+	.current-menu-item {
+		> a {
+			color: $accent;
+		}
+	}
+}

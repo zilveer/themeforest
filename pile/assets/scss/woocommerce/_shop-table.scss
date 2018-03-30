@@ -1,0 +1,135 @@
+.shop_table.cart {
+	margin-bottom: 0;
+
+	thead, tbody, tr, td, th {
+		display: block;
+		border: 0;
+		margin: 0;
+	}
+
+	@include query-above($lap) {
+		thead,
+		tbody {
+			padding-left: 22px;
+		}
+	}
+
+	tr {
+		position: relative;
+		display: flex;
+		width: 100%;
+		align-items: center;
+		padding: 1em 0;
+	}
+
+	tr + tr,
+	> * + * {
+		border-top: 1px solid #EBEBEB;
+	}
+
+	th, td {
+		flex: 0 0 100px;
+		padding: 0;
+		padding-left: 20px;
+
+		&:first-child {
+			padding-left: 0;
+		}
+	}
+
+	.product-remove {
+		font-size: 20px;
+		line-height: 32px;
+		color: #B3B3B3;
+		margin-right: 12px;
+	}
+
+	.product-name {
+		flex-grow: 1;
+		padding-left: 0;
+	}
+
+	.product-thumbnail {
+		display: none;
+	}
+
+	th, .button {
+		@extend %btn--transparent;
+	}
+
+	th {
+		opacity: 1;
+	}
+
+	.qty {
+		min-height: 0;
+		border: 0;
+		padding: 0;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+
+		@include query-above($lap) {
+			text-align: center;
+		}
+	}
+
+	.actions {
+		display: flex;
+		flex-grow: 1;
+		padding-left: 0;
+
+		.coupon {
+			display: flex;
+			flex-grow: 1;
+			margin-right: 2em;
+
+			label {
+				display: none;
+			}
+
+			.input-text {
+				flex-basis: 15em;
+				margin-right: 2em;
+			}
+		}
+	}
+
+	// http://css-tricks.com/responsive-data-tables/
+	@include query-below($lap) {
+		/* Force table to not be like tables anymore */
+		&, thead, tbody, th, td, tr {
+			display: block;
+		}
+
+		/* Hide table headers (but not display: none;, for accessibility) */
+		thead tr, th {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+		tr {
+			// padding: 0;
+		}
+
+		td {
+			text-align: left;
+			padding-left: 0;
+			font-weight: 400;
+		}
+
+		.product-name {
+			font-weight: 700;
+		}
+
+		td[data-title] {
+			display: flex;
+
+			&:before {
+				content: attr(data-title);
+				flex: 0 0 50%;
+			}
+		}
+	}
+}

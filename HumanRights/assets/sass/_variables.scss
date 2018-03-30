@@ -1,0 +1,88 @@
+// main: style.scss
+// SASS Variables and Mixins
+
+// Variables
+//--------------------------------------------------------
+
+// Default Color:
+$text: 			#555555;
+
+$primary: 		#bfa980;
+
+$secondary: 	#b00f14;
+
+//$hover:			#bfa980;
+
+$border:		#f0f0f0;
+
+$meta:			#f4f3ee;
+//$meta:		#f1efe8;
+
+// Fonts
+$font_text:      	 "Open Sans", Helvetica, Arial, sans-serif;
+$font_heading:       "Source Sans Pro", Helvetica, Arial, sans-serif;
+$monaco: 			 Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+
+// Screen resolutions
+$small_phone:	400px;
+$phone: 		650px;
+$table: 		790px;
+$small_desktop:	1100px;
+
+//Grid
+$width:			1130px;
+$grid:			1030px;
+$column: 		40px;
+$gutter: 		50px;
+$gutter2: 		30px;
+
+//Baseline
+$base: 			20px;
+
+// Mixins
+//--------------------------------------------------------
+
+@mixin border-radius($radius: 2px) {
+	-webkit-border-radius:  $radius;
+		-moz-border-radius: $radius;
+			border-radius:  $radius;
+}
+
+// Mobile first responsive
+@mixin for($media) {
+	@if $media == tiny-screens {
+		@media screen and (min-width: $small_phone) { @content; }
+	}
+	@else if $media ==screens-tiny {
+		@media screen and (max-width: $small_phone) { @content; }
+	}
+	@if $media == small-screens {
+		@media screen and (min-width: $phone) { @content; }
+	}
+	@else if $media ==screens-small {
+		@media screen and (max-width: $phone) { @content; }
+	}
+
+	@else if $media == medium-screens {
+		@media screen and (min-width: $table) { @content; }
+	}
+	@else if $media == screens-medium {
+		@media screen and (max-width: $table) { @content; }
+	}
+
+	@else if $media == large-screens {
+		@media screen and (min-width: $small_desktop) { @content; }
+	}
+	@else if $media == screens-large {
+		@media screen and (max-width: $small_desktop) { @content; }
+	}
+}
+
+// Vertical Align
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

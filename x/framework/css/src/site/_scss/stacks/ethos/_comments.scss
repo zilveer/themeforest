@@ -1,0 +1,401 @@
+// =============================================================================
+// _COMMENTS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Comment Container
+//   02. Comment and Reply Title
+//   03. Comment Lists
+//   04. Comment
+//   05. Comment Reply
+// =============================================================================
+
+// Comment Container
+// =============================================================================
+
+.x-comments-area {
+  margin: $layoutSpacing 0 0;
+}
+
+
+
+// Comment and Reply Title
+// =============================================================================
+
+.h-comments-title,
+#reply-title {
+  overflow: hidden;
+  margin: 0 0 $layoutSpacing;
+  font-size: 150%;
+  line-height: 1.05;
+
+  span {
+    position: relative;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 9999px;
+      display: block;
+      margin-top: 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    &:before {
+      right: 100%;
+      margin-right: 0.75em;
+    }
+
+    &:after {
+      left: 100%;
+      margin-left: 0.75em;
+    }
+  }
+}
+
+#reply-title {
+  small {
+    display: block;
+    margin-top: 5px;
+    @include font-size(1.2);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+.x-comments-list {
+  #reply-title {
+    margin-top: 0;
+  }
+}
+
+
+
+// Comment Lists
+// =============================================================================
+
+//
+// All comments.
+//
+
+.x-comments-list {
+  margin: 0;
+  list-style: none;
+
+  > li.comment:first-child {
+    border-top: 0;
+
+    > article.comment:first-child {
+      padding-top: 0;
+    }
+  }
+}
+
+
+//
+// Child comments.
+//
+
+.x-comments-list .children {
+  margin: 0;
+  list-style: none;
+  @include break(cubs) {
+    margin-left: 0;
+  }
+
+  .x-comment-content-wrap {
+    width: calc(100% - 50px - (#{$layoutSpacing} * 2));
+  }
+}
+
+.x-comments-list .children .children {
+  .x-comment-content-wrap {
+    width: calc(100% - 50px - (#{$layoutSpacing} * 3));
+  }
+}
+
+.x-comments-list .children .children .children {
+  .x-comment-content-wrap {
+    width: calc(100% - 50px - (#{$layoutSpacing} * 4));
+  }
+}
+
+@include break(middle-bear) {
+  .x-comments-list .children .x-comment-content-wrap,
+  .x-comments-list .children .children .x-comment-content-wrap,
+  .x-comments-list .children .children .children .x-comment-content-wrap {
+    width: calc(100% - 50px - #{$layoutSpacing});
+  }
+}
+
+@include break(baby-bear) {
+  .x-comments-list .x-comment-content-wrap,
+  .x-comments-list .children .x-comment-content-wrap,
+  .x-comments-list .children .children .x-comment-content-wrap,
+  .x-comments-list .children .children .children .x-comment-content-wrap {
+    width: 100%;
+  }
+}
+
+
+
+// Comment
+// =============================================================================
+
+//
+// Original comment container + replies.
+//
+
+li.comment {
+  margin: 0;
+  border-top: 1px solid $shortcodeBorderColor;
+  padding: 0;
+}
+
+li.comment.odd {}
+
+li.comment.even {}
+
+li.comment.depth-1 {}
+
+li.comment.depth-2 {}
+
+li.comment.depth-3 {}
+
+
+//
+// Individual comment.
+//
+
+article.comment {
+  position: relative;
+  margin: 0;
+  padding-top: $layoutSpacing;
+  padding-bottom: $layoutSpacing;
+  background-color: $baseModBackground;
+  @include clearfix();
+}
+
+.x-comment-header {
+  margin-bottom: ($layoutSpacing / 4);
+
+  .x-comment-meta {
+    margin-bottom: 4px;
+    line-height: 1;
+    @include clearfix();
+  }
+}
+
+.x-comment-content-wrap {
+  float: right;
+  width: calc(100% - 50px - #{$layoutSpacing});
+}
+
+.x-comment-content {
+  position: relative;
+
+  p,
+  ul,
+  ol {
+    margin-bottom: ($baseMargin / 2);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.x-comment-author {
+  font-family: $altFontFamily;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: $headingsColor;
+  font-size: 128.6%;
+
+  a {
+    color: $headingsColor;
+
+    &:hover {
+      color: $accentColor;
+    }
+  }
+}
+
+.x-comment-time {
+  float: left;
+  display: inline-block;
+  font-family: $altFontFamily;
+  @include font-size(1.2);
+  line-height: 1;
+  text-transform: uppercase;
+  color: $textColor;
+
+  &:hover {
+    color: $accentColor;
+  }
+}
+
+.x-comment-awaiting-moderation {
+  padding: 0.5em 0.5em 0.75em;
+  line-height: 1.2;
+  text-align: center;
+  color: $accentColor;
+  background-color: #f5f5f5;
+}
+
+
+//
+// Edit.
+//
+
+.comment-edit-link {
+  display: block;
+  margin-right: 1em;
+  float: right;
+  @include font-size(1.2);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+
+//
+// Reply.
+//
+
+.comment-reply-link {
+  position: relative;
+  float: right;
+  @include font-size(1.2);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.comment-reply-link-after {
+  position: relative;
+  bottom: 1px;
+  font-size: 0.722em;
+  line-height: 1;
+}
+
+
+//
+// Author comment.
+//
+
+// .bypostauthor {
+//   article.comment {
+//     border: 1px solid #c5c5c5;
+//   }
+
+//   .comment-edit-link {
+//     border: 1px solid #c5c5c5;
+//     border-right: 0;
+//   }
+// }
+
+
+//
+// Gravatar image.
+//
+
+.x-comment-img {
+  float: left;
+  width: 50px;
+
+  .avatar-wrap {
+    display: block;
+    position: relative;
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .bypostauthor {
+    display: block;
+    bottom: 0;
+    width: 100%;
+    clear: left;
+    margin-top: 5px;
+    @include font-size(1.1);
+    line-height: 1.2;
+    text-align: center;
+    @include opacity(0.65);
+  }
+
+  @include break(baby-bear) {
+    display: none;
+  }
+}
+
+
+
+// Comment Reply
+// =============================================================================
+
+#respond {
+
+}
+
+#commentform {
+  margin-bottom: 0;
+}
+
+.logged-in-as {
+  margin-bottom: 1em;
+}
+
+.comment-form-author,
+.comment-form-email,
+.comment-form-url,
+.comment-form-rating,
+.comment-form-comment {
+  margin: 0;
+
+  label {
+    position: absolute;
+    top: -9999em;
+    visibility: hidden;
+    font-family: $altFontFamily;
+    font-size: 128.6%;
+    color: $headingsColor;
+
+    .required {
+      position: relative;
+      right: 0.175em;
+    }
+  }
+}
+
+.comment-form-author,
+.comment-form-email,
+.comment-form-url {
+  input {
+    margin-bottom: 1.5em;
+    width: 100%;
+  }
+}
+
+.comment-form-comment {
+  textarea {
+    width: 100%;
+    resize: none;
+    margin-bottom: 1.5em;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+  }
+}
+
+.form-submit {
+  margin: 0;
+}

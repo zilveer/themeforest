@@ -1,0 +1,237 @@
+/*------------------------------------------------------------
+ * Initial Load Appearance Animation
+ *------------------------------------------------------------*/
+
+.init-load-animation--true {
+
+	.js & {
+		.header,
+		.content-wrapper {
+			opacity: 0;
+		}
+	}
+
+	&.init-load-animation-end {
+		.header,
+		.content-wrapper {
+			opacity: 1;
+		}
+	}
+
+	&.init-load-animation-start {
+		overflow: hidden;
+
+		.header{
+			opacity: 1;
+			.animation( ~"sleek-fade-in 1s 1 cubic-bezier(0.7, 0, 0.3, 1)" );
+		}
+
+		.content-wrapper  {
+			opacity: 1;
+			.animation( ~"sleek-fade-in 1s 1 cubic-bezier(0.7, 0, 0.3, 1)" );
+		}
+	}
+}
+
+
+
+/*------------------------------------------------------------
+ * Page AJAX Loading styles
+ *------------------------------------------------------------*/
+
+.js-ajax-load-pages {
+	&.ajax-main-content-loading-start .main-content,
+	&.ajax-content-wrapper-loading-start .content-wrapper {
+		opacity: 0;
+		.animation( ~"sleek-fade-out 1s 1 cubic-bezier(0.7, 0, 0.3, 1)" );
+	}
+
+	&.ajax-main-content-loading-end .main-content,
+	&.ajax-content-wrapper-loading-end .content-wrapper {
+		opacity: 1;
+		.animation( ~"sleek-fade-in 1.5s 1 cubic-bezier(0.7, 0, 0.3, 1)" );
+	}
+}
+
+
+
+
+/*------------------------------------------------------------
+ * Appearance Animation Classes
+ *------------------------------------------------------------*/
+
+.js .sleek-animate-appearance {
+
+	@media @tablet, @desktop {
+
+		opacity: 0;
+
+		&--start {
+			opacity: 1;
+
+			// default
+			.animation( ~"sleek-fade-in-bottom-soft 0.7s 1 cubic-bezier(0.7, 0, 0.3, 1)");
+
+
+
+			&.sleek-fade-in{
+				.animation( ~"sleek-fade-in 0.7s 1 cubic-bezier(0.7, 0, 0.3, 1)" );
+			}
+
+			&.sleek-fade-in-top-soft {
+				.animation( ~"sleek-fade-in-top-soft 0.7s 1 cubic-bezier(0.7, 0, 0.3, 1)");
+			}
+
+			&.sleek-fade-in-bottom-soft {
+				.animation( ~"sleek-fade-in-bottom-soft 1s 1 cubic-bezier(0.7, 0, 0.3, 1)");
+			}
+
+			&.sleek-fade-in-left-soft {
+				.animation( ~"sleek-fade-in-left-soft 0.7s 1 cubic-bezier(0.7, 0, 0.3, 1)");
+			}
+
+			&.sleek-fade-in-right-soft {
+				.animation( ~"sleek-fade-in-right-soft 0.7s 1 cubic-bezier(0.7, 0, 0.3, 1)");
+			}
+		}
+	} // /media query
+}
+
+
+
+
+/*------------------------------------------------------------
+ * Sleek Loader
+ *------------------------------------------------------------*/
+
+.sleek-loader {
+	pointer-events: none;
+	width: 35px;
+	height: 35px;
+	position: relative;
+	z-index: 0;
+	opacity: 0;
+
+	&:before,
+	&:after {
+		content: "";
+		.placement;
+		.circled;
+		opacity: 0;
+		background: @primary-color;
+	}
+
+	&:after {
+		z-index: 1;
+		-webkit-animation: preloader 1.4s infinite 0.7s ease-out;
+		   -moz-animation: preloader 1.4s infinite 0.7s ease-out;
+		     -o-animation: preloader 1.4s infinite 0.7s ease-out;
+		        animation: preloader 1.4s infinite 0.7s ease-out;
+	}
+
+	&:before {
+		z-index: 2;
+		-webkit-animation: preloader 1.4s infinite ease-in;
+		   -moz-animation: preloader 1.4s infinite ease-in;
+		     -o-animation: preloader 1.4s infinite ease-in;
+		        animation: preloader 1.4s infinite ease-in;
+	}
+}
+
+/* Sleek Loader Keyframes
+ *------------------------------------------------------------*/
+
+@-webkit-keyframes preloader {
+	0% 	 { opacity: 0; -webkit-transform: scale(0); }
+	50%  { opacity: 1; }
+	100% { opacity: 0; -webkit-transform: scale(1); }
+}
+@-moz-keyframes preloader {
+	0% 	 { opacity: 0; -moz-transform: scale(0); }
+	50%  { opacity: 1; }
+	100% { opacity: 0; -moz-transform: scale(1); }
+}
+@-o-keyframes preloader {
+	0% 	 { opacity: 0; -o-transform: scale(0); }
+	50%  { opacity: 1; }
+	100% { opacity: 0; -o-transform: scale(1); }
+}
+@keyframes preloader {
+	0% 	 { opacity: 0; transform: scale(0); }
+	50%  { opacity: 1; }
+	100% { opacity: 0; transform: scale(1); }
+}
+
+
+
+/* Sleek Loader Body
+ *------------------------------------------------------------*/
+
+.sleek-loader--body {
+	display: none;
+
+	.init-load-animation--true & {
+
+		display: block;
+		.placement( @position:fixed );
+		margin: auto;
+
+		opacity: 1;
+		.transition;
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+
+
+
+		// Initial page loading
+		.init-load-animation-start&,
+		.init-load-animation-end& {
+			opacity: 0;
+		}
+
+
+
+		// Page Navigation
+		.ajax-content-wrapper-loading-start& {
+			opacity: 1;
+			.transition( ~"opacity 1.5s 1s ease-in-out" );
+
+			@media @desktop {
+				left: @header_width;
+			}
+		}
+
+		.ajax-content-wrapper-loading-end& {
+			opacity: 0;
+
+			@media @desktop {
+				left: @header_width;
+			}
+		}
+
+
+
+		// Pagination
+		.ajax-main-content-loading-start& {
+			opacity: 1;
+			.transition( ~"opacity 1.5s 1s ease-in-out" );
+
+			@media @tablet {
+				right: 300px;
+			}
+
+			@media @desktop {
+				left: @header_width;
+				right: 300px;
+			}
+
+			@media @desktop-m {
+				right: 375px;
+			}
+		}
+
+		.ajax-main-content-loading-end& {
+			opacity: 0;
+			.transition;
+		}
+	}
+}

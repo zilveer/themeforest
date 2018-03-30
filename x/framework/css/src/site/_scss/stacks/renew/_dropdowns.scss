@@ -1,0 +1,145 @@
+// =============================================================================
+// _DROPDOWNS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Desktop Base Styles
+//   02. Desktop Masthead Positioning: Inline
+//   03. Desktop Masthead Positioning: Stacked
+// =============================================================================
+
+// Desktop Base Styles
+// =============================================================================
+
+.desktop {
+  .menu-item,
+  .menu-item > a {
+    position: relative;
+  }
+
+  .menu-item.x-active > .sub-menu {
+    display: block;
+  }
+
+  .sub-menu {
+    position: absolute;
+    display: none;
+    float: left;
+    min-width: 250px;
+    margin: 0;
+    padding: $dropdownPadding;
+    @include font-size(1.2);
+    list-style: none;
+    background-color: $navbarBackground;
+    z-index: $zindexDropdown;
+    @include translate3d(0, 0, 0);
+    @include background-clip(padding-box);
+
+    li {
+      position: relative;
+
+      > a {
+        display: block;
+        padding: $dropdownLinkPadding;
+        line-height: 2;
+        white-space: nowrap;
+        color: $navbarLinkColor;
+        @include transition(#{none});
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        @include opacity(0.125);
+      }
+
+      &:before {
+        top: 0;
+        height: 1px;
+      }
+
+      &:last-child:after {
+        bottom: -1px;
+        height: 1px;
+      }
+    }
+  }
+}
+
+
+
+// Desktop Masthead Positioning: Inline
+// =============================================================================
+
+.masthead-inline {
+  .x-navbar {
+    .desktop .sub-menu {
+      left: auto;
+      right: 0;
+
+      .sub-menu {
+        top: $dropdownTop;
+        right: $dropdownOffset;
+      }
+    }
+
+    &.x-navbar-fixed-left {
+      .desktop .sub-menu {
+        top: 0;
+        left: $dropdownFirstSide;
+        right: auto;
+
+        .sub-menu {
+          top: $dropdownTop;
+          left: $dropdownOffset;
+          right: auto;
+        }
+      }
+    }
+
+    &.x-navbar-fixed-right {
+      .desktop .sub-menu {
+        top: 0;
+        left: auto;
+        right: $dropdownFirstSide;
+
+        .sub-menu {
+          top: $dropdownTop;
+          left: auto;
+          right: $dropdownOffset;
+        }
+      }
+    }
+  }
+}
+
+
+
+// Desktop Masthead Positioning: Stacked
+// =============================================================================
+
+.masthead-stacked {
+  .x-navbar {
+    .desktop .sub-menu {
+      left: 0;
+      right: auto;
+
+      .sub-menu {
+        top: $dropdownTop;
+        left: $dropdownOffset;
+      }
+    }
+  }
+}

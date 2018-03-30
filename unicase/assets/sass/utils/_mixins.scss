@@ -1,0 +1,108 @@
+/*===================================================================================*/
+/*	MIXIN
+/*===================================================================================*/
+
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+%clearfix {
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// Responsive image
+//
+// Keep images from scaling beyond the width of their parents.
+@mixin img-responsive($display: block) {
+    display: $display;
+    max-width: 100%; // Part 1: Set a maximum relative to the parent
+    height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+}
+
+@mixin screen-reader-text() {
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+}
+
+@mixin widget-title($color: #444, $font-size: 20px) {
+    font-family: $title-font;
+    font-size: $font-size;
+    margin-bottom: 36px;
+    font-weight: 700;
+    color: $color;
+}
+
+@mixin btn($color: #555) {    
+    border-radius: 4px;
+    color: $color;
+    font-size: 13px;
+    font-weight: $roboto-medium;;
+    text-transform: uppercase;
+    padding: 8px 17px;
+    line-height: 18px;
+    @include transition(all linear 0.2s);
+    &:hover{
+        color: #fff;
+    }
+}
+
+@mixin btn-transparent($bg: transparent) {
+    background-color: $bg;
+    border: 2px solid #ddd;
+}
+
+@mixin make-button-block() {
+    display: block;
+    width: 100%;
+}
+
+@mixin applyMedia() {
+    // Proper spacing between instances of .media
+    margin-top: 15px;
+    zoom: 1;
+    overflow: hidden;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+@mixin applyMediaLeft ( $float : #{$start} ) {
+    display: table-cell;
+    vertical-align: top;
+    padding-#{$end}: 10px;
+    float: $float;
+}
+
+@mixin applyMediaObject( $float : #{$start} ) {
+    display: block;
+    float: $float;
+}
+
+@mixin applyMediaBody() {
+    zoom: 1;
+    overflow: hidden;
+    width: 10000px;
+    display: table-cell;
+    vertical-align: top;
+}
+
+@mixin applyMediaHeading() {
+    margin-top: 0;
+    margin-bottom: 5px;
+    @include styleLikeHeading();
+}

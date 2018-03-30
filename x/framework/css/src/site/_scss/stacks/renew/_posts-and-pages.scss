@@ -1,0 +1,672 @@
+// =============================================================================
+// _POSTS-AND-PAGES.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Main Containing Element
+//   02. All Posts and Pages
+//   03. Pages
+//   04. Posts
+//   05. Standard Posts
+//   06. Video Posts
+//   07. Audio Posts
+//   08. Image Posts
+//   09. Gallery Posts
+//   10. Link Posts
+//   11. Quote Posts
+//   12. Portfolio Posts
+//   13. Page Templates
+//   14. 404 Page
+//   15. Landmark Header
+// =============================================================================
+
+// Main Containing Element
+// =============================================================================
+
+.x-main {
+  position: relative;
+  @include clearfix();
+
+  .widget {
+    margin-top: 3em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+
+
+// All Posts and Pages
+// =============================================================================
+
+.hentry {
+  margin-top: 90px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.entry-wrap {
+  @include clearfix();
+}
+
+.entry-title {
+  position: relative;
+  margin: 0;
+  font-size: 170%;
+  line-height: 1.1;
+
+  &:before {
+    float: left;
+    position: relative;
+    top: 0.1375em;
+    margin-right: 0.35em;
+    font-size: 0.88em;
+    line-height: 1;
+    text-align: center;
+    color: darken($baseModBackground, 10%);
+    background-color: $baseModBackground;
+    @include font-awesome();
+  }
+}
+
+.entry-title-sub {
+  display: block;
+  margin: 0.725em 0 0;
+  font-size: 128.5%;
+  font-weight: 300;
+  color: darken($baseModBackground, 25%);
+  line-height: 1.1;
+}
+
+.p-meta {
+  margin: 8px 0 0;
+  line-height: 1.5;
+
+  > span {
+    display: inline-block;
+
+    > a {
+      white-space: nowrap;
+    }
+
+    &:after {
+      content: "/";
+      padding: 0 0.45em;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+}
+
+.entry-featured {
+  position: relative;
+  margin-top: 25px;
+  border: 2px solid $shortcodeBorderColor;
+  padding: 6px;
+  background-color: $baseModBackground;
+}
+
+.entry-thumb {
+  display: block;
+  position: relative;
+  background-color: $linkColor;
+  @include translate3d(0, 0, 0);
+
+  img {
+    min-width: 100%;
+    @include transition(#{opacity 0.75s ease});
+  }
+
+  &:before {
+    content: "\f0c1";
+    display: block;
+    position: absolute;
+    margin: -36px 0 0 -35px;
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    font-family: "fontawesome";
+    @include font-size(4.2);
+    font-style: normal;
+    font-weight: normal;
+    line-height: 72px;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    color: $white;
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 100em;
+    @include opacity(0);
+    @include transition(#{opacity 0.75s ease});
+  }
+}
+
+a.entry-thumb:hover {
+  img {
+    @include opacity(0.15);
+  }
+
+  &:before {
+    @include opacity(1);
+  }
+}
+
+.entry-content {
+  margin-top: 25px;
+
+  embed,
+  iframe,
+  object {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  > p,
+  > ul,
+  > ol {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.entry-content.excerpt {
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.more-link {
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.entry-footer {
+  margin-top: $baseMargin;
+  padding: 1em 1.25em;
+  line-height: 1.4;
+  background-color: darken($baseModBackground, 2.5%);
+
+  > p {
+    margin: 0;
+  }
+}
+
+
+
+// Pages
+// =============================================================================
+
+.page {
+  .no-post-thumbnail {
+    .entry-content {
+      margin-top: 0;
+    }
+  }
+}
+
+
+
+// Posts
+// =============================================================================
+
+.x-iso-container-posts {
+  &.cols-2 {
+    .entry-wrap {
+      padding: 7% 7.5% 7.5%;
+    }
+  }
+
+  &.cols-3 {
+    .entry-wrap {
+      padding: 7% 7.5% 7.5%;
+    }
+
+    .entry-title {
+      font-size: 150%;
+    }
+
+    .p-meta {
+      font-size: 82%;
+    }
+  }
+
+  > .hentry {
+    .entry-wrap {
+      margin: 0 -1px -1px;
+      border: 1px solid #f2f2f2;
+      background-color: $baseModBackground;
+    }
+  }
+}
+
+
+
+// Standard Posts
+// =============================================================================
+
+.format-standard {
+  .entry-title {
+    &:before {
+      content: "\f0f6";
+    }
+  }
+}
+
+
+
+// Video Posts
+// =============================================================================
+
+.format-video {
+  .entry-title {
+    &:before {
+      content: "\f008";
+    }
+  }
+}
+
+
+
+// Audio Posts
+// =============================================================================
+
+.format-audio {
+  .entry-title {
+    &:before {
+      content: "\f001";
+    }
+  }
+
+  &.no-post-thumbnail {
+    .entry-featured {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+  &.has-post-thumbnail {
+    .entry-featured {
+      .x-audio {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        margin: 0 auto;
+
+        iframe {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
+// Image Posts
+// =============================================================================
+
+.format-image {
+  .entry-title {
+    &:before {
+      content: "\f083";
+    }
+  }
+}
+
+
+
+// Gallery Posts
+// =============================================================================
+
+.format-gallery {
+  .entry-title {
+    &:before {
+      content: "\f03e";
+    }
+  }
+}
+
+
+
+// Link Posts
+// =============================================================================
+
+.format-link {
+  .x-hgroup {
+    margin-bottom: $baseMargin;
+    border-bottom: 1px solid darken($baseModBackground, 5%);
+    padding: 0 0 $baseMargin;
+  }
+
+  .entry-title {
+    &:before {
+      content: "\f0c1";
+    }
+  }
+
+  .entry-title-sub a {
+    border-bottom: 1px dotted;
+    word-break: break-all;
+  }
+}
+
+.blog,
+.search,
+.archive {
+  &.x-post-meta-disabled {
+    .format-link {
+      .x-hgroup {
+        margin-bottom: 0;
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+
+
+// Quote Posts
+// =============================================================================
+
+.format-quote {
+  .x-hgroup {
+    margin-bottom: $baseMargin;
+    border-bottom: 1px solid darken($baseModBackground, 5%);
+    padding: 0 0 $baseMargin;
+  }
+
+  .entry-title {
+    &:before {
+      content: "\f10d";
+    }
+  }
+
+  .entry-title-sub {
+    text-align: right;
+
+    &:before {
+      content: "\2013\00A0";
+    }
+  }
+}
+
+.blog,
+.search,
+.archive {
+  &.x-post-meta-disabled {
+    .format-quote {
+      .x-hgroup {
+        margin-bottom: 0;
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+
+
+// Portfolio Posts
+// =============================================================================
+
+.x-portfolio {
+  .entry-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.925);
+    @include translate(-100%, 0);
+    @include transition(#{all 0.75s ease});
+
+    &:before {
+      content: "";
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+  }
+
+  .entry-cover-content {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 80%;
+    height: auto;
+
+    span {
+      text-transform: uppercase;
+    }
+  }
+
+  .entry-featured {
+    overflow: hidden;
+
+    &:hover .entry-cover {
+      @include translate(0, 0);
+    }
+  }
+
+  .entry-info {
+    float: left;
+    width: 64%;
+  }
+
+  .entry-extra {
+    float: right;
+    width: 32%;
+    border: 2px solid $shortcodeBorderColor;
+    padding: 25px;
+    font-size: 114.2%;
+    @include break(middle-bear) {
+      margin-top: $baseMargin + 0.35;
+    }
+
+    .x-btn {
+      margin-bottom: 2.5em;
+    }
+
+    .x-ul-icons {
+      margin-left: 1.355em;
+    }
+  }
+
+  .entry-info,
+  .entry-extra {
+    @include break(middle-bear) {
+      float: none;
+      width: 100%;
+    }
+  }
+
+  .h-extra {
+    margin-top: 0.5em;
+    font-size: 150%;
+
+    &.skills { margin: 0 0 0.25em;     }
+    &.launch { margin: 0.95em 0 0.4em; }
+  }
+}
+
+.single-x-portfolio {
+  .entry-header {
+    margin-top: 5%;
+  }
+
+  .entry-featured {
+    margin: 0;
+  }
+}
+
+.x-iso-container-portfolio {
+  .entry-featured {
+    margin: 0;
+
+    .entry-thumb:hover {
+      cursor: default;
+
+      img {
+        @include opacity(1);
+      }
+
+      &:before {
+        @include opacity(0);
+      }
+    }
+  }
+}
+
+h1.entry-title.entry-title-portfolio {
+  margin: 0;
+  font-size: 285.7%;
+  line-height: 1.05;
+  @include break(baby-bear) {
+    font-size: 228.5%;
+  }
+}
+
+h2.entry-title.entry-title-portfolio {
+  margin: 0;
+  font-size: 171.4%;
+  line-height: 1.1;
+  text-align: center;
+}
+
+
+
+// Page Templates
+// =============================================================================
+
+.page-template-template-blank-3-php.x-navbar-fixed-left-active,
+.page-template-template-blank-3-php.x-navbar-fixed-right-active,
+.page-template-template-blank-6-php.x-navbar-fixed-left-active,
+.page-template-template-blank-6-php.x-navbar-fixed-right-active,
+.page-template-template-blank-7-php.x-navbar-fixed-left-active,
+.page-template-template-blank-7-php.x-navbar-fixed-right-active,
+.page-template-template-blank-8-php.x-navbar-fixed-left-active,
+.page-template-template-blank-8-php.x-navbar-fixed-right-active {
+  padding: 0;
+}
+
+[class*="page-template-template-blank"] {
+  .entry-content {
+    margin: 0;
+  }
+}
+
+[class*="page-template-template-blank"],
+.page-template-template-layout-full-width-php {
+  .x-main {
+    float: none;
+    display: block;
+    width: auto;
+  }
+}
+
+
+
+// 404 Page
+// =============================================================================
+
+.error404 {
+  .entry-404 {
+    margin: 6.5% 0 8.5%;
+
+    p {
+      max-width: 750px;
+      margin: 0 auto 1.313em;
+      font-size: 1.5em;
+      @include break(middle-bear) {
+        font-size: 1.25em;
+      }
+      @include break(baby-bear) {
+        font-size: 1em;
+      }
+    }
+
+    .form-search {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+}
+
+
+
+// Landmark Header
+// =============================================================================
+
+.x-header-landmark {
+  padding: 30px 0;
+  border: 1px solid darken($baseModBackground, 5%);
+  border-left: 0;
+  border-right: 0;
+}
+
+.x-landmark-breadcrumbs-wrap {
+  display: table;
+  width: 100%;
+
+  .x-landmark,
+  .x-breadcrumbs-wrap {
+    @include break(middle-bear) {
+      width: 100%;
+      display: block;
+      text-align: center;
+    }
+  }
+}
+
+.x-landmark,
+.x-breadcrumbs-wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.x-landmark {
+  width: 63.02463%;
+  padding-right: 9.92611%;
+  @include break(middle-bear) {
+    padding: 0;
+  }
+}
+
+.x-breadcrumbs-wrap {
+  width: 27.04926%;
+  text-align: right;
+  @include break(middle-bear) {
+    margin-top: $baseMargin / 2;
+  }
+}
+
+.h-landmark,
+.entry-title.h-landmark {
+  margin: 0;
+  font-size: 245%;
+  letter-spacing: -0.075em;
+  line-height: 1;
+
+  span {
+    display: inline-block;
+    position: relative;
+  }
+}

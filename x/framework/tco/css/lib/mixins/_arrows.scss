@@ -1,0 +1,139 @@
+// =============================================================================
+// _ARROWS.SCSS
+// -----------------------------------------------------------------------------
+// Global SCSS mixins.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Popover Arrows
+//   02. CSS Arrow Box
+// =============================================================================
+
+// Popover Arrows
+// =============================================================================
+
+//
+// For tooltips and popovers.
+//
+
+@mixin popover-arrow-top($arrowWidth: 5px, $color: $black) {
+  bottom: 0;
+  left: 50%;
+  margin-left: -$arrowWidth;
+  border-left: $arrowWidth solid transparent;
+  border-right: $arrowWidth solid transparent;
+  border-top: $arrowWidth solid $color;
+}
+
+@mixin popover-arrow-left($arrowWidth: 5px, $color: $black) {
+  top: 50%;
+  right: 0;
+  margin-top: -$arrowWidth;
+  border-top: $arrowWidth solid transparent;
+  border-bottom: $arrowWidth solid transparent;
+  border-left: $arrowWidth solid $color;
+}
+
+@mixin popover-arrow-bottom($arrowWidth: 5px, $color: $black) {
+  top: 0;
+  left: 50%;
+  margin-left: -$arrowWidth;
+  border-left: $arrowWidth solid transparent;
+  border-right: $arrowWidth solid transparent;
+  border-bottom: $arrowWidth solid $color;
+}
+
+@mixin popover-arrow-right($arrowWidth: 5px, $color: $black) {
+  top: 50%;
+  left: 0;
+  margin-top: -$arrowWidth;
+  border-top: $arrowWidth solid transparent;
+  border-bottom: $arrowWidth solid transparent;
+  border-right: $arrowWidth solid $color;
+}
+
+
+
+// CSS Arrow Box
+// =============================================================================
+
+//
+// Creates a bordered box and arrow completely out of CSS.
+//
+
+@mixin css-arrow-box($backgroundColor: #dddddd, $borderColor: #999999, $borderWidth: 7px, $size: 20px, $position: left, $align: 50%) {
+  position: relative;
+  background: $backgroundColor;
+  border: $borderWidth solid $borderColor;
+  
+  &:after, &:before {
+    @if $position == top {
+      bottom: 100%;
+    }
+    @else if $position == right {
+      left: 100%;
+    }
+    @else if $position == bottom {
+      top: 100%;
+    }
+    @else {
+      right: 100%;
+    }
+    border: solid transparent;
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  &:after {
+    border-width: $size;
+    @if $position == top {
+      border-bottom-color: $backgroundColor;
+      left: $align;
+      margin-left: $size * -1;
+    }
+    @else if $position == right {
+      border-left-color: $backgroundColor;
+      top: $align;
+      margin-top: $size * -1;
+    }
+    @else if $position == bottom {
+      border-top-color: $backgroundColor;
+      left: $align;
+      margin-left: $size * -1;
+    }
+    @else {
+      border-right-color: $backgroundColor;
+      top: $align;
+      margin-top: $size * -1;
+    }
+  }
+  
+  &:before {
+    border-width: round($size + ($borderWidth * 1.4));
+    @if $position == top {
+      border-bottom-color: $borderColor;
+      left: $align;
+      margin-left: round(($size + ($borderWidth * 1.4)) * -1);
+    }
+    @else if $position == right {
+      border-left-color: $borderColor;
+      top: $align;
+      margin-top: round(($size + ($borderWidth * 1.4)) * -1);
+    }
+    @else if $position == bottom {
+      border-top-color: $borderColor;
+      left: $align;
+      margin-left: round(($size + ($borderWidth * 1.4)) * -1);
+    }
+    @else {
+      border-right-color: $borderColor;
+      top: $align;
+      margin-top: round(($size + ($borderWidth * 1.4)) * -1);
+    }
+  }
+}

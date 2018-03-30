@@ -1,0 +1,592 @@
+//
+// Dropdown menus
+// --------------------------------------------------
+
+// The dropdown wrapper (div)
+.dropdown-font-style(@size: @default-text-font-size, @color: @font-site-light-color) {
+	color: @color;
+	font-size: @size;
+	font-style: normal;
+	white-space: nowrap;
+}
+
+.dropdown {
+	position: relative;
+	float: right;
+	background-color: transparent;
+	border: 1px solid @border-color;
+	margin-bottom: 20px;
+
+	.dropdown-toggle {
+		display: block;
+		
+		span {
+			display: block;
+			height: 25px;
+			line-height: 24px;
+			.dropdown-font-style();
+			float: left;
+			
+			&.title {
+				padding: 0 5px 0 14px;
+				min-width: 160px;
+			}
+			
+			&.arrows {
+				.rel();
+				width: 25px;
+				
+				/*&:before {
+					@w: 25px;
+					@h: 25px;
+					
+					content: "";
+					display: block;
+					.abs();
+					top: 0;
+					right: 0;
+					width: @w;
+					height: @h;
+					background: @main-site-dark-color url('../img/shop-dropdown.gif') center center no-repeat;
+				}*/
+			}
+		}
+	}
+}
+
+// Prevent the focus on the dropdown toggle when closing dropdowns
+.dropdown-toggle:focus {
+	outline: 0;
+}
+
+// The dropdown menu (ul)
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 20;
+	display: none; // none by default, but block on "open" of the menu
+	float: left;
+	min-width: 100%;
+	padding: 5px 0;
+	margin: 2px 0 0; // override default ul
+	list-style: none;
+	background-color: transparent;
+	border: 1px solid @border-color;
+
+	// Aligns the dropdown menu to right
+	&.pull-right {
+		right: 0;
+		left: auto;
+	}
+
+	// Links within the dropdown menu
+	> li > a {
+		display: block;
+		padding: 3px 20px;
+		clear: both;
+		.dropdown-font-style();
+		
+		&:hover {
+			color: @main-site-light-color;
+		}
+	}
+	
+	// Hover/Focus state
+	> li > a {
+		&:hover,
+			&:focus {
+			text-decoration: none;
+		}
+	}
+
+	// Active state
+	> .active > a {
+		&,
+		&:hover,
+			&:focus {
+			text-decoration: none;
+			outline: 0;
+		}
+	}
+}
+
+// Open state for the dropdown
+.open {
+	// Show the menu
+	> .dropdown-menu {
+		display: block;
+	}
+
+	// Remove the outline when :focus is triggered
+	> a {
+		outline: 0;
+	}
+}
+
+/* --------------------------------------
+	DropKick
+-------------------------------------- */
+/**
+ * Default DropKick theme
+ *
+ * Feel free to edit the default theme
+ * or even add your own.
+ *
+ * See the readme for themeing help
+ *
+ */
+.dk_container-background() {
+	background-color: transparent;
+	border: 1px solid @border-color;//darken(@border-color, 10%);
+}
+.dk_container {
+	//margin-bottom: 18px;
+	.dropdown-font-style(15px);
+	.dk_container-background();
+	.rel();
+	.rounded(25px);
+	.transition(border-radius .3s ease);
+	&:focus {
+		outline: 0;
+	}
+	
+	&.dk_open {
+		.rounded-bottom(0);
+	}
+	
+	a {
+		color: inherit;
+		line-height: 2.5em;
+		cursor: pointer;
+		text-decoration: none;
+		//text-shadow: @main-site-dark-color 0 1px 0;
+	}
+	&:hover {
+		.rounded(2px);
+	}
+}
+
+.dk_toggle {
+	.rel();
+	padding: 7px 45px 7px 25px;
+	//text-shadow: @main-site-dark-color 0 1px 0;
+	.rounded(3px);
+	
+	&:before {
+		content: '';
+		.abs();
+		width: 10px;
+		.block();
+		top: 50%;
+		margin-top: -2px;
+		right: 15px;
+		height: 1px;                    
+		background-color: @third-site-dark-color;
+		.box-shadow(~"0 -2px 0 @{third-site-dark-color}, 0 2px 0 @{third-site-dark-color}");
+		.transition(~"background .3s ease-in-out, box-shadow .3s ease-in-out");
+	}
+	&:hover {
+		&:before {
+			.box-shadow(~"0 -2px 0 @{third-site-light-color}, 0 2px 0 @{third-site-light-color}");
+			background-color: @third-site-light-color;
+		}
+	}
+}
+
+/* Applied when the dropdown is focused */
+.dk_focus .dk_toggle {
+	//border-color: #ff0000;
+}
+
+/* Applied whenever the dropdown is open */
+.dk_open {
+	z-index: 10;
+}
+.dk_open .dk_toggle {
+    background-color: transparent;
+    color: @font-site-light-color;
+    border-color: @border-color;
+}
+
+/* The outer container of the options */
+.dk_options {
+	overflow: hidden;
+	.box-sizing(content-box);
+	.block();
+	position: absolute;
+	left: -2px;
+	top: -1px !important;
+	padding-right: 3px;
+	width: 100%;
+	height: auto;
+	max-height: 0;
+	.rounded(2px);
+	.opacity(0);
+	.transform-origin();
+	.transform(scaleY(0));
+	.transform-origin(50% 0);
+	visibility: hidden;
+	.box-shadow(0px 3px 10px 3px fade(@forth-site-dark-color, 15%));
+	.transition(all .3s ease);
+	
+	a {
+		padding: 4px 15px;
+	}
+	li {
+		font-size: @default-text-font-size - 1;
+		list-style: none;
+		line-height: 1em;
+		border-bottom: 1px dotted @border-color;
+		.transition(~"color .3s ease, background .3s ease");
+		&:last-child {
+			border-bottom-width: 0;
+			a {
+				border-bottom: none;
+			}
+		}
+		&:hover {
+			color: @main-site-dark-color;
+			background: @third-site-dark-color;
+		}
+	}
+}
+
+.dk_options .disabled {
+    cursor: default;
+}
+.dk_options .disabled a {
+	color: #aaa;
+}
+.dk_options .disabled:hover,
+.dk_options .disabled:hover a {
+	cursor: default;
+	background-color: @main-site-dark-color;
+	border-bottom-color: #999;
+	text-shadow: none;
+}
+
+/* Inner container for options, this is what makes the scrollbar possible. */
+.dk_options_inner {
+	max-height: 250px;
+	margin-bottom: 0px;
+	background: @main-site-dark-color;
+	overflow: auto;
+	position: relative;
+	margin-right: -21px !important;
+	-webkit-overflow-scrolling: touch;
+}
+
+/******  End Theme ******/
+/***** Critical to the continued enjoyment of working dropdowns ******/
+.dk_container {
+	display: none;
+	float: left;
+}
+.dk_container a {
+    outline: 0;
+}
+
+.dk_toggle {
+	.rel();
+	.inline-block();
+	
+	//DEPRECATED display: -moz-inline-stack;
+}
+
+.dk_open {
+	position: relative;
+}
+.dk_open .dk_options {
+	bottom: auto !important;
+	height: auto;
+	max-height: 250px;
+	.opacity(1);
+	.transform(scaleY(1));
+	visibility: visible;
+}
+.dk_open .dk_label {
+    color: inherit;
+}
+.dk_options a, .dk_options a:link, .dk_options a:visited {
+    display: block;
+}
+
+/* Hides only dropkick <select> instances */
+.dk_container select {
+	position: absolute;
+	top: -99999em;
+	visibility: hidden;
+}
+
+/*  nativeMobile override */ 
+.dk_mobile {
+	position: relative;
+}
+.dk_mobile select {
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    visibility: visible;
+    opacity: 0;
+/*NOTYET appearance:none;*/
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+/***** End Critical to the continued enjoyment of working dropdowns ******/
+
+.click-dropdown {
+	float: left;
+	.rel();
+	padding: 0 6px;
+	//z-index: 6;
+
+	> a {
+		font-size: @default-text-font-size - 1;
+		.rel();
+		.block();
+		//height: 36px;
+		line-height: 36px;
+		padding: 0 80px 0 15px;
+		color: @title-color;
+		border: 1px solid @border-color;
+		.rounded(36px);
+		-webkit-transition: -webkit-border-radius .3s ease;
+		-moz-transition: -moz-border-radius .3s ease;
+		-o-transition: -o-border-radius .3s ease;
+		-ms-transition: -ms-border-radius .3s ease;
+		transition: -webkit-border-radius .3s ease, border-radius .3s ease;
+		&:before {
+			@line: 7px;
+			content: "";
+			.abs();
+			top: 50%;
+			right: 15px;
+			margin-top: -3px;
+			width: @line;
+			height: 1px;
+			background: @third-site-dark-color;
+			.box-shadow(~"0 2px 0 0 @{third-site-dark-color}, 0 4px 0 0 @{third-site-dark-color}");
+			.transition(~"background .3s ease, box-shadow .3s ease");
+			/*border-left: 3px solid transparent;
+			border-right: 3px solid transparent;
+			border-top: 3px solid @title-color;
+			.transition(border-top-color .3s ease);*/
+		}
+		span {
+			.hide();
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			z-index: 5;
+		}
+	}
+	> div {
+		.abs();
+		top: 0;
+		left: 0;
+		padding: 0;
+		background: @main-site-dark-color;
+		min-width: 200px;
+		height: auto;
+		max-height: 0;
+		overflow: hidden;
+		//height: 0;
+		.rounded(3px);
+		.opacity(0);
+		visibility: hidden;
+		z-index: 7;
+		.box-shadow(0px 3px 10px 3px fade(@forth-site-dark-color, 15%));
+		.transform-origin();
+		.transform(scaleY(0));
+		.transform-origin(50% 0);
+		.transition(all .3s ease-in-out);
+		ul {
+			.rel();
+			margin-right: -26px;
+			margin-bottom: 0;
+			max-height: 400px;
+			list-style: none;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			&.category-filer {
+
+				.icon-wrap {
+					float: left;
+					line-height: 3em;
+					width: 30px;
+					text-align: center;
+					color: inherit;
+
+					i {
+						line-height: inherit;
+						color: inherit;
+						&.none:before {
+							content: "-";
+							font-family: @default-text-font-family;
+						}
+					}
+				}
+				a {
+					margin-left: 40px;
+				}
+				&.dfd-woo-page-filter {
+					a {
+						margin-left: 0;
+					}
+				}
+			}
+			li {
+				overflow: hidden;
+				line-height: 3em;
+				padding: 0 10px;
+				color: @title-color;
+				background: transparent;
+				border-bottom: 1px dotted @border-color;
+				.transition(~"background .3s ease-in-out, color .3s ease-in-out, border .3s ease-in-out");
+
+				a {
+					font-size: 13px;
+					line-height: 3em;
+					display: block;
+					color: inherit;
+				}
+				&:last-child {
+					border-bottom-width: 0;
+				}
+				&:hover {
+					background: @third-site-dark-color;
+					color: @main-site-dark-color;
+					border-bottom-style: solid;
+					border-bottom-width: @third-site-dark-color;
+				}
+			}
+			&.filter-authors,
+			&.filter-tags {
+				li {
+					padding: 0 20px;
+				}
+			}
+		}
+	}
+	&:hover {
+		> a {
+			.rounded(2px);
+			&:before {
+				//border-top-color: @third-site-light-color;
+				background: @third-site-light-color;
+				.box-shadow(~"0 2px 0 0 @{third-site-light-color}, 0 4px 0 0 @{third-site-light-color}");
+			}
+		}
+	}
+	&.active {
+		> a {
+			span {
+				.block();
+			}
+		}
+		> div {
+			height: auto;
+			max-height: 400px;
+			.opacity(1);
+			visibility: visible;
+			.transform(scaleY(1));
+		}
+	}
+}
+
+.dk-select,
+.dk-select-multi {
+	.rel();
+	.block();
+	width: 100%;
+	.dk-selected {
+		.rel();
+		.block();
+		width: 100%;
+		padding: 12px 45px 12px 25px;
+		border: 1px solid @border-color;
+		.rounded(25px);
+		cursor: pointer;
+		.transition(border-radius .3s ease);
+
+		&:before {
+			content: '';
+			.abs();
+			width: 10px;
+			.block();
+			top: 50%;
+			margin-top: -2px;
+			right: 15px;
+			height: 1px;                    
+			background-color: @third-site-dark-color;
+			.box-shadow(~"0 -2px 0 @{third-site-dark-color}, 0 2px 0 @{third-site-dark-color}");
+			.transition(~"background .3s ease-in-out, box-shadow .3s ease-in-out");
+		}
+		&:hover {
+			.rounded(3px);
+			&:before {
+				.box-shadow(~"0 -2px 0 @{third-site-light-color}, 0 2px 0 @{third-site-light-color}");
+				background-color: @third-site-light-color;
+			}
+		}
+	}
+	.dk-select-options {
+		overflow: hidden;
+		.abs();
+		top: 0;
+		left: 0;
+		.block();
+		width: 100%;
+		height: auto;
+		max-height: 0;
+		margin-bottom: 0;
+		background: @main-site-dark-color;
+		.rounded(2px);
+		.opacity(0);
+		.transform-origin();
+		.transform(scaleY(0));
+		.transform-origin(50% 0);
+		visibility: hidden;
+		.box-shadow(0px 3px 10px 3px fade(@forth-site-dark-color, 15%));
+		z-index: 999;
+		.transition(all .3s ease);
+		li {
+			font-size: @default-text-font-size - 1;
+			list-style: none;
+			line-height: 1em;
+			padding: 13px 15px;
+			border-bottom: 1px dotted @border-color;
+			cursor: pointer;
+			.transition(~"color .3s ease, background .3s ease");
+			&:last-child {
+				border-bottom-width: 0;
+				a {
+					border-bottom: none;
+				}
+			}
+			&:hover {
+				color: @main-site-dark-color;
+				background: @third-site-dark-color;
+			}
+		}
+	}
+	&.dk-select-open-up,
+	&.dk-select-open-down {
+		.dk-select-options {
+			bottom: auto !important;
+			height: auto;
+			max-height: 250px;
+			.opacity(1);
+			.transform(scaleY(1));
+			visibility: visible;
+		}
+	}
+}
+
+select[data-dkcacheid] {
+	display: none;
+}

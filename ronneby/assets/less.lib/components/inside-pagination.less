@@ -1,0 +1,351 @@
+/* 
+    Created on : 16.01.2015, 11:45:58
+    Author     : DFD
+	Styles for : Single items inside pagination
+*/
+/* Single item inside prev-next pagination with images */
+body.dfd-custom-padding-html {
+	.dfd-controls {
+		.page-inner-nav {
+			&.nav-prev {
+				left: @layout-white-space-size + 10;
+			}
+			&.nav-next {
+				right: @layout-white-space-size + 10;
+			}
+		}
+	}
+}
+.dfd-controls.dfd-arrows-nav {
+	.page-inner-nav {
+		z-index: 2;
+		.pagination-title {
+			z-index: 3;
+		}
+		&.nav-prev {
+			.pagination-title {
+				left: 5px;
+			}
+		}
+		&.nav-next {
+			.pagination-title {
+				right: 5px;
+			}
+		}
+		.dfd-controler {
+			color: @box-name-color;
+			background: transparent;
+			border-color: fade(#777777, 40%);
+		}
+		&:hover {
+			.dfd-controler {
+				color: @box-name-color;
+				background: transparent;
+				border-color: fade(#777777, 40%);
+			}
+		}
+	}
+}
+.dfd-controls {
+	@s: 115px;
+	@w: 32px;
+	@thumb: 95px;
+
+	.page-inner-nav {
+		.block();
+		width: @w;
+		height: @thumb;
+		position: fixed;
+		top: 50%;
+		margin-top: -24px;
+		z-index: 3;
+		
+		&.nav-prev {
+			left: 0;
+
+			.pagination-title {
+				left: @w + 10;
+				text-align: left;
+				padding-right: 20px;
+				.transform(translateX(-150%));
+				div.box-name,
+				div.subtitle {
+					padding-left: 30px;
+					margin-left: 95px;
+				}
+				.thumb {
+					margin-left: -1px;
+				}
+			}
+		}
+		&.nav-next {
+			right: 0;
+
+			.pagination-title {
+				right: @w + 10;
+				text-align: right;
+				padding-left: 20px;
+				.transform(translateX(150%));
+				div.box-name,
+				div.subtitle {
+					padding-right: 30px;
+					margin-right: 95px;
+				}
+				.thumb {
+					margin-right: -1px;
+				}
+			}
+		}
+		.thumb {
+			.rel();
+			width: @thumb;
+			height: @thumb;
+			line-height: @thumb;
+			text-align: center;
+			margin-top: -1px;
+			color: @title-color;
+			
+			img {
+				.block();
+				.rounded(2px);
+			}
+			
+			.entry-comments {
+				.abs();
+				top: 15px;
+				.block();
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				color: @main-site-dark-color;
+				background: @third-site-light-color;
+				&:before {
+					content: "";
+					.block();
+					.abs();
+					top: 100%;
+					left: 0;
+					border-top: 3px solid darken(@third-site-light-color, 10%);
+					border-left: 3px solid darken(@third-site-light-color, 10%);
+					border-bottom: 3px solid transparent;
+					border-right: 3px solid transparent;
+				}
+			}
+
+			&.prev {
+				float: left;
+				right: 0;
+				.entry-comments {
+					right: -15px;
+				}
+			}
+			&.next {
+				float: right;
+				left: 0;
+				.entry-comments {
+					left: -15px;
+				}
+			}
+			i {
+				font-size: 30px;
+				line-height: inherit;
+			}
+		}
+		.pagination-title {
+			.abs();
+			top: 50%;
+			.block();
+			height: @thumb;
+			min-width: @thumb;
+			white-space: nowrap;
+			padding: 0;
+			margin-top: -(@thumb)/2;
+			background: @main-site-dark-color;
+			z-index: 2;
+			border: 1px solid @border-color;
+			.rounded(2px);
+			.transition(all .3s ease);
+			div.box-name {
+				font-size: @box-name-font-size;
+				padding-top: 15px;
+				padding-bottom: 6px;
+				border-bottom: 1px dotted @border-color;
+				//color: @main-site-dark-color;
+			}
+			div.subtitle {
+				font-size: @subtitles-font-size - 1;
+				margin: 0;
+				padding-bottom: 15px;
+				//color: fade(@main-site-dark-color, 50%);
+			}
+		}
+		.dfd-controler {
+			.block();
+			width: @w;
+			height: @thumb;
+			line-height: @thumb;
+			text-align: center;
+			.abs();
+			top: 0;
+			color: @box-name-color;
+			background: transparent;
+			z-index: 3;
+			border: 1px solid fade(#777777, 40%);
+			.rounded(2px);
+			.transition(~"background .3s ease-in-out, color .3s ease-in-out, border-color .3s ease-in-out");
+			
+			i {
+				font-size: 10px;
+				color: inherit;
+			}
+			&.prev,
+			&.next {
+				span {
+					.link-style();
+					.link-decoration();
+					.transition(~"color .3s ease, margin-left .3s ease");
+					&:hover {
+						color: @link-color;
+					}
+				}
+			}
+			&.prev {
+				left: 10px;
+				span {
+					margin-left: 20px;
+				}
+			}
+			&.next {
+				right: 10px;
+				span {
+					margin-left: -20px;
+				}
+			}
+		}
+		&:hover,
+		&.active {
+			.thumb {
+				.opacity(1);
+			}
+			.dfd-controler {
+				color: @main-site-dark-color;
+				background: @third-site-light-color;
+				border-color: @third-site-light-color;
+				&.prev span {
+					margin-left: -20px;
+				}
+				&.next span {
+					margin-left: 10px;
+				}
+			}
+			&.nav-prev {
+				.pagination-title {
+					margin-left: 5px;
+				}
+			}
+			&.nav-next {
+				.pagination-title {
+					margin-right: 5px;
+				}
+			}
+			.pagination-title {
+				.transform(translateX(0));
+			}
+		}
+	}
+}
+.dfd-controls-top {
+	@s: 42px;
+	overflow: hidden;
+	padding-top: 30px;
+	padding-bottom: 25px;
+	border-bottom: 1px dotted @border-color;
+	.page-inner-nav {
+		.rel();
+		float: left;
+		&.nav-prev {
+			margin-right: 7px;
+			.pagination-title {
+				
+			}
+		}
+		&.nav-next {
+			.pagination-title {
+				
+			}
+		}
+		.dfd-controler {
+			.rel();
+			width: @s;
+			height: @s;
+			line-height: @s;
+			text-align: center;
+			border: 1px solid @border-color;
+			.rounded(2px);
+			&:before {
+				font-family: "icomoon";
+			}
+			&.prev {
+				&:before {
+					content: "\ec2c";
+				}
+			}
+			&.next {
+				&:before {
+					content: "\ec46";
+				}
+			}
+			.thumb {
+				.abs();
+				top: 0;
+				left: 0;
+				width: @s;
+				height: @s;
+				.opacity(0);
+				visibility: hidden;
+				.transition(~"opacity .3s ease, visibility .3s ease");
+				img {
+					.block();
+					.rounded(2px);
+				}
+				i {
+					.block();
+					width: @s - 2;
+					height: @s - 2;
+					line-height: @s - 2;
+					text-align: center;
+					background: @main-site-dark-color;
+				}
+			}
+		}
+		.pagination-title {
+			overflow: hidden;
+			.abs();
+			top: 0;
+			left: 100%;
+			height: @s;
+			min-width: 230px;
+			margin-left: 7px;
+			padding: 0 10px;
+			background: @main-site-dark-color;
+			.opacity(0);
+			visibility: hidden;
+			z-index: 1;
+			.transition(~"opacity .3s ease, visibility .3s ease");
+			//white-space: nowrap;
+		}
+		&:hover {
+			.dfd-controler {
+				.thumb {
+					.opacity(1);
+					visibility: visible;
+				}
+			}
+			.pagination-title {
+				.opacity(1);
+				visibility: visible;
+			}
+		}
+	}
+}

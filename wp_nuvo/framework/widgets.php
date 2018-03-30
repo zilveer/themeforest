@@ -1,0 +1,10 @@
+<?php
+get_template_part('framework/widgets/tweets');
+get_template_part('framework/widgets/news_tabs');
+get_template_part('framework/widgets/recent_post_v1');
+get_template_part('framework/widgets/recent_post_v2');
+get_template_part('framework/widgets/restaurantmenu');
+get_template_part('framework/widgets/social');
+get_template_part('framework/widgets/newsletter');
+get_template_part('framework/widgets/cart_search');
+get_template_part('framework/widgets/search');

@@ -1,0 +1,666 @@
+
+/* ==========================================================================
+	13. Media Element Player
+============================================================================= */
+
+.wp-video-wrapper {
+	position: relative;
+	.wp-video {
+		position: absolute;
+		left: 0; top: 0;
+		width: 100% !important;
+		height: 100% !important;
+	}
+}
+
+.mejs-offscreen{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
+
+.mejs-container {
+	position: relative;
+	&:focus {
+		outline: none !important;
+	}
+}
+
+.me-plugin {
+	position: absolute;
+}
+
+.mejs-embed {
+	&, body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+}
+
+.mejs-fullscreen {
+	overflow: hidden !important;
+}
+
+.mejs-container-fullscreen {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	z-index: 1000;
+
+	.mejs-mediaelement, video {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.mejs-clear {
+	clear: both;
+}
+
+/* Start: LAYERS */
+.mejs-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.mejs-mediaelement {
+	position: absolute;
+	left: 0; top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.mejs-poster {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-size: contain;
+	background-position: 50%;
+	background-repeat: no-repeat;
+
+	:root & img {
+		display: none;
+	}
+
+	img {
+		border: 0;
+		padding: 0;
+	}
+}
+
+.mejs-overlay {
+	position: absolute;
+	left: 0; top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.mejs-overlay-play {
+	cursor: pointer;
+}
+
+.mejs-overlay-button {
+	position: absolute;
+	.size(65px; 40px);
+	left: 50%; top: 50%;
+	margin-left: -32.5px;
+	margin-top: -20px;
+	border-radius: 5px;
+	background-color: rgba(51, 51, 51, 0.9);
+	text-align: center;
+
+	&:before {
+		display: block;
+		font-size: 20px;
+		width: 65px;
+		height: 40px;
+		line-height: 40px;
+		font-family: 'FontAwesome';
+		content: '\f04b';
+		color: #fff;
+	}
+}
+
+.mejs-overlay-loading {
+	position: absolute;
+	.size(80px; 80px);
+	left: 50%; top: 50%;
+	margin: -40px 0 0 -40px;
+	border-radius: 50%;
+	background-color: rgba(51, 51, 51, 0.9);
+	text-align: center;
+
+	span {
+		display: none;
+	}
+}
+/* End: LAYERS */
+
+/* Start: CONTROL BAR */
+.mejs-controls {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 36px;
+	background: #333;
+	white-space: nowrap;
+
+	> div, > a {
+		display: inline-block;
+		vertical-align: top;
+		height: 100%;
+		position: relative;
+		border-right: 1px solid #404040;
+
+		&:last-child {
+			border-right: none;
+		}
+	}
+
+	.mejs-button {
+		padding: 0 6px;
+
+		button {
+			cursor: pointer;
+			display: block;
+			font-size: 14px;
+			line-height: 1;
+			text-decoration: none;
+			margin: 0;
+			padding: 0;
+			border: 0;
+			width: 28px;
+			height: 36px;
+			background: transparent;
+			-webkit-appearance: none;
+			position: relative;
+
+			&:before {
+				font-family: 'FontAwesome';
+				position: absolute;
+				left: 0; top: 0;
+				width: 100%;
+				height: 100%;
+				line-height: 36px;
+				color: #d2d6db;
+			}
+
+			/* :focus for accessibility */
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}
+/* End: CONTROL BAR */
+
+/* Start: Time (Current / Duration) */
+.mejs-controls .mejs-time {
+	color: #fff;
+	overflow: hidden;
+	text-align: center;
+	font-size: 11px;
+	line-height: 36px;
+
+	span {
+		display: block;
+		padding: 0 12px;
+	}
+}
+/* End: Time (Current / Duration) */
+
+/* Start: Play/Pause/Stop */
+.mejs-controls {
+	.mejs-play button:before {
+		content: '\f04b';
+	}
+
+	.mejs-pause button:before {
+		content: '\f04c';
+	}
+
+	.mejs-stop button:before {
+		content: '\f04d';
+	}
+}
+/* Start: Play/Pause/Stop */
+
+/* Start: Progress Bar */
+.mejs-controls .mejs-time-rail {
+	direction: ltr;
+	width: 200px;
+	padding: 13px 12px;
+
+	.mejs-time-total {
+		padding: 1px;
+		height: 10px;
+		display: block;
+		background-color: #262929;
+	}
+
+	.mejs-time-buffering, 
+	.mejs-time-loaded, 
+	.mejs-time-current {
+		display: block;
+		position: absolute;
+		cursor: pointer;
+		height: 8px;
+	}
+
+	.mejs-time-buffering {
+		background: #464849;
+		background-size: 14px 14px;
+		#gradient > .striped(rgba(0, 0, 0, 0.4), -45deg);
+		.animation(buffering-stripes 2s linear infinite);
+	}
+
+	.mejs-time-loaded {
+		background: #464849;
+	}
+
+	.mejs-time-current {
+		background: @brand-primary;
+		background-size: 10px 10px;
+		#gradient > .striped(rgba(0, 0, 0, 0.15), -45deg);
+	}
+
+	.mejs-time-handle {
+		display: none;
+	}
+
+	.mejs-time-float {
+		position: absolute;
+		display: none;
+		background-color: #262626;
+		width: 42px;
+		height: auto !important;
+		border-radius: 4px;
+		top: -15px;
+		text-align: center;
+		color: #fff;
+	}
+
+	.mejs-time-float-current {
+		line-height: 24px;
+		display: block;
+		font-size: 11px;
+	}
+
+	.mejs-time-float-corner {
+		position: absolute;
+		display: block;
+		border: solid 4px transparent;
+		border-top-color: #262626;
+		top: 100%;
+		left: 50%;
+		margin-left: -4px;
+	}
+
+	.mejs-long-video & {
+		.mejs-time-float {
+			width: 48px;
+		}
+
+		.mejs-time-float-current {
+			width: 42px;
+		}
+	}
+}
+
+@-webkit-keyframes buffering-stripes { from {background-position: 0 0;} to{background-position:30px 0;} }
+@keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
+
+/* End: Progress Bar */
+
+/* Start: Fullscreen */
+.mejs-controls {
+	.mejs-fullscreen-button button:before {
+		content: '\f065';
+	}
+
+	.mejs-unfullscreen button:before {
+		content: '\f066';
+	}
+}
+/* End: Fullscreen */
+
+
+/* Start: Mute/Volume */
+.mejs-controls {
+	.mejs-mute button:before {
+		content: '\f028';
+	}
+
+	.mejs-unmute button:before {
+		content: '\f026';
+	}
+
+	.mejs-volume-button {
+		.mejs-volume-slider {
+			display: none;
+			height: 115px;
+			width: 25px;
+			background: #333;
+			left: 0;
+			bottom: 100%;
+			z-index: 1;
+			position: absolute;
+
+			.mejs-volume-total, 
+			.mejs-volume-current {
+				position: absolute;
+				left: 11px;
+				top: 8px;
+				width: 2px;
+				height: 100px;
+				background: rgba(255, 255, 255, 0.5);
+			}
+
+			.mejs-volume-current {
+				background: rgba(255, 255, 255, 0.9);
+			}
+
+			.mejs-volume-handle {
+				position: absolute;
+				left: 4px;
+				top: -3px;
+				width: 16px;
+				height: 6px;
+				background: rgba(255, 255, 255, 0.9);
+				cursor: N-resize;
+				border-radius: 1px;
+			}
+		}
+	}
+}
+
+/* horizontal version */
+.mejs-controls .mejs-horizontal-volume-slider {
+	width: 60px;
+	height: 100%;
+	margin-left: 12px;
+	position: relative;
+
+	.mejs-horizontal-volume-total {
+		position: absolute;
+		left: 0;
+		top: 13px;
+		width: 48px;
+		height: 10px;
+		background: #262929;
+		border: 1px solid #262929;
+		box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 1px 1px rgba(0, 0, 0, 0.18);
+	}
+
+	.mejs-horizontal-volume-current {
+		position: absolute;
+		left: 1px;
+		top: 14px;
+		width: 0;
+		height: 8px;
+		background: @brand-primary;
+		background-size: 10px 10px;
+		box-shadow: 0 1px 1px rgba(32, 33, 34, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	}
+
+	.mejs-horizontal-volume-handle {
+		display: none;
+	}
+}
+/* End: Mute/Volume */
+
+/* Start: Track (Captions and Chapters) */
+.mejs-controls .mejs-captions-button {
+	position: relative;
+
+	button:before {
+		content: '\f141';
+	}
+
+	.mejs-captions-selector {
+		visibility: hidden;
+		position: absolute;
+		bottom: 100%;
+		right: 0;
+		padding: 12px;
+		background: #333;
+		overflow: hidden;
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			overflow: hidden;
+
+			li {
+				margin: 0 0 5px;
+				padding: 0;
+				color: #fff;
+				line-height: 1;
+				white-space: nowrap;
+
+				input, label {
+					margin: 0;
+					display: inline-block;
+					vertical-align: middle;
+				}
+
+				label {
+					font-size: 11px;
+					font-weight: normal;
+					margin-left: 5px;
+				}
+			}
+		}
+	}
+
+	.mejs-captions-translations {
+		font-size: 10px;
+		margin: 0 0 5px 0;
+	}
+}
+
+.mejs-chapters {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10000px;
+	z-index: 1;
+
+	.mejs-chapter {
+		position: absolute;
+		float: left;
+		background: rgba(0, 0, 0, 0.7);
+		overflow: hidden;
+		border: 0;
+
+		.mejs-chapter-block {
+			font-size: 11px;
+			color: #fff;
+			padding: 5px;
+			display: block;
+			border-right: solid 1px #333;
+			border-bottom: solid 1px #333;
+			cursor: pointer;
+
+			&:hover {
+				background: rgba(102,102,102, 0.7);
+			}
+
+			.ch-title {
+				font-size: 12px;
+				font-weight: bold;
+				display: block;
+				margin: 0 0 3px 0;
+				line-height: 12px;
+				.text-overflow();
+			}
+
+			.ch-timespan {
+				font-size: 12px;
+				line-height: 12px;
+				margin: 3px 0 4px 0;
+				display: block;
+				.text-overflow();
+			}
+		}
+
+		.mejs-chapter-block-last {
+			border-right: none;
+		}
+	}
+}
+
+.mejs-captions-layer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align:center;
+	line-height: 22px;
+	font-size: 12px;
+	color: #fff;
+}
+
+.mejs-captions-layer a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.mejs-captions-layer[lang=ar] {
+	font-size: 20px;
+	font-weight: normal;
+}
+
+.mejs-captions-position {
+	position: absolute;
+	width: 100%;
+	bottom: 15px;
+	left: 0;
+}
+
+.mejs-captions-position-hover {
+	bottom: 45px;
+}
+
+.mejs-captions-text {
+	padding: 3px 5px;
+	background: rgba(20, 20, 20, 0.8);
+
+}
+/* End: Track (Captions and Chapters) */
+
+/* Start: Error */
+.me-cannotplay {
+	a {
+		color: #fff;
+		font-weight: bold;
+	}
+
+	span {
+		padding: 15px;
+		display: block;
+	}
+}
+/* End: Error */
+
+
+/* Start: Loop */
+.mejs-controls .mejs-loop-off button:before {}
+
+.mejs-controls .mejs-loop-on button:before {}
+
+/* End: Loop */
+
+/* Start: backlight */
+.mejs-controls .mejs-backlight-off button:before {}
+
+.mejs-controls .mejs-backlight-on button:before {}
+/* End: backlight */
+
+/* Start: Picture Controls */
+.mejs-controls .mejs-picturecontrols-button {}
+/* End: Picture Controls */
+
+
+/* context menu */
+.mejs-contextmenu {
+	position: absolute;
+	width: 150px;
+	padding: 10px;
+	border-radius: 4px;
+	top: 0;
+	left: 0;
+	background: #fff;
+	border: solid 1px #999;
+	z-index: 1001; /* make sure it shows on fullscreen */
+
+	.mejs-contextmenu-separator {
+		height: 1px;
+		font-size: 0;
+		margin: 5px 6px;
+		background: #333;	
+	}
+
+	.mejs-contextmenu-item {
+		font-size: 12px;
+		padding: 4px 6px;
+		cursor: pointer;
+		color: #333;
+
+		&:hover {
+			background: #2c7c91;
+			color: #fff;
+		}
+	}
+}
+
+/* Start: Source Chooser */
+.mejs-controls .mejs-sourcechooser-button {
+	position: relative;
+
+	button:before {}
+
+	.mejs-sourcechooser-selector {
+		&:extend(.mejs-controls .mejs-captions-button .mejs-captions-selector all);
+	}
+}
+/* End: Source Chooser */
+
+/* Start: Postroll */
+.mejs-postroll-layer {
+	left: 0; top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(50, 50, 50, 0.7);
+	z-index: 1000;
+	overflow: hidden;
+}
+
+.mejs-postroll-layer-content {
+	.size(100%; 100%);
+}
+
+.mejs-postroll-close {
+	position: absolute;
+	right: 0;
+	top: 0;
+	background: rgba(50, 50, 50, 0.7);
+	color: #fff;
+	padding: 4px;
+	z-index: 100;
+	cursor: pointer;
+}
+/* End: Postroll */

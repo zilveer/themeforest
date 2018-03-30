@@ -1,0 +1,174 @@
+
+/* ==========================================================================
+    2.1 WordPress Alignments
+============================================================================= */
+
+.alignleft, 
+.alignright, 
+.aligncenter, 
+.alignnone {
+    display: block;
+    margin: 0 0 1em;
+    max-width: 100%;
+}
+
+.aligncenter {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignleft, 
+.alignright {
+    max-width: 50%;
+    max-width: ~'-moz-calc(50% - 1.071428571em)';
+    max-width: ~'calc(50% - 1.071428571em)';
+    margin-top: unit( 20 / @font-size-base, em );
+}
+
+p + .alignleft,
+p + .alignright {
+    margin-top: 0;
+}
+
+p > .alignleft:first-child,
+p > :first-child > .alignleft:first-child,
+p > .alignright:first-child,
+p > :first-child > .alignright:first-child {
+    margin-top: 0;
+}
+
+.alignleft {
+    float: left;
+    margin-right: unit( 30 / @font-size-base, em );
+}
+
+.alignright {
+    float: right;
+    margin-left: unit( 30 / @font-size-base, em );
+}
+
+.wp-caption-text {
+    line-height: 1.5;
+    color: @text-muted;
+
+    .wp-caption & {
+        text-align: center;
+        margin: 6px 0 0;
+    }
+}
+
+/* ==========================================================================
+    2.2 WordPress Gallery
+============================================================================= */
+
+.gallery-item {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    &:hover .gallery-caption {
+        .translate(0, -100%);
+    }
+}
+
+.gallery-caption {
+    position: absolute;
+    z-index: 1;
+    line-height: 1.5;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 0; right: 0;
+    top: 100%;
+    color: #fff;
+    .transition-transform(.3s ease);
+
+    &:empty {
+        display: none;
+    }
+}
+
+.gallery-columns( @size; @margin: 10; ) {
+    @percent: unit( 100 / @size, % );
+    @gutter: unit( ( ( @size - 1 ) * @margin ) / @size, px );
+    .gallery-item {
+        width: ~'calc(@{percent} - @{gutter})';
+    }
+}
+
+// >= 480px
+.gallery-columns-2, 
+.gallery-columns-3, 
+.gallery-columns-4, 
+.gallery-columns-5, 
+.gallery-columns-6, 
+.gallery-columns-7, 
+.gallery-columns-8, 
+.gallery-columns-9 {
+    @media (min-width: @screen-xs-min) {
+        .gallery-columns(2);
+    }
+}
+
+// >= 768
+.gallery-columns-3 {
+    @media (min-width: @screen-md-min) {
+        .gallery-columns(3);
+    }
+}
+
+.gallery-columns-4, 
+.gallery-columns-5, 
+.gallery-columns-6, 
+.gallery-columns-7, 
+.gallery-columns-8, 
+.gallery-columns-9 {
+    @media (min-width: @screen-sm-min) {
+        .gallery-columns(4);
+    }
+}
+
+// >= 992
+.gallery-columns-5 {
+    @media (min-width: @screen-md-min) {
+        .gallery-columns(5);
+    }
+}
+.gallery-columns-6, 
+.gallery-columns-7, 
+.gallery-columns-8, 
+.gallery-columns-9 {
+    @media (min-width: @screen-md-min) {
+        .gallery-columns(6);
+    }
+}
+
+// >= 1200
+@media (min-width: @screen-lg-min) {
+    .gallery-columns-7 {
+        .gallery-columns(7);
+    }
+    .gallery-columns-8 {
+        .gallery-columns(8);
+    }
+    .gallery-columns-9 {
+        .gallery-columns(9);
+    }
+}
+
+/* ==========================================================================
+    2.3 WordPress Video
+============================================================================= */
+
+.wp-video, 
+.wp-audio-shortcode {
+    max-width: 100%;
+    margin-bottom: 1.1428571em;
+}

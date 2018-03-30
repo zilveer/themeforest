@@ -1,0 +1,187 @@
+// =============================================================================
+// _NAVBAR.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Styles
+//   02. Button
+//   03. Desktop Navigation
+//   04. Mobile Navigation
+//   05. Fixed Navbar
+//   06. Search
+// =============================================================================
+
+// Base Styles
+// =============================================================================
+
+.x-navbar {
+  border-bottom: $navbarOuterBorderWidth solid $navbarOuterBorderColor;
+  background-color: $navbarBackground;
+}
+
+
+
+// Button
+// =============================================================================
+
+.x-btn-navbar {
+  padding: 0;
+  color: $navbarBtnColor;
+
+  &:hover {
+    color: $navbarBtnColor;
+  }
+
+  &.collapsed {
+    color: $navbarBtnColorCollapsed;
+
+    &:hover {
+      color: $navbarBtnColor;
+    }
+  }
+}
+
+
+
+// Desktop Navigation
+// =============================================================================
+
+.x-navbar .desktop .x-nav {
+  > li {
+    > a {
+      border-right: 1px solid $navbarLinkBorderColor;
+      padding: 0;
+    }
+
+    &:first-child > a {
+      border-left: 1px solid $navbarLinkBorderColor;
+    }
+  }
+}
+
+
+
+// Mobile Navigation
+// =============================================================================
+
+//
+// Links.
+//
+
+.x-navbar .mobile .x-nav li > a {
+  margin: 0 0 10px;
+  padding: 0.85em 1.15em;
+  color: $navbarLinkColor;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.x-navbar .mobile .x-nav li > a:hover,
+.x-navbar .mobile .x-nav .x-active > a,
+.x-navbar .mobile .x-nav .current-menu-item > a {
+  color: $navbarLinkColorHover;
+}
+
+
+//
+// Sub toggle.
+//
+
+.x-sub-toggle {
+  width: 45px;
+}
+
+
+
+// Fixed Navbar
+// =============================================================================
+
+//
+// Left/right styles.
+//
+
+.x-navbar-fixed-left,
+.x-navbar-fixed-right {
+  @include break(mama-bear) {
+    border-bottom: 0;
+  }
+
+  .desktop .x-nav {
+    > li {
+      > a {
+        text-align: center;
+        border-left: 0;
+        padding: 20px 35px;
+
+        &:before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 37.5%;
+          right: 37.5%;
+          bottom: -1px;
+          height: 2px;
+          background-color: $navbarLinkBorderColor;
+        }
+      }
+
+      &:last-child > a {
+        border-right: 0;
+
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+//
+// Left styles.
+//
+
+.x-navbar-fixed-left {
+  border-right: $navbarOuterBorderWidth solid $navbarOuterBorderColor;
+  @include break(cubs) {
+    border-right: 0;
+  }
+
+  .desktop .x-nav > li > a:hover {
+    @include box-shadow(#{$navbarLeftLinkBoxShadowHover});
+  }
+}
+
+
+//
+// Right styles.
+//
+
+.x-navbar-fixed-right {
+  border-left: $navbarOuterBorderWidth solid $navbarOuterBorderColor;
+  @include break(cubs) {
+    border-left: 0;
+  }
+
+  .desktop .x-nav > li > a:hover {
+    @include box-shadow(#{$navbarRightLinkBoxShadowHover});
+  }
+}
+
+
+
+// Search
+// =============================================================================
+
+.x-navbar .mobile .x-nav > li.x-menu-item-search {
+  margin: 22px 0 0;
+  text-align: center;
+
+  > a {
+    margin: 0;
+    background-color: transparent;
+  }
+}

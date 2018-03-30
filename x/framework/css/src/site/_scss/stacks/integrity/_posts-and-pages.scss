@@ -1,0 +1,679 @@
+// =============================================================================
+// _POSTS-AND-PAGES.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Main Containing Element
+//   02. All Posts and Pages
+//   03. Pages
+//   04. Posts
+//   05. Audio Posts
+//   06. Image Posts
+//   07. Link Posts
+//   08. Quote Posts
+//   09. Portfolio Posts
+//   10. Page Templates
+//   11. 404 Page
+//   12. Landmark Header
+// =============================================================================
+
+// Main Containing Element
+// =============================================================================
+
+.x-main {
+  position: relative;
+
+  .widget {
+    margin-top: 3em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+
+
+// All Posts and Pages
+// =============================================================================
+
+.hentry {
+  margin-top: 4em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.entry-featured {
+  position: relative;
+  @include box-shadow(#{$entryFeaturedBoxShadow});
+  @include translate3d(0, 0, 0);
+}
+
+.has-post-thumbnail .entry-featured {
+  border-bottom: 1px solid $boxedEntryBorder;
+}
+
+.x-boxed-layout-active .has-post-thumbnail .entry-featured {
+  border: 1px solid $boxedEntryBorder;
+}
+
+.entry-wrap {
+  display: block;
+  padding: 60px;
+  background-color: $baseModBackground;
+  border-radius: 4px;
+  @include box-shadow(#{$baseBoxShadow});
+  @include break(middle-bear) {
+    padding: 36px;
+  }
+  @include break(baby-bear) {
+    padding: 25px;
+  }
+}
+
+.x-boxed-layout-active .entry-wrap {
+  margin-top: -1px;
+  border: 1px solid $boxedEntryBorder;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.has-post-thumbnail .entry-wrap {
+  border-radius: 0 0 4px 4px;
+}
+
+.entry-thumb {
+  display: block;
+  position: relative;
+  background-color: $black;
+
+  img {
+    min-width: 100%;
+    @include transition(#{opacity 0.75s ease});
+  }
+
+  &:before {
+    content: "\f0c1";
+    display: block;
+    position: absolute;
+    margin: -36px 0 0 -35px;
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    @include font-size(4.2);
+    line-height: 72px;
+    text-align: center;
+    text-shadow: 0 0.035em 0 rgba(0, 0, 0, 0.35);
+    vertical-align: middle;
+    color: $white;
+    border-radius: 100em;
+    @include opacity(0);
+    @include transition(#{opacity 0.75s ease});
+    @include font-awesome();
+  }
+}
+
+a.entry-thumb:hover {
+  img {
+    @include opacity(0.15);
+  }
+
+  &:before {
+    @include opacity(1);
+  }
+}
+
+.entry-title {
+  margin: 0;
+  font-size: 250%;
+  line-height: 1.05;
+  @include break(baby-bear) {
+    font-size: 200%;
+  }
+}
+
+.entry-title-sub {
+  display: block;
+  margin: 0.75em 0 0;
+  font-size: 128.5%;
+  line-height: 1.05;
+}
+
+.p-meta {
+  margin: 8px 0 0;
+  font-family: $altFontFamily;
+  font-size: 85.7%;
+  line-height: 1.5;
+  text-transform: uppercase;
+
+  > span {
+    display: inline-block;
+
+    > a {
+      white-space: nowrap;
+    }
+
+    &:after {
+      content: "/";
+      padding: 0 0.5em 0 0.45em;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+}
+
+.entry-content {
+  margin-top: 1.25em;
+  @include clearfix();
+
+  embed,
+  iframe,
+  object {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  > p,
+  > ul,
+  > ol {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.more-link {
+  display: inline-block;
+  margin: 0;
+  font-weight: 700;
+  font-size: 128.5%;
+  line-height: 1.4;
+}
+
+.entry-footer {
+  margin-top: 0.325em;
+
+  a {
+    @include btn_simple();
+  }
+}
+
+
+
+// Pages
+// =============================================================================
+
+.x-page-title-disabled {
+  .entry-content {
+    margin-top: 0;
+  }
+}
+
+
+
+// Posts
+// =============================================================================
+
+.x-iso-container-posts {
+  &.cols-2 {
+    .entry-title {
+      font-size: 200%;
+    }
+
+    .p-meta {
+      font-size: 79%;
+      @include break(middle-bear) {
+        font-size: 85.7%;
+      }
+      @include break(baby-bear) {
+        font-size: 85.7%;
+      }
+    }
+
+    .entry-wrap {
+      padding: 6.75% 7.25%;
+    }
+
+    .more-link {
+      font-size: 110%;
+      @include break(middle-bear) {
+        font-size: 128.5%;
+      }
+    }
+  }
+
+  &.cols-3 {
+    .entry-title {
+      font-size: 165%;
+      @include break(cubs) {
+        font-size: 200%;
+      }
+    }
+
+    .p-meta {
+      font-size: 70%;
+      @include break(cubs) {
+        font-size: 85.7%;
+      }
+    }
+
+    .entry-wrap {
+      padding: 7.75% 8.25%;
+      @include break(cubs) {
+        padding: 6.75% 7.25%;
+      }
+      @include break(baby-bear) {
+        padding: 7.75% 8.25%;
+      }
+    }
+
+    .more-link {
+      font-size: 105%;
+      @include break(cubs) {
+        font-size: 128.5%;
+      }
+    }
+  }
+}
+
+
+
+// Audio Posts
+// =============================================================================
+
+.format-audio {
+  &.no-post-thumbnail {
+    .entry-featured {
+      margin-bottom: 1.5em;
+      @include box-shadow(#{none});
+    }
+  }
+
+  &.has-post-thumbnail {
+    .entry-featured {
+      .x-audio {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        margin: 0 auto;
+
+        iframe {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
+// Image Posts
+// =============================================================================
+
+.blog,
+.search,
+.archive {
+  .format-image {
+    .entry-featured {
+      @include box-shadow(#{none});
+    }
+  }
+
+  &.x-blog-standard-active {
+    .format-image {
+      h2.entry-title {
+        margin-top: -9px;
+      }
+    }
+  }
+
+  &.x-blog-masonry-active {
+    .format-image {
+      h2.entry-title {
+        margin-top: -6px;
+      }
+    }
+  }
+
+  @include break(middle-bear) {
+    &.x-blog-standard-active {
+      .format-image {
+        h2.entry-title {
+          margin-top: -6px;
+        }
+      }
+    }    
+  }
+
+  @include break(baby-bear) {
+    &.x-blog-standard-active {
+      .format-image {
+        h2.entry-title {
+          margin-top: -5px;
+        }
+      }
+    }    
+  }
+}
+
+
+
+// Link Posts
+// =============================================================================
+
+.format-link {
+  .x-hgroup {
+    margin-bottom: 1.5em;
+    border-bottom: 1px solid darken($baseModBackground, 5%);
+    padding: 0 0 1.5em;
+  }
+
+  .entry-title-sub a {
+    border-bottom: 1px dotted;
+    word-break: break-all;
+  }
+
+  .p-meta {
+    text-align: center;
+  }
+}
+
+.x-iso-container-posts {
+  &.cols-2,
+  &.cols-3 {
+    .format-link {
+      .entry-title-sub {
+        font-size: 110%;
+      }
+    }
+  }
+}
+
+.blog,
+.search,
+.archive {
+  &.x-post-meta-disabled {
+    .format-link {
+      .x-hgroup {
+        margin-bottom: 0;
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+
+
+// Quote Posts
+// =============================================================================
+
+.format-quote {
+  .x-hgroup {
+    margin-bottom: 1.5em;
+    border-bottom: 1px solid darken($baseModBackground, 5%);
+    padding: 0 0 1.5em;
+    text-align: center;
+  }
+
+  .entry-title {
+    &:before,
+    &:after {
+      font-weight: 300;
+    }
+
+    &:before {
+      content: "\201C";
+      margin-right: 0.115em;
+    }
+
+    &:after {
+      content: "\201D";
+      margin-left: 0.115em;
+    }
+  }
+
+  .entry-title-sub:before {
+    content: "\2013\00A0";
+  }
+
+  .p-meta {
+    text-align: center;
+  }
+}
+
+.x-iso-container-posts {
+  &.cols-2,
+  &.cols-3 {
+    .format-quote {
+      .entry-title-sub {
+        font-size: 110%;
+      }
+    }
+  }
+}
+
+.blog,
+.search,
+.archive {
+  &.x-post-meta-disabled {
+    .format-quote {
+      .x-hgroup {
+        margin-bottom: 0;
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+
+
+// Portfolio Posts
+// =============================================================================
+
+.x-iso-container-portfolio {
+  .entry-wrap {
+    padding: 29px 6.5% 35px;
+  }
+
+  .x-entry-share {
+    margin: 15px 0 -10px !important;
+    border-color: darken($baseModBackground, 6%);
+    padding: 5px 0;
+
+    p {
+      display: none;
+    }
+  }
+}
+
+.x-portfolio {
+  .entry-info {
+    float: left;
+    width: 64%;
+  }
+
+  .entry-extra {
+    float: right;
+    width: 28%;
+    font-size: 114.2%;
+    @include break(middle-bear) {
+      margin-top: $baseMargin + 0.35;
+    }
+
+    .x-ul-icons {
+      margin-bottom: 1.5em;
+    }
+
+    .x-btn {
+      margin-bottom: 2.5em;
+    }
+  }
+
+  .entry-info,
+  .entry-extra {
+    @include break(middle-bear) {
+      float: none;
+      width: 100%;
+    }
+  }
+
+  .h-extra {
+    margin-top: 0.5em;
+    font-size: 150%;
+
+    &.skills { margin: 0 0 0.3em; }
+    &.launch { margin: 0 0 0.4em; }
+  }
+}
+
+h1.entry-title.entry-title-portfolio {
+  margin: 0;
+  font-size: 285.7%;
+  line-height: 1.05;
+  @include break(baby-bear) {
+    @include font-size(3.2);
+  }
+}
+
+h2.entry-title.entry-title-portfolio {
+  margin: 0;
+  padding: 0 7%;
+  font-size: 150%;
+  font-weight: 400;
+  line-height: 1.05;
+  text-align: center;
+}
+
+
+
+// Page Templates
+// =============================================================================
+
+[class*="page-template-template-blank"] {
+  .entry-content {
+    margin-top: 0;
+  }
+}
+
+.page-template-template-blank-3-php.x-navbar-fixed-left-active,
+.page-template-template-blank-3-php.x-navbar-fixed-right-active,
+.page-template-template-blank-6-php.x-navbar-fixed-left-active,
+.page-template-template-blank-6-php.x-navbar-fixed-right-active,
+.page-template-template-blank-7-php.x-navbar-fixed-left-active,
+.page-template-template-blank-7-php.x-navbar-fixed-right-active,
+.page-template-template-blank-8-php.x-navbar-fixed-left-active,
+.page-template-template-blank-8-php.x-navbar-fixed-right-active {
+  padding: 0;
+}
+
+[class*="page-template-template-blank"],
+.page-template-template-layout-full-width-php {
+  .x-main {
+    float: none;
+    display: block;
+    width: auto;
+  }
+}
+
+
+
+// 404 Page
+// =============================================================================
+
+.error404 {
+  .entry-404 {
+    p {
+      max-width: 750px;
+      margin: 0 auto 1.313em;
+      font-size: 1.5em;
+      @include break(middle-bear) {
+        font-size: 1.25em;
+      }
+      @include break(baby-bear) {
+        font-size: 1em;
+      }
+    }
+
+    .form-search {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+}
+
+
+
+// Landmark Header
+// =============================================================================
+
+.x-header-landmark {
+  margin: 34px auto 0;
+  text-align: center;
+}
+
+.h-landmark {
+  overflow: hidden;
+  margin: 0;
+  padding-bottom: 8px;
+  letter-spacing: -3px;
+  line-height: 1;
+  @include break(middle-bear) { @include font-size(4.8); }
+  @include break(baby-bear)   { @include font-size(4.2); }
+
+  span {
+    display: inline-block;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      width: 275%;
+      display: block;
+      background-color: $headerLandmarkBackgroundColor;
+      background-color: $headerLandmarkBackgroundColorRgba;
+      @include box-shadow(0 1px 0 0 $headerLandmarkBoxShadow);
+    }
+
+    &:before {
+      right: 100%;
+      margin-right: 0.5em;
+    }
+
+    &:after {
+      left: 100%;
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.p-landmark-sub {
+  margin: 5px 0 0;
+  padding: 0 5%;
+  @include font-size(2.4);
+  font-family: $altFontFamily;
+  letter-spacing: -1px;
+  line-height: 1.3;
+  @include break(baby-bear) { @include font-size(1.8); }
+
+  strong {
+    color: $headingsColor;
+  }
+}

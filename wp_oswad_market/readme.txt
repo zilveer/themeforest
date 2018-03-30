@@ -1,0 +1,24 @@
+WPDANCE.COM THEME USAGE LICENSE
+
+By using our product, you agree to the following terms:
+
+1. Limitation of liability under no circumstances shall Codespot Software Jsc company be liable for any direct, indirect, special, incidental or consequential damages, including, but not limited to, loss of data or profit, arising out of the use, or the inability to use, the materials on this site, even if Codespot Software Jsc or an authorized representative has been advised of the possibility of such damages. If your use of materials from this site results in the need for servicing, repair or correction of equipment or data, you assume any costs thereof. 
+
+2. License
+Our Commercial WordPress themes (Premium wordpress themes) are released under the GNU Public License 3.0. 
+All .PSD files are packaged separately and are not licensed under the GPL 3.0. Instead, these files inherit the WPDance Personal Use License. These files are given to all members on a personal use basis. You may not offer them, modified or unmodified, for redistribution or resale of any kind.
+You are free to use the free wordpress theme. However. all our free WordPress themes do not alow to remove credit link. In order to remove credit link you have to upgrade to commercial version. You are not allowed to distribute these resources for profit.
+
+3. Ownership and Liability
+You may not claim intellectual or exclusive ownership to any of our products, modified or unmodified. All products are property of CodeSpot Software Jsc. Our products are provided "as is" without warranty of any kind, either expressed or implied. In no event shall our juridical person be liable for any damages including, but not limited to, direct, indirect, special, incidental or consequential damages or other losses arising out of the use of or inability to use our products. 
+
+4. Refund Policy 
+Before you make a purchase at our site of any product, you must acknowledge that we do not issue refunds for our non-tangible, irrevocable good. We do not issue any refunds, only purchase if you agree.
+
+5. Warranty Our products are provided "as is" without warranty of any kind, either expressed or implied. We do not guarantee that themes will work in all browsers, nor do we guarantee that our themes will be functional with all versions of WordPress. We do not guarantee compatibility with any additional third party plugins, scripts, or applications. 
+
+6. Payments
+All payments are handled through PayPal using PayPal subscriptions. This subscription will automatically renew at the end of the year, and you will be automatically billed at the end of your term for the next year if your subscription is still active. You can, however, cancel your subscription at any time from within your PayPal control panel. You can also request a cancellation from within the WPDance account manager. If you do not cancel by the end of the year, you will be automatically billed for the next year. 
+
+7. Photos Copyright Info
+When viewing the theme demos in the gallery http://demo.wpdance.com/ you will see several photographic images used. These photos serve as example images only and are not included in the membership. Our themes do not come packaged with any copyrighted photography. The photos used in the demos are purely for demonstration purposes, and are used to give the visitor a functional preview of what the theme will look like once content has been added. These photos should not be saved, copied or redistributed in any way.

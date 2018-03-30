@@ -1,0 +1,672 @@
+// =============================================================================
+// _WIDGETS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Widget Area
+//   02. Individual Widget
+//   03. Widget Headings
+//   04. Individual WordPress Widgets
+//       a. Archive
+//       b. Calendar
+//       c. Categories
+//       d. Custom Menu
+//       e. Meta
+//       f. Pages
+//       g. Recent Comments
+//       h. Recent Posts
+//       i. RSS
+//       j. Search
+//       k. Tag Cloud
+//       l. Text
+//   05. WordPress Widget Groups
+// =============================================================================
+
+// Widget Area
+// =============================================================================
+
+.widget-area {
+
+}
+
+
+
+// Individual Widget
+// =============================================================================
+
+.widget {
+  text-shadow: $widgetTextShadow;
+
+  .h-widget:before,
+  .h-widget:after {
+    @include opacity(0.35);
+  }
+
+  a:before,
+  a:after {
+    line-height: 1;
+    text-decoration: inherit;
+    @include opacity(0.35);
+    @include font-awesome();
+  }
+
+  p,
+  ul,
+  ol {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul,
+  ol {
+    overflow: hidden;
+    margin-left: 0;
+    border: 1px solid $widgetBorderColor;
+    border: 1px solid $widgetBorderColorRgba;
+    list-style: none;
+    border-radius: 6px;
+    background-color: $widgetUlBackground;
+    @include box-shadow(#{$widgetUlBoxShadow});
+
+    li {
+      border-bottom: 1px solid $widgetBorderColor;
+      border-bottom: 1px solid $widgetBorderColorRgba;
+      padding: 0.65em 0.85em;
+      line-height: 1.5;
+      @include box-shadow(#{$widgetLiBoxShadow});
+      @include transition(#{background-color 0.3s ease});
+
+      &:hover {
+        background-color: $widgetLiBackgroundHover;
+      }
+
+      a {
+        border-bottom: 1px dotted;
+        color: $textColor;
+
+        &:hover {
+          color: $accentColor;
+        }
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+
+// WPML Language Selector Widget
+// =============================================================================
+
+#lang_sel ul {
+  overflow: visible;
+  border: 0;
+  box-shadow: none;
+}
+
+#lang_sel li {
+  box-shadow: none;
+}
+
+
+
+// Widget Headings
+// =============================================================================
+
+.h-widget {
+  margin: 0 0 0.5em;
+  font-size: 150%;
+  line-height: 1;
+}
+
+
+
+// Individual WordPress Widgets
+// =============================================================================
+
+//
+// Archive.
+// Outputs a <ul> or <select> of links to old posts.
+//
+
+.widget_archive {
+
+}
+
+.widget.widget_archive li {
+
+}
+
+
+//
+// Calendar.
+// Ouputs a <div> with a "calendar_wrap" ID around a <table> with a
+// "wp-calendar" ID. Blank cells in the <thead>, <tfoot>, and <tbody> receive
+// a "pad" class.
+//
+
+.widget_calendar {
+
+}
+
+.widget_calendar #calendar_wrap {
+
+}
+
+.widget_calendar #wp-calendar {
+  font-size: 87.5%;
+  background-color: transparent;
+
+  caption {
+    font-family: $altFontFamily;
+    font-size: 128.5%;
+    font-weight: 400;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+
+  th,
+  td {
+    line-height: 1;
+    text-align: center;
+  }
+
+  th {
+    border-bottom: 2px solid $headingsColor;
+    padding: 3% 0;
+    font-family: $altFontFamily;
+    font-weight: 700;
+    color: $headingsColor;
+  }
+
+  td {
+    padding: 4.75% 0;
+  }
+
+  tbody td {
+    border: 1px solid darken($baseModBackground, 10%);
+    background-color: $baseModBackground;
+    @include box-shadow(#{inset 0 1px 2px rgba(0, 0, 0, 0.045)});
+
+    &.pad {
+      background-color: transparent;
+      @include box-shadow(#{none});
+
+      &:first-child {
+        border-left: 0;
+      }
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+
+  #prev,
+  #next {
+    padding: 4.5% 0;
+    font-size: 87.5%;
+    font-family: $altFontFamily;
+    font-weight: 300;
+    line-height: 1;
+    text-shadow: none;
+    text-transform: uppercase;
+  }
+}
+
+.widget_calendar #prev {
+
+}
+
+.widget_calendar #next {
+
+}
+
+.widget_calendar .pad {
+
+}
+
+
+//
+// Categories.
+// Ouputs a <ul> of links to post categories. <li> elements receive two
+// different classes, "cat-item" and "cat-item-___", where "___" is the unique
+// number assigned to that category item.
+//
+
+.widget_categories,
+.widget_product_categories {
+
+}
+
+.widget.widget_categories li,
+.widget.widget_product_categories li {
+
+}
+
+.widget_categories .cat-item-___,
+.widget_product_categories .cat-item-___ {
+
+}
+
+.widget.widget_categories li ul,
+.widget.widget_product_categories li ul {
+  margin: 0.65em -0.85em -0.65em;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 0;
+  background-color: transparent;
+  @include box-shadow(#{$widgetUlChildrenBoxShadow});
+}
+
+.widget.widget_categories li ul li,
+.widget.widget_product_categories li ul li {
+  @include box-shadow(#{$widgetLiBoxShadow});
+}
+
+.widget.widget_categories li li a,
+.widget.widget_product_categories li li a {
+  margin-left: 1.25em;
+}
+
+.widget.widget_categories li li li a,
+.widget.widget_product_categories li li li a {
+  margin-left: 2.5em;
+}
+
+.widget_categories select,
+.widget_product_categories select {
+  margin-bottom: 0;
+}
+
+
+//
+// Custom menu.
+// Outputs a <div> container with a class of "menu-___-container", where "___" is
+// the name given to the WordPress Menu (e.g. "Secondary Menu" becomes
+// "menu-secondary-menu-container"). Additionaly, a <ul> with an ID of "menu-___"
+// is output (e.g. "menu-secondary-menu") and a class of "menu" as well.
+// Finally, a unique ID and an assortment of classes are output on the <li>
+// elements, including and ID of "menu-item-___", where "___" is the unique ID
+// number of that item, and multiple classes, including "menu-item".
+//
+
+.widget_nav_menu {
+
+}
+
+.widget_nav_menu .menu-___-container {
+
+}
+
+.widget_nav_menu #menu-___ {
+
+}
+
+.widget_nav_menu .menu {
+  > li:last-child {
+    margin-bottom: -1px;
+  }
+}
+
+.widget_nav_menu #menu-item-___ {
+
+}
+
+.widget.widget_nav_menu li {
+
+}
+
+.widget_nav_menu .sub-menu {
+
+}
+
+.widget_nav_menu .current-menu-item > a {
+  background-color: $widgetNavMenuCurrentItemBackground;
+}
+
+
+//
+// Meta.
+// Outputs a <ul> of links for various WordPress functions.
+//
+
+.widget_meta {
+
+}
+
+.widget.widget_meta ul {
+  border-bottom: 0;
+}
+
+.widget.widget_meta li {
+  abbr[title] {
+    border-bottom: 0;
+  }
+}
+
+
+//
+// Pages.
+// Outputs a <ul> of links to static pages. Each <li> receives classes of
+// "page_item" and "page-item-___", where "___" is a unique ID for that item.
+// Additionally, child pages are placed in a sub <ul> with a class of
+// "children" and have the same classes as top-level items.
+//
+
+.widget_pages {
+
+}
+
+.widget.widget_pages ul {
+  border-bottom: 0;
+}
+
+.widget.widget_pages li {
+
+}
+
+.widget_pages .page-item-___ {
+
+}
+
+.widget_pages .children {
+
+}
+
+
+//
+// Recent comments.
+// Outputs a <ul> with an ID of "recentcomments" and <li> elements with a class
+// of recentcomments". Each <li> follows a format of a link surrounding the
+// comment author's name (if they input a site) with a class of "url" then
+// plain text with the word "on" followed by another link to the actual post.
+//
+
+.widget_recent_comments {
+
+}
+
+.widget_recent_comments #recentcomments {
+
+}
+
+.widget.widget_recent_comments li {
+  padding: 1.4em 1.4em 1.5em;
+  font-size: 81.25%;
+  line-height: 1.3;
+}
+
+.widget_recent_comments li > a {
+  &:last-child {
+    display: block;
+    margin-top: 0.5em;
+    border-bottom: 0;
+    font-family: $altFontFamily;
+    font-size: 135.7%;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+}
+
+.widget_recent_comments .url {
+  border-bottom: 0;
+
+  &:before {
+    content: "\f08e";
+    padding-right: 0.4em;
+  }
+}
+
+
+//
+// Recent posts.
+// Outputs a <ul> of links to the most recent posts on the site.
+//
+
+.widget_recent_entries {
+
+}
+
+.widget.widget_recent_entries li {
+  padding: 1.4em;
+  font-size: 81.25%;
+
+  a {
+    display: block;
+    border-bottom: 0 !important;
+    font-family: $altFontFamily;
+    font-size: 135.7%;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .post-date {
+    display: block;
+    margin-top: 0.5em;
+    text-transform: uppercase;
+    @include opacity(0.575);
+  }
+}
+
+
+//
+// RSS.
+// First outputs two links with a class of "rsswidget", one is an icon that
+// links to the feed and the other is text that links to the actual site. Next,
+// a <ul> is output with links to the actual articles (descriptions, et cetera
+// are optional). The actual link to the article inside each <li> also gets a
+// class of "rsswidget", followed by a <span> surrounding the date with a class
+// of "rss-date", then a <div> with a class of "rssSummary", and finally a
+// <cite> tag surrounding the author's name.
+//
+
+.widget_rss {
+
+}
+
+.widget_rss .rsswidget {
+
+}
+
+.widget_rss .rsswidget img {
+  display: none;
+}
+
+.widget.widget_rss li {
+  padding: 1.4em;
+  font-size: 81.25%;
+
+  .rsswidget {
+    display: block;
+    border-bottom: 0 !important;
+    font-family: $altFontFamily;
+    font-size: 135.7%;
+    font-weight: 400;
+    line-height: 1.2;
+
+    &:before {
+      content: "\f08e";
+      padding-right: 0.4em;
+    }
+  }
+}
+
+.widget_rss .rss-date {
+  display: block;
+  margin-top: 0.5em;
+  text-transform: uppercase;
+  @include opacity(0.575);
+}
+
+.widget_rss .rssSummary {
+  margin: 0.75em 0;
+  font-size: 84.6%;
+}
+
+.widget_rss cite {
+  display: block;
+  text-transform: uppercase;
+  @include opacity(0.575);
+
+  &:before {
+    content: "By: "
+  }
+}
+
+
+//
+// Search.
+// Outputs the search form from searchform.php in the site's template files.
+//
+
+.widget_search,
+.widget_product_search {
+
+}
+
+
+//
+// Tag cloud.
+// Outputs a <div> with a class of "tagcloud" that contains links of all tags.
+// Each link receives a "tag-link-___" class, where "___" is a unique ID assisnged
+// to that item.
+//
+
+.widget_tag_cloud,
+.widget_product_tag_cloud {
+  text-shadow: none;
+}
+
+.widget_tag_cloud .tagcloud,
+.widget_product_tag_cloud .tagcloud {
+  margin-bottom: -0.615em;
+  @include clearfix();
+}
+
+.widget_tag_cloud .tagcloud a,
+.widget_product_tag_cloud .tagcloud a {
+  @include btn_simple();
+}
+
+.widget_tag_cloud .tag-link-___,
+.widget_product_tag_cloud .tag-link-___ {
+
+}
+
+
+//
+// Text.
+// Outputs a <div> with a class of "textwidget" that holds the widget content.
+//
+
+.widget_text {
+  ol,
+  ul {
+    overflow: visible;
+    margin: 0 0 $baseMargin 1.655em;
+    border: 0;
+    list-style: disc;
+    background-color: transparent;
+    border-radius: 0;
+    @include box-shadow(#{none});
+
+    li {
+      border: 0;
+      padding: 0;
+      background-color: transparent;
+      @include box-shadow(#{none});
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      a {
+        border-bottom: 0;
+      }
+    }
+
+    &.x-ul-icons {
+      list-style: none;
+    }
+  }
+}
+
+.widget_text .textwidget {
+
+}
+
+
+
+// WordPress Widget Groups
+// =============================================================================
+
+.widget_nav_menu ul,
+.widget_meta ul,
+.widget_pages ul {
+  li {
+    border: 0;
+    padding: 0;
+    @include box-shadow(#{none});
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    a {
+      display: block;
+      // border-top: $widgetBlockLinkBorder;
+      border-bottom: 1px solid $widgetBorderColor;
+      border-bottom: 1px solid $widgetBorderColorRgba;
+      // border-bottom: 0;
+      padding: 0.65em 0.85em;
+      @include box-shadow(#{$widgetLiABlockBoxShadow});
+
+      &:before {
+        content: "\f0da";
+        padding-right: 0.4em;
+      }
+
+      &:hover {
+        background-color: $widgetLiABlockBackgroundHover;
+      }
+    }
+
+    ul,
+    .sub-menu {
+      border: 0;
+      background-color: transparent;
+      border-radius: 0;
+      @include box-shadow(#{$widgetLiABlockBoxShadow});
+
+      li {
+        a {
+          padding-left: 2.55em;
+        }
+
+        &:first-child {
+          a {
+            // border-top: 1px solid $widgetLiABlockFirstChildBorderTop;
+            border-radius: 0;
+          }
+        }
+      }
+
+      ul li a {
+        padding-left: 4.25em;
+      }
+    }
+  }
+}

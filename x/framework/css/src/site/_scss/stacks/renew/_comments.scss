@@ -1,0 +1,369 @@
+// =============================================================================
+// _COMMENTS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Comment Container
+//   02. Comment Title
+//   03. Comment Lists
+//   04. Comment
+//   05. Comment Reply
+// =============================================================================
+
+// Comment Container
+// =============================================================================
+
+.x-comments-area {
+  margin: ($baseMargin + 2) 0 0;
+}
+
+
+
+// Comment Title
+// =============================================================================
+
+.h-comments-title {
+  margin: 0 0 ($baseMargin - 1);
+  font-size: 171.4%;
+  font-weight: 300;
+  line-height: 1.1;
+
+  span {
+    font-weight: 700;
+  }
+}
+
+
+
+// Comment Lists
+// =============================================================================
+
+//
+// All comments.
+//
+
+.x-comments-list {
+  margin: 0;
+  list-style: none;
+}
+
+
+//
+// Child comments.
+//
+
+.x-comments-list .children {
+  margin: 0;
+  list-style: none;
+  @include break(cubs) {
+    margin-left: 0;
+  }
+
+  li.comment {
+    position: relative;
+    margin: 0;
+    border-left: 1px solid $widgetBorderColor;
+    padding-left: 50px;
+    @include box-shadow(#{inset 1px 0 0 0 rgba(255, 255, 255, 0.85)});
+    @include break(middle-bear) {
+      border-left: 0;
+      padding-left: 0;
+
+      &:before {
+        display: none;
+      }
+    }
+
+    &:before {
+      content: "\00A0";
+      display: block;
+      position: absolute;
+      float: left;
+      top: 30px;
+      left: 0;
+      width: 25px;
+      height: 1px;
+      background-color: $widgetBorderColor;
+      @include box-shadow(#{0 1px 0 0 rgba(255, 255, 255, 0.85)});
+    }
+  }
+}
+
+
+
+// Comment
+// =============================================================================
+
+//
+// Original comment container + replies.
+//
+
+li.comment {
+  margin: 0;
+  padding: 0;
+}
+
+li.comment.odd {}
+
+li.comment.even {}
+
+li.comment.depth-1 {}
+
+li.comment.depth-2 {}
+
+li.comment.depth-3 {}
+
+li.bypostauthor > article.comment {
+  border-color: $linkColor;
+}
+
+
+//
+// Individual comment.
+//
+
+article.comment {
+  position: relative;
+  margin: 0 0 15px 0;
+  border: 2px solid $shortcodeBorderColor;
+  padding: 25px;
+  font-size: 114.2%;
+  line-height: 1.5;
+  background-color: $baseModBackground;
+  @include clearfix();
+  @include break(baby-bear) {
+    padding: 15px;
+  }
+}
+
+.x-comment-wrap {
+  margin-left: 84px;
+  @include break(baby-bear) {
+    margin-left: 74px;
+  }
+}
+
+.x-comment-header {
+  margin-bottom: 13px;
+  border-bottom: 1px solid $widgetBorderColor;
+  padding-bottom: 3px;
+  line-height: 1;
+}
+
+.x-comment-content {
+  position: relative;
+
+  p,
+  ul,
+  ol {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.x-comment-author {
+  display: inline-block;
+  font-size: 131.25%;
+  letter-spacing: -1px;
+  line-height: 1;
+  border-radius: 3px;
+
+  a {
+    color: $headingsColor;
+
+    &:hover {
+      color: $linkColor;
+    }
+  }
+}
+
+.x-comment-time {
+  display: inline-block;
+  margin: 9px 0 0;
+  position: relative;
+  font-size: 68.75%;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: darken($baseModBackground, 35%);
+}
+
+.x-comment-awaiting-moderation {
+  padding: 0.5em 0.5em 0.75em;
+  line-height: 1.2;
+  text-align: center;
+  color: $accentColor;
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  @include box-shadow(#{inset 0 2px 3px rgba(0, 0, 0, 0.1)});
+}
+
+
+//
+// Edit.
+//
+
+.comment-edit-link {
+  display: block;
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  @include font-size(1.1);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+
+//
+// Reply.
+//
+
+.x-reply {
+  float: left;
+  clear: left;
+  margin-left: 3px;
+}
+
+.comment-reply-link {
+  @include font-size(1.0);
+  font-weight: 400;
+  letter-spacing: 2px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #c5c5c5;
+}
+
+.comment-reply-link-after {
+  @include font-size(1.0);
+  line-height: 1;
+}
+
+
+//
+// Author comment.
+//
+
+span.bypostauthor {
+  display: block;
+  margin: 10px 0 0;
+  font-size: 50%;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+//
+// Gravatar image.
+//
+
+.x-comment-img {
+  float: left;
+
+  .avatar-wrap {
+    display: block;
+    position: relative;
+
+    .avatar {
+      width: 60px;
+    }
+  }
+}
+
+
+
+// Comment Reply
+// =============================================================================
+
+#respond {
+  .required {
+    font-weight: 700;
+  }
+}
+
+#reply-title {
+  margin: ($baseMargin + 0.675) 0 ($baseMargin - 1.4);
+  font-size: 171.4%;
+  line-height: 1.1;
+
+  small {
+    margin: 8px 0 0;
+    display: block;
+    font-size: 54.16%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}
+
+#commentform {
+  margin-bottom: 0;
+}
+
+.comment-notes {
+  margin-bottom: 1em;
+  font-size: 100%;
+}
+
+.logged-in-as {
+  margin-bottom: 1em;
+  font-size: 114.2%;
+}
+
+.comment-form-author,
+.comment-form-email,
+.comment-form-url,
+.comment-form-rating,
+.comment-form-comment {
+  margin: 0;
+
+  label {
+    font-size: 100%;
+    color: $headingsColor;
+
+    .required {
+      position: relative;
+      right: 0.175em;
+    }
+  }
+}
+
+.comment-form-author,
+.comment-form-email,
+.comment-form-url {
+  float: left;
+  width: 33.33333%;
+
+  input {
+    width: 100%;
+    margin-bottom: 0.85em;
+    @include font-size(1.6);
+  }
+}
+
+.comment-form-author { padding-right: 0.5em; }
+.comment-form-email  { padding: 0 0.5em;     }
+.comment-form-url    { padding-left: 0.5em;  }
+
+.comment-form-comment {
+  textarea {
+    width: 100%;
+    resize: none;
+    margin-bottom: 0.85em;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    @include font-size(1.6);
+  }
+}
+
+.form-submit {
+  margin: 0;
+}

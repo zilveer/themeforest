@@ -1,0 +1,228 @@
+// =============================================================================
+// _POST-CAROUSEL.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Styles
+//   02. Slick Slider
+// =============================================================================
+
+// Base Styles
+// =============================================================================
+
+.x-post-carousel.unstyled {
+  position: relative;
+  margin: 0 0 0 -2px;
+  padding: 2px 0;
+  height: 229px;
+  background-color: $white;
+
+  .entry-cover {
+    border-left: 2px solid $white;
+    padding-bottom: 225px;
+
+    &:hover {
+      .h-entry-cover {
+        top: -8em;
+      }
+
+      .x-post-carousel-meta {
+        bottom: 50%;
+        margin-bottom: -60px;
+      }
+    }
+  }
+}
+
+.x-post-carousel-item {
+  float: left;
+}
+
+.x-post-carousel-meta {
+  position: absolute;
+  height: 120px;
+  left: $layoutSpacing * 1.5;
+  right: $layoutSpacing * 1.5;
+  bottom: -175px;
+  @include transition(#{all 0.615s $easeOutExpo});
+
+  > span {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    padding: 13px 0;
+    @include font-size(1.4);
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: uppercase;
+    color: $baseModBackground;
+    @include text-overflow();
+
+    &:before,
+    &:last-child:after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.125);
+    }
+
+    &:before           { top: 0;    }
+    &:last-child:after { bottom: 0; }
+  }
+}
+
+
+
+// Slick Slider
+// =============================================================================
+
+//
+// Container (.x-post-carousel)
+//
+
+.slick-slider {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -ms-touch-action: none;
+      touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+//
+// Generated (first inner container).
+//
+
+.slick-list {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.dragging {
+    cursor: pointer;
+    cursor: hand;
+  }
+}
+
+
+//
+// Generated (second inner container).
+//
+
+.slick-track {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: block;
+  @include clearfix();
+}
+
+
+//
+// Arrows.
+//
+
+.slick-prev,
+.slick-next {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  border: 0;
+  width: 85px;
+  font-size: 0;
+  line-height: 0;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.925);
+  color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  @include transition(#{box-shadow 0.3s ease});
+
+  &:before {
+    @include font-size(3.2);
+    line-height: 1;
+    color: $white;
+    @include opacity(0.5);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @include font-awesome();
+    @include transition(#{opacity 0.3s ease});
+  }
+
+  &:hover {
+    &:before {
+      @include opacity(1);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.slick-prev {
+  left: 0;
+  // @include box-shadow(#{inset 35px 0 40px -35px rgba(0, 0, 0, 0.85)});
+
+  &:before {
+    content: "\f053";
+    padding-right: 20px;
+  }
+}
+
+.slick-next {
+  right: 0;
+  // @include box-shadow(#{inset -35px 0 40px -35px rgba(0, 0, 0, 0.85)});
+
+  &:before {
+    content: "\f054";
+    padding-left: 20px;
+  }
+}
+
+
+//
+// Miscellaneous.
+//
+
+.slick-initialized {
+  .slick-slide {
+    display: block;
+  }
+}
+
+.slick-loading {
+  .slick-track,
+  .slick-slide {
+    visibility: hidden;
+  }
+
+  .slick-list {
+    // background: white url(./ajax-loader.gif) center center no-repeat;
+  }
+}
+
+.slick-list,
+.slick-track,
+.slick-slide,
+.slick-slide img {
+  @include translate3d(0, 0, 0);
+}

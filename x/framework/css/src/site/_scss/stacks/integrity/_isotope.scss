@@ -1,0 +1,187 @@
+// =============================================================================
+// _ISOTOPE.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Isotope Filtering
+//   02. Isotope CSS3 Transitions
+//   03. Isotope Container
+//   04. Isotope Item
+//   05. Filters
+//   06. Loading Element
+// =============================================================================
+
+// Isotope Filtering
+// =============================================================================
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+// Isotope CSS3 Transitions
+// =============================================================================
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform;
+     -moz-transition-property:    -moz-transform;
+      -ms-transition-property:     -ms-transform;
+       -o-transition-property:         top, left;
+          transition-property:         transform;
+}
+
+
+//
+// Disabling Isotope CSS3 transitions.
+//
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+
+
+// Isotope Container
+// =============================================================================
+
+.x-iso-container {
+  margin: 0 -1em;
+  @include box-sizing(content-box);
+}
+
+
+
+// Isotope Item
+// =============================================================================
+
+.x-iso-container > .hentry {
+  margin: 0;
+  padding: 0 1em 2em;
+  opacity: 0;
+}
+
+.x-iso-container.cols-1 > .hentry {
+  width: 100%;
+}
+
+.x-iso-container.cols-2 > .hentry {
+  width: 49.95%;
+}
+
+.x-iso-container.cols-3 > .hentry {
+  width: 33.28%;
+  @include break(old-bear) {
+    width: 49.95%;
+  }
+}
+
+.x-iso-container.cols-4 > .hentry {
+  width: 33.28%;
+  @include break(papa-bear) {
+    width: 24.95%;
+  }
+  @include break(old-bear) {
+    width: 49.95%;
+  }
+}
+
+.x-iso-container[class*="cols-"] > .hentry {
+  @include break(middle-bear) {
+    width: 100%;
+  }
+}
+
+.x-iso-container + .pagination {
+  margin-top: 5px;
+}
+
+
+
+// Filters
+// =============================================================================
+
+.option-set {
+  margin-top: $baseMargin / 1.5;
+  margin-bottom: 0;
+}
+
+.x-portfolio-filters,
+.x-portfolio-filter {
+  @include btn_simple(breadcrumb);
+}
+
+.x-portfolio-filters {
+  margin: 0;
+}
+
+.x-portfolio-filters-menu {
+  margin-top: $baseMargin;
+  text-align: center;
+
+  li {
+    display: inline-block;
+  }
+
+  .selected {
+    color: $tagColorActive;
+    color: $tagColorActiveRgba;
+    border-color: $tagBorderColorActive;
+    border-color: $tagBorderColorActiveRgba;
+    background-color: $tagBackgroundColorActive;
+    background-color: $tagBackgroundColorActiveRgba;
+    @include box-shadow(#{$tagBoxShadowActive});
+  }
+}
+
+.x-portfolio-filter {
+  display: inline-block;
+}
+
+
+
+// Loading Element
+// =============================================================================
+
+#x-isotope-loading {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  display: block;
+  width: 100px;
+  height: 9px;
+  margin-left: -50px;
+  background-image: url(../../../../img/global/loading.gif);
+}

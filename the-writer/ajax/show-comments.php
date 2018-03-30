@@ -1,0 +1,1 @@
+<?php /* removed in 1.2.0 */ ?>

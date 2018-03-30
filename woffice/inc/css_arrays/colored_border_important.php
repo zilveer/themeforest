@@ -1,0 +1,23 @@
+<?php
+$colored_border_important = array(
+    0 => 'input:focus',
+    1 => 'textarea:focus',
+    2 => ' #content-container div.item-list-tabs ul li.current a span.no-count',
+    3 => ' #content-container div.item-list-tabs ul li.current a span.count',
+    4 => ' #content-container div.item-list-tabs ul li.selected a span',
+    5 => ' #content-container div.item-list-tabs-wiki ul li.active a span',
+    6 => ' #content-container div.item-list-tabs-project ul li.active a span',
+    7 => ' #featuredbox.has-search form input:focus',
+    8 => ' .woffice-task.is-done header label .checkbox-style:before',
+    9 => ' #woffice-minicart-top',
+    10 => ' #woffice-notifications-menu',
+    11 => ' #content-container .ui-state-active',
+    12 => ' #content-container .ui-widget-content .ui-state-active',
+    13 => ' #content-container .ui-widget-header .ui-state-active',
+    14 => ' #content-container .ui-state-hover',
+    15 => ' #content-container .ui-widget-content .ui-state-hover',
+    16 => ' #content-container .ui-widget-header .ui-state-hover',
+    17 => ' #content-container .ui-state-focus',
+    18 => ' #content-container .ui-widget-content .ui-state-focus',
+    19 => ' #content-container .ui-widget-header .ui-state-focus',
+);

@@ -1,0 +1,1 @@
+Documentation can be found in the purchased file from ThemeForest.

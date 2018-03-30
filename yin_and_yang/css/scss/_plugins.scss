@@ -1,0 +1,501 @@
+/*  21. Plugins
+    ========================================================================== */
+	
+	/**
+	 * Flexslider Resets
+	 */
+	.oy-flex-container a:hover,
+	.oy-flex-slider a:hover,
+	.oy-flex-container a:focus,
+	.oy-flex-slider a:focus {
+		outline: none;
+	}
+		.oy-slides,
+		.oy-slides > li,
+		.oy-flex-control-nav,
+		.oy-flex-direction-nav {
+		  	margin: 0;
+		  	padding: 0;
+		  	list-style: none;
+		}
+			.oy-flex-pauseplay span {
+			  	text-transform: capitalize;
+			}
+	
+	/**
+	 * Flexslider Base Styles
+	 */
+	.oy-flexslider {
+		margin: 0;
+		padding: 0;
+		
+		overflow: hidden; // Custom property-value pair
+		cursor: pointer; // Custom property-value pair
+		
+		.oy-slides > li {
+		 	display: none;
+		  	
+		  	-webkit-backface-visibility: hidden;
+		  	
+		  	img {
+				display: block;
+				// width: 100%; // Do not stretch the images full width
+			}
+		}
+		
+		.oy-slides:after {
+		  	display: block;
+		  	visibility: hidden;
+		  	height: 0;
+		  	clear: both;
+		  	
+		  	content: "\0020";
+		  	line-height: 0;
+		}
+		
+		html[xmlns] & .oy-slides {
+		  	display: block;
+		}
+		* html & .oy-slides {
+		  	height: 1%;
+		}
+		.no-js & .oy-slides > li:first-child {
+			display: block;
+		}
+	}
+	
+	/**
+	 * Flexslider Default Theme
+	 */
+	.oy-flexslider {
+		position: relative;
+		margin: 0;
+				
+		zoom: 1;
+		
+		.no-touch &:hover .oy-flex-direction-nav .oy-flex-prev,
+		.no-touch &:hover .oy-flex-direction-nav .oy-flex-next {
+		  	opacity: 0.4;
+		}
+		.touch & .oy-flex-direction-nav .oy-flex-prev,
+		.touch & .oy-flex-direction-nav .oy-flex-next {
+		  	opacity: 0.4;
+		}
+		.no-touch &:hover .oy-flex-direction-nav .oy-flex-prev:hover,
+		.no-touch &:hover .oy-flex-direction-nav .oy-flex-next:hover {
+		  	opacity: 0.8;
+		}
+						
+		.oy-slides {
+		  	zoom: 1;
+		  	
+		  	img {
+			  	height: auto;
+			}
+		}
+		.oy-flex-img-loader {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			
+			background: url('images/image-loader.gif') no-repeat 50% 50%;
+			background-size: 24px 24px;
+		}
+		.oy-flex-direction-nav {
+			*height: 0;
+			
+			a {
+				@extend .hide-text;
+				
+				display: block;
+			  	width: 30px;
+			  	height: 30px;
+			  	margin: -15px 0 0;
+			  	position: absolute;
+			  	top: 50%;
+			  	
+			  	background: url('images/main.png') no-repeat; 
+			  	
+			  	opacity: 0;
+			  	overflow: hidden;
+			  	z-index: 10;
+			  	cursor: pointer;
+			  	
+			  	transition: opacity 0.3s ease-in-out;
+			  	
+				&.oy-flex-prev {
+				  	left: 20px;
+				  	
+				  	background-position: -300px -50px;
+				  	
+				  	&.oy-flex-prev.background--dark {
+						background-position: -400px -50px;
+				  	}
+				}
+				&.oy-flex-next {
+				  	right: 20px;
+				  	
+				  	background-position: -350px -50px;
+				  	
+				  	text-align: right;
+				  	
+				  	&.oy-flex-next.background--dark {
+						background-position: -450px -50px;
+				  	}
+				}
+			}
+			.oy-flex-disabled {
+				opacity: 0!important;
+				filter: alpha(opacity=0);
+				cursor: default;
+			}
+		}
+		.carousel li {
+		  	margin-right: 5px;
+		}
+		.oy-flex-pauseplay a {
+		  	display: block;
+		  	width: 20px;
+		  	height: 20px;
+		  	position: absolute;
+		  	bottom: 5px;
+		  	left: 10px;
+		  	
+		  	opacity: 0.8;
+		  	z-index: 10;
+		  	overflow: hidden;
+		  	cursor: pointer;
+		  	color: #000;
+		  	
+		  	&:before {
+			  	display: inline-block;
+
+			  	font-family: "flexslider-icon";
+			  	font-size: 20px;
+			  	content: '\f004';
+			}
+			&:hover {
+			  	opacity: 1;
+			}
+			&.oy-flex-play:before {
+			  	content: '\f003';
+			}
+		}	
+		.oy-flex-control-nav {
+		  	position: absolute;
+		  	top: 18px;
+		  	right: 22px;
+		  	
+		  	z-index: 99;
+		  	text-align: center;
+		  	
+		  	li {
+			  	margin: 0 6px;
+			  	display: inline-block;
+			  	zoom: 1;
+			  	*display: inline;
+			}
+		}
+		.oy-flex-control-paging li a {
+			@extend .hide-text;
+			
+			width: 11px;
+			height: 11px;
+			display: block;
+			
+			border-radius: 20px;
+		  
+			background: #666;
+			background: rgba(0, 0, 0, 0.5);
+			
+			cursor: pointer;
+		  
+		  	&:hover {
+		  	  	background: #333;
+		  	  	background: rgba(0, 0, 0, 0.7);
+		  	}
+		  	&.oy-flex-active {
+				background: #000;
+				background: rgba(0, 0, 0, 0.9);
+				cursor: default;
+		  	}
+		}
+		.oy-flex-control-paging.background--dark li a {
+			background: rgba(255, 255, 255, 0.25);
+			
+			&:hover {
+		  	  	background: rgba(255, 255, 255, 0.6);
+		  	}
+		  	&.oy-flex-active {
+				background: rgba(255, 255, 255, 0.75);
+		  	}
+		}
+		.oy-flex-control-thumbs {
+		  	position: static;
+		  	margin: 5px 0 0;
+		  	
+		  	overflow: hidden;
+		  	
+		  	li {
+			  	width: 25%;
+			  	float: left;
+			  	margin: 0;
+			  	
+			  	img {
+				  	width: 100%;
+				  	height: auto;
+				  	display: block;
+				  
+				  	opacity: .7;
+				  	cursor: pointer;
+				  
+				  	transition: all 1s ease;
+				  	
+				  	&:hover {
+						opacity: 1;
+					}
+					&.oy-flex-active {
+						opacity: 1;
+						cursor: default;
+					}
+				}
+			}
+		}
+	}
+	.oy-flex-viewport {
+		max-height: 2000px;
+
+		transition: all 1s ease;
+		
+		.oy-loading & {
+			max-height: 300px;
+		}
+	}
+	.oy-flex-caption {  
+		width: 100%; 
+		padding: 10px 20px; 
+		margin: 0; 
+		position: absolute; 
+		left: 0; 
+		bottom: 0; 
+		
+		background: rgba(90, 90, 90, 0.5); 
+		
+		text-align: center;
+		color: #fff;
+		
+		transition: all .2s ease-in-out;  
+		
+		.no-touch .oy-flexslider:hover &,
+		.no-touch .single-img-container:hover & { 
+			background: rgba(0, 0, 0, 0.5); 			
+		}
+	}
+		 
+	/**
+	 * Soliloquy Slider Plugin
+	 */
+	.soliloquy-container img {
+		margin-bottom: 0;
+	}
+	
+	/**
+	 * Lightbox Plugin
+	 */
+	html #swipebox-caption, 
+	#swipebox-action { 
+		border-color: transparent !important; 
+	}
+	html #swipebox-action {
+		top: -50px;
+		bottom: auto !important;
+		
+		&.visible-bars {
+			top: 0;
+			bottom: auto !important;
+		}
+		&.force-visible-bars {
+			top: 0 !important;
+			bottom: auto !important;
+		}
+	}
+	html #swipebox-caption {
+		bottom: -50px;
+		top: auto !important;
+		
+		font-family: $font-sans;
+		
+		&.visible-bars {
+			bottom: 0;
+			top: auto !important;
+		}
+		&.force-visible-bars {
+			bottom: 0 !important;
+			top: auto !important;
+		}
+	}
+	
+	/**
+	 * Metaslider Plugin
+	 */
+	.metaslider {
+		img {
+			margin-bottom: 0;	
+		}	
+		ol, ul {
+			margin: auto;
+			line-height: 0;
+		}	
+			.flex-direction-nav a {
+				/* Prev/Next */
+				margin: -17px 0 0;
+				opacity: .4;
+				border-radius: 50px;
+				transition: all .3s ease;
+				background: #fefefe;
+				
+				&.flex-next {
+				 	background-position: 100% 0; 
+				 	right: 10px; 
+				 	
+				 	&:after {
+						margin-left: -2px;
+						border-top: 6px solid transparent;
+						border-left: 6px solid #333;
+						border-bottom: 6px solid transparent;
+					}
+				}
+				&.flex-prev {
+					left: 10px;
+					
+					&:after {
+						margin-left: -4px;
+						border-top: 6px solid transparent;
+						border-right: 6px solid #333;
+						border-bottom: 6px solid transparent;
+					}
+				}
+				&:after {
+					content: "";				
+					position: absolute;
+					display: block;
+					top: 50%;
+					left: 50%;
+					margin-top: -6px;
+					width: 0;
+					height: 0;
+				}
+			}
+			.flexslider:hover .flex-next { 
+				opacity: 0.7;
+				right: 10px; 
+			}
+			.flexslider:hover .flex-prev {
+				opacity: 0.7; 
+				left: 10px;
+			}
+								
+			.flex-control-paging li {
+				margin-bottom: 0;
+			   
+			    a {
+					/* Slider pagination */
+					background: #c5c5c5;
+					box-shadow: none;
+					
+					&.flex-active { 
+				    	background: #2e2e2e; 
+					}	
+				}
+		    }   
+	}
+	
+	/**
+	 * Cyclone Slider Plugin
+	 */
+	.cycloneslider.cycloneslider-template-standard {
+		margin-bottom: 3.5em; /* 56px */
+		
+		& .cycloneslider-pager {
+			bottom: -30px;
+			
+			& span {
+				background: #e0e0e0;
+				box-shadow: none;
+				
+				&.cycle-pager-active {
+					background-color: #2e2e2e;
+				}
+			}	
+		}	
+	}
+	
+	/**
+	 * MapPress Plugin
+	 */
+	.mapp-layout { 
+		border: none !important;
+		margin: 0 0 1.75em 0 !important; /* 28px */
+		
+		.mapp-map-links {
+			background-color: none !important;
+			border: none !important;
+		}
+	}
+	
+	/**
+	 * Contact Form 7 Plugin
+	 */
+	.wpcf7 {
+		p {
+			margin-bottom: 1.75em; /* 28px */
+		}
+		.wpcf7-form-control-wrap { /* span wrapper */
+			display: inline !important;
+		}
+		div.wpcf7-response-output {
+			margin: 2em 0 1em;
+		}
+		span.wpcf7-not-valid-tip {
+			z-index: 100;
+			background: none;
+			border: none;
+			font-size: 0.875em; /* 14px */
+			width: 200px;
+			padding: 0;
+			color: #e44141;
+		}	
+		
+		.slide-out-div & .wpcf7-response-output,
+		.dropdown-page & .wpcf7-response-output {
+			padding: 0;
+		}
+		.slide-out-div & .wpcf7-mail-sent-ok,
+		.dropdown-page & .wpcf7-mail-sent-ok {
+			border: none;
+			color: #70c949;
+		}
+		.slide-out-div & .wpcf7-mail-sent-ng,
+		.dropdown-page & .wpcf7-mail-sent-ng {
+			border: none;
+			color: #e44141;
+		}
+		.slide-out-div & .wpcf7-spam-blocked,
+		.dropdown-page & .wpcf7-spam-blocked {
+			border: none;
+			color: #ffa500;
+		}
+		.slide-out-div & .wpcf7-validation-errors,
+		.dropdown-page & .wpcf7-validation-errors {
+			border: none;
+			color: #f4e50f;
+		}	
+	}
+	
+	/* Disable the default margin introduced by WordPress' admin bar */
+	html[lang] {
+		margin-top: 0 !important;		
+	}
+	

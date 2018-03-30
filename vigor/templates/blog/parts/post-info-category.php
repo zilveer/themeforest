@@ -1,0 +1,1 @@
+<div class="post_category"><?php _e('in ','edgt'); ?><?php the_category(', '); ?></div>

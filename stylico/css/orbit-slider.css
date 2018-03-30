@@ -1,0 +1,255 @@
+for /* CSS for jQuery Orbit Plugin 1.2.3
+ * www.ZURB.com/playground
+ * Copyright 2010, ZURB
+ * Free to use under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ 
+ 
+ 
+/* PUT IN YOUR SLIDER ID AND SIZE TO MAKE LOAD BEAUTIFULLY
+   ================================================== */
+#featured-slider {
+	background: #000 url('../images/orbit/loading.gif') no-repeat center center;
+	overflow: hidden; 
+}
+
+#featured-slider > img {
+	display: none;
+}
+
+/* CONTAINER
+   ================================================== */
+   
+div.orbit-wrapper img {
+	border: none !important;
+	border-radius: 0;	
+}
+
+div.orbit-wrapper {
+    width: 1px;
+    height: 1px;
+    position: relative; 
+}
+
+div.orbit {
+    width: 1px;
+    height: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+div.orbit > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none; 
+}
+
+
+/* TIMER
+   ================================================== */
+
+div.timer {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: .6;
+    cursor: pointer;
+    z-index: 1001; 
+}
+
+span.rotator {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: -20px;
+    background: url(../images/orbit/rotator-black.png) no-repeat;
+    z-index: 3; 
+}
+
+span.mask {
+    display: block;
+    width: 20px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    overflow: hidden; 
+}
+
+span.rotator.move {
+    left: 0 
+}
+
+span.mask.move {
+    width: 40px;
+    left: 0;
+    background: url(../images/orbit/timer-black.png) repeat 0 0; 
+}
+
+span.pause {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(../images/orbit/pause-black.png) no-repeat;
+    z-index: 4;
+    opacity: 0; 
+}
+
+span.pause.active {
+    background: url(../images/orbit/pause-black.png) no-repeat 0 -40px 
+}
+
+div.timer:hover span.pause,
+span.pause.active {
+    opacity: 1 
+}
+
+
+/* CAPTIONS
+   ================================================== */
+
+.orbit-caption {
+    display: none;
+}
+
+.orbit-wrapper .orbit-caption {
+	position: absolute;
+	width: 37%;
+	height: 190px;
+	left: 10px;
+    top: 10px;
+	background: url(../images/orbit/black_px_opacity8.png); /* fallback */
+    background: rgba(0,0,0,.85);
+	padding: 20px;
+    z-index: 1000;
+    color: #fff;
+    font-size: 13px;
+	-webkit-box-shadow: 1px 1px 5px 0px #000000;
+	-moz-box-shadow: 1px 1px 5px 0px #000000;
+	box-shadow: 1px 1px 5px 0px #000000; 
+}
+
+
+/* DIRECTIONAL NAV
+   ================================================== */
+
+div.slider-nav {
+	width: 100%;
+	height: 80px;
+	position: relative;
+    display: block }
+
+div.slider-nav a {
+    width: 42px;
+	height: 43px;
+	margin-top: -16px;
+    text-indent: -9999px;
+    position: absolute;
+	top: 50%;
+    z-index: 1000;
+}
+
+div.slider-nav a.right, div.slider-nav a.right:visited {
+    background: url(../images/orbit/arrows_sprite.png) no-repeat 0px -64px;
+    right: 18px; 
+}
+
+div.slider-nav a.right:hover {
+	background: url(../images/orbit/arrows_sprite.png) no-repeat -42px -64px;
+}
+
+div.slider-nav a.right:active {
+	background: url(../images/orbit/arrows_sprite.png) no-repeat -84px -64px;
+}
+
+div.slider-nav a.left, div.slider-nav a.left:visited {
+    background: url(../images/orbit/arrows_sprite.png) no-repeat -84px -21px;
+    left: 18px; 
+}
+
+div.slider-nav a.left:hover {
+	background: url(../images/orbit/arrows_sprite.png) no-repeat -42px -21px;
+}
+
+div.slider-nav a.left:active {
+	background: url(../images/orbit/arrows_sprite.png) no-repeat 0px -21px;
+}
+
+
+/* THUMBNAILS NAV
+   ================================================== */
+   
+.orbit-thumbnails-container {
+	width: 650px;
+	height: 100px;
+	position: absolute;
+	top: -14px;
+	left: 90px;
+	z-index: 1000;
+	overflow: hidden;
+}
+
+.orbit-active-arrow {
+	display: none;
+	width: 27px;
+	height: 14px;
+	margin-left: -7px;
+	position: absolute;
+	top: 2px;
+	left: -50px;
+	z-index: 10000;
+	background: url(../images/orbit/active_arrow.png) no-repeat;
+}
+
+.orbit-thumbnails {
+	position: relative;
+	margin: 0;	
+    list-style: none !important;	
+}
+
+.orbit-thumbnails li {
+	margin: 0 !important;
+	background: #fefff8 !important;
+	border: 1px solid #8c8b97;
+	top: 24px;
+	padding: 4px 4px 6px 4px !important;
+	position: absolute;
+    cursor: pointer;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 1px 0px #898896;
+	-moz-box-shadow: 0px 0px 1px 0px #898896;
+	box-shadow: 0px 0px 1px 0px #898896;
+}
+
+.orbit-thumbnails li.orbit-thumbnail-hover {
+	border: 1px solid #5cb4f6;
+	-webkit-box-shadow: 0px 0px 2px 0px #6fc9ff;
+	-moz-box-shadow: 0px 0px 2px 0px #6fc9ff;
+	box-shadow: 0px 0px 2px 0px #6fc9ff; 	
+}
+
+.orbit-thumbnails li.orbit-thumbnail-active {
+	-webkit-box-shadow: 0px 1px 2px 0px #a6a7ba;
+	-moz-box-shadow: 0px 1px 2px 0px #a6a7ba;
+	box-shadow: 0px 1px 2px 0px #a6a7ba;  	
+}
+
+.orbit-thumbnails li div {
+	border: 1px solid #a9a8b6;
+	overflow: hidden;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}

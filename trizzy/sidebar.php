@@ -1,0 +1,53 @@
+<?php
+/**
+ * The Sidebar containing the main widget areas.
+ *
+ * @package Trizzy
+ */
+?>
+<div class="four columns widget-area">
+	<?php
+	$sidebar = get_post_meta($post->ID, "pp_sidebar_set", $single = true);
+	if ($sidebar) {
+		if ( ! dynamic_sidebar( $sidebar ) ) :?>
+
+		<aside id="archives" class="widget">
+			<h1 class="widget-title"><?php _e( 'Archives', 'trizzy' ); ?></h1>
+			<ul>
+				<?php wp_get_archives( array( 'type' => 'monthly' ) ); ?>
+			</ul>
+		</aside>
+
+		<aside id="meta" class="widget">
+			<h1 class="widget-title"><?php _e( 'Meta', 'trizzy' ); ?></h1>
+			<ul>
+				<?php wp_register(); ?>
+				<li><?php wp_loginout(); ?></li>
+				<?php wp_meta(); ?>
+			</ul>
+		</aside>
+		<?php endif;
+	}// end sidebar widget area ?>
+
+	<?php
+	if (!$sidebar) {
+		if (!dynamic_sidebar('sidebar-1')) : ?>
+		<aside id="archives" class="widget">
+			<h1 class="widget-title"><?php _e( 'Archives', 'trizzy' ); ?></h1>
+			<ul>
+				<?php wp_get_archives( array( 'type' => 'monthly' ) ); ?>
+			</ul>
+		</aside>
+
+		<aside id="meta" class="widget">
+			<h1 class="widget-title"><?php _e( 'Meta', 'trizzy' ); ?></h1>
+			<ul>
+				<?php wp_register(); ?>
+				<li><?php wp_loginout(); ?></li>
+				<?php wp_meta(); ?>
+			</ul>
+		</aside>
+		<?php endif;
+    } // end primary widget area
+    ?>
+</div><!-- #secondary -->

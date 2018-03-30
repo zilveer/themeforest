@@ -1,0 +1,65 @@
+// =============================================================================
+// _MIXINS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Simplified Button Styling
+//   02. Thumbnail Style
+// =============================================================================
+
+// Simplified Button Styling
+// =============================================================================
+
+@mixin btn_simple($style: standard) {
+  & {
+    @if $style == standard {
+      display: block;
+      width: 38px;
+      height: 42px;
+      @include font-size(1.8);
+      line-height: 42px;
+    } @else if $style == filters {
+      display: inline-block;
+      padding: 0.65em 0.925em;
+      @include font-size(1.4);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    border: 1px solid $navbarBackground;
+    text-align: center;
+    color: $navbarBackground;
+    background-color: $baseModBackground;
+    @include transition(#{color 0.3s ease, background-color 0.3s ease});
+
+    &:hover {
+      color: $baseModBackground;
+      background-color: $navbarBackground;
+    }
+
+    @if $style == filters {
+      &.selected {
+        color: $baseModBackground;
+        background-color: $navbarBackground;
+      }
+    }
+  }
+}
+
+
+
+// Thumbnail Style
+// =============================================================================
+
+@mixin img_thumbnail() {
+  & {
+    padding: 5px;
+    line-height: $baseLineHeight;
+    border: 1px solid $shortcodeBorderColor;
+    background-color: $baseModBackground;
+    @include transition(#{border 0.3s ease});
+  }
+}

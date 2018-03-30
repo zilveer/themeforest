@@ -1,0 +1,1 @@
+Please see "Documentation - Help" for written and video documentation.

@@ -1,0 +1,495 @@
+<?php
+	
+	// Require config
+	require_once('config.php');
+
+	// Kill user if not logged in and can edit posts
+	if ( !is_user_logged_in() || !current_user_can('edit_posts') ) wp_die(__('You are not allowed to access this page', 'swiftframework'));
+?>
+
+<!-- Swift Framework Shortcode Panel -->
+
+<!-- OPEN html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+	
+	<!-- OPEN head -->
+	<head>
+		
+		<!-- Title & Meta -->
+		<title><?php _e('Swift Framework Shortcodes', 'swiftframework');?></title>
+		<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
+
+		<!-- LOAD scripts -->
+		<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script language="javascript" type="text/javascript" src="<?php echo get_template_directory_uri() ?>/includes/sf_shortcodes/sf.shortcodes.js"></script>
+		<script language="javascript" type="text/javascript" src="<?php echo get_template_directory_uri() ?>/includes/sf_shortcodes/sf.shortcode.embed.js"></script>
+		<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+
+		<base target="_self" />
+		<link href="<?php echo get_template_directory_uri() ?>/css/base.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo get_template_directory_uri() ?>/includes/sf_shortcodes/style.css" rel="stylesheet" type="text/css" />
+
+	<!-- CLOSE head -->
+	</head>
+
+	<!-- OPEN body -->
+	<body onLoad="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';" id="link" >
+		
+		<!-- OPEN swiftframework_shortcode_form -->
+		<form name="swiftframework_shortcode_form" action="#">
+
+			<!-- OPEN #shortcode_wrap -->
+			<div id="shortcode_wrap">
+
+				<!-- CLOSE #shortcode_panel -->
+				<div id="shortcode_panel" class="current">
+
+					<fieldset>
+
+						<h4><?php _e('Select a shortcode', 'swiftframework');?></h4>
+						<div class="option">
+							<label for="shortcode-select"><?php _e('Shortcode', 'swiftframework');?></label>
+							<select id="shortcode-select" name="shortcode-select">
+								<option value="0"></option>
+								<option value="shortcode-buttons"><?php _e('Buttons', 'swiftframework');?></option>
+								<option value="shortcode-icons"><?php _e('Icons', 'swiftframework');?></option>
+								<option value="shortcode-social"><?php _e('Social', 'swiftframework');?></option>
+								<option value="shortcode-typography"><?php _e('Typography', 'swiftframework');?></option>
+								<option value="shortcode-columns"><?php _e('Columns', 'swiftframework');?></option>
+								<option value="shortcode-tables"><?php _e('Tables', 'swiftframework');?></option>
+								<option value="shortcode-pricingtables"><?php _e('Pricing Tables', 'swiftframework');?></option>
+								<option value="shortcode-labelledpricingtables"><?php _e('Labelled Pricing Table', 'swiftframework');?></option>
+								<option value="shortcode-lists"><?php _e('Lists', 'swiftframework');?></option>
+							</select>
+						</div>
+
+					
+						<!--//////////////////////////////
+						////	BUTTONS
+						//////////////////////////////-->
+
+						<div id="shortcode-buttons">
+							<h5><?php _e('Buttons', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="button-size"><?php _e('Button size', 'swiftframework');?></label>
+								<select id="button-size" name="button-size">
+									<option value="0"></option>
+									<option value="small"><?php _e('Small', 'swiftframework');?></option>
+									<option value="medium"><?php _e('Medium', 'swiftframework');?></option>
+									<option value="large"><?php _e('Large', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="button-colour"><?php _e('Button colour', 'swiftframework');?></label>
+								<select id="button-colour" name="button-colour">
+									<option value="0"></option>
+									<option value="accent"><?php _e('Accent', 'swiftframework');?></option>
+									<option value="black"><?php _e('Black', 'swiftframework');?></option>
+									<option value="grey"><?php _e('Grey', 'swiftframework');?></option>
+									<option value="lightgrey"><?php _e('Light Grey', 'swiftframework');?></option>
+									<option value="purple"><?php _e('Purple', 'swiftframework');?></option>
+									<option value="lightblue"><?php _e('Light Blue', 'swiftframework');?></option>
+									<option value="green"><?php _e('Green', 'swiftframework');?></option>
+									<option value="limegreen"><?php _e('Lime Green', 'swiftframework');?></option>
+									<option value="turquoise"><?php _e('Turquoise', 'swiftframework');?></option>
+									<option value="pink"><?php _e('Pink', 'swiftframework');?></option>
+									<option value="orange"><?php _e('Orange', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="button-type"><?php _e('Button type', 'swiftframework');?></label>
+								<select id="button-type" name="button-type">
+									<option value="0"></option>
+									<option value="standard"><?php _e('Standard', 'swiftframework');?></option>
+									<option value="squarearrow"><?php _e('Square with arrow', 'swiftframework');?></option>
+									<option value="slightlyrounded"><?php _e('Slightly rounded', 'swiftframework');?></option>
+									<option value="slightlyroundedarrow"><?php _e('Slightly rounded with arrow', 'swiftframework');?></option>
+									<option value="rounded"><?php _e('Rounded', 'swiftframework');?></option>
+									<option value="roundedarrow"><?php _e('Rounded with arrow', 'swiftframework');?></option>
+									<option value="outerglow"><?php _e('Outer glow effect', 'swiftframework');?></option>
+									<option value="dropshadow"><?php _e('Drop shadow effect', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="button-text"><?php _e('Button text', 'swiftframework');?></label>
+								<input id="button-text" name="button-text" type="text" value="<?php _e('Button text', 'swiftframework');?>"/>
+							</div>
+							<div class="option">
+								<label for="button-url"><?php _e('Button URL', 'swiftframework');?></label>
+								<input id="button-url" name="button-url" type="text" value="http://"/>
+							</div>
+							<div class="option">
+								<label for="button-target" class="for-checkbox"><?php _e('Open link in a new window?', 'swiftframework');?></label>
+								<input id="button-target" class="checkbox" name="button-target" type="checkbox"/>
+							</div>
+						</div>
+
+
+						<!--//////////////////////////////
+						////	ICONS
+						//////////////////////////////-->
+
+						<div id="shortcode-icons">
+							<h5><?php _e('Icons', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="icon-size"><?php _e('Icon size', 'swiftframework');?></label>
+								<select id="icon-size" name="icon-size">
+									<option value="0"></option>
+									<option value="small"><?php _e('Small', 'swiftframework');?></option>
+									<option value="medium"><?php _e('Medium', 'swiftframework');?></option>
+									<option value="large"><?php _e('Large', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="icon-image"><?php _e('Icon image', 'swiftframework');?></label>
+								<select id="icon-image" name="icon-image">
+									<option value="wrench"><?php _e('Options / Tools', 'swiftframework');?></option>
+									<option value="cog"><?php _e('Cog', 'swiftframework');?></option>
+									<option value="search"><?php _e('Magnify', 'swiftframework');?></option>
+									<option value="pencil"><?php _e('Pencil', 'swiftframework');?></option>
+									<option value="bolt"><?php _e('Bolt', 'swiftframework');?></option>
+									<option value="bar-chart"><?php _e('Chart', 'swiftframework');?></option>
+									<option value="globe"><?php _e('Globe', 'swiftframework');?></option>
+									<option value="music"><?php _e('Music', 'swiftframework');?></option>
+									<option value="star"><?php _e('Star', 'swiftframework');?></option>	
+									<option value="briefcase"><?php _e('Briefcase', 'swiftframework');?></option>	
+									<option value="gift"><?php _e('Gift', 'swiftframework');?></option>	
+									<option value="legal"><?php _e('Legal', 'swiftframework');?></option>	
+									<option value="dashboard"><?php _e('Dashboard', 'swiftframework');?></option>	
+									<option value="download"><?php _e('Download', 'swiftframework');?></option>	
+									<option value="envelope"><?php _e('Envelope', 'swiftframework');?></option>	
+									<option value="trophy"><?php _e('Trophy', 'swiftframework');?></option>	
+									<option value="cloud"><?php _e('Cloud', 'swiftframework');?></option>	
+									<option value="phone"><?php _e('Phone', 'swiftframework');?></option>	
+									<option value="magic"><?php _e('Magic', 'swiftframework');?></option>	
+									<option value="road"><?php _e('Road', 'swiftframework');?></option>	
+								</select>
+							</div>
+							<div class="option">
+								<label for="icon-cont"><?php _e('Circular container', 'swiftframework');?></label>
+								<select id="icon-cont" name="icon-cont">
+									<option value="no"><?php _e('No', 'swiftframework');?></option>
+									<option value="yes"><?php _e('Yes', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="icon-float"><?php _e('Icon float', 'swiftframework');?></label>
+								<select id="icon-float" name="icon-float">
+									<option value="left"><?php _e('Left', 'swiftframework');?></option>
+									<option value="right"><?php _e('Right', 'swiftframework');?></option>
+									<option value="none"><?php _e('None', 'swiftframework');?></option>
+								</select>
+							</div>
+						</div>
+
+						<!--//////////////////////////////
+						////	SOCIAL
+						//////////////////////////////-->
+
+						<div id="shortcode-social">
+							<h5><?php _e('Social', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="social-size"><?php _e('Social Icon Size', 'swiftframework');?></label>
+								<select id="social-size" name="social-size">
+									<option value="standard"><?php _e('Standard', 'swiftframework');?></option>
+									<option value="small"><?php _e('Small', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="social-style"><?php _e('Social Icon Style', 'swiftframework');?></label>
+								<select id="social-style" name="social-style">
+									<option value="colour"><?php _e('Colour', 'swiftframework');?></option>
+									<option value="light"><?php _e('Light', 'swiftframework');?></option>
+									<option value="dark"><?php _e('Dark', 'swiftframework');?></option>
+								</select>
+							</div>
+						</div>
+
+
+						<!--//////////////////////////////
+						////	TYPOGRAPHY
+						//////////////////////////////-->
+
+						<div id="shortcode-typography">
+							<h5><?php _e('Typography', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="typography-type"><?php _e('Type', 'swiftframework');?></label>
+								<select id="typography-type" name="typography-type">
+									<option value="0"></option>
+									<option value="highlight"><?php _e('Highlight', 'swiftframework');?></option>
+									<option value="decorative_ampersand"><?php _e('Decorative Ampersand', 'swiftframework');?></option>
+									<option value="blockquote1"><?php _e('Blockquote Standard', 'swiftframework');?></option>
+									<option value="blockquote2"><?php _e('Blockquote Medium', 'swiftframework');?></option>
+									<option value="blockquote3"><?php _e('Blockquote Big', 'swiftframework');?></option>
+									<option value="pullquote"><?php _e('Pull Quote', 'swiftframework');?></option>
+									<option value="dropcap1"><?php _e('Dropcap Type 1', 'swiftframework');?></option>
+									<option value="dropcap2"><?php _e('Dropcap Type 2', 'swiftframework');?></option>
+									<option value="dropcap3"><?php _e('Dropcap Type 3', 'swiftframework');?></option>
+									<option value="dropcap4"><?php _e('Dropcap Type 4', 'swiftframework');?></option>
+								</select>
+							</div>
+						</div>
+
+
+						<!--//////////////////////////////
+						////	COLUMNS
+						//////////////////////////////-->
+
+						<div id="shortcode-columns" class="shortcode-option">
+							<h5><?php _e('Columns', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="column-options"><?php _e('Layout', 'swiftframework');?></label>
+								<select id="column-options" name="column-options">
+									<option value="0"></option>
+									<option value="two_halves"><?php _e('1/2 + 1/2', 'swiftframework');?></option>
+									<option value="three_thirds"><?php _e('1/3 + 1/3 + 1/3', 'swiftframework');?></option>
+									<option value="one_third_two_thirds"><?php _e('1/3 + 2/3', 'swiftframework');?></option>
+									<option value="two_thirds_one_third"><?php _e('2/3 + 1/3', 'swiftframework');?></option>
+									<option value="four_quarters"><?php _e('1/4 + 1/4 + 1/4 + 1/4', 'swiftframework');?></option>
+									<option value="one_quarter_three_quarters"><?php _e('1/4 + 3/4', 'swiftframework');?></option>
+									<option value="three_quarters_one_quarter"><?php _e('3/4 + 1/4', 'swiftframework');?></option>
+									<option value="one_quarter_one_quarter_one_half"><?php _e('1/4 + 1/4 + 1/2', 'swiftframework');?></option>
+									<option value="one_quarter_one_half_one_quarter"><?php _e('1/4 + 1/2 + 1/4', 'swiftframework');?></option>
+									<option value="one_half_one_quarter_one_quarter"><?php _e('1/2 + 1/4 + 1/4', 'swiftframework');?></option>
+								</select>
+							</div>
+						</div>
+						
+						
+						<!--//////////////////////////////
+						////	TABLE
+						//////////////////////////////-->
+
+						<div id="shortcode-tables" class="shortcode-option">
+							<h5><?php _e('Tables', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="table-type"><?php _e('Table style', 'swiftframework');?></label>
+								<select id="table-type" name="table-type">
+									<option value="standard_minimal"><?php _e('Standard minimal table', 'swiftframework');?></option>
+									<option value="striped_minimal"><?php _e('Striped minimal table', 'swiftframework');?></option>
+									<option value="standard_bordered"><?php _e('Standard bordered table', 'swiftframework');?></option>
+									<option value="striped_bordered"><?php _e('Striped bordered table', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="table-head"><?php _e('Table Head', 'swiftframework');?></label>
+								<select id="table-head" name="table-head">
+									<option value="yes"><?php _e('Yes', 'swiftframework');?></option>
+									<option value="no"><?php _e('No', 'swiftframework');?></option>
+									<p class="info">Include a heading row in the table</p>
+								</select>
+							</div>
+							<div class="option">
+								<label for="table-columns"><?php _e('Number of columns', 'swiftframework');?></label>
+								<select id="table-columns" name="table-columns">
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+									<option value="5"><?php _e('5', 'swiftframework');?></option>
+									<option value="6"><?php _e('6', 'swiftframework');?></option>
+								</select>
+							</div>
+							
+							<div class="option">
+								<label for="table-rows"><?php _e('Number of rows', 'swiftframework');?></label>
+								<select id="table-rows" name="table-rows">
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+									<option value="5"><?php _e('5', 'swiftframework');?></option>
+									<option value="6"><?php _e('6', 'swiftframework');?></option>
+									<option value="7"><?php _e('7', 'swiftframework');?></option>
+									<option value="8"><?php _e('8', 'swiftframework');?></option>
+									<option value="9"><?php _e('9', 'swiftframework');?></option>
+									<option value="10"><?php _e('10', 'swiftframework');?></option>
+								</select>
+							</div>
+						</div>
+						
+						
+						<!--//////////////////////////////
+						////	PRICING TABLE
+						//////////////////////////////-->
+
+						<div id="shortcode-pricingtables" class="shortcode-option">
+							<h5><?php _e('Pricing Tables', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="ptable-type"><?php _e('Table style', 'swiftframework');?></label>
+								<select id="ptable-type" name="ptable-type">
+									<option value="standard"><?php _e('Standard pricing table', 'swiftframework');?></option>
+									<option value="bordered"><?php _e('Bordered pricing table', 'swiftframework');?></option>
+									<option value="bordered_alt"><?php _e('Alt bordered pricing table', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="ptable-columns"><?php _e('Number of columns', 'swiftframework');?></label>
+								<select id="ptable-columns" name="ptable-columns">
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="ptable-highlight"><?php _e('Highlighted column', 'swiftframework');?></label>
+								<select id="ptable-highlight" name="ptable-highlight">
+									<option value="0"></option>
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="ptable-buttontext"><?php _e('Button text', 'swiftframework');?></label>
+								<input id="ptable-buttontext" name="ptable-buttontext" type="text" value=""/>
+								<p class="info">Enter the button text here, or leave blank to hide the button.</p>
+							</div>
+						</div>
+						
+						
+						<!--//////////////////////////////
+						////	LABELLED PRICING TABLE
+						//////////////////////////////-->
+
+						<div id="shortcode-labelledpricingtables" class="shortcode-option">
+							<h5><?php _e('Labelled Pricing Table', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="lptable-columns"><?php _e('Number of columns', 'swiftframework');?></label>
+								<select id="lptable-columns" name="lptable-columns">
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="lptable-highlight"><?php _e('Highlighted column', 'swiftframework');?></label>
+								<select id="lptable-highlight" name="lptable-highlight">
+									<option value="0"></option>
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="lptable-rows"><?php _e('Number of rows', 'swiftframework');?></label>
+								<select id="lptable-rows" name="lptable-highlight">
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+									<option value="5"><?php _e('5', 'swiftframework');?></option>
+									<option value="6"><?php _e('6', 'swiftframework');?></option>
+									<option value="7"><?php _e('7', 'swiftframework');?></option>
+									<option value="8"><?php _e('8', 'swiftframework');?></option>
+									<option value="9"><?php _e('9', 'swiftframework');?></option>
+									<option value="10"><?php _e('10', 'swiftframework');?></option>
+									<option value="11"><?php _e('11', 'swiftframework');?></option>
+									<option value="12"><?php _e('12', 'swiftframework');?></option>
+									<option value="13"><?php _e('13', 'swiftframework');?></option>
+									<option value="14"><?php _e('14', 'swiftframework');?></option>
+									<option value="15"><?php _e('15', 'swiftframework');?></option>
+									<option value="16"><?php _e('16', 'swiftframework');?></option>
+									<option value="17"><?php _e('17', 'swiftframework');?></option>
+									<option value="18"><?php _e('18', 'swiftframework');?></option>
+									<option value="19"><?php _e('19', 'swiftframework');?></option>
+									<option value="20"><?php _e('20', 'swiftframework');?></option>
+									<option value="21"><?php _e('21', 'swiftframework');?></option>
+									<option value="22"><?php _e('22', 'swiftframework');?></option>
+									<option value="23"><?php _e('23', 'swiftframework');?></option>
+									<option value="24"><?php _e('24', 'swiftframework');?></option>
+									<option value="25"><?php _e('25', 'swiftframework');?></option>
+									<option value="26"><?php _e('26', 'swiftframework');?></option>
+									<option value="27"><?php _e('27', 'swiftframework');?></option>
+									<option value="28"><?php _e('28', 'swiftframework');?></option>
+									<option value="29"><?php _e('29', 'swiftframework');?></option>
+									<option value="30"><?php _e('30', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="lptable-buttontext"><?php _e('Button text', 'swiftframework');?></label>
+								<input id="lptable-buttontext" name="lptable-buttontext" type="text" value=""/>
+								<p class="info">Enter the button text here, or leave blank to hide the button.</p>
+							</div>
+						</div>						
+
+
+						<!--//////////////////////////////
+						////	LISTS
+						//////////////////////////////-->
+
+						<div id="shortcode-lists" class="shortcode-option">
+							<h5><?php _e('Lists', 'swiftframework');?></h5>
+							<div class="option">
+								<label for="list-type"><?php _e('List type', 'swiftframework');?></label>
+								<select id="list-type" name="list-type">
+									<option value="add_bw"><?php _e('Add (B&W)', 'swiftframework');?></option>
+									<option value="add"><?php _e('Add (Colour)', 'swiftframework');?></option>
+									<option value="arrow_bw"><?php _e('Arrow (B&W)', 'swiftframework');?></option>
+									<option value="arrow"><?php _e('Arrow (Colour)', 'swiftframework');?></option>
+									<option value="article"><?php _e('Article', 'swiftframework');?></option>
+									<option value="bar"><?php _e('Bar', 'swiftframework');?></option>
+									<option value="bolt_bw"><?php _e('Bolt (B&W)', 'swiftframework');?></option>
+									<option value="bolt"><?php _e('Bolt (Colour)', 'swiftframework');?></option>
+									<option value="date"><?php _e('Date', 'swiftframework');?></option>
+									<option value="delete_bw"><?php _e('Delete (B&W)', 'swiftframework');?></option>
+									<option value="delete"><?php _e('Delete (Colour)', 'swiftframework');?></option>
+									<option value="dot"><?php _e('Dot', 'swiftframework');?></option>
+									<option value="like_bw"><?php _e('Like (B&W)', 'swiftframework');?></option>
+									<option value="like"><?php _e('Like', 'swiftframework');?></option>
+									<option value="pen"><?php _e('Pen', 'swiftframework');?></option>
+									<option value="question_bw"><?php _e('Question mark (B&W)', 'swiftframework');?></option>
+									<option value="question"><?php _e('Question mark (Colour)', 'swiftframework');?></option>
+									<option value="settings_bw"><?php _e('Settings (B&W)', 'swiftframework');?></option>
+									<option value="settings"><?php _e('Settings (Colour)', 'swiftframework');?></option>
+									<option value="star_bw"><?php _e('Star (B&W)', 'swiftframework');?></option>
+									<option value="star"><?php _e('Star (Colour)', 'swiftframework');?></option>
+									<option value="tick_bw"><?php _e('Tick (B&W)', 'swiftframework');?></option>
+									<option value="tick"><?php _e('Tick (Colour)', 'swiftframework');?></option>
+									<option value="user"><?php _e('User', 'swiftframework');?></option>
+									<option value="warning_bw"><?php _e('Warning (B&W)', 'swiftframework');?></option>
+									<option value="warning"><?php _e('Warning', 'swiftframework');?></option>
+								</select>
+							</div>
+							<div class="option">
+								<label for="list-items"><?php _e('Number of list items', 'swiftframework');?></label>
+								<select id="list-items" name="list-items">
+									<option value="1"><?php _e('1', 'swiftframework');?></option>
+									<option value="2"><?php _e('2', 'swiftframework');?></option>
+									<option value="3"><?php _e('3', 'swiftframework');?></option>
+									<option value="4"><?php _e('4', 'swiftframework');?></option>
+									<option value="5"><?php _e('5', 'swiftframework');?></option>
+									<option value="6"><?php _e('6', 'swiftframework');?></option>
+									<option value="7"><?php _e('7', 'swiftframework');?></option>
+									<option value="8"><?php _e('8', 'swiftframework');?></option>
+									<option value="9"><?php _e('9', 'swiftframework');?></option>
+									<option value="10"><?php _e('10', 'swiftframework');?></option>
+									<p class="info">You can easily add more by duplicating the code after.</p>
+								</select>
+							</div>
+						</div>
+
+					</fieldset>
+
+				<!-- CLOSE #shortcode_panel -->					
+				</div>
+
+				<div class="buttons clearfix">
+					<input type="submit" id="insert" name="insert" value="<?php _e('Insert Shortcode', 'swiftframework');?>" onClick="embedSelectedShortcode();" />
+				</div>
+
+			<!-- CLOSE #shortcode_wrap -->
+			</div>
+
+		<!-- CLOSE swiftframework_shortcode_form -->
+		</form>
+
+	<!-- CLOSE body -->
+	</body>
+
+<!-- CLOSE html -->	
+</html>

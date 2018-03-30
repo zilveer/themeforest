@@ -1,0 +1,133 @@
+// =============================================================================
+// _TYPE.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Fonts
+//       a. Families
+//       b. Values
+//       c. Defaults
+//       d. Font Awesome
+//   02. Font Size
+//   03. Text Overflow
+//   04. Placeholder Text
+// =============================================================================
+
+// Fonts
+// =============================================================================
+
+//
+// Families.
+//
+
+@mixin font-family-serif() {
+  font-family: $serifFontFamily;
+}
+
+@mixin font-family-sans-serif() {
+  font-family: $sansFontFamily;
+}
+
+@mixin font-family-monospace() {
+  font-family: $monoFontFamily;
+}
+
+
+//
+// Values.
+//
+
+@mixin font-shorthand($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
+}
+
+
+//
+// Defaults.
+//
+
+@mixin font-serif($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+  @include font-family-serif();
+  @include font-shorthand($size, $weight, $lineHeight);
+}
+
+@mixin font-sans-serif($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+  @include font-family-sans-serif();
+  @include font-shorthand($size, $weight, $lineHeight);
+}
+
+@mixin font-monospace($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+  @include font-family-monospace();
+  @include font-shorthand($size, $weight, $lineHeight);
+}
+
+
+//
+// Font Awesome.
+//
+
+@mixin font-awesome() {
+  font-family: "FontAwesome" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  text-decoration: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+// Font Size
+// =============================================================================
+
+//
+// Provides rem unit sizing with a px fallback.
+// Must set html font-size to 62.5% since base 10 is used for px fallback.
+// 1. $sizeValue of 1.6 results in 16px and 1.6rem.
+//
+
+@mixin font-size($sizeValue: 1.6) { // 1
+  font-size: ($sizeValue * 10) + px;
+  // font-size: $sizeValue + rem;
+}
+
+
+
+// Text Overflow
+// =============================================================================
+
+//
+// Requires 'inline-block' or 'block' for proper styling.
+//
+
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+// Placeholder Text
+// =============================================================================
+
+@mixin placeholder($color: $placeholderText) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}

@@ -1,0 +1,134 @@
+// =============================================================================
+// _UTILITIES.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Clearfix
+//   02. Image Replacement (Hide Text)
+//   03. Center Block Element
+//   04. Sizing Shortcuts
+//       a. Rectangles
+//       b. Square
+//   05. Tab Focus
+//   06. Horizontal Dividers
+//   07. Navbar Vertical Align
+// =============================================================================
+
+// Clearfix
+// =============================================================================
+
+//
+// For clearing floats like a boss.
+//
+
+@mixin clearfix() {  
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  
+  &:after {
+    clear: both;
+  }
+}
+
+
+
+// Image Replacement (Hide Text)
+// =============================================================================
+
+@mixin hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+
+
+// Center Block Element
+// =============================================================================
+
+@mixin center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+// Sizing Shortcuts
+// =============================================================================
+
+//
+// Rectangles.
+//
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+
+//
+// Square.
+//
+
+@mixin square($size) {
+  @include size($size, $size);
+}
+
+
+
+// Tab Focus
+// =============================================================================
+
+//
+// 1. Default.
+// 2. Webkit.
+//
+
+@mixin tab-focus() {
+  outline: thin dotted #333; // 1
+  outline: 5px auto $linkColor; // 2
+  outline-offset: -1px;
+}
+
+
+
+// Horizontal Dividers
+// =============================================================================
+
+//
+// Dividers (basically an <hr>) within dropdowns and nav lists.
+//
+
+@mixin nav-divider($top: #e5e5e5, $bottom: $white) {
+  height: 1px;
+  margin: (($baseLineHeight / 2) - 1) 1px;
+  overflow: hidden;
+  background-color: $top;
+  border-bottom: 1px solid $bottom;
+}
+
+
+
+// Navbar Vertical Align
+// =============================================================================
+
+//
+// Vertically center elements in the navbar.
+// Example: an element has a height of 30px, so write out
+// '@include navbar-vertical-align(30px);' to calculate the appropriate
+// 'margin-top'.
+//
+
+@mixin navbar-vertical-align($elementHeight) {
+  margin-top: ($navbarHeight - $elementHeight) / 2;
+}

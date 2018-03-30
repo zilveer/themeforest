@@ -1,0 +1,25 @@
+<?php
+
+$help  = '<p>' . __('<h2 class="theme_help_title">STRIKING MULTIFLEX SUPPORT</h2>
+<p align="justify">Support for Striking MultiFlex is divided into two categories:  Product Support and Custom Support. &nbsp;A free to register support site with a forum is maintained by the Striking Developer for interaction between the theme support staff, and users. &nbsp;Under consideration is a more formalized ticket system and other support devices.</p>
+<h3><em>Product Support</em></h3>
+<p align="justify">Product Support is free and refers to:<br />
+<b>a)</b> <u>Keeping the theme bug free</u> and attending to any bugs that are reported by users.<br />
+<b>b)</b> <u>Updating the theme from time to time</u> for changes that have occurred to the wordpress core, to browsers, and to scripts that are incorporated into the theme so that the theme continues to work in good order.<br />
+<b>c)</b> <u>Answering general usage questions</u> from users about theme related matters such as where to find a setting or what is the purpose of a setting and its effect.</p>
+<p align="justify">Questions on implementation of a feature may or may not fall into the product support category, and are determined on a case by case basis at the sole discretion of the support team. &nbsp;At official release Striking MultiFlex will include very detailed built-in help fields for most settings, and a video series which will illustrate all core functionality.</p> 
+<p align="justify">Past experience via 10,000+ questions has taught the support team that most issues arise when a user is unfamiliar with basic wordpress conventions, has not read the help fields or documentation, or is attempting to customize via custom css/html/js/php or plugins without a good understanding of web code. &nbsp;The support team will usually attempt to point the way towards the wp codex for understanding, point the way to the correct help fields & documentation and expand upon the matter if relevant. &nbsp;Customization matters are dealt with in the Customer Support section below.</p>
+<h3><em>Customer Support</em></h3>
+<p align="justify"><u>Customer Support refers to anything that is not covered by Product Support.</u> &nbsp;In general, customer support includes the following: custom html/css implementation, website design, website transfer, SEO, requests that involve php or js modifications, anything to do with custom fields and non-theme custom post types, 3rd party plugin usage and integration, plugin debugging.  &nbsp;<u>All such requests are paid support.</u> &nbsp;We maintain a free to post open forum where uses can post such questions in order to seek help from each other, and have an extensive library of forum questions that can assist with many such queries.</p>
+<p align="justify">To clarify, the theme is provided &#34;as is&#34;, and any situation wherein one wants to modify the appearence, or a function behaviour, outside of the theme supplied settings range is &#34;customization&#34; and support is normally proferred on a paid basis only. &nbsp;Whether it be changing the theme CSS for one specific instance, or loading a new font into the theme, or modifying the header to accept some custom php or a code object, or difficulty with a plugin, all these and more are work outside of the Striking theme defaults and standing core, and are thus paid support.</p>
+<p align="justify">The theme support forum has more detailed information on support topics and at any time a user is welcome to query via the forum tools a support team member on a matter and how it is covered in support policy. &nbsp;The support team has an excellent reputation for providing liberal support in the past, and does intend to continue this tradition but there have been frequent and flagrant abuses of the free support model and so it is trusted that the above guidelines assist all users in determining the nature of what is supported and the appropriate terms of that support.</p>
+<p align="justify">Nothing in the policy above is intended to counteract the licensing of the Striking MultiFlex theme by Themeforest and when in doubt the Themeforest licensing shall apply. &nbsp;The Striking MultiFlex theme developer reserves the right to cancel the theme and support at any time without notice. &nbsp;Per Themeforest licensing, successful downloading of the theme package from the Themeforest website fulfills in full all obligations of Themeforest and the Striking MultiFlex developer in respect of the theme product and nothing contained herein this Theme Support policy is intended to imply any other obligation, in whole or in part, otherwise.</p>
+', 'theme_admin' ) .'</p>';
+
+$screen->add_help_tab( array(
+	'id'      => 'theme-support',
+	'title'   => __( 'Theme Support' , 'theme_admin' ),
+	'content' => $help,
+) );
+
+unset($help);

@@ -1,0 +1,399 @@
+
+/* ==========================================================================
+	4.1 Header
+============================================================================= */
+
+.site-header {
+	background-color: @header-bg;
+	.box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.1));
+}
+
+/* ==========================================================================
+	4.2 Header Top
+============================================================================= */
+
+.site-header-top {
+	background-color: @header-top-bg;
+	height: @header-top-height;
+	color: @header-top-text-color;
+	font-size: @font-size-small;
+}
+
+.site-header-top-left > p {
+	margin: 0;
+	.text-overflow();
+	line-height: @header-top-height;
+}
+
+.site-header-top-right {
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.site-header-social, 
+.site-header-search {
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* ==========================================================================
+	4.3 Header Social
+============================================================================= */
+
+.site-header-social {
+	li {
+		display: inline-block;
+		font-size: 11px;
+		line-height: 20px;
+		.transition(.25s);
+		a {
+			display: block;
+			color: inherit;
+			padding: 10px;
+		}
+		&:hover {
+			background-color: lighten(@header-top-bg, 7%);
+			a {
+				color: @header-top-link-hover-color;
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	4.4 Header Search
+============================================================================= */
+
+.site-header-search {
+	background-color: lighten(@header-top-bg, 6.25%);
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	.search-toggle {
+		display: inline-block;
+		vertical-align: top;
+		line-height: 20px;
+		padding: 10px 12px;
+		color: inherit;
+	}
+
+	.search-form {
+		display: inline-block;
+		vertical-align: top;
+		max-width: 0;
+		overflow: hidden;
+		.transition(max-width .3s ease-out);
+		.form-control {
+			border-radius: 0;
+			border: none;
+			height: 40px;
+			color: @header-top-text-color;
+			background-color: transparent;
+		}
+	}
+
+	&.open .search-form {
+		max-width: 200px;
+	}
+
+	&:hover, 
+	&.open {
+		.search-toggle {
+			color: @header-top-link-hover-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	4.5 Header Affix
+============================================================================= */
+
+.affix-container {
+	&.affix {
+		top: 0;
+		z-index: 999;
+		width: 100%;
+		background-color: @header-bg;
+		.translate3d(0, 0, 0);
+		.box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.1));
+	}
+}
+
+/* ==========================================================================
+	4.6 Mobile Toggles
+============================================================================= */
+
+.mobile-nav-toggle {
+	position: absolute;
+	top: 50%;
+	width: 21px;
+	height: 21px;
+	margin-top: -10.5px;
+}
+
+/* ==========================================================================
+	4.7 Mobile Nav Toggle
+============================================================================= */
+
+.mobile-nav-toggle {
+	left: 20px;
+	> a {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		padding: 9px 2px;
+		> span {
+			position: relative;
+
+			&, > span {
+				display: block;
+				width: 17px;
+				height: 3px;
+				background: #666;
+				.transition(0.3s);
+			}
+
+			> span {
+				position: absolute;
+				&:first-child {
+					top: -5px;
+				}
+
+				&:last-child {
+					top: 5px;
+				}
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	4.8 Logo
+============================================================================= */
+
+.brand {
+	text-align: center;
+	padding: 10px 57px;
+	height: 60px;
+
+	a {
+		display: inline-block;
+		height: 100%;
+	}
+	img {
+		width: auto;
+		max-width: 100%;
+		max-height: 100%;
+	}
+}
+
+/* ==========================================================================
+	4.9 Navigation
+============================================================================= */
+
+.primary-nav, 
+.secondary-nav {
+	text-transform: uppercase;
+	ul {
+		&:extend(ul.plain-list);
+	}
+	li {
+		position: relative;
+		line-height: 20px;
+	}
+	a {
+		display: block;
+	}
+}
+
+.primary-nav {
+	z-index: 999;
+	left: 0; right: 0;
+	padding-left: 0;
+	padding-right: 0;
+	background-color: @header-bg;
+	position: absolute;
+	border-bottom: 1px solid @base-border-color;
+	ul {
+		display: none;
+		li {
+			font-size: 12px;
+			border-top: 1px solid @base-border-color;
+			a {
+				color: @menu-link-color;
+				padding: 10px 20px;
+			}
+			&:hover, 
+			&.current-menu-item {
+				> a {
+					color: @menu-link-hover-color;
+				}
+			}
+		}
+	}
+	.primary-nav-wrap {
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	.sub-menu > li {
+		> a {
+			padding-left: 40px;
+		}
+		.sub-menu > li {
+			> a {
+				padding-left: 60px;
+			}
+			.sub-menu > li {
+				> a {
+					padding-left: 80px;
+				}
+			}
+		}
+	}
+
+	.menu-item-has-children > a {
+		padding-right: 60px;
+	}
+
+	.subnav-toggle {
+		display: block;
+		position: absolute;
+		right: 0; top: 0;
+		.size(40px, 40px);
+		cursor: pointer;
+		border-left: 1px solid @base-border-color;
+
+		&:after {
+			content: '';
+			width: 6px;
+			height: 6px;
+			border: 1px solid @text-color;
+			border-width: 0 0 1px 1px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin: -3px 0 0 -3px;
+			.rotate(-45deg);
+			.transition-transform(.25s);
+		}
+
+		&.open:after {
+			.rotate(-225deg);
+		}
+	}
+}
+
+/* ==========================================================================
+	4.10 Site Content
+============================================================================= */
+
+.site-wrapper {
+	min-height: 100vh;
+	position: relative;
+	.ios-vh-fix( min-height );
+}
+
+.site-content-header {
+	margin: 15px 0;
+}
+
+.site-content-title {
+	margin: 0;
+	text-align: center;
+	small {
+		margin-bottom: .5em;
+		display: block;
+		font-family: "Inconsolata", sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-weight: 400;
+		font-size: @font-size-small;
+	}
+
+	.error404 & {
+		font-size: 8em;
+		small {
+			margin-top: 2em;
+		}
+	}
+}
+
+.site-content-description {
+	text-align: center;
+	margin-top: 15px;
+}
+
+/* ==========================================================================
+	4.11 Back to Top
+============================================================================= */
+
+.back-to-top {
+	opacity: 0;
+	visibility: hidden;
+	position: fixed;
+	z-index: 999;
+	right: 13px;
+	bottom: 13px;
+	text-align: center;
+	background-color: #fff;
+	color: @text-color;
+	border-radius: 3px;
+	.box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.1));
+	&, .fa {
+		width: 36px;
+		height: 36px;
+		line-height: 36px;
+	}
+	&:hover {
+		background-color: @footer-bottom-bg;
+		color: #fff;
+	}
+	&.affix {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+/* ==========================================================================
+	4.12 Footer
+============================================================================= */
+
+.site-footer {
+	background-color: @footer-bg;
+	color: @footer-text-color;
+	a {
+		color: @footer-link-color;
+		&:hover {
+			color: @footer-link-hover-color;
+		}
+	}
+
+	&.sticky {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+}
+
+.footer-widgets {
+	padding: 60px 0;
+}
+
+.footer-bottom {
+	background-color: @footer-bottom-bg;
+	padding: 20px 0;
+	font-size: 12px;
+	text-align: center;
+}
+
+/* ==========================================================================
+	4.13 404
+============================================================================= */
+
+.error404 .wrapper-404 {
+	text-align: center;
+}

@@ -1,0 +1,91 @@
+// =============================================================================
+// _TOOLTIPS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Styles
+//   02. Arrows
+// =============================================================================
+
+// Base Styles
+// =============================================================================
+
+.tooltip {
+  position: absolute;
+  z-index: $zindexTooltip;
+  display: block;
+  visibility: visible;
+  padding: 0.455em;
+  @include font-size(1.1);
+  font-weight: normal;
+  line-height: 1.2;
+  @include opacity(0);
+  @include translate3d(0, 0, 0);
+  @include transition(#{opacity 0.3s ease});
+
+  &.top    { margin-top:  -0.273em; }
+  &.right  { margin-left:  0.273em; }
+  &.bottom { margin-top:   0.273em; }
+  &.left   { margin-left: -0.273em; }
+}
+
+.tooltip-inner {
+  max-width: 200px;
+  padding: 0.727em 0.818em;
+  color: $tooltipColor;
+  text-align: center;
+  text-decoration: none;
+  background-color: $tooltipBackground;
+  border-radius: 2px;
+}
+
+
+
+// Arrows
+// =============================================================================
+
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.tooltip {
+  &.top .tooltip-arrow {
+    bottom: 0;
+    left: 50%;
+    margin-left: -$tooltipArrowWidth;
+    border-width: $tooltipArrowWidth $tooltipArrowWidth 0;
+    border-top-color: $tooltipArrowColor;
+  }
+
+  &.right .tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -$tooltipArrowWidth;
+    border-width: $tooltipArrowWidth $tooltipArrowWidth $tooltipArrowWidth 0;
+    border-right-color: $tooltipArrowColor;
+  }
+
+  &.left .tooltip-arrow {
+    top: 50%;
+    right: 0;
+    margin-top: -$tooltipArrowWidth;
+    border-width: $tooltipArrowWidth 0 $tooltipArrowWidth $tooltipArrowWidth;
+    border-left-color: $tooltipArrowColor;
+  }
+  
+  &.bottom .tooltip-arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -$tooltipArrowWidth;
+    border-width: 0 $tooltipArrowWidth $tooltipArrowWidth;
+    border-bottom-color: $tooltipArrowColor;
+  }
+}

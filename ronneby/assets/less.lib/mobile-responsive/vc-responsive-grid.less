@@ -1,0 +1,137 @@
+/* 
+    Created on : 01.04.2015, 16:06:25
+    Author     : DFD
+	Styles for : Responsive vc grid
+*/
+@grid-columns: 12;
+/*.dfd_make-grid-columns() {
+    // Common styles for all sizes of grid columns, widths 1-12
+    .dfd_col(@index) when (@index = 1) { // initial
+        @item: ~".dfd_col-mobile-@{index}, .dfd_col-tablet-@{index}, .dfd_col-laptop-@{index}, .dfd_col-tabletop-@{index}";
+        .dfd_col((@index + 1), @item);
+    }
+    .dfd_col(@index, @list) when (@index =< @grid-columns) { // general; "=<" isn't a typo
+        @item: ~".dfd_col-mobile-@{index}, .dfd_col-tablet-@{index}, .dfd_col-laptop-@{index}, .dfd_col-tabletop-@{index}";
+        .dfd_col((@index + 1), ~"@{list}, @{item}");
+    }
+    .dfd_col(@index, @list) when (@index > @grid-columns) { // terminal
+            @{list} {
+            position: relative;
+            // Prevent columns from collapsing when empty
+            min-height: 1px;
+            // Inner gutter via padding
+            padding-left:  (@grid-gutter-width / 2);
+            padding-right: (@grid-gutter-width / 2);
+            .box-sizing(border-box);
+        }
+    }
+    .dfd_col(1); // kickstart it
+}*/
+/*
+.vc_float-grid-columns(@class) {
+    .dfd_col(@index) when (@index = 1) { // initial
+        @item: ~".dfd_col-@{class}-@{index}";
+        .dfd_col((@index + 1), @item);
+    }
+    .dfd_col(@index, @list) when (@index =< @grid-columns) { // general
+        @item: ~".dfd_col-@{class}-@{index}";
+        .dfd_col((@index + 1), ~"@{list}, @{item}");
+    }
+    .dfd_col(@index, @list) when (@index > @grid-columns) { // terminal
+        @{list} {
+            float: left;
+        }
+    }
+    .dfd_col(1); // kickstart it
+}
+*/
+.vc_calc-grid-column(@index, @class, @type) when (@type = width) and (@index > 0) {
+    .dfd_col-@{class}-@{index} {
+		float: left;
+		clear: none;
+        width: percentage((@index / @grid-columns));
+    }
+}
+.vc_calc-grid-column(@index, @class, @type) when (@type = push) and (@index > 0) {
+    .dfd_col-@{class}-push-@{index} {
+        left: percentage((@index / @grid-columns));
+    }
+}
+.vc_calc-grid-column(@index, @class, @type) when (@type = push) and (@index = 0) {
+    .dfd_col-@{class}-push-0 {
+        left: auto;
+    }
+}
+.vc_calc-grid-column(@index, @class, @type) when (@type = pull) and (@index > 0) {
+    .dfd_col-@{class}-pull-@{index} {
+        right: percentage((@index / @grid-columns));
+    }
+}
+.vc_calc-grid-column(@index, @class, @type) when (@type = pull) and (@index = 0) {
+    .dfd_col-@{class}-pull-0 {
+        right: auto;
+    }
+}
+.vc_calc-grid-column(@index, @class, @type) when (@type = offset) {
+    .dfd_col-@{class}-offset-@{index} {
+        margin-left: percentage((@index / @grid-columns));
+    }
+}
+
+// Basic looping in LESS
+.vc_loop-grid-columns(@index, @class, @type) when (@index >= 0) {
+    .vc_calc-grid-column(@index, @class, @type);
+    // next iteration
+    .vc_loop-grid-columns((@index - 1), @class, @type);
+}
+
+// Create grid for specific class
+.dfd_make-grid(@class) {
+    .vc_float-grid-columns(@class);
+    .vc_loop-grid-columns(@grid-columns, @class, width);
+    .vc_loop-grid-columns(@grid-columns, @class, pull);
+    .vc_loop-grid-columns(@grid-columns, @class, push);
+    .vc_loop-grid-columns(@grid-columns, @class, offset);
+}
+
+.vc_row {
+    .make-row();
+}
+
+//.dfd_make-grid-columns();
+// Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+
+@media (max-width: @screen-medium - 1) {
+	.row {
+		.dfd_make-grid(mobile);
+	}
+}
+
+@media (min-width: @screen-medium) {
+	.row {
+		.dfd_make-grid(tablet);
+	}
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: @screen-normal) {
+	.row {
+		.dfd_make-grid(laptop);
+	}
+}
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: @screen-x-large) {
+	.row {
+		.dfd_make-grid(tabletop);
+	}
+}

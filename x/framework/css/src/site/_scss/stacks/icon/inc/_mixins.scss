@@ -1,0 +1,76 @@
+// =============================================================================
+// _MIXINS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Category and Tag Links
+//   02. Thumbnail Style
+// =============================================================================
+
+// Category and Tag Links
+// =============================================================================
+
+@mixin btn_simple($style: standard) {
+  & {
+    display: inline-block;
+    @if $style == standard {
+      float: left;
+    } @else if $style == breadcrumb {
+      float: none;
+    }
+    position: relative;
+    @if $style == standard {
+      margin: 0.615em 0.615em 0 0;
+    } @else if $style == breadcrumb {
+      margin: 0.35em 0.615em;
+    }
+    border: 1px solid #ddd;
+    padding: 0.692em 1.154em 0.769em;
+    cursor: pointer;
+    @include font-size(1.3);
+    font-weight: 300;
+    line-height: 1.3;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95);
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: #c5c5c5;
+    background-color: transparent;
+    border-radius: 0.35em;
+    @include box-shadow(#{inset 0 0 0 rgba(0, 0, 0, 0), 0 1px 1px rgba(255, 255, 255, 0.95)});
+    @include transition(#{color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease});
+
+    &:hover {
+      color: #777;
+      border-color: #cfcfcf;
+      background-color: $baseModBackground;
+    }
+
+    &:active {
+      color: #777;
+      border-color: #bbb;
+      background-color: #ebebeb;
+      @include box-shadow(#{inset 0 1px 2px rgba(0, 0, 0, 0.225), 0 1px 1px rgba(255, 255, 255, 0.95)});
+    }
+  }
+}
+
+
+
+// Thumbnail Style
+// =============================================================================
+
+@mixin img_thumbnail() {
+  & {
+    line-height: $baseLineHeight;
+    border: 1px solid $baseBorderSolid;
+    border: 1px solid $baseBorderRgba;
+    padding: 7px;
+    background-color: $baseModBackground;
+    @include transition(#{border 0.3s ease, box-shadow 0.3s ease});
+  }
+}

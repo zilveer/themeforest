@@ -1,0 +1,371 @@
+/*------------------------------------------------------------
+ * Layout common classes and setup
+ *------------------------------------------------------------*/
+
+.clearfix {
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+html {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+}
+
+*,*:before,*:after {
+	-webkit-box-sizing: inherit;
+	   -moz-box-sizing: inherit;
+			box-sizing: inherit;
+}
+
+
+
+/*------------------------------------------------------------
+ * Main Layout
+ *------------------------------------------------------------*/
+
+html,
+body {
+	@media @tablet, @desktop {
+		height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		position: relative;
+		overflow: hidden;
+	}
+}
+
+
+
+/*------------------------------------------------------------
+ * Touchscreen Header Behavior with overrides for desktop
+ *------------------------------------------------------------*/
+
+.header {
+	z-index: 4;
+	height: 100%;
+
+	position: fixed;
+	width: 260px;
+	left: -260px;
+	top: 0px;
+
+	&__overflow {
+		overflow: hidden;
+		height: 100%;
+	}
+
+	.nano-content {
+		padding: 50px 20px 20px;
+		height: 100%;
+		overflow-y: scroll;
+	}
+
+
+	&:before {
+		content: "";
+		opacity: 0;
+		visibility: hidden;
+		background: @bg_sidebar;
+		.placement(@left:260px);
+		width: 990px;
+	}
+
+	// Header Behavior + independent sidebar
+	@media @tablet {
+		position: fixed !important;
+		overflow: visible !important;
+	}
+
+	@media @desktop {
+
+		position: relative;
+		width: @header_width;
+		left: 0;
+		float: left;
+
+		&:before {
+			content: none;
+		}
+
+	} /* /media query */
+}
+
+
+
+/* touchscreen nav toggle on*/
+body.touchscreen-header-open {
+	overflow: hidden;
+	position: relative;
+
+	.header {
+		left: 0;
+
+		&:before {
+			pointer-events: none;
+			visibility: visible;
+			opacity: 0.9;
+		}
+	}
+}
+
+
+
+/* Layout: Sidebar
+ *------------------------------------------------------------*/
+
+@media @tablet, @desktop {
+
+	.sidebar--true {
+		display: -webkit-flex;
+		display: flex;
+		-webkit-align-items: stretch;
+		align-items: stretch;
+
+		.sidebar {
+			position: relative;
+			width: @sidebar_width;
+			float: right;
+			overflow: hidden;
+		}
+
+		.main-content {
+			margin-right: -@sidebar_width;
+			width: 100%;
+			float: left;
+
+			&__inside {
+				margin-right: @sidebar_width;
+			}
+		}
+	}
+
+} /* /media query */
+
+
+
+/* Layout: Basics - Tablet & Desktop
+ *------------------------------------------------------------*/
+
+@media @tablet, @desktop {
+
+	.content-wrapper {
+		overflow-x: hidden;
+		overflow-y: auto;
+		height: 100%;
+
+		// Enable momentum scroll on iPad
+		-webkit-overflow-scrolling: touch;
+
+		&__inside {
+			width: 100%;
+		}
+	}
+
+} /* /media query */
+
+
+/* Layout: Desktop - Big
+ *------------------------------------------------------------*/
+
+@media @desktop-m {
+
+	.sidebar--true {
+
+		.sidebar {
+			width: @sidebar_width_big;
+		}
+
+		.main-content {
+			margin-right: -@sidebar_width_big;
+
+			&__inside {
+				margin-right: @sidebar_width_big;
+			}
+		}
+	}
+
+} /* /media query */
+
+
+/* Independent Sidebar Styles
+ *------------------------------------------------------------*/
+
+.independent-sidebar--true {
+
+	@media @tablet, @desktop {
+
+		.content-wrapper {
+			overflow: hidden;
+
+			&__inside {
+				height: 100%;
+			}
+		}
+
+		.main-content {
+			display: block;
+			overflow: hidden;
+			height: 100%;
+
+			&__inside {
+				min-height: 100%;
+				height: 100%;
+				overflow-x: hidden;
+
+				.js & {
+					overflow: hidden;
+				}
+			}
+		}
+
+		.sidebar {
+			height: 100%;
+			overflow: hidden;
+
+			&__content {
+				max-height: 100%;
+				height: 100%;
+			}
+		}
+
+	} /* /media query */
+
+}
+
+
+
+/*------------------------------------------------------------
+ * Max Width Wrapper
+ *------------------------------------------------------------*/
+
+.max-width-wrapper {
+
+	padding: 0 25px;
+	margin-left: auto;
+	margin-right: auto;
+
+	/* this is only on vertical tablet with sidebar */
+	@media @tablet {
+		padding-left: 50px;
+		padding-right: 50px;
+	} /* /media query */
+
+	.main-content--m-plus & {
+		padding-left: 70px;
+		padding-right: 70px;
+		max-width: 1215px;
+	}
+
+}
+
+
+
+/*------------------------------------------------------------
+ * Grid System
+ *------------------------------------------------------------*/
+
+.row {}
+
+[class^='column--'],
+[class*='column--'] {
+	width: 100%;
+	padding: 0 15px;
+	margin-bottom: 15px;
+
+	&:empty {
+		margin-bottom: 0;
+	}
+}
+
+.row__inwrap {
+	.clearfix;
+}
+
+// Max-Width-Wrapper functionality, manual-way
+.full-width--true {
+
+	.row__inwrap {
+		padding: 0 25px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* this is only on vertical tablet with sidebar */
+	@media @tablet {
+		.row__inwrap {
+			padding-left: 50px;
+			padding-right: 50px;
+		}
+	} /* /media query */
+
+	.main-content--m-plus {
+		.row__inwrap {
+			padding-left: 70px;
+			padding-right: 70px;
+			max-width: 1215px;
+		}
+	}
+}
+
+.sidebar {
+	.row__inwrap {
+		padding: 0 25px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+
+
+@media @tablet, @desktop {
+
+	.column-wrap {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+
+	[class^='column--'],
+	[class*='column--'] {
+
+		float: left;
+		min-height: 1px;
+		margin-bottom: 0;
+
+		[class^='column--'],
+		[class*='column--'] {
+			&:first-of-type { padding-left: 0; }
+			&:last-of-type { padding-right: 0; }
+		}
+	}
+
+	.column {
+		&--1-1 { width: 100%; }
+		&--1-2 { width: 50%; }
+		&--1-3 { width: 33.33333333333333%; }
+		&--1-4 { width: 25%; }
+		&--1-5 { width: 20%; }
+		&--1-6 { width: 16.666666666666664%; }
+
+		&--2-3 { width: 66.66666666666666%; }
+		&--2-4 { width: 50%; }
+		&--3-4 { width: 75%; }
+		&--2-5 { width: 40%; }
+		&--3-5 { width: 60%; }
+		&--4-5 { width: 80%; }
+
+		&--2-6 { width: 33.33333333333333%; }
+		&--3-6 { width: 50%; }
+		&--4-6 { width: 66.66666666666666%; }
+		&--5-6 { width: 83.333333335%; }
+
+	}
+
+}

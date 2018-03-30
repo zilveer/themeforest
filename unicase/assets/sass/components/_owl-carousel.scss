@@ -1,0 +1,446 @@
+/*===================================================================================*/
+/*  OWL CAROUSEL
+/*===================================================================================*/
+
+.owl-carousel{
+	display: none;
+	width: 100%;
+	-webkit-tap-highlight-color: transparent;
+	/* position relative and z-index fix webkit rendering fonts issue */
+	position: relative;
+	z-index: 1;
+
+	.owl-stage{
+		position: relative;
+		-ms-touch-action: pan-Y;
+	}
+
+	.owl-stage:after{
+		content: ".";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		line-height: 0;
+		height: 0;
+	}
+
+	.owl-stage-outer{
+		position: relative;
+		overflow: hidden;
+		-webkit-transform: translate3d(0px, 0px, 0px);
+		width: 100%;
+	}
+
+	.owl-item{
+		position: relative;
+		min-height: 1px;
+		float: $start;
+		-webkit-backface-visibility: hidden;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-touch-callout: none;
+	}
+	.owl-item img{
+		display: block;
+		width: 100%;
+		-webkit-transform-style: preserve-3d;
+	}
+
+	.owl-nav.disabled,
+	.owl-dots.disabled{
+		display: none;
+	}
+
+	.owl-nav .owl-prev,
+	.owl-nav .owl-next,
+	.owl-dot{
+		cursor: pointer;
+		cursor: hand;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	&.owl-loaded{
+		display: block;
+	}
+
+	&.owl-loading{
+		opacity: 0;
+		display: block;
+	}
+
+	&.owl-hidden{
+		opacity: 0;
+	}
+
+	&.owl-refresh .owl-item{
+		display: none;
+	}
+
+	&.owl-drag .owl-item{
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	&.owl-grab{
+		cursor: move;
+		cursor: -webkit-grab;
+		cursor: -o-grab;
+		cursor: -ms-grab;
+		cursor: grab;
+	}
+	
+	&.owl-rtl{
+		direction: rtl;
+	}
+
+	&.owl-rtl .owl-item{
+		float: $start;
+	}
+}
+
+/* No Js */
+.no-js .owl-carousel{
+	display: block;
+}
+
+
+/*
+ *  Owl Carousel - Animate Plugin
+ */
+.owl-carousel{
+	.animated {
+		-webkit-animation-duration: 1000ms;
+		animation-duration: 1000ms;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+	.owl-animated-in {
+		z-index: 0;
+	}
+	.owl-animated-out {
+		z-index: 1;
+	}
+	.fadeOut {
+		-webkit-animation-name: fadeOut;
+		animation-name: fadeOut;
+	}
+}
+
+@-webkit-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+// Specific to hero units
+
+.owl-carousel {
+	text-align: center;
+	cursor: default;
+}
+.owl-controls {
+	display: inline-block;
+    position: relative;
+    margin-top: 40px;
+}
+.panel-group .panel .owl-controls {
+    margin-top: 25px;
+}
+.panel-group.blank .panel .owl-controls {
+    margin-top: 40px;
+}
+.owl-dots {
+	position: relative;
+	line-height: 30px;
+}
+
+.owl-prev,
+.owl-next {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 30px;
+	height: 30px;
+	font-size: 30px;
+	color: #FFF;
+	background-color: transparent;
+	border: none;
+	border-radius: 3px;
+	margin: auto;
+	transition: all 200ms ease-out;
+	opacity: 0;
+}
+.owl-prev {
+	#{$start}: -35px;
+}
+.owl-next {
+	#{$end}: -35px;
+}
+.owl-carousel:hover .owl-prev {
+	#{$start}: -40px;
+	opacity: .25;
+}
+.owl-carousel:hover .owl-next {
+	#{$end}: -40px;
+	opacity: .25;
+}
+.owl-carousel:hover .owl-prev:hover,
+.owl-carousel:hover .owl-next:hover {
+    color: #202020;
+	opacity: 1;
+}
+
+.owl-controls .owl-dot {
+    display: inline-block;
+}
+.owl-dots .owl-dot span {
+	display: block;
+	width: 15px;
+	height: 15px;
+	background: #737373;
+	border: none;
+	border-radius: 50%;
+	margin: 0 5px;
+	transition: all 200ms ease-out;
+}
+.owl-dots .owl-dot.active span,
+.owl-dots .owl-dot:hover span {
+	background: #535453;
+}
+
+.owl-outer-nav:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	#{$start}: -15%;
+	height: 100%;
+	z-index: 0;
+}
+.owl-outer-nav .owl-stage-outer,
+.owl-outer-nav .owl-dots,
+.owl-outer-nav .owl-prev,
+.owl-outer-nav .owl-next {
+	z-index: 1;
+}
+// .owl-outer-nav .owl-controls {
+// 	position: static;
+// }
+.owl-outer-nav .owl-prev {
+	#{$start}: -65px;
+}
+.owl-outer-nav .owl-next {
+	#{$end}: -65px;
+}
+.owl-outer-nav:hover .owl-prev {
+	#{$start}: -80px;
+}
+.owl-outer-nav:hover .owl-next {
+	#{$end}: -80px;
+}
+
+
+.owl-ui-md .owl-dots {
+	line-height: 45px;
+}
+.owl-ui-md .owl-prev,
+.owl-ui-md .owl-next {
+	width: 45px;
+	height: 45px;
+	font-size: 45px;
+}
+.owl-ui-md .owl-prev {
+	#{$start}: -55px;
+}
+.owl-ui-md .owl-next {
+	#{$end}: -55px;
+}
+.owl-ui-md:hover .owl-prev {
+	#{$start}: -60px;
+}
+.owl-ui-md:hover .owl-next {
+	#{$end}: -60px;
+}
+
+.owl-outer-nav.owl-ui-md:after {
+	#{$start}: -18%;
+	width: 136%;
+}
+.owl-outer-nav.owl-ui-md .owl-prev {
+	#{$start}: -85px;
+}
+.owl-outer-nav.owl-ui-md .owl-next {
+	#{$end}: -85px;
+}
+.owl-outer-nav.owl-ui-md:hover .owl-prev {
+	#{$start}: -100px;
+}
+.owl-outer-nav.owl-ui-md:hover .owl-next {
+	#{$end}: -100px;
+}
+
+.owl-ui-lg .owl-dots {
+	line-height: 60px;
+}
+.owl-ui-lg .owl-prev,
+.owl-ui-lg .owl-next {
+	width: 80px;
+	height: 80px;
+	font-size: 80px;
+}
+.owl-ui-lg .owl-prev {
+	#{$start}: -75px;
+}
+.owl-ui-lg .owl-next {
+	#{$end}: -75px;
+}
+.owl-ui-lg:hover .owl-prev {
+	#{$start}: -80px;
+}
+.owl-ui-lg:hover .owl-next {
+	#{$end}: -80px;
+}
+
+.owl-outer-nav.owl-ui-lg:after {
+	#{$start}: -22%;
+	width: 144%;
+}
+.owl-outer-nav.owl-ui-lg .owl-prev {
+	#{$start}: -105px;
+}
+.owl-outer-nav.owl-ui-lg .owl-next {
+	#{$end}: -105px;
+}
+.owl-outer-nav.owl-ui-lg:hover .owl-prev {
+	#{$start}: -120px;
+}
+.owl-outer-nav.owl-ui-lg:hover .owl-next {
+	#{$end}: -120px;
+}
+
+/*.owl-inner-nav .owl-controls {
+	position: static;
+}
+.owl-inner-nav .owl-prev {
+	#{$start}: 45px;
+}
+.owl-inner-nav .owl-next {
+	#{$end}: 45px;
+}
+.owl-inner-nav:hover .owl-prev {
+	#{$start}: 30px;
+}
+.owl-inner-nav:hover .owl-next {
+	#{$end}: 30px;
+}
+
+.owl-outer-nav .owl-prev,
+.owl-outer-nav .owl-next,
+.owl-inner-nav .owl-prev,
+.owl-inner-nav .owl-next {
+	bottom: 70px;
+}
+
+.owl-outer-nav.owl-ui-md .owl-prev,
+.owl-outer-nav.owl-ui-md .owl-next,
+.owl-inner-nav.owl-ui-md .owl-prev,
+.owl-inner-nav.owl-ui-md .owl-next {
+	bottom: 85px;
+}
+
+.owl-outer-nav.owl-ui-lg .owl-prev,
+.owl-outer-nav.owl-ui-lg .owl-next,
+.owl-inner-nav.owl-ui-lg .owl-prev,
+.owl-inner-nav.owl-ui-lg .owl-next {
+	bottom: 100px;
+}
+
+.owl-inner-pagination .owl-dots,
+.owl-inner-pagination .owl-prev,
+.owl-inner-pagination .owl-next {
+	margin-top: -40px;
+	top: -60px;
+}
+
+.owl-inner-pagination.owl-ui-md .owl-dots,
+.owl-inner-pagination.owl-ui-md .owl-prev,
+.owl-inner-pagination.owl-ui-md .owl-next {
+	margin-top: -50px;
+	top: -65px;
+}
+
+.owl-inner-pagination.owl-ui-lg .owl-dots,
+.owl-inner-pagination.owl-ui-lg .owl-prev,
+.owl-inner-pagination.owl-ui-lg .owl-next {
+	margin-top: -60px;
+	top: -75px;
+}
+
+.owl-inner-pagination.owl-outer-nav .owl-prev,
+.owl-inner-pagination.owl-outer-nav .owl-next,
+.owl-inner-pagination.owl-inner-nav .owl-prev,
+.owl-inner-pagination.owl-inner-nav .owl-next {
+	margin: auto;
+	top: 0;
+	bottom: 43px;
+}
+
+.owl-inner-pagination .owl-dots {
+	-webkit-transition: all 200ms ease-out;
+	   -moz-transition: all 200ms ease-out;
+		 -o-transition: all 200ms ease-out;
+			transition: all 200ms ease-out;
+	opacity: 0;
+}
+
+.owl-inner-pagination:hover .owl-dots {
+	opacity: 1;
+}
+
+.owl-inner-pagination.owl-inner-nav .owl-dots,
+.owl-inner-pagination.owl-outer-nav .owl-dots {
+	top: -45px;
+}
+
+.owl-inner-pagination.owl-inner-nav.owl-ui-md .owl-dots,
+.owl-inner-pagination.owl-outer-nav.owl-ui-md .owl-dots {
+	top: -50px;
+}
+
+.owl-inner-pagination.owl-inner-nav.owl-ui-lg .owl-dots,
+.owl-inner-pagination.owl-outer-nav.owl-ui-lg .owl-dots {
+	top: -60px;
+}
+
+.owl-inner-pagination.owl-inner-nav:hover .owl-dots,
+.owl-inner-pagination.owl-outer-nav:hover .owl-dots {
+	top: -60px;
+}
+
+.owl-inner-pagination.owl-inner-nav.owl-ui-md:hover .owl-dots,
+.owl-inner-pagination.owl-outer-nav.owl-ui-md:hover .owl-dots {
+	top: -65px;
+}
+
+.owl-inner-pagination.owl-inner-nav.owl-ui-lg:hover .owl-dots,
+.owl-inner-pagination.owl-outer-nav.owl-ui-lg:hover .owl-dots {
+	top: -75px;
+}*/

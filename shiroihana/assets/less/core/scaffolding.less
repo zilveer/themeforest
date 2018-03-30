@@ -1,0 +1,282 @@
+
+/* ==========================================================================
+	1.1 Typography
+============================================================================= */
+
+a {
+	&, &:hover, &:focus {
+		text-decoration: none;
+	}
+	&:focus {
+		outline: none;
+	}
+	.transition(color .3s ease);
+}
+
+strong, b {
+	font-family: inherit;
+	font-weight: 700;
+}
+
+p {
+	margin-bottom: 1.1428571em;
+}
+
+.lead {
+	line-height: 1.5;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.dropcap {
+	float: left;
+	font-size: 5.125em;
+	line-height: 1;
+	margin-bottom: -0.15em;
+	margin-right: 0.15em;
+	margin-top: -0.1em;
+}
+
+blockquote {
+	border: none;
+	overflow: hidden;
+	padding: 2em 0 0;
+	margin-left: 1em;
+	margin-right: 1em;
+	text-align: center;
+	position: relative;
+	color: @headings-color;
+	line-height: 1.3;
+	font-size: 2.2em;
+	font-family: @headings-font-family;
+
+	&:after {
+		content: '';
+		top: 1em;
+		width: 9em;
+		margin-left: -4.5em;
+		border-top: 1px dotted @dotted-border-color;
+		position: absolute;
+	}
+
+	&:before {
+		content: '\201C';
+		font-size: 1.5em;
+		position: absolute;
+		z-index: 1;
+		background-color: @base-box-bg;
+		top: .35em;
+		left: 50%;
+		width: 1em;
+		height: 1em;
+		line-height: 1em;
+		margin-left: -.5em;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	small {
+		font-size: @font-size-base;
+		font-family: @font-family-base;
+		color: @text-muted;
+		line-height: 1.5;
+		margin-top: 1.5em;
+		&:before {
+			content: none;
+		}
+	}
+}
+
+/* ==========================================================================
+	1.2 Heading Styles
+============================================================================= */
+
+h1, h2 {
+	margin-top: 1em;
+	margin-bottom: 0.625em;
+}
+
+h3, h4, h5, h6 {
+	margin-top: 1.25em;
+	margin-bottom: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	a {
+		color: inherit;
+		&:hover {
+			color: @brand-primary;
+		}
+	}
+	
+	&.no-margin-top {
+		margin-top: 0;
+	}
+
+	&.no-margin-bottom {
+		margin-bottom: 0;
+	}
+
+	&.bordered {
+		position: relative;
+		> span {
+			position: relative;
+			z-index: 1;
+			padding-right: 10px;
+			display: inline-block;
+			background-color: @base-box-bg;
+		}
+		
+		&.text-right, 
+		&.text-center {
+			> span {
+				padding-left: 10px;
+			}
+		}
+
+		&.text-right > span {
+			padding-right: 0;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			margin-top: -1px;
+			border: dotted @dotted-border-color;
+			border-width: 1px 0;
+			height: 3px;
+			left: 0; right: 0;
+		}
+	}
+}
+
+/* ==========================================================================
+	1.3 Code Styles
+============================================================================= */
+
+pre {
+	border: none;
+	background-color: @body-bg;
+	padding: @grid-gutter-width / 2;
+}
+
+/* ==========================================================================
+	1.4 Responsive Image
+============================================================================= */
+
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+#map_canvas img,
+.google-maps img {
+	max-width: none;
+}
+
+/* ==========================================================================
+	1.5 List Styles
+============================================================================= */
+
+ul.plain-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* ==========================================================================
+	1.6 Form Styles
+============================================================================= */
+
+.form-control {
+	box-shadow: none !important;
+}
+
+textarea {
+	resize: vertical;
+}
+
+.form-group {
+	[class*="col-sm-"], 
+	[class*="col-md-"], 
+	[class*="col-lg-"] {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+/* ==========================================================================
+	1.7 Spacers
+============================================================================= */
+
+.spacer( @size; @increments: 10; @max: 40; ) when( @size <= @max ) {
+	.spacer-@{size} {
+		margin: unit(round(@size / 2), px)  0;
+	}
+	.spacer( @size + @increments; @increments; @max );
+}
+
+[class*="spacer-"] {
+	.clearfix();
+}
+
+.spacer( 10, 10, 100 );
+
+/* ==========================================================================
+	1.8 Contact Form 7
+============================================================================= */
+
+div {
+	&.wpcf7-response-output {
+		padding: @alert-padding;
+		margin: 0;
+		margin-bottom: @line-height-computed;
+		border: 1px solid transparent;
+		border-radius: @alert-border-radius;
+	}
+
+	&.wpcf7-mail-sent-ok {
+		background-color: @alert-success-bg;
+		border-color: @alert-success-border;
+		color: @alert-success-text;
+	}
+
+	&.wpcf7-mail-sent-ng {
+		background-color: @alert-danger-bg;
+		border-color: @alert-danger-border;
+		color: @alert-danger-text;
+	}
+
+	&.wpcf7-spam-blocked {
+		background-color: @alert-warning-bg;
+		border-color: @alert-warning-border;
+		color: @alert-warning-text;
+	}
+
+	&.wpcf7-validation-errors {
+		background-color: @alert-danger-bg;
+		border-color: @alert-danger-border;
+		color: @alert-danger-text;
+	}
+}
+
+/* ==========================================================================
+	1.9 Miscs.
+============================================================================= */
+
+#_atssh {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}

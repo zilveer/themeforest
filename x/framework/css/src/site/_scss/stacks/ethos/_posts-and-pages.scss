@@ -1,0 +1,817 @@
+// =============================================================================
+// _POSTS-AND-PAGES.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Main Containing Element
+//   02. All Posts and Pages
+//   03. Pages
+//   04. Posts
+//   05. Audio Posts
+//   06. Link Posts
+//   07. Quote Posts
+//   08. Filterable Index
+//   09. Portfolio Posts
+//   10. Page Templates
+//   11. 404 Page
+//   12. Landmark Header
+//   13. Entry Cover
+// =============================================================================
+
+// Main Containing Element
+// =============================================================================
+
+.x-main {
+  position: relative;
+
+  &.left  { padding-right: $layoutSpacing; }
+  &.right { padding-left:  $layoutSpacing; }
+
+  .widget {
+    margin-top: 3em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  @include break(cubs) {
+    &.left  { padding-right: 0; }
+    &.right { padding-left: 0;  }
+  }
+}
+
+
+
+// All Posts and Pages
+// =============================================================================
+
+.hentry {
+  @include clearfix();
+}
+
+
+//
+// Entry featured.
+//
+
+.entry-featured {
+  position: relative;
+}
+
+.entry-thumb {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+a.entry-thumb {
+  padding-bottom: 65%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  .view {
+    display: block;
+    margin: -16px 0 0;
+    position: absolute;
+    top: 250%;
+    left: 0;
+    right: 0;
+    height: 30px;
+    @include font-size(1.2);
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: $white;
+    z-index: 2;
+    @include transition(#{all 0.615s $easeOutExpo});
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $entryCoverBackgroundHover;
+    z-index: 1;
+    @include opacity(0);
+    @include transition(#{all 0.615s $easeOutExpo});
+  }
+
+  &:hover {
+    .view {
+      top: 50%;
+    }
+
+    &:before {
+      top: 0;
+      @include opacity(1);
+    }
+  }
+
+  &.featured {
+    &.big {
+      padding: 16.5% ceil($layoutSpacing * 1.5);
+      text-align: center;
+    }
+
+    &.skinny {
+      padding: ceil($layoutSpacing * 1.5);
+    }
+
+    &:before {
+      background-color: $entryCoverBackground;
+      @include opacity(1);
+    }
+
+    &:hover {
+      &:before {
+        background-color: $entryCoverBackgroundHover;
+      }
+    }
+  }
+
+  @include break(middle-bear) {
+    &.featured.big {
+      text-align: initial;
+    }
+
+    &.featured.big,
+    &.featured.skinny {
+      padding: $layoutSpacing;
+    }
+  }
+
+  @include break(baby-bear) {
+    &.featured.big,
+    &.featured.skinny {
+      padding: ceil($layoutSpacing / 1.5);
+
+      .featured-meta { @include font-size(1.4); }
+      .h-featured    { @include font-size(2.4); }
+      .featured-view { @include font-size(1.0); }
+    }
+  }
+}
+
+.x-full-width-layout-active {
+  &.x-content-sidebar-active {
+    a.entry-thumb.featured {
+      margin-right: -$layoutSpacing;
+    }
+  }
+
+  &.x-sidebar-content-active {
+    a.entry-thumb.featured {
+      margin-left: -$layoutSpacing;
+    }
+  }
+
+  @include break(cubs) {
+    &.x-content-sidebar-active {
+      a.entry-thumb.featured {
+        margin-right: 0;
+      }
+    }
+
+    &.x-sidebar-content-active {
+      a.entry-thumb.featured {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.featured-meta,
+.h-featured,
+.featured-view {
+  position: relative;
+  z-index: 2;
+}
+
+.featured-meta {
+  display: inline-block;
+  margin-bottom: 10px;
+  @include font-size(1.6);
+  line-height: 1.4;
+  color: $white;
+}
+
+.h-featured {
+  margin: 0;
+  @include font-size(3.2);
+  text-transform: uppercase;
+  color: $white;
+}
+
+.featured-view {
+  margin-top: 19px;
+  display: inline-block;
+  border: 1px solid $white;
+  padding: 0.5em 1em 0.535em;
+  @include font-size(1.2);
+  text-transform: uppercase;
+  color: $white;
+  @include transition(#{color 0.3s ease, background-color 0.3s ease});
+
+  &:hover {
+    color: $navbarBackground;
+    background-color: $white;
+  }
+}
+
+
+//
+// Entry header.
+//
+
+.entry-header {
+  @include clearfix();
+}
+
+.entry-title {
+  margin: 0;
+  line-height: 1.1;
+  @include break(baby-bear) {
+    font-size: 200%;
+  }
+}
+
+h1.entry-title {
+  font-size: 200%;
+}
+
+h2.entry-title {
+  font-size: 140%;
+}
+
+.p-meta {
+  margin: 1em 0 0;
+  font-family: $altFontFamily;
+  font-size: 0.75em;
+
+  > span {
+    > a {
+      white-space: nowrap;
+      color: $headingsColor;
+
+      &:hover {
+        color: $accentColor;
+      }
+    }
+
+    &:after {
+      content: "/";
+      padding: 0 0.45em;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+}
+
+
+//
+// Entry content.
+//
+
+.entry-content {
+  margin-top: $layoutSpacing / 2;
+  @include clearfix();
+
+  embed,
+  iframe,
+  object {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  > p,
+  > ul,
+  > ol {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+//
+// Entry top navigation.
+//
+
+.entry-top-navigation {
+  margin-bottom: $layoutSpacing;
+  @include clearfix();
+
+  .entry-parent {
+    float: left;
+    @include btn_simple();
+  }
+
+  .entry-parent {
+    width: 46px;
+  }
+}
+
+
+//
+// Area specific styles.
+//
+
+.blog,
+.search,
+.archive {
+  .x-main {
+    .hentry {
+      margin-top: $layoutSpacing;
+      border-top: 1px solid $shortcodeBorderColor;
+      padding-top: $layoutSpacing;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &:last-of-type {
+        border-bottom: 1px solid $shortcodeBorderColor;
+        padding-bottom: $layoutSpacing;
+      }
+
+      > .entry-featured {
+        float: left;
+        width: 34%;
+        margin: 0;
+      }
+
+      &.has-post-thumbnail {
+        > .entry-wrap {
+          float: right;
+          width: 66%;
+          padding-left: $layoutSpacing;
+        }
+      }
+
+      @include break(middle-bear) {
+        > .entry-featured {
+          float: none;
+          width: auto;
+          margin: 0 0 $baseMargin;
+        }
+
+        &.has-post-thumbnail {
+          > .entry-wrap {
+            float: none;
+            width: auto;
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.page,
+.single-post {
+  .x-main {
+    .hentry .entry-featured {
+      margin-bottom: $baseMargin;
+    }
+
+    &.left .hentry .entry-featured {
+      margin-top: -$layoutSpacing;
+      margin-right: -$layoutSpacing;
+      @include break(cubs) {
+        margin-right: 0;
+      }
+    }
+
+    &.right .hentry .entry-featured {
+      margin-top: -$layoutSpacing;
+      margin-left: -$layoutSpacing;
+      @include break(cubs) {
+        margin-left: 0;
+      }
+    }
+
+    &.full .hentry .entry-featured {
+      margin-top: -$layoutSpacing;
+    }
+  }
+}
+
+.x-iso-container {
+  &.cols-1 { .entry-cover { padding-bottom: 85%; } }
+  &.cols-2 { .entry-cover { padding-bottom: 85%; } }
+  &.cols-3 { .entry-cover { padding-bottom: 85%; } }
+  &.cols-4 { .entry-cover { padding-bottom: 85%; } }
+}
+
+
+
+// Pages
+// =============================================================================
+
+.x-page-title-disabled {
+  .entry-content {
+    margin-top: 0;
+  }
+}
+
+
+
+// Posts
+// =============================================================================
+
+.single-post {
+  .x-nav-articles {
+    @include break(middle-bear) {
+      display: none;
+    }
+  }
+}
+
+
+
+// Audio Posts
+// =============================================================================
+
+.format-audio {
+  &.no-post-thumbnail {
+    .entry-featured {
+      margin-top: $baseMargin;
+      margin-bottom: $baseMargin;
+    }
+  }
+
+  &.has-post-thumbnail {
+    .entry-featured {
+      .x-audio {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        margin: 0 auto;
+
+        iframe {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
+// Link Posts
+// =============================================================================
+
+.format-link {
+  .link {
+    margin: $baseMargin 0;
+
+    a {
+      font-size: 1.571em;
+      line-height: 1.5;
+      word-wrap: break-word;
+      color: $textColor;
+
+      &:hover {
+        color: $accentColor;
+      }
+    }
+  }
+}
+
+
+
+// Quote Posts
+// =============================================================================
+
+.format-quote {
+  .x-hgroup {
+    margin: $baseMargin 0;
+
+    .quote {
+      margin: 0;
+      font-size: 1.5em;
+      line-height: 1.4;
+
+      &:before { content: "\201C"; }
+      &:after  { content: "\201D"; }
+    }
+
+    .cite {
+      display: block;
+      margin: 0.25em 0 0;
+      text-align: right;
+
+      &:before {
+        content: "\2013\00A0";
+      }
+    }
+  }
+}
+
+
+
+// Filterable Index
+// =============================================================================
+
+//
+// Filterable item.
+//
+
+.x-filterable-category-group {
+  display: none;
+  visibility: hidden;
+
+  &.selected {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.x-filterable-featured-entries {
+  margin-bottom: $layoutSpacing;
+  @include clearfix();
+}
+
+.x-btn-filterable {
+  display: none;
+  margin-top: $layoutSpacing;
+}
+
+.no-js {
+  .x-btn-filterable {
+    display: block;
+  }
+}
+
+
+
+// Portfolio Posts
+// =============================================================================
+
+.single-x-portfolio {
+  .entry-featured,
+  .entry-wrap {
+    margin-bottom: $layoutSpacing;
+  }
+
+  .entry-featured {
+    float: left;
+    padding-right: $layoutSpacing;
+    width: 68%;
+  }
+
+  .entry-wrap {
+    float: right;
+    width: 32%;
+  }
+
+  .entry-content {
+    margin-top: 0;
+  }
+
+  .entry-extra {
+    .x-ul-tags {
+      margin: 0 0 $layoutSpacing 0;
+      list-style: none;
+      text-align: center;
+
+      li {
+        a {
+          display: block;
+          border-top: 1px solid $shortcodeBorderColor;
+          padding: 5px 0;
+          color: $textColor;
+
+          // &:before {
+          //   content: "\f02b";
+          //   display: inline;
+          //   margin-right: 7px;
+          //   color: $navbarBackground;
+          //   @include font-awesome();
+          // }
+
+          &:hover {
+            color: $navbarBackground !important;
+          }
+        }
+
+        &:first-child a {
+          border-top: 0;
+        }
+      }
+    }
+  }
+
+  .h-extra {
+    margin-top: $layoutSpacing;
+    font-size: 120%;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+
+    &.skills { margin-bottom: 0.3em; }
+    &.launch { margin-bottom: 0.4em; }
+  }
+
+  #reply-title {
+    margin-top: 0;
+  }
+
+  @include break(cubs) {
+    .entry-featured {
+      padding: 0;
+    }
+
+    .entry-featured,
+    .entry-wrap {
+      float: none;
+      width: 100%;
+    }
+  }
+}
+
+
+
+// Page Templates
+// =============================================================================
+
+[class*="page-template-template-blank"] {
+  .entry-content {
+    margin-top: 0;
+  }
+}
+
+.page-template-template-blank-3-php.x-navbar-fixed-left-active,
+.page-template-template-blank-3-php.x-navbar-fixed-right-active,
+.page-template-template-blank-6-php.x-navbar-fixed-left-active,
+.page-template-template-blank-6-php.x-navbar-fixed-right-active,
+.page-template-template-blank-7-php.x-navbar-fixed-left-active,
+.page-template-template-blank-7-php.x-navbar-fixed-right-active,
+.page-template-template-blank-8-php.x-navbar-fixed-left-active,
+.page-template-template-blank-8-php.x-navbar-fixed-right-active {
+  padding: 0;
+}
+
+.page-template-template-blank-4-php,
+.page-template-template-blank-5-php,
+.page-template-template-blank-6-php,
+.page-template-template-blank-8-php {
+  .x-container.main > .offset {
+    margin: 0;
+  }
+
+  .x-main {
+    background-color: $baseModBackground;
+  }
+}
+
+[class*="page-template-template-blank"] .x-container.main:before {
+  left: -5000em;
+}
+
+
+
+// 404 Page
+// =============================================================================
+
+.error404 {
+  .entry-404 {
+    p {
+      max-width: 750px;
+      margin: 0 auto 1.313em;
+      font-size: 1.5em;
+      @include break(middle-bear) {
+        font-size: 1.25em;
+      }
+      @include break(baby-bear) {
+        font-size: 1em;
+      }
+    }
+
+    .form-search {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+}
+
+
+
+// Landmark Header
+// =============================================================================
+
+.x-header-landmark {
+  padding: 1.85em 0 2.15em;
+  @include break(middle-bear) {
+    text-align: center;
+  }
+}
+
+.h-landmark,
+.h-landmark.entry-title {
+  margin: 0;
+  font-size: 236%;
+  line-height: 1.1;
+}
+
+
+
+// Entry Cover
+// =============================================================================
+
+.entry-cover {
+  position: relative;
+  display: block;
+  padding-bottom: 65%;
+  overflow: hidden;
+  text-align: center;
+  background-color: $navbarBackground;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  &:hover {
+    .h-entry-cover {
+      &:before {
+        background-color: $entryCoverBackgroundHover;
+      }
+    }
+  }
+}
+
+.h-entry-cover {
+  position: absolute;
+  top: calc(100% - 4em);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 1.5em;
+  @include font-size(1.4);
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  color: $white;
+  @include transition(#{all 0.615s $easeOutExpo});
+
+  span {
+    display: block;
+    position: relative;
+    z-index: 1;
+    @include text-overflow();
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50em;
+    background-color: $entryCoverBackground;
+    z-index: 0;
+    @include transition(#{background-color 0.4s ease});
+  }
+}
+
+// .no-post-thumbnail {
+//   .entry-cover {
+//     &:before {
+//       content: "";
+//       display: block;
+//       position: absolute;
+//       top: 15px;
+//       left: 15px;
+//       @include font-size(3.6);
+//       line-height: 1;
+//       color: rgba(255, 255, 255, 0.0425);
+//       @include font-awesome();
+//     }
+//   }
+
+//   &.format-standard { .entry-cover:before { content: "\f0f6"; } }
+//   &.format-audio    { .entry-cover:before { content: "\f001"; } }
+//   &.format-video    { .entry-cover:before { content: "\f008"; } }
+//   &.format-image    { .entry-cover:before { content: "\f083"; } }
+//   &.format-gallery  { .entry-cover:before { content: "\f03e"; } }
+//   &.format-link     { .entry-cover:before { content: "\f0c1"; } }
+//   &.format-quote    { .entry-cover:before { content: "\f10d"; } }
+//   &.x-portfolio     { .entry-cover:before { content: "\f067"; } }
+
+// }

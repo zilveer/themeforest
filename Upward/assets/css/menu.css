@@ -1,0 +1,560 @@
+/*
+
+	1 - PRIMARY
+
+		1.1 - Level 1
+		1.2 - Level 2
+		1.3 - Level 3
+		1.4 - Menu by click on responsive mode
+
+	2 - SECONDARY
+
+		2.1 - Level 1
+		2.2 - Level 2
+		2.3 - Level 3
+
+	3 - DROP-DOWN
+
+*/
+
+/*===============================================
+
+	P R I M A R Y
+	Primary menu on header
+
+===============================================*/
+
+/*
+	Hierarchy:
+
+	#menu
+	| div
+	| | #menu-box
+	| | | ul.menu
+	| | | | li
+	| | | | | a.a-level
+	| | | | | | span.ico-menu-top
+	| | | | | | span.subline
+	| | | | | ul.sub-menu
+	| | | | | | li
+	| | | | | | | a
+	| | | | | | | | span.ico-menu-top
+	| | | | | | | | span.subline
+*/
+
+#menu {
+	position: relative;
+	float: left;
+	width: 640px;
+	height: 160px;
+	z-index: 5;
+}
+
+	#menu-box {
+	}
+
+		ul.menu {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			line-height: 1.2em;
+			position: relative; 
+		}
+
+			ul.menu li {
+				position: relative;
+			}
+		
+				ul.menu a {
+					position: relative;
+					display: block;
+					text-decoration: none;
+				}
+
+					ul.menu a:hover {
+					}
+
+				ul.menu ul {
+					list-style-type: none;
+					margin: 0;
+					padding: 0;
+				}
+
+
+	/*-------------------------------------------
+		1.1 - Level 1
+	-------------------------------------------*/
+
+	ul.menu > li {
+		float: left; 
+		margin: 0 10px 0 0;
+	}
+
+		ul.menu > li > a {
+			font-size: 21px;
+			font-weight: bold;
+			color: #3a3346;
+			padding: 15px;
+			z-index: 9;
+			border: 1px solid transparent;
+			transition: all 250ms linear;
+			transition-property: border;
+		}
+
+			ul.menu > li.hasUl > a {
+				padding-right: 33px;
+			}
+
+			ul.menu > li > a:hover,
+			ul.menu > li.hover-has-ul > a {
+				border-color: #CCC;
+				transition: all 125ms linear;
+				transition-property: border;
+			}
+
+			ul.menu > li.current-menu-item > a,
+			ul.menu > li.current_page_item > a,
+			ul.menu > li.current-menu-ancestor > a,
+			ul.menu > li.current-post-ancestor > a {
+				background-image: url('../images/bg-white-15.png');
+			}
+
+				ul.menu > li > .ico-menu-top {
+					position: absolute;
+					display: block;
+					top: 11px;
+					right: 5px;
+					width: 30px;
+					height: 30px;
+					background: url('../images/ico-menu-top.png') center no-repeat;
+					z-index: 10;
+					opacity: 0.6;
+					cursor: pointer;
+					-webkit-user-select: none;
+					-khtml-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					user-select: none;
+				}
+
+					.chrome ul.menu > li > .ico-menu-top {
+						top: 10px;
+					}
+
+					.hidpi ul.menu > li > .ico-menu-top {
+						background-image: url('../images/ico-menu-top-2x.png');
+						background-size: 11px 10px;
+					}
+
+					.ico-menu-top.clicked {
+						opacity: 1 !important;
+					}
+
+				ul.menu > li > a > span.subline {
+					display: block;
+					font-size: 13px;
+					text-transform: none;
+					font-weight: normal;
+					margin-top: 10px;
+					opacity: 0.6;
+				}
+
+					ul.menu > li > a:hover > span.subline {
+						opacity: 0.8;
+					}
+
+					ul.menu > li.hasUl > a > span.subline {
+						margin-right: -18px;
+					}
+
+
+	/*-------------------------------------------
+		1.2 - Level 2
+	-------------------------------------------*/
+
+	ul.menu ul {
+		width: 180px;
+		top: -9999px;
+		left: 0;
+		padding: 5px 0 0;
+		line-height: 1.785em;
+		position: absolute;
+		background: url('../images/empty.png');
+		z-index: 10;
+	}
+
+		ul.menu ul:after {
+			position: relative;
+			content: "";
+			float: left;
+			border-style: solid;
+			border-width: 14px 180px 0 0;
+			border-color: #3a3346 transparent transparent transparent;
+		}
+
+			ul.menu ul li {
+				padding: 0 10px;
+				background: #3a3346;
+				transition: background-color 250ms linear;
+				-webkit-transition: background-color 250ms linear;
+			}
+	
+				ul.menu ul li:first-child {
+					border-top: 5px solid #3a3346;
+				}
+	
+				ul.menu > li > ul > li:first-child > a:before {
+					position: absolute;
+					content: "";
+					border-style: solid;
+					top: -10px;
+					left: -10px;
+					border-width: 0 0 5px 40px;
+					border-color: transparent transparent #3a3346 transparent;
+				}
+
+				ul.menu ul li:hover {
+					background: #1c93c5;
+					transition: all 125ms linear;
+					-webkit-transition: all 250ms linear;
+				}
+	
+					ul.menu ul li:first-child > a {
+						background-image: none;
+					}
+	
+					ul.menu ul li a { 
+						display: block;
+						font-size: 14px;
+						font-weight: bold;
+						color: #FFF;
+						padding: 15px 5px 13px;
+						background: url('../images/line-light.png') left top repeat-x;
+					} 
+	
+						ul.menu ul li a:hover {
+							color: #FFF;
+						}
+	
+						ul.menu ul li span.subline {
+							font-size: 13px;
+							font-weight: normal;
+							line-height: 1.535em;
+							display: block;
+							padding-top: 3px;
+							text-transform: none;
+							opacity: 0.7;
+						}
+	
+						ul.menu ul li span.ico-menu-top {
+							float: right;
+							width: 15px;
+							height: 15px;
+							margin: 0.25em 0 0;
+							background: url('../images/ico-menu-sub.png') center right no-repeat;
+						}
+	
+							.hidpi ul.menu ul li span.ico-menu-top {
+								background-image: url('../images/ico-menu-sub-2x.png');
+								background-size: 8px 8px;
+							}
+
+
+	/*-------------------------------------------
+		1.3 - Level 3
+	-------------------------------------------*/
+
+	ul.menu ul ul { 
+		left: 177px; 
+		top: -9999px;
+		padding: 0;
+	}
+
+
+	/*-------------------------------------------
+		1.4 - Sub-menu by click on responsive mode
+	-------------------------------------------*/
+
+	#menuByClick {
+		display: none;
+		clear: both;
+		width: 300px;
+		margin: 0 auto;
+	}
+
+		#menuByClick ul {
+			list-style-type: none;
+		}
+
+			#menuByClick > ul {
+				margin: 10px 0;
+				background: url('../images/line-light.png') left bottom repeat-x;
+			}
+
+				#menuByClick > ul > li {
+					background: url('../images/line-light.png') left top repeat-x;
+				}
+
+				#menuByClick > ul > li > a {
+					font-size: 16px;
+					line-height: 1.44em;
+					padding: 15px;
+				}
+
+					#menuByClick > ul > li > a:before {
+						content: "";
+						display: inline-block;
+						width: 16px;
+						height: 16px;
+						margin: 0 9px -2px 0;
+						background: url('../images/icons/16/glyphs/gray/arrow-right.png') center no-repeat;
+					}
+
+						.hidpi #menuByClick > ul > li > a:before {
+							background-image: url('../images/icons/32/glyphs/gray/arrow-right.png');
+							background-size: 16px 16px;
+						}
+
+						#menuByClick ul a {
+							display: block;
+							color: #56646F;
+						}
+	
+							#menuByClick ul a:hover {
+								background: url('../images/line-light.png');
+							}
+	
+								/*--- Level 2 -----------------------------*/
+				
+								#menuByClick ul ul {
+									margin: 0 0 0 20px;
+									padding: 0;
+								}
+				
+									#menuByClick ul ul li {
+										padding: 0 0 0 20px;
+									}
+		
+										#menuByClick ul ul li a {
+											font-size: 14px;
+											display: block;
+											padding: 10px 15px;
+											background: url('../images/line-light.png') left top repeat-x;
+										}
+		
+											/*--- Level 3+ -----------------------------*/
+										
+											.widget_custom_menu ul ul ul {
+												margin-left: 1.2em;
+											}
+
+			#menuByClick ul span {
+				display: none;
+			}
+
+
+
+/*===============================================
+
+	S E C O N D A R Y
+	Secondary menu on header
+
+===============================================*/
+
+/*
+	Hierarchy:
+
+	#menu-2
+	| ul.menu-2
+	| | li
+	| | | a
+	| | | | span
+	| | | ul.sub-menu
+	| | | | li
+	| | | | | a
+	| | | | | | span
+*/
+
+#menu-2 {
+	display: inline-block;
+	padding-left: 295px;
+}
+
+	ul.menu-2 {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		line-height: 1.2em;
+		position: relative; 
+	}
+
+		ul.menu-2 li {
+			position: relative;
+		}
+	
+			ul.menu-2 a {
+				position: relative;
+				font-size: 12px;
+				line-height: 1.3em;
+				display: block;
+				text-decoration: none;
+				transition: all 250ms linear;
+			}
+
+				ul.menu-2 a:hover {
+					transition: all 125ms linear;
+				}
+
+			ul.menu-2 ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+
+
+	/*-------------------------------------------
+		2.1 - Level 1
+	-------------------------------------------*/
+
+	ul.menu-2 > li {
+		float: left;
+		display: inline-block;
+		margin: 5px 5px 0 0;
+	}
+
+		ul.menu-2 > li > a {
+			padding: 5px 15px;
+			color: #56646F;
+			border: 1px solid transparent;
+		}
+
+			ul.menu-2 > li > a:hover,
+			ul.menu-2 > li.hover-has-ul > a {
+				border-color: #CCC;
+				transition: all 125ms linear;
+				transition-property: border;
+			}
+
+			ul.menu-2 > li.current-menu-item > a,
+			ul.menu-2 > li.current_page_item > a,
+			ul.menu-2 > li.current-menu-ancestor > a,
+			ul.menu-2 > li.current-post-ancestor > a {
+				background-image: url('../images/bg-white-15.png');
+				opacity: 1;
+			}
+
+				ul.menu-2 > li a span {
+					display: inline-block;
+					width: 13px;
+					background: url('../images/ico-menu-top-2.png') right 50% no-repeat;
+				}
+
+					.hidpi ul.menu-2 > li a span {
+						background-image: url('../images/ico-menu-top-2-2x.png');
+						background-size: 8px 8px;
+					}
+
+
+	/*-------------------------------------------
+		2.2 - Level 2
+	-------------------------------------------*/
+
+	ul.menu-2 ul {
+		width: 150px;
+		top: -9999px;
+		left: 0;
+		padding: 5px 0 0;
+		line-height: 1.4em;
+		position: absolute;
+		z-index: 10;
+	}
+
+		ul.menu-2 ul:after {
+			position: relative;
+			content: "";
+			float: left;
+			border-style: solid;
+			border-width: 11px 150px 0 0;
+			border-color: #3a3346 transparent transparent transparent;
+		}
+
+			ul.menu-2 ul li {
+				padding: 0 10px;
+				background: #3a3346;
+				transition: background-color 250ms linear;
+				-webkit-transition: background-color 250ms linear;
+			}
+	
+				ul.menu-2 ul li:first-child {
+					border-top: 5px solid #3a3346;
+				}
+	
+				ul.menu-2 > li > ul > li:first-child > a:before {
+					position: absolute;
+					content: "";
+					border-style: solid;
+					top: -10px;
+					left: -10px;
+					border-width: 0 0 5px 40px;
+					border-color: transparent transparent #3a3346 transparent;
+				}
+	
+				ul.menu-2 ul li:hover {
+					background: #1c93c5;
+					transition: background-color 125ms linear;
+					-webkit-transition: background-color 125ms linear;
+				}
+	
+					ul.menu-2 ul li:first-child > a {
+						background-image: none;
+					}
+	
+					ul.menu-2 ul li a {
+						position: relative;
+						color: #FFF;
+						padding: 9px 5px 8px;
+						background: url('../images/line-light.png') top left repeat-x;
+					}
+	
+						ul.menu-2 ul li a span {
+							position: absolute;
+							right: 0;
+							top: 8px;
+							background-image: url('../images/ico-menu-sub-2.png');
+						}
+	
+							.hidpi ul.menu-2 ul li a span {
+								background-image: url('../images/ico-menu-sub-2-2x.png');
+								background-size: 8px 8px;
+							}
+
+
+	/*-------------------------------------------
+		2.3 - Level 3
+	-------------------------------------------*/
+
+	ul.menu-2 ul ul {
+		left: 147px;
+		padding: 0;
+	}
+
+
+/*===============================================
+
+	D R O P - D O W N
+	Drop-down menu for responsive mode
+
+===============================================*/
+
+	#menu-select {
+		display: none;
+	}
+
+		#selectElement {
+			color: #FFF;
+			padding: 5px;
+			border: none;
+			background-color: transparent;
+			background: #3a3346 url('../images/line-light.png');
+			-webkit-appearance: none;
+		}

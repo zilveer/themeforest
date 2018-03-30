@@ -1,0 +1,117 @@
+/*------------------------------------------------------------
+ * Pagination Section
+ *------------------------------------------------------------*/
+
+.pagination {
+	.clearfix;
+	.transition;
+	opacity: 1;
+	visibility: visible;
+	position: relative;
+	z-index: 1;
+	margin: 30px auto 30px;
+
+	/* js adds class when masonry initiated */
+	.loop-is-masonry + & {
+		opacity: 0;
+		.transition;
+
+		.loop-is-masonry--init-processed&{
+			opacity: 1;
+		}
+	}
+
+	&--classic {
+		text-align: center;
+
+		.page-numbers {
+			.font--navigation;
+			display: inline-block;
+			background: transparent;
+			min-width: 32px;
+			height: 32px;
+			line-height: 32px;
+			margin-bottom: 10px;
+			padding: 0 5px;
+			.link-color(@grey, @black);
+
+			i {
+				display: inline-block;
+				vertical-align: middle;
+				margin: -3px 5px 0;
+			}
+
+			&.current {
+				.circled;
+				color: @white;
+				background: @primary-color;
+			}
+
+			&.prev {
+				min-width: 105px;
+				text-align: right;
+			}
+
+			&.next {
+				min-width: 105px;
+				text-align: left;
+			}
+		}
+	}
+
+	&--load-more {
+		.button;
+		.button--solid--color;
+		.button--medium;
+		display: table;
+
+		&.pagination--disabled:not(.pagination--loading) {
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
+
+	&--auto {
+
+		@media @tablet, @desktop {
+			visibility: hidden;
+			display: block;
+		}
+	}
+
+
+
+	& + .sleek-loader {
+		// .transition;
+
+		width: 30px;
+		height: 30px;
+		margin: -67px auto 25px;
+	}
+
+
+
+	&--loading {
+		opacity: 0 !important;
+		visibility: hidden;
+
+		& + .sleek-loader {
+			opacity: 1;
+		}
+	}
+}
+
+.pagination-message {
+	opacity: 0;
+	visibility: hidden;
+	text-align: center;
+	.font--navigation;
+	color: @grey-light;
+	.transition;
+	margin-top: -40px;
+
+	.pagination--disabled:not(.pagination--loading) ~ & {
+		opacity: 1;
+		visibility: visible;
+	}
+}

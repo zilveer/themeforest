@@ -1,0 +1,235 @@
+/*===================================================================================*/
+/*	SINGLE-PRODUCT-TABS
+/*===================================================================================*/
+.woocommerce-tabs{
+    @include make-row();
+    padding-bottom: 62px;
+
+	.tabs{
+		@include make-lg-column(3);
+		@include make-md-column(3);
+		@include make-sm-column(3);
+
+		list-style: none;
+		padding-#{$start}: 15px;
+		margin: 0;
+
+		> li{
+			float: none;
+			
+			> a{
+				border-bottom: 1px solid #dddddd;
+	            color: #555;
+	            display: block;
+	            padding: 12px 28px;
+	            font-size:20px;
+				font-weight: $roboto-bold;
+				position: relative;
+				transition: all 0.3s ease 0s;
+				text-align: center;
+			  
+			    &:hover,
+			    &:focus
+			    {
+                    border-radius: 3px;
+			        color: #fff;
+			        transition: all 0.3s ease 0s;
+
+					&:after{
+	                    display:block;
+						content: "";
+						position:absolute;
+						width: 0; 
+						height: 0;
+						top:35%; #{$end}: -10px;
+						border-top: 8px solid transparent; 
+						border-#{$start}: 16px solid blue; 
+						border-bottom: 8px solid transparent;
+					}
+				}
+			}
+
+			&.active{
+				> a{
+			
+                    border-radius:3px;
+			        color:#fff;
+                    text-shadow: 1px 1px rgba(0,0,0,.1);
+                    margin: 0 auto;
+                    position: relative;
+                    border-bottom: 1px solid rgba(0,0,0,0);
+
+                    @include if-ltr { 
+						&:after{
+		                    display:block;
+							content: "";
+							position:absolute;
+							width: 0; 
+							height: 0;
+							border-top: 8px solid transparent; 
+							border-#{$start}: 16px solid blue; 
+							border-bottom: 8px solid transparent;
+							top:35%; #{$end}: -10px;
+						}
+					}
+
+					@include if-rtl { 
+						&:before{
+		                    display:block;
+							content: "";
+							position:absolute;
+							width: 0; 
+							height: 0;
+							border-top: 8px solid transparent; 
+							border-bottom: 8px solid transparent;
+							top:35%; #{$end}: -10px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.panel.wc-tab{
+		@include make-lg-column(9);
+		@include make-md-column(9);
+		@include make-sm-column(9);
+
+		border: 1px solid #f2f2f2;
+		padding: 25px;
+
+		h2{
+			display: none;
+		}
+
+		.shop_attributes{
+			tbody{
+				tr{
+					th{
+						font-size: 15px;
+						vertical-align: middle;
+					}
+				}
+			}
+
+			thead, tbody {
+				tr, tr:nth-child(2n) {
+					th, td {
+						padding: 14px 0;
+						background-color: transparent;
+						border-top: 1px solid #DDD;
+					}
+				}
+
+				tr:last-child{
+					th,td{
+						border-bottom: 1px solid #DDD;
+					}
+				}
+			}
+		}
+
+		#reviews {
+			#comments {
+				margin-top: 0;
+				padding-top: 0;
+				margin-bottom: $vspacing;
+
+				.commentlist {
+					margin-bottom: 50px;
+					margin-#{$start}: 0;
+				}
+			}
+
+			#respond {
+				margin-bottom: $vspacing;
+
+				.comment-form-author,
+				.comment-form-email {
+					width: 50%;
+				}
+
+				.comment-form-rating {
+					@include clearfix;
+				}
+			}
+		}
+	}
+}
+
+.style-2{
+	.woocommerce-tabs{
+		.tabs{
+			@include make-lg-column(12);
+			@include make-md-column(12);
+			@include make-sm-column(12);
+
+			list-style: none;
+			margin-bottom: 0;
+			padding-#{$start}: 15px;
+
+	        > li{
+				 	margin-#{$end}: 10px;
+	                padding: 0;
+	                float: $start;
+
+	                a{
+	                	border: 2px solid #e1e1e1;
+					    border-radius: 0px;
+					    color: #666666;
+					    font-weight: $roboto-bold;
+					    font-size: 20px;
+					    line-height: 30px;
+					    padding: 4px 12px;
+					    transition: all 0.3s ease 0s;
+					    display: block;
+
+					    &:hover,
+					    &:focus{
+					    	color:#fff;
+
+					    	&:after{
+					    		content: none;
+					    	}
+					    }
+	                }
+	                &.active{
+	                	a{
+	                		color:#fff;
+
+	                		&:after{
+					    		content: none;
+					    	}
+	                	}
+	                }
+				}
+		}
+
+		.panel.wc-tab{
+			@include make-lg-column(12);
+			@include make-md-column(12);
+			@include make-sm-column(12);
+			
+			border: none;
+			box-shadow: none;
+			margin-top: 30px;
+			margin-bottom: 0;
+			padding:0px 15px;
+
+			#reviews {
+				#comments {
+					margin-top: 0;
+					
+					.commentlist {
+						margin-bottom: 50px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.woocommerce-noreviews{
+	@include make-alert();
+	@include make-alert-info();
+}

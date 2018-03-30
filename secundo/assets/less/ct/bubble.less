@@ -1,0 +1,46 @@
+@bubbleTickWidth: 6px;
+@bubbleTickHeight: 10px;
+@bubbleTickColor: #fff;
+
+.bubble {
+  font-family: 'News Cycle', sans-serif;
+  font-size: 20px;
+  position: relative;
+  padding: 2px 7px 8px 8px;
+  color: #000;
+  background: #fff;
+  .border-radius(5px);
+  .box-shadow(0 1px 0 #d5d5d5);
+  display: inline-block;
+
+  &:after {
+    content: "";
+    position: absolute;
+    border-width: 15px 15px 0; /* vary these values to change the angle of the vertex */
+    border-style: solid;
+    border-color: @bubbleTickColor transparent;
+  /* reduce the damage in FF3.0 */
+    display: block;
+    width: 0;
+    top: 10px; /* controls vertical position */
+    bottom: auto;
+    border-width: @bubbleTickHeight/2 @bubbleTickWidth @bubbleTickHeight/2 0;
+    border-color: transparent @bubbleTickColor;
+  }
+
+  &.left {
+    &:after {
+      left: -(@bubbleTickWidth)+1; /* value = - border-left-width - border-right-width */
+      border-width: @bubbleTickHeight/2 @bubbleTickWidth @bubbleTickHeight/2 0;
+    }
+    margin-left: @bubbleTickWidth;
+  }
+  &.right {
+    margin-right: @bubbleTickWidth;
+    &:after {
+      right: -(@bubbleTickWidth)+1; /* value = - border-left-width - border-right-width */
+      left: auto;
+      border-width: @bubbleTickHeight/2  0 @bubbleTickHeight/2 @bubbleTickWidth;
+    }
+  }
+}

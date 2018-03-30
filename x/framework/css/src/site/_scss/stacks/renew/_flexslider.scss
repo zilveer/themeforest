@@ -1,0 +1,174 @@
+// =============================================================================
+// _FLEXSLIDER.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Browser Resets
+//   02. Necessary Styles
+//   03. Slider Theme
+// =============================================================================
+
+// Browser Resets
+// =============================================================================
+
+.flex-container a:active,
+.x-flexslider a:active {
+  outline: none;
+}
+
+.x-slides,
+.flex-control-nav,
+.flex-direction-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+
+// Necessary Styles
+// =============================================================================
+
+.x-flexslider {
+  margin: 0;
+  padding: 0;
+}
+
+.x-flexslider .x-slides {
+  .x-slide {
+    display: none;
+    position: relative;
+  }
+
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
+.flex-pauseplay span {
+  text-transform: capitalize;
+}
+
+
+//
+// Clearfix for the .x-slides element.
+//
+
+.x-slides {
+  @include clearfix();
+}
+
+
+//
+// No JavaScript fallback.
+//
+
+.no-js .x-slides > li:first-child {
+  display: block;
+}
+
+
+
+// Slider Theme
+// =============================================================================
+
+.x-flexslider {
+  width: 100%;
+  margin: 0 0 $baseMargin;
+  background: darken($baseModBackground, 10%);
+  position: relative;
+}
+
+.flex-viewport {
+  max-height: 2000px;
+  @include transition(#{all 1s ease});
+}
+
+.loading .flex-viewport {
+  max-height: 300px;
+}
+
+
+//
+// Direction nav.
+//
+
+.flex-direction-nav a {
+  display: block;
+  cursor: pointer;
+  position: absolute;
+  top: 14px;
+  height: 30px;
+  width: 30px;
+  @include font-size(1.4);
+  line-height: 30px;
+  text-align: center;
+  color: $white;
+  background-color: $accentColor;
+  border-radius: 100em;
+  @include opacity(0.5);
+  @include transition(#{opacity 0.3s ease});
+  z-index: 10;
+
+  [class*="#{$fa-css-prefix}-"] {
+    width: auto;
+  }
+
+  &:hover {
+    text-decoration: none;
+    color: $white;
+    @include opacity(1);
+  }
+
+  &.flex-prev {
+    left: 14px;
+  }
+
+  &.flex-next {
+    left: 50px;
+  }
+}
+
+
+//
+// Control nav.
+//
+
+.flex-control-nav {
+  position: absolute;
+  padding: 0 6px;
+  top: 14px;
+  right: 14px;
+  line-height: 1;
+  text-align: center;
+  background-color: $baseModBackground;
+  border-radius: 100em;
+
+  li {
+    margin: 7px 3px 6px;
+    display: inline-block;
+    text-indent: -9999px;
+  }
+
+  a {
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: $headingsColor;
+    border-radius: 100em;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $accentColor;
+    }
+
+    &.flex-active {
+      background-color: $accentColor;
+    }
+  }
+}

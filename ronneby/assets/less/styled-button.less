@@ -1,0 +1,860 @@
+/*------------------------------------------------------------------
+[Styled buttons styles]
+
+1. Styled buttons
+
+font-size, font-weight, letter-spacing, icon font-size, width, height, border-width, border-style, border-radius, and border-color values are being defined in button's code
+
+@color-main: @main-site-light-color;
+
+@color-second: @second-site-light-color;
+
+@color-third: @third-site-light-color;
+
+@color-fourth: @forth-site-light-color;
+
+@color-white: @main-site-dark-color;
+
+@color-dark: @title-color;
+
+@color-gray: @gray-light;
+-------------------------------------------------------------------*/
+@import "../less.lib/variables.less";
+@import "../less.lib/sb_mixins.less";
+/* http://tympanus.net/Development/CreativeLinkEffects/ */
+
+.button-gradient(@color: @main-site-light-color) {
+	background: -moz-linear-gradient(left, lighten(@color, 10%), @color);
+	background: -webkit-linear-gradient(left, lighten(@color, 10%), @color);
+	background: -o-linear-gradient(left, lighten(@color, 10%), @color);
+	background: -ms-linear-gradient(left, lighten(@color, 10%), @color);
+	background: linear-gradient(left, lighten(@color, 10%), @color);
+}
+
+.button-icon-gradient(@color: @main-site-light-color) {
+	background: -moz-linear-gradient(left, darken(@color, 5%), @color);
+	background: -webkit-linear-gradient(left, darken(@color, 5%), @color);
+	background: -o-linear-gradient(left, darken(@color, 5%), @color);
+	background: -ms-linear-gradient(left, darken(@color, 5%), @color);
+	background: linear-gradient(left, darken(@color, 5%), @color);
+}
+
+// colors
+@color-main: @main-site-light-color;
+
+@color-second: @second-site-light-color;
+
+@color-third: @third-site-light-color;
+
+@color-fourth: @forth-site-light-color;
+
+@color-white: @main-site-dark-color;
+
+@color-dark: @title-color;
+
+@color-gray: @gray-light;
+
+
+@s: 41px;
+
+.around-button {
+	z-index: 1;
+	overflow: hidden;
+	text-align: center;
+	padding: 1px;
+	&:before, &:after {
+		content: ".";
+		display: block;
+		overflow: hidden;
+		visibility: hidden;
+		font-size: 0;
+		line-height: 0;
+		width: 0;
+		height: 0;
+		.box-sizing(border-box);
+	}
+	&.inline {
+		.inline-block();
+	}
+	&.block {
+		.block();
+	}
+}
+
+.styled-button {
+	font-weight: 700;
+	.block();
+	.rel();
+	text-decoration: none;
+	outline: medium none;
+	color: inherit;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+	cursor: pointer;
+	z-index: 1;
+	&:not(.read-more) {
+		.transition(all 0.3s ease 0s);
+	}
+	i {
+		.inline-block();
+		line-height: inherit;
+		.abs();
+		top: 0;
+		text-align: center;
+		.transition(~"opacity .3s ease-in-out, right .3s ease-in-out, left .3s ease-in-out, color .3s ease-in-out");
+	}
+	span {
+		.block();
+		line-height: inherit;
+		.transition(color .3s ease-in-out);
+	}
+	
+	/* Font family */
+	
+	&.dfd-block-title-family {
+		font-family: @block-title-font-family;
+	}
+	&.dfd-subtitle-family {
+		font-family: @subtitles-font-family;
+	}
+	&.dfd-default-text-family {
+		font-family: @default-text-font-family;
+	}
+		
+	/* Button width (display) */
+	
+	&.inline {
+		.inline-block();
+	}
+	&.block {
+		.block();
+	}
+	
+	/* Text color */
+	
+	&.text-main span {
+		color: @main-site-light-color;
+	}
+	
+	&.text-second span {
+		color: @second-site-light-color;
+	}
+	
+	&.text-third span {
+		color: @third-site-light-color;
+	}
+	
+	&.text-fourth span {
+		color: @forth-site-light-color;
+	}
+	
+	&.text-white span {
+		color: @main-site-dark-color;
+	}
+	
+	&.text-dark span {
+		color: @color-dark;
+	}
+	
+	&.text-gray span {
+		color: @gray-light;
+	}
+	
+	&:before {
+		content: "";
+		.block();
+		.abs();
+		left: 0;
+		top: 0;
+		z-index: -1;
+		.transition(all .3s ease-in-out);
+	}
+	
+	&.style-1 {
+		&:before {
+			.hide();
+		}
+	}
+	
+	&.style-2 {
+		&:before {
+			width: 100%;
+			height: 100%;
+		}
+		&.without-border {
+			&:before {
+				width: 0;
+			}
+		}
+		&:hover {
+			&:before {
+				width: 0;
+			}
+		}
+		&.without-border:hover {
+			&:before {
+				width: 100%;
+			}
+		}
+	}
+	
+	&.style-3 {
+		&:before {
+			width: 100%;
+			height: 100%;
+		}
+		&.without-border {
+			&:before {
+				height: 0;
+			}
+		}
+		&:hover {
+			&:before {
+				height: 0;
+			}
+		}
+		&.without-border:hover {
+			&:before {
+				height: 100%;
+			}
+		}
+	}
+			
+	/* Button background */
+	
+	&.bg-main {
+		&.style-1 {
+			background: @main-site-light-color;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: darken(@main-site-light-color, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @main-site-light-color;
+			}
+			&.without-border {
+				background: @main-site-light-color;
+				&:before {
+					background: darken(@main-site-light-color, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	
+	&.bg-second {
+		&.style-1 {
+			background: @second-site-light-color;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: darken(@second-site-light-color, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @second-site-light-color;
+			}
+			&.without-border {
+				background: @second-site-light-color;
+				&:before {
+					background: darken(@second-site-light-color, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	
+	&.bg-third {
+		&.style-1 {
+			background: @third-site-light-color;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: darken(@third-site-light-color, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @third-site-light-color;
+			}
+			&.without-border {
+				background: @third-site-light-color;
+				&:before {
+					background: darken(@third-site-light-color, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	
+	&.bg-fourth {
+		&.style-1 {
+			background: @forth-site-light-color;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: darken(@forth-site-light-color, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @forth-site-light-color;
+			}
+			&.without-border {
+				background: @forth-site-light-color;
+				&:before {
+					background: darken(@forth-site-light-color, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	
+	&.bg-white {
+		&.style-1 {
+			background: @main-site-dark-color;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: darken(@main-site-dark-color, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @main-site-dark-color;
+			}
+			&.without-border {
+				background: @main-site-dark-color;
+				&:before {
+					background: darken(@main-site-dark-color, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	&.bg-dark {
+		&.style-1 {
+			background: @color-dark;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: lighten(@color-dark, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @color-dark;
+			}
+			&.without-border {
+				background: @color-dark;
+				&:before {
+					background: lighten(@color-dark, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	&.bg-gray {
+		&.style-1 {
+			background: @background-grey;
+			&:hover {
+				background: transparent;
+			}
+			&.without-border {
+				&:hover {
+					background: darken(@background-grey, 5%);
+				}
+			}
+		}
+		&.style-2,
+		&.style-3 {
+			&:before {
+				background: @background-grey;
+			}
+			&.without-border {
+				background: @background-grey;
+				&:before {
+					background: darken(@background-grey, 5%);
+				}
+			}
+		}
+		&:not(.without-border) {
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	
+	&.bg-transparent {
+		background: transparent;
+		&.without-border {
+			line-height: 1.3 !important;
+			height: 1em;
+			i,
+			span {
+				line-height: inherit !important;
+			}
+		}
+		&.border-color-main {
+			&.style-1 {
+				&:hover {
+					background: @main-site-light-color;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @main-site-light-color;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @main-site-dark-color;
+				}
+			}
+		}
+		&.border-color-second {
+			&.style-1 {
+				&:hover {
+					background: @second-site-light-color;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @second-site-light-color;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @main-site-dark-color;
+				}
+			}
+		}
+		&.border-color-third {
+			&.style-1 {
+				&:hover {
+					background: @third-site-light-color;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @third-site-light-color;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @main-site-dark-color;
+				}
+			}
+		}
+		&.border-color-fourth {
+			&.style-1 {
+				&:hover {
+					background: @forth-site-light-color;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @forth-site-light-color;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @main-site-dark-color;
+				}
+			}
+		}
+		&.border-color-white {
+			&.style-1 {
+				&:hover {
+					background: @main-site-dark-color;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @main-site-dark-color;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+		&.border-color-dark {
+			&.style-1 {
+				&:hover {
+					background: @forth-site-dark-color;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @forth-site-dark-color;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @main-site-dark-color;
+				}
+			}
+		}
+		&.border-color-gray {
+			&.style-1 {
+				&:hover {
+					background: @gray-light;
+				}
+			}
+			&.style-2,
+			&.style-3 {
+				&:before {
+					background: @gray-light;
+				}
+			}
+			&.style-2 {
+				&:before {
+					width: 0;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+			&.style-3 {
+				&:before {
+					height: 0;
+				}
+				&:hover {
+					&:before {
+						height: 100%;
+					}
+				}
+			}
+			&:hover {
+				i,
+				span {
+					color: @color-dark;
+				}
+			}
+		}
+	}
+	
+	/* Text alignment */
+	
+	&.text-left {
+		padding: 0 50px 0 10px;
+		&.left-icon {
+			padding-left: 50px;
+		}
+		&.right-icon {
+			padding-right: 80px;
+		}
+	}
+	&.text-right {
+		padding: 0 10px 0 50px;
+		&.left-icon {
+			padding-left: 80px;
+		}
+		&.right-icon {
+			padding-right: 50px;
+		}
+	}
+	&.text-center {
+		padding: 0 40px;
+		&.left-icon {
+			padding-left: 70px;
+		}
+		&.right-icon {
+			padding-right: 70px;
+		}
+	}
+	
+	/* Icons style */
+	
+	&.animated-icon {
+		i {
+			.opacity(0);
+		}
+		&.left-icon i {
+			left: -20px;
+		}
+		&.right-icon i {
+			right: -20px;
+		}
+		&:hover {
+			i {
+				.opacity(1);
+			}
+			&.left-icon i {
+				left: 0;
+			}
+			&.right-icon i {
+				right: 0;
+			}
+		}
+	}
+	&.left-icon {
+		i {
+			left: 0;
+		}
+	}
+	&.right-icon {
+		i {
+			right: 0;
+		}
+	}
+	
+	/* Icon color */
+	
+	&.icon-color-main i {
+		color: @main-site-light-color;
+	}
+	&.icon-color-second i {
+		color: @second-site-light-color;
+	}
+	&.icon-color-third i {
+		color: @third-site-light-color;
+	}
+	&.icon-color-fourth i {
+		color: @forth-site-light-color;
+	}
+	&.icon-color-white i {
+		color: @main-site-dark-color;
+	}
+	&.icon-color-dark i {
+		color: @color-dark;
+	}
+	&.icon-color-gray i {
+		color: @gray-light;
+	}
+	
+	/* Border color */
+	
+	&.without-border {
+		border-width: 0;
+	}
+	&.border-color-main {
+		border-color: @main-site-light-color;
+	}
+	&.border-color-second {
+		border-color: @second-site-light-color;
+	}
+	&.border-color-third {
+		border-color: @third-site-light-color;
+	}
+	&.border-color-fourth {
+		border-color: @forth-site-light-color;
+	}
+	&.border-color-white {
+		border-color: @main-site-dark-color;
+	}
+	&.border-color-dark {
+		border-color: @color-dark;
+	}
+	&.border-color-gray {
+		border-color: @gray-light;
+	}
+}

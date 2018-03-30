@@ -1,0 +1,362 @@
+// =============================================================================
+// _MEJS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. MEJS Media Container
+//   02. MEJS Controls
+//   03. MEJS Layers
+//   04. MEJS Miscellaneous
+// =============================================================================
+
+// MEJS Media Container
+// =============================================================================
+
+.mejs-container {
+  position: static;
+  width: 100% !important;
+  height: auto !important;
+  background: none !important;
+  background-color: transparent !important;
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
+
+  &.mejs-container-fullscreen {
+    background-color: $black;
+  }
+}
+
+
+
+// MEJS Controls
+// =============================================================================
+
+//
+// Control containers.
+//
+
+.mejs-controls {
+  position: relative;
+  width: 100%;
+  height: $mejsHeight !important;
+  margin: 0;
+  border: 1px solid transparent;
+  padding: 0;
+  background: none !important;
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  border-radius: 3px;
+
+  > div {
+    position: relative;
+    float: left;
+    width: $mejsHeightInner;
+    height: $mejsHeightInner;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background: none;
+    line-height: $mejsHeightInner;
+  }
+}
+
+.mejs-video {
+  .mejs-controls {
+    width: auto;
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+}
+
+
+//
+// Play/pause buttons.
+//
+
+.mejs-button {
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  margin: 0 !important;
+
+  &.mejs-playpause-button {
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+  }
+
+  &.mejs-volume-button,
+  &.mejs-fullscreen-button {
+    border-left: 1px solid rgba(0, 0, 0, 0.25);
+  }
+
+  button {
+    position: static;
+    display: block;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: $mejsHeightInner;
+    height: $mejsHeightInner;
+    @include font-size(1.4);
+    line-height: inherit;
+    text-align: center;
+    vertical-align: top;
+    color: rgba(255, 255, 255, 0.5);
+    background: none;
+    text-decoration: none;
+    text-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+    @include transition(#{color 0.3s ease});
+
+    &:hover {
+      color: $white;
+      opacity: 1 !important;
+    }
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+
+    &:before {
+      content: "\f065";
+      display: block;
+      position: static;
+      margin: 0 auto;
+      font-size: inherit;
+      @include font-awesome();
+    }
+  }
+
+  &.mejs-play button:before         { content: "\f04b"; }
+  &.mejs-pause button:before        { content: "\f04c"; }
+  &.mejs-mute button:before         { content: "\f028"; }
+  &.mejs-unmute button:before       { content: "\f026"; }
+  &.mejs-fullscreen button:before   { content: "\f065"; }
+  &.mejs-unfullscreen button:before { content: "\f066"; }
+}
+
+
+//
+// Time.
+//
+
+.mejs-controls {
+  .mejs-time {
+    width: $mejsAdvancedTimeWidth !important;
+    margin: 0;
+    padding: 0;
+    @include font-size(1.0);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+
+    span {
+      float: none;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      padding: 0;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+
+    @include break(middle-bear) {
+      display: none;
+    }
+  }
+}
+
+
+//
+// Time rail.
+//
+
+.mejs-controls {
+  .mejs-time-rail {
+    width: calc(100% - #{$mejsHeightInner}) !important;
+    padding: 10px 10px 0;
+  }
+
+  .mejs-time-total {
+    display: block;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    position: relative;
+    width: 100% !important;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    box-shadow: none;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+  }
+
+  .mejs-time-loaded,
+  .mejs-time-current {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    background: none;
+    border-radius: 5px;
+  }
+
+  .mejs-time-loaded {
+    width: 100% !important;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .mejs-time-current {
+    background-color: $white;
+  }
+}
+
+
+//
+// Advanced controls.
+//
+
+.advanced-controls {
+  .mejs-time-rail {
+    padding-left: 0;
+    padding-right: 0;
+
+    @include break(middle-bear) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
+
+.advanced-controls.mejs-audio {
+  .mejs-time-rail {
+    width: calc(100% - #{$mejsAdvancedTimeRailWidthAudio}) !important;
+
+    @include break(middle-bear) {
+      width: calc(100% - #{$mejsAdvancedTimeRailWidthAudio - $mejsAdvancedTimeWidthTotal}) !important;
+    }
+  }
+}
+
+.advanced-controls.mejs-video {
+  .mejs-time-rail {
+    width: calc(100% - #{$mejsAdvancedTimeRailWidthVideo}) !important;
+
+    @include break(middle-bear) {
+      width: calc(100% - #{$mejsAdvancedTimeRailWidthVideo - $mejsAdvancedTimeWidthTotal}) !important;
+    }
+  }
+}
+
+
+
+// MEJS Mediaelement
+// =============================================================================
+
+.mejs-mediaelement {
+  position: static !important;
+}
+
+
+
+// MEJS Layers
+// =============================================================================
+
+.mejs-audio {
+  .mejs-layers {
+    display: none !important;
+  }
+}
+
+.mejs-video {
+  .mejs-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .mejs-poster {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+
+  .mejs-overlay-play {
+    cursor: pointer;
+  }
+
+  .mejs-overlay-loading,
+  .mejs-overlay-error,
+  .mejs-overlay-play .mejs-overlay-button {
+    display: none;
+  }
+}
+
+
+
+// MEJS Miscellaneous
+// =============================================================================
+
+//
+// Hidden elements.
+//
+
+.mejs-controls:before,
+.mejs-offscreen,
+.mejs-time-buffering,
+.mejs-time-handle,
+.mejs-time-float,
+.mejs-volume-slider,
+.mejs-clear {
+  display: none !important;
+}
+
+
+//
+// Hidden controls.
+//
+
+.hide-controls {
+  .mejs-video {
+    .mejs-controls {
+      display: none !important;
+    }
+  }
+}
+
+
+//
+// Hidden controls and autoplay.
+//
+
+.hide-controls.autoplay {
+  .mejs-video {
+    .mejs-layers {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+}

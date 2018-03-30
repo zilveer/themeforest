@@ -1,0 +1,61 @@
+// =============================================================================
+// _FORMS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Input Block Level
+//   02. Form Field State
+// =============================================================================
+
+// Input Block Level
+// =============================================================================
+
+//
+// 1. Make inputs at least the height of their button counterpart.
+// 2. Makes inputs behave like true block-level elements.
+//
+
+@mixin input-block-level() {
+  display: block;
+  width: 100%;
+  min-height: 28px; // 1
+  @include box-sizing(border-box); // 2
+}
+
+
+
+// Form Field State
+// =============================================================================
+
+//
+// 1. Set the text color.
+// 2. Style inputs accordingly.
+// 3. Give a small 'background-color' for input-prepent/-append.
+//
+
+@mixin form-field-state($textColor: #555, $borderColor: #ccc, $backgroundColor: #f5f5f5) {
+
+  > label, .help-block, .help-inline {
+    color: $textColor; // 1
+  }
+
+  .checkbox, .radio, input, select, textarea {
+    color: $textColor;          // 2
+    border-color: $borderColor; // 2
+
+    &:focus {
+      border-color: darken($borderColor, 10%);                 // 2
+      @include box-shadow(0 0 6px lighten($borderColor, 20%)); // 2
+    }
+  }
+
+  .input-prepend .add-on, .input-append .add-on {
+    color: $textColor;
+    background-color: $backgroundColor; // 3
+    border-color: $textColor;
+  }
+}

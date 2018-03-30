@@ -1,0 +1,478 @@
+// =============================================================================
+// _FORMS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. General Styles
+//   02. Form Controls
+//   03. Placeholder
+//   04. Checkboxes and Radios
+//   05. Disabled State
+//   06. Form Field Feedback States
+//   07. Search Form
+//   08. Contact Form 7
+//   09. Individual Input Adjustments
+// =============================================================================
+
+// General Styles
+// =============================================================================
+
+//
+// Make all forms have space below them.
+//
+
+form {
+  margin: 0 0 $baseMargin;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+
+//
+// Groups of fields with labels on top (legends).
+//
+
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: $legendMargin;
+  line-height: 1.4;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+
+//
+// Set font for forms.
+// 1. Only set 'font-family' for those that need it (note the missing <label>
+//    element).
+//
+
+label,
+input,
+button,
+select,
+textarea {
+  font-size: 100%;
+  line-height: $baseLineHeight;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: $baseFontFamily; // 1
+}
+
+
+//
+// Identify controls by their labels.
+//
+
+label {
+  display: block;
+  margin-bottom: $labelMarginBottom;
+}
+
+
+
+// Form Controls
+// =============================================================================
+
+//
+// Shared size and type resets.
+//
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  display: inline-block;
+  height: 2.65em;
+  margin-bottom: 9px;
+  border: 1px solid $inputBorder;
+  padding: 0 0.65em;
+  @include font-size(1.3);
+  line-height: normal;
+  color: $gray;
+  background-color: $inputBackground;
+  border-radius: $inputBorderRadius;
+  @include box-shadow($inputUneditableBoxShadow);
+}
+
+
+//
+// Reset appearance properties for textual <inputs> and <textarea>
+// Declare width for legacy (can't be on input[type=*] selectors or it's too specific).
+//
+
+input,
+textarea {
+  width: auto;
+}
+
+
+//
+// Reset height since textareas have rows.
+//
+
+textarea {
+  height: auto;
+  line-height: 1.3;
+}
+
+
+//
+// Everything else.
+//
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  @include transition(#{border linear 0.2s, box-shadow linear 0.2s});
+
+  &:focus {
+    border-color: $inputBorderFocus;
+    outline: 0;
+    outline: thin dotted \9;
+    @include box-shadow($inputBoxShadowFocus);
+  }
+}
+
+
+//
+// Position radios and checkboxes better.
+//
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0.425em 0;
+  margin-top: 1px \9;
+  line-height: normal;
+  cursor: pointer;
+  @include break(baby-bear) {
+    border: 1px solid #ccc;
+  }
+}
+
+
+//
+// Reset 'width' of input buttons, radios, checkboxes.
+// 1. Override of generic input selector.
+//
+
+input[type="file"],
+input[type="image"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto; // 1
+}
+
+
+//
+// Set the 'height' of select and file controls to match text inputs.
+//
+
+select,
+input[type="file"] {
+  height: 2.65em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+
+//
+// Make select elements obey 'height' by applying a 'border'.
+// 1. Default input width + 10px of padding that doesn't get applied.
+//
+
+select {
+  width: auto; // 1
+}
+
+
+//
+// Make multiple select elements 'height' not fixed.
+//
+
+select[multiple],
+select[size] {
+  height: auto;
+  border: 1px solid $inputBorder;
+}
+
+
+//
+// :focus for select, file, radio, and checkbox.
+//
+
+select:focus,
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  @include tab-focus();
+}
+
+
+
+// Placeholder
+// =============================================================================
+
+input,
+textarea {
+  @include placeholder($placeholderText);
+}
+
+
+
+// Checkboxes and Radios
+// =============================================================================
+
+//
+// Indent the labels to position radios/checkboxes as hanging.
+// 1. Clear the floating <input> if there is no <label> text.
+//
+
+.radio,
+.checkbox {
+  min-height: 18px; // 1
+  padding-left: 18px;
+}
+
+.radio input[type="radio"],
+.checkbox input[type="checkbox"] {
+  position: relative;
+  float: left;
+  margin-left: -18px;
+}
+
+
+//
+// Move the options list down to align with labels.
+// 1. Has to be 'padding' because 'margin' collapses.
+//
+
+.controls > .radio:first-child,
+.controls > .checkbox:first-child {
+  padding-top: 5px; // 1
+}
+
+
+//
+// Radios and checkboxes on same line.
+// 1. Space out consecutive inline controls.
+//
+
+.radio.inline,
+.checkbox.inline {
+  display: inline-block;
+  padding-top: 5px;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.radio.inline + .radio.inline,
+.checkbox.inline + .checkbox.inline {
+  margin-left: 10px; // 1
+}
+
+
+
+// Disabled State
+// =============================================================================
+
+//
+// Disabled and read-only inputs.
+//
+
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly] {
+  cursor: not-allowed;
+}
+
+input[disabled]:not(input[type="submit"]),
+select[disabled],
+textarea[disabled],
+input[readonly]:not(input[type="submit"]),
+select[readonly],
+textarea[readonly] {
+  background-color: $inputDisabledBackground;
+}
+
+
+//
+// Explicitly reset the colors here.
+//
+
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
+
+
+
+// Form Field Feedback States
+// =============================================================================
+
+//
+// HTML5 invalid states.
+// Shares styles with the .control-group.error above.
+//
+
+// input:focus:required:invalid,
+// textarea:focus:required:invalid,
+// select:focus:required:invalid {
+//   color: #b94a48;
+//   border-color: #ee5f5b;
+
+//   &:focus {
+//     border-color: darken(#ee5f5b, 10%);
+//     @include box-shadow(0 0 6px lighten(#ee5f5b, 20%));
+//   }
+// }
+
+
+
+// Search Form
+// =============================================================================
+
+.form-search,
+.widget_product_search form {
+  position: relative;
+  margin-bottom: 0;
+  line-height: 1;
+
+  &:before {
+    content: "\f002";
+    position: absolute;
+    left: 12px;
+    bottom: 50%;
+    display: block;
+    margin-bottom: -6px;
+    @include font-size(1.2);
+    line-height: 1;
+    text-decoration: inherit;
+    text-shadow: none;
+    color: $searchFormIconColor;
+    @include font-awesome();
+  }
+
+  .search-query,
+  input[type="search"] {
+    width: 100%;
+    margin-bottom: 0;
+    padding-left: 30px;
+  }
+}
+
+
+
+// Contact Form 7
+// =============================================================================
+
+.wpcf7 {
+  p {
+    margin-bottom: $baseMargin / 4;
+  }
+
+  select,
+  textarea,
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"] {
+    width: 100%;
+  }
+}
+
+.wpcf7-display-none {
+  display: none;
+}
+
+
+
+// Individual Input Adjustments
+// =============================================================================
+
+textarea {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+input[type="color"] {
+  padding: 1px 3px;
+}
+
+input[type="file"] {
+  margin-top: $fileMarginTop;
+}
+
+.checkbox input[type="checkbox"] {
+  top: $checkboxTopPosition;
+}
+
+.radio input[type="radio"] {
+  top: $radioTopPosition;
+}
+
+#recaptcha_table #recaptcha_response_field {
+  height: 16px;
+  border-width: 1px;
+  font-size: 10px;
+  line-height: 16px;
+  border-radius: 0;
+}

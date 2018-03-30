@@ -1,0 +1,1 @@
+<?php echo mb_get_breadcrumbs(); ?>

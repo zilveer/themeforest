@@ -1,0 +1,828 @@
+// =============================================================================
+// _BBPRESS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Styles
+//   02. Single Loop Item Sections
+//   03. Form: Search
+//   04. Form: General
+//   05. User
+//   06. Typography
+//   07. Pagination
+//   08. Notification Counts
+//   09. Stand Alone Buttons
+//   10. Status
+//   11. Navigation
+//   12. BuddyPress Integration
+// =============================================================================
+
+// Base Styles
+// =============================================================================
+
+.bbpress .entry-content {
+  padding: 0;
+}
+
+.bbp-forums,
+.bbp-topics,
+.bbp-replies,
+.bbp-search-results,
+.bbp-header > ul,
+.bbp-body > ul,
+.bbp-footer > ul {
+  margin: 0;
+  list-style: none;
+}
+
+.bbp-forums,
+.bbp-topics {
+  @include box-shadow(#{none});
+}
+
+.bbp-forums {
+  + .bbp-topics {
+    margin-top: $bpSpacingLg;
+  }
+}
+
+.bbp-topics {
+  + .bbp-no-topic,
+  + .bbp-template-notice {
+    margin-top: $bpSpacingLg;
+  }
+}
+
+.bbp-header,
+.bbp-footer {
+  margin: 0 0 (-$bpBorderWidth);
+  border: $bpBorder;
+  background-color: $bpAccentColor;
+}
+
+.bbp-header,
+.bbp-header > ul,
+.bbp-body,
+.bbp-body > ul,
+.bbp-body > .hentry,
+.bbp-footer,
+.bbp-footer > ul {
+  @include clearfix();
+}
+
+.bbp-header > ul > li,
+.bbp-body > ul > li,
+.bbp-footer > ul > li {
+  float: left;
+  line-height: 1;
+}
+
+.bbp-header,
+.bbp-footer {
+  padding: 10px $bpSpacingSm;
+  @include font-size(0.9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  > ul > li,
+  .bbp-reply-author,
+  .bbp-reply-content {
+    @include text-overflow();
+  }
+}
+
+.bbp-body {
+  > ul,
+  > div.hentry {
+    margin: 0 0 (-$bpBorderWidth);
+    border: $bpBorder;
+    padding: $bpSpacingSm;
+    background-color: $baseModBackground;
+
+    &:last-child {
+      margin-bottom: (-$bpBorderWidth);
+    }
+  }
+
+  > div.hentry {
+    margin-bottom: $bpSpacingSm;
+  }
+}
+
+.bbpress.reply #bbpress-forums {
+  > div.reply {
+    margin: 0;
+    border: $bpBorder;
+    padding: $bpSpacingSm;
+    background-color: $baseModBackground;
+  }
+}
+
+.x-bbp-header {
+  margin: 0 0 $bpSpacingSm;
+  @include clearfix();
+
+  .actions {
+    line-height: 1;
+  }
+}
+
+
+
+// Single Loop Item Sections
+// =============================================================================
+
+//
+// Formus and topics.
+//
+
+.bbp-forum-info,
+.bbp-topic-title {
+  width: 60%;
+  @include break(baby-bear) {
+    width: 100%;
+  }
+}
+
+.bbp-forum-topic-count,
+.bbp-topic-voice-count {
+  width: 10%;
+  padding: 0 5px;
+  text-align: center;
+  @include break(middle-bear) {
+    width: 15%;
+  }
+  @include break(baby-bear) {
+    display: none;
+  }
+}
+
+.bbp-forum-reply-count,
+.bbp-topic-reply-count {
+  width: 10%;
+  padding: 0 5px;
+  text-align: center;
+  @include break(middle-bear) {
+    display: none;
+  }
+}
+
+.bbp-forum-freshness,
+.bbp-topic-freshness {
+  width: 20%;
+  padding: 0 5px;
+  text-align: center;
+  @include break(middle-bear) {
+    width: 25%;
+  }
+  @include break(baby-bear) {
+    display: none;
+  }
+}
+
+
+//
+// Item info.
+//
+
+.x-bbp-item-info-header {
+  margin: (-$bpSpacingSm) (-$bpSpacingSm) $bpSpacingSm;
+  border-bottom: $bpBorder;
+  padding: $bpSpacingSm;
+  @include font-size(0.9);
+  letter-spacing: 1px;
+  line-height: 1;
+  text-transform: uppercase;
+  background-color: $bpAccentColor;
+  @include clearfix();
+
+  .x-item-info-date {
+    float: left;
+  }
+
+  .x-item-info-permalink {
+    float: right;
+    color: $textColor;
+
+    &:hover {
+      color: $accentColor;
+    }
+
+    @include break(middle-bear) {
+      display: none;
+    }
+  }
+
+  .bbp-admin-links {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin: $bpSpacingSm 0 0;
+    text-align: left;
+
+    .x-bbp-admin-links-inner {
+      margin: 0 (-$bpSpacingSm - $bpBorderWidth) (-$bpSpacingSm - $bpBorderWidth) (-$bpSpacingSm);
+      border-top: $bpBorder;
+      @include clearfix();
+    }
+
+    a {
+      display: block;
+      border-right: $bpBorder;
+      border-bottom: $bpBorder;
+      padding: 10px $bpSpacingSm;
+      line-height: 1;
+      color: $bpNavSubnavColor;
+      background-color: $bpAccentColor;
+      @include text-overflow();
+
+      width: 20%;
+      float: left;
+
+      @include break(middle-bear) {
+        width: 33.3333%;
+      }
+
+      @include break(baby-bear) {
+        width: 50%;
+      }
+
+      &:hover {
+        background-color: $baseModBackground;
+      }
+    }
+  }
+}
+
+.x-bbp-item-info-content {
+  @include clearfix();
+
+  .x-bbp-item-info-author {
+    width: 80px;
+    float: left;
+    line-height: 1;
+    text-align: center;
+    @include break(baby-bear) {
+      width: 50px;
+    }
+
+    .bbp-author-avatar {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .bbp-author-name,
+    .bbp-author-role,
+    .bbp-author-ip {
+      display: block;
+      @include font-size(0.9);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      @include text-overflow();
+    }
+
+    .bbp-author-name {
+      color: $headingsColor;
+
+      &:hover {
+        color: $accentColor;
+      }
+    }
+
+    .bbp-author-role,
+    .bbp-author-ip {
+      margin: 5px 0 0;
+    }
+  }
+
+  .x-bbp-item-info-the-content {
+    width: calc(100% - 95px);
+    margin-bottom: 5px;
+    float: right;
+    line-height: $baseLineHeight;
+    @include break(baby-bear) {
+      width: calc(100% - 65px);
+    }
+  }
+}
+
+
+
+// Form: Search
+// =============================================================================
+
+.x-bbp-search-form {
+  margin-bottom: $bpSpacingSm;
+  border: $bpBorder;
+  padding: $bpSpacingSm;
+  background-color: $bpAccentColor;
+  @include clearfix();
+
+  label {
+    margin: 0;
+    width: 100%;
+  }
+
+  input {
+    margin: 0;
+    width: 100%;
+  }
+
+  input[type="submit"] {
+    display: none;
+  }
+}
+
+
+
+// Form: General
+// =============================================================================
+
+.x-bbp-general-form {
+  &.bbp-topic-tag-form {
+    .bbp-form {
+      margin-top: $bpSpacingLg;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+  }
+
+  form {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  legend {
+    margin: 0;
+    border: 0;
+    padding: $bpSpacingLg 0 $bpSpacingSm;
+    padding: 0 0 $bpSpacingSm;
+    font-size: 125%;
+    line-height: 1.4;
+    color: $headingsColor;
+  }
+
+  label {
+    + br {
+      display: none;
+    }
+  }
+
+  input[type="radio"] + label,
+  input[type="checkbox"] + label {
+    display: inline;
+  }
+
+  select,
+  textarea,
+  input[type="text"],
+  input[type="password"] {
+    margin: 0;
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .bbp-the-content-wrapper {
+    margin-bottom: $baseMargin;
+  }
+
+  .form-allowed-tags {
+    display: none;
+  }
+}
+
+.bbp-submit-wrapper {
+  @include clearfix();
+
+  button[type="submit"] {
+    float: left;
+    min-width: 70px;
+    display: block;
+    height: 2.65em;
+    margin: 0 10px 0 0;
+    border: 0;
+    padding: 0 0.5em;
+    @include font-size(1.3);
+    line-height: 1;
+    text-shadow: none;
+    color: $white;
+    background-color: $accentColor;
+    @include box-shadow(#{none});
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+  }
+}
+
+.bbp-topics,
+.bbp-replies,
+.bbp-pagination,
+.bbp-template-notice {
+  + .x-bbp-general-form {
+    margin-top: $bpSpacingLg;
+  }
+}
+
+
+
+// User
+// =============================================================================
+
+.x-bbp-user-header {
+  margin: 0 0 (-$bpBorderWidth);
+  border: $bpBorder;
+  padding: $bpSpacingSm;
+  background-color: $bpAccentColor;
+
+  #bbp-user-avatar {
+    float: left;
+    width: 100px;
+    text-align: center;
+  }
+
+  .x-bbp-user-header-content {
+    float: right;
+    width: calc(100% - 115px);
+  }
+
+  .x-bbp-user-header-title {
+    margin: 0;
+    font-size: 165%;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  @include break(middle-bear) {
+    #bbp-user-avatar {
+      display: none;
+    }
+
+    .x-bbp-user-header-content {
+      width: 100%;
+    }
+  }
+}
+
+#bbp-user-navigation {
+  margin: 0 0 $bpSpacingLg;
+  border: $bpBorder;
+  background-color: $bpAccentColor;
+
+  > ul {
+    margin: 0 (-$bpBorderWidth) (-$bpBorderWidth) 0;
+    list-style: none;
+    @include clearfix();
+
+    > li {
+      display: inline-block;
+      width: 33.3333%;
+      float: left;
+
+      @include break(middle-bear) {
+        width: 50%;
+      }
+
+      @include break(baby-bear) {
+        width: 100%;
+      }
+
+      a {
+        display: block;
+        position: relative;
+        border-right: $bpBorder;
+        border-bottom: $bpBorder;
+        padding: 10px 11px;
+        line-height: 1;
+        color: $bpNavSubnavColor;
+        background-color: $bpAccentColor;
+        @include text-overflow();
+      }
+
+      a:hover,
+      &.current a {
+        color: $accentColor;
+        background-color: $baseModBackground;
+      }
+    }
+  }
+}
+
+#bbp-user-body {
+  .entry-title {
+    margin: $bpSpacingLg 0 10px;
+    @include font-size(2.4);
+  }
+}
+
+
+
+// Typography
+// =============================================================================
+
+.bbp-forum-title,
+.bbp-topic-permalink {
+  display: inline-block;
+  margin: -3px 0 10px;
+  font-size: 125%;
+  line-height: 1.4;
+  color: $headingsColor;
+
+  &:hover {
+    color: $accentColor;
+  }
+}
+
+.bbp-forum-content,
+.bbp-topic-meta {
+  line-height: $baseLineHeight;
+}
+
+.bbp-topic-meta {
+  @include font-size(0.9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  .bbp-topic-started-in {
+    display: none;
+  }
+}
+
+.bbp-body .bbp-forum-freshness,
+.bbp-body .bbp-topic-freshness {
+  @include font-size(0.9);
+  letter-spacing: 1px;
+  line-height: $baseLineHeight;
+  text-transform: uppercase;
+
+  a {
+    display: block;
+    color: $textColor;
+    @include text-overflow();
+
+    &:hover {
+      color: $accentColor;
+    }
+  }
+
+  .bbp-topic-meta {
+    margin: 5px 0 0;
+  }
+}
+
+
+//
+// Lists and logs.
+//
+
+.bbp-forums-list,
+.bbp-topic-revision-log,
+.bbp-reply-revision-log {
+  margin: $bpSpacingSm 0 0;
+  padding: 0 0 0;
+  list-style: none;
+
+  > li {
+    margin: 0 0 (-$bpBorderWidth);
+    border: $bpBorder;
+    padding: 10px;
+    @include font-size(0.9);
+    letter-spacing: 1px;
+    line-height: $baseLineHeight;
+    text-transform: uppercase;
+    background-color: $bpAccentColor;
+  }
+}
+
+
+//
+// Context title.
+//
+
+.x-context-title {
+  display: block;
+  margin: 0 0 10px;
+  @include font-size(0.9);
+  font-weight: $baseFontWeight;
+  letter-spacing: 1px;
+  line-height: 1;
+  @include text-overflow();
+}
+
+
+
+// Pagination
+// =============================================================================
+
+.bbp-pagination {
+  margin: $bpSpacingSm 0 0;
+}
+
+.bbp-pagination-links {
+  display: inline-block;
+  @include clearfix();
+}
+
+
+
+// Notification Counts
+// =============================================================================
+
+.x-bbp-count {
+  display: inline-block;
+  padding: 3px 4px;
+  line-height: 1;
+  text-align: center;
+  @include font-size(0.9);
+  color: $white;
+  background-color: $accentColor;
+  z-index: 5;
+}
+
+.bbp-forum-topic-count,
+.bbp-forum-reply-count,
+.bbp-topic-voice-count,
+.bbp-topic-reply-count {
+  .x-bbp-count {
+    display: block;
+    margin: 2px auto 0;
+    max-width: 35px;
+    @include text-overflow();
+  }
+}
+
+
+
+// Stand Alone Buttons
+// =============================================================================
+
+.x-btn-bbp,
+.bbp-topic-tags a,
+.bbp-row-actions a,
+.x-bbp-header .actions a,
+.quicktags-toolbar input.button {
+  display: inline-block;
+  margin: 0;
+  border: 0;
+  padding: 5px 6px;
+  @include font-size(1.1);
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  text-shadow: none;
+  text-transform: none;
+  color: $white;
+  background-color: $accentColor;
+  @include box-shadow(#{none});
+
+  &:hover {
+    color: $white;
+  }
+}
+
+
+//
+// Topic tags.
+//
+
+.bbp-topic-tags {
+  margin: $bpSpacingLg 0 0;
+  border: $bpBorder;
+  padding: 10px;
+  line-height: 1;
+  text-align: center;
+  background-color: $bpAccentColor;
+
+  span {
+    display: block;
+    margin: 0 0 4px;
+    @include font-size(0.9);
+    letter-spacing: 1px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  a {
+    margin: 4px 2px 0;
+  }
+}
+
+
+//
+// Row actions.
+//
+
+.bbp-row-actions {
+  display: block;
+  margin-bottom: 5px;
+
+  a {
+    margin-right: 3px;
+    padding: 2px 5px;
+    line-height: 1.1;
+  }
+}
+
+
+//
+// Quicktags toolbar.
+//
+
+.quicktags-toolbar {
+  input.button {
+    margin: 0 5px 5px 0;
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+  }
+}
+
+
+
+// Status
+// =============================================================================
+
+.bbp-body {
+  > div.hentry.status-spam,
+  > div.hentry.status-trash {
+    .x-item-info-date,
+    .x-item-info-permalink {
+      color: $errorText;
+    }
+  }
+
+  > div.hentry.status-spam {
+    .bbp-reply-spam-link {
+      color: $errorText;
+    }
+  }
+
+  > div.hentry.status-trash {
+    .bbp-reply-delete-link,
+    .bbp-topic-delete-link {
+      color: $errorText;
+    }
+  }
+}
+
+
+
+// Navigation
+// =============================================================================
+
+.x-navbar .x-nav > .x-menu-item-bbpress {
+  > a {
+    > span:after {
+      display: none;
+    }
+  }
+
+  > .sub-menu {
+    > li {
+      > a {
+        > i {
+          margin-right: 2px;
+        }
+      }
+    }
+  }
+}
+
+
+
+// BuddyPress Integration
+// =============================================================================
+
+.buddypress {
+  #item-body > #bbpress-forums {
+    margin-top: $bpSpacingLg;
+  }
+
+  #bbpress-forums h3,
+  .x-item-list-tabs-subnav + h3 {
+    display: none;
+  }
+
+  #bbpress-forums .entry-title {
+    margin: $bpSpacingLg 0 10px;
+    @include font-size(2.4);
+    line-height: 1.3;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+}

@@ -1,0 +1,163 @@
+/*------------------------------------------------------------
+ * Elements
+ *------------------------------------------------------------*/
+
+
+
+/* m-Dash
+ *------------------------------------------------------------*/
+
+.mdash {
+	padding-left: 30px;
+
+	&:before {
+		content: "";
+		width: 20px;
+		height: 1px;
+		display: inline-block;
+		vertical-align: middle;
+		border-top: 1px solid @grey;
+		border-top-color: inherit;
+		margin-right: 10px;
+		margin-left: -30px;
+		margin-top: -7px;
+		opacity: 0.5;
+	}
+}
+
+
+
+/* Read More
+ *------------------------------------------------------------*/
+
+.read-more {
+	position: relative;
+	display: inline-block;
+	margin-left: 3px;
+	width: 17px;
+	height: 17px;
+	border: 1px solid @black;
+	color: @black;
+	vertical-align: text-top;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		background: @black;
+		.transition;
+	}
+
+	&:before {
+		top: 7px;
+		left: 4px;
+		height: 1px;
+		width: 7px;
+	}
+
+	&:after {
+		top: 4px;
+		left: 7px;
+		height: 7px;
+		width: 1px;
+	}
+
+	&:hover {
+		border-color: @primary-color;
+		background: @primary-color;
+
+		&:before,
+		&:after {
+			background: @white;
+		}
+	}
+
+	.dark-mode & {
+		.link-color(@white, @primary-color);
+	}
+
+	&--continue {
+		display: block;
+		.font--navigation;
+		.link-color(@primary-color, @black);
+	}
+}
+
+
+
+/* Hexagon Icon
+ *------------------------------------------------------------*/
+
+.icon--hexagon-outline {
+	position: relative;
+
+	&:after{
+		// content: "\e7c3";
+		content: "\e8e5";
+		opacity: 0.5;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		font-size: 3em;
+		font-weight: 300;
+		.translate(-50%, -50%);
+
+		/* enable as stand-alone, without .icon */
+		font-family: 'icomoon';
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+	}
+}
+
+/* Icon Separator
+ * .separator--icon & .separator--icon-border
+ * must be added to element containing ICON
+ *------------------------------------------------------------*/
+
+.separator--icon {
+	font-size: 21px;
+	margin-top: 1em;
+
+	i {
+		.icon--hexagon-outline;
+	}
+}
+
+.separator--icon-border {
+	position: relative;
+	margin-top: 1em;
+
+	&:before,
+	&:after {
+		content: "";
+		opacity: 0.8;
+		height: 1px;
+		border-top: 1px solid @black;
+		// border-top: 1px solid @grey;
+		border-top-color: inherit;
+		width: 100px;
+		position: absolute;
+		top: 50%;
+	}
+
+	&:before {
+		right: 50%;
+		margin-right: 28px;
+	}
+
+	&:after {
+		left: 50%;
+		margin-left: 28px;
+	}
+}
+
+.separator--icon-border-false {
+	&:before,
+	&:after {
+		content: none;
+	}
+}

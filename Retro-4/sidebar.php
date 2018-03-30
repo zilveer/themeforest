@@ -1,0 +1,1 @@
+<?php dynamic_sidebar( 'retro_main_sidebar' ); ?>

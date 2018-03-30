@@ -1,0 +1,74 @@
+/*------------------------------------------------------------
+ * NanoScrollerJS Styles
+ *------------------------------------------------------------*/
+
+.nano-content {
+	.clearfix;
+	// Enable momentum scroll on iPad
+	-webkit-overflow-scrolling: touch;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+@media @tablet, @desktop {
+	.js-nano{
+
+		.header &,
+		.independent-sidebar--true & {
+
+			position: relative;
+			height: 100%;
+			overflow: hidden;
+
+			& > .nano-content {
+				overflow: scroll;
+				overflow-x: hidden;
+				.placement;
+			}
+
+			&.nano > .nano-content {
+				&::-webkit-scrollbar {
+					display: none;
+				}
+			}
+
+			& > .nano-pane {
+				position: absolute;
+				z-index: 2;
+				width: 8px;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				opacity: 0;
+				.transition;
+
+				& > .nano-slider {
+					.border-radius;
+					background: @black;
+					background: fade(@black, 70%);
+					border: 1px solid fade(@white,20%);
+					position: relative;
+					margin: 0 1px;
+				}
+			}
+
+			&:hover > .nano-pane,
+			.nano-pane.active,
+			.nano-pane.flashed {
+				opacity: 0.99;
+			}
+		}
+
+		&.nano.has-scrollbar {
+			.header&,
+			.independent-sidebar--true & {
+				& > .nano-content::-webkit-scrollbar {
+					display: block;
+				}
+			}
+		}
+	}
+
+}

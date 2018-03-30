@@ -1,0 +1,1 @@
+<form role="search" class="searchform" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>"><input type="text" value="<?php echo get_search_query(); ?>" name="s"><input type="submit" value="<?php esc_attr_e( 'Search', 'royalgold' ); ?>"><div class="clear"></div></form>

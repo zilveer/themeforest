@@ -1,0 +1,5 @@
+= PRIMASHOP (WOOCOMMERCE) WORDPRESS THEME =
+
+* http://www.primathemes.com/
+
+== ABOUT PRIMASHOP (WOOCOMMERCE) ==

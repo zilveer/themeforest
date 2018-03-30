@@ -1,0 +1,797 @@
+// =============================================================================
+// _SHORTCODES.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Container
+//   02. Gap
+//   03. Clear
+//   04. Map
+//   05. Code
+//   06. Icon
+//   07. Block Grid
+//   08. Icon List
+//   09. Video
+//   10. Responsive Slider
+//   11. Audio
+//   12. Search
+//   13. Counter
+//   14. Text Type
+//   15. Card
+//   16. Creative CTA
+//   17. Feature Box
+//   18. Feature List
+// =============================================================================
+
+// Container
+// =============================================================================
+
+.x-container {
+  margin: 0 auto;
+  @include clearfix();
+
+  &.max {
+    max-width: 1200px;
+  }
+
+  &.width {
+    width: 88%;
+  }
+}
+
+
+
+// Gap
+// =============================================================================
+
+.x-gap {
+  margin: 0 0 $baseMargin;
+  border-color: transparent;
+}
+
+
+
+// Clear
+// =============================================================================
+
+.x-clear {
+  margin: 0;
+  border: 0;
+  clear: both;
+}
+
+
+
+// Map
+// =============================================================================
+
+.x-map {
+  margin-bottom: $baseMargin;
+
+  .x-map-inner {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .gm-style {
+    img {
+      max-width: none;
+    }
+  }
+}
+
+
+
+// Code
+// =============================================================================
+
+.x-code {
+  line-height: 1;
+}
+
+
+
+// Icon
+// =============================================================================
+
+[data-x-icon],
+[class*="#{$fa-css-prefix}-"] {
+  display: inline-block;
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &.left {
+    margin-right: 0.5em;
+  }
+
+  &.right {
+    margin-left: 0.5em;
+  }
+
+  &:before {
+    content: attr(data-x-icon);
+    line-height: 1;
+  }
+}
+
+
+
+// Block Grid
+// =============================================================================
+
+.x-block-grid {
+  display: block;
+  overflow: hidden;
+  margin: 0 0 $baseMargin;
+
+  > li {
+    display: block;
+    float: left;
+    height: auto;
+    margin: 5% 5% 0 0;
+    padding: 0;
+  }
+
+
+  //
+  // Two.
+  //
+
+  &.two-up > li {
+    width: 47.5%;
+
+    &:nth-child(-n+2) { margin-top: 0;   }
+    &:nth-child(2n)   { margin-right: 0; }
+    &:nth-child(2n+1) { clear: both;     }
+
+    @include break(baby-bear) {
+      width: 100%;
+      margin-right: 0;
+
+      &:nth-child(2) { margin-top: 5%; }
+    }
+  }
+
+
+  //
+  // Three.
+  //
+
+  &.three-up > li {
+    width: 30%;
+
+    &:nth-child(-n+3) { margin-top: 0;   }
+    &:nth-child(3n)   { margin-right: 0; }
+    &:nth-child(3n+1) { clear: both;     }
+
+    @include break(cubs) {
+      width: 47.5%;
+
+      &:nth-child(3)    { margin-top: 5%;   }
+      &:nth-child(3n)   { margin-right: 5%; }
+      &:nth-child(3n+1) { clear: none;      }
+      &:nth-child(2n)   { margin-right: 0;  }
+      &:nth-child(2n+1) { clear: both;      }
+    }
+
+    @include break(baby-bear) {
+      width: 100%;
+      margin-right: 0;
+
+      &:nth-child(2)  { margin-top: 5%;  }
+      &:nth-child(3n) { margin-right: 0; }
+    }
+  }
+
+
+  //
+  // Four.
+  //
+
+  &.four-up > li {
+    width: 21.25%;
+
+    &:nth-child(-n+4) { margin-top: 0;   }
+    &:nth-child(4n)   { margin-right: 0; }
+    &:nth-child(4n+1) { clear: both;     }
+
+    @include break(cubs) {
+      width: 47.5%;
+
+      &:nth-child(3),
+      &:nth-child(4)    { margin-top: 5%;   }
+      &:nth-child(4n)   { margin-right: 5%; }
+      &:nth-child(4n+1) { clear: none;      }
+      &:nth-child(2n)   { margin-right: 0;  }
+      &:nth-child(2n+1) { clear: both;      }
+    }
+
+    @include break(baby-bear) {
+      width: 100%;
+      margin-right: 0;
+
+      &:nth-child(2)  { margin-top: 5%;  }
+      &:nth-child(4n) { margin-right: 0; }
+    }
+  }
+}
+
+
+
+// Icon List
+// =============================================================================
+
+.x-ul-icons {
+  margin-left: 1.5em;
+  list-style: none;
+
+  li {
+    [class*="#{$fa-css-prefix}-"] {
+      text-indent: -1.5em;
+    }
+  }
+}
+
+
+
+// Video
+// =============================================================================
+
+.x-video {
+  margin-bottom: $baseMargin;
+
+  .x-video-inner {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+
+    &.five-by-three { padding-bottom: 60%;    }
+    &.five-by-four  { padding-bottom: 80%;    }
+    &.four-by-three { padding-bottom: 75%;    }
+    &.three-by-two  { padding-bottom: 66.67%; }
+
+    embed,
+    iframe,
+    img,
+    object,
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  }
+
+  &.bg {
+    @include transition(#{opacity 1s ease});
+
+    &,
+    & .x-video-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    &.poster {
+      background-size: cover;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+
+
+// Responsive Slider
+// =============================================================================
+
+.x-flexslider-shortcode-container {
+  margin-bottom: $baseMargin;
+
+  .x-flexslider-shortcode {
+    margin: 0;
+  }
+}
+
+
+
+// Audio
+// =============================================================================
+
+.x-audio {
+  margin-bottom: $baseMargin;
+
+  &.player {
+    height: $mejsHeight;
+  }
+}
+
+
+
+// Search
+// =============================================================================
+
+.x-search-shortcode {
+  margin-bottom: $baseMargin;
+}
+
+
+
+// Counter
+// =============================================================================
+
+.x-counter {
+  text-align: center;
+
+  .number-wrap {
+    font-size: 3.25em;
+    line-height: 1;
+  }
+
+  .text-above,
+  .text-below {
+    display: block;
+    letter-spacing: 0.125em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .text-above {
+    margin-bottom: 0.5em;
+  }
+
+  .text-below {
+    margin-top: 0.5em;
+  }
+}
+
+
+
+// Text Type
+// =============================================================================
+
+.x-text-type {
+  .typed-cursor{
+    -webkit-animation: blink 0.65s infinite;
+            animation: blink 1s infinite;
+  }
+}
+
+@-webkit-keyframes blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+
+// Card
+// =============================================================================
+
+.x-card-outer {
+  margin: 0 auto $baseMargin;
+  text-align: center;
+  cursor: pointer;
+
+  .x-card-inner {
+    position: relative;
+  }
+
+  .x-face-outer {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &.front { z-index: 2; }
+    &.back  { z-index: 1; }
+  }
+  
+  .x-face-inner {
+    height: 100%;
+  }
+
+  .x-face-graphic {
+    margin: 0 0 10px;
+    line-height: 1;
+  }
+
+  .x-face-title,
+  .x-face-text {
+    color: inherit;
+  }
+
+  .x-face-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.75em;
+  }
+
+  .x-face-text {
+    margin: 8px 0 0;
+  }
+
+  .x-face-button {
+    display: inline-block;
+    margin: 15px 0 0;
+    border: 0;
+    padding: 0.825em 1em;
+    line-height: 1;
+    text-decoration: none;
+    border-radius: 0.35em;
+    box-shadow: none;
+  }
+  
+  &.flipped {
+    .x-face-outer {
+      &.front { z-index: 1; }
+      &.back  { z-index: 2; }
+    }
+  }
+
+  &.center-vertically {
+    .x-face-inner {
+      &:before {
+        content: "";
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+      }
+    }
+
+    .x-face-content {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &.flip-3d {
+    @include perspective(1200px);
+
+    .x-card-inner {
+      -webkit-transition: -webkit-transform 1.25s $easeOutQuint;
+              transition: transform 1.25s $easeOutQuint;
+      @include transform-style(preserve-3d);
+    }
+
+    .x-face-outer {
+      @include backface-visibility(hidden);
+    }
+
+    .x-face-outer.front,
+    .x-face-outer.back,
+    &.flipped .x-face-outer.front,
+    &.flipped .x-face-outer.back {
+      z-index: 1;
+    }
+
+    &.flip-from-left .back,
+    &.flip-from-right .back                 { @include rotate-y(180deg);  }
+    &.flip-from-left.flipped .x-card-inner  { @include rotate-y(180deg);  }
+    &.flip-from-right.flipped .x-card-inner { @include rotate-y(-180deg); }
+
+    &.flip-from-top .back,
+    &.flip-from-bottom .back                 { @include rotate-x(180deg);  }
+    &.flip-from-top.flipped .x-card-inner    { @include rotate-x(-180deg); }
+    &.flip-from-bottom.flipped .x-card-inner { @include rotate-x(180deg);  }
+  }
+}
+
+
+
+// Creative CTA
+// =============================================================================
+
+.x-creative-cta {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  border: 0;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: none;
+  @include transition(#{background-color 0.3s ease});
+
+  > span {
+    display: block;
+    @include transition(#{all 0.65s $easeOutQuint});
+
+    &.text {
+      line-height: 1.2;
+      opacity: 1;
+    }
+
+    &.graphic {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      line-height: 1;
+      opacity: 0;
+
+      > i,
+      > img {
+        @include transition(#{all 0.65s $easeOutQuint});
+      }
+    }
+  }
+
+  &:hover {
+    > span.text    { opacity: 0; }
+    > span.graphic { opacity: 1; }
+  }
+
+  &.slide-top    { &:hover { > span.text { @include translate(0, -150%); } } }
+  &.slide-left   { &:hover { > span.text { @include translate(-80%, 0);  } } }
+  &.slide-right  { &:hover { > span.text { @include translate(80%, 0);   } } }
+  &.slide-bottom { &:hover { > span.text { @include translate(0, 150%);  } } }
+}
+
+
+
+// Feature Box
+// =============================================================================
+
+//
+// Base.
+//
+
+.x-feature-box {
+  position: relative;
+  margin: 0 auto $baseMargin;
+}
+
+
+//
+// Graphic.
+//
+
+.x-feature-box-graphic {
+  display: inline-block;
+  margin: 0 0 10px;
+
+  i,
+  img {
+    &.rounded { border-radius: 0.15em; }
+    &.circle  { border-radius: 100em;  }
+  }
+
+  i {
+    display: block;
+    position: relative;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+
+    &:before {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1em;
+      margin-top: -0.5em;
+      font-size: 0.395em;
+      line-height: 1;
+    }
+  }
+
+  img {
+    display: block;
+  }
+}
+
+.x-feature-box-graphic-outer,
+.x-feature-box-graphic-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.x-feature-box-graphic-inner {
+  width: 1em;
+}
+
+
+//
+// Graphic - shapes.
+//
+
+.x-feature-box-graphic-inner.hexagon {
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    border: 0 solid transparent;
+    border-left-width: 0.5em;
+    border-right-width: 0.5em;
+  }
+
+  &:before {
+    border-bottom-width: 0.285em;
+    border-bottom-color: inherit;
+  }
+
+  &:after {
+    border-top-width: 0.285em;
+    border-top-color: inherit;
+  }
+
+  i {
+    height: 0.6em;
+  }
+}
+
+.x-feature-box-graphic-inner.badge {
+  -webkit-transform: scale(0.725) rotate(15deg);
+      -ms-transform: scale(0.725) rotate(15deg);
+          transform: scale(0.725) rotate(15deg);
+
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0.5em solid;
+    border-color: inherit;
+    z-index: 1;
+  }
+
+  &:before {
+    @include rotate(30deg);
+  }
+
+  &:after {
+    @include rotate(60deg);
+  }
+
+  i {
+    position: relative;
+    z-index: 2;
+
+    &:before {
+      -webkit-transform: scale(1.275) rotate(-15deg);
+          -ms-transform: scale(1.275) rotate(-15deg);
+              transform: scale(1.275) rotate(-15deg);
+    }
+  }
+}
+
+
+//
+// Connector.
+//
+
+.x-feature-box-connector {
+  display: block;
+  position: absolute;
+  width: 0;
+  margin: 0 auto;
+  z-index: 1;
+
+  &.full  { height: 100%; top: 0.5em; }
+  &.upper { height: 50%;  top: 0;     }
+  &.lower { height: 50%;  top: 50%;   }
+}
+
+
+//
+// Content.
+//
+
+.x-feature-box-title {
+  margin: 0;
+  font-size: 1.5em;
+  line-height: 1.2;
+}
+
+.x-feature-box-text {
+  margin: 8px 0 0;
+
+  a {
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+
+
+// Feature List
+// =============================================================================
+
+.x-feature-list {
+  margin: 0 0 $baseMargin;
+  padding: 1px 0;
+  list-style: none;
+  counter-reset: xFeatureListNum;
+
+
+  //
+  // Child feature boxes.
+  //
+
+  .x-feature-box {
+    margin-bottom: 0;
+    counter-increment: xFeatureListNum;
+
+    &.top-text {
+      > div {
+        padding: 0 0 $baseMargin;
+      }
+
+      &:last-child {
+        > div {
+          padding-bottom: 0;
+        }
+
+        .full {
+          display: none;
+        }
+      }
+    }
+
+    &.middle-text {
+      > div {
+        padding: ($baseMargin / 2) 0;
+      }
+
+      &:first-child { margin-top:    -($baseMargin / 2); }
+      &:last-child  { margin-bottom: -($baseMargin / 2); }
+
+      &:first-child .upper,
+      &:last-child .lower {
+        display: none;
+      }
+    }
+  }
+
+
+  //
+  // Numbers.
+  //
+
+  .x-feature-box-graphic {
+    i.number:before {
+      content: counter(xFeatureListNum);
+      font-style: normal;
+    }
+  }
+}

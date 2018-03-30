@@ -1,0 +1,182 @@
+// =============================================================================
+// _NAVBAR.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Styles
+//   02. Button
+//   03. Desktop Navigation
+//   04. Mobile Navigation
+//   05. Fixed Navbar
+//   06. Search
+// =============================================================================
+
+// Base Styles
+// =============================================================================
+
+.x-navbar {
+  border-bottom: 1px solid $navbarOuterBorder;
+  background-color: $navbarBackground;
+  @include box-shadow(#{$baseBoxShadowNavbar});
+  @include translate3d(0, 0, 0);
+}
+
+
+
+// Button
+// =============================================================================
+
+.x-btn-navbar {
+  padding: 0.458em 0.625em;
+  text-shadow: $navbarBtnTextShadow;
+  color: $navbarBtnColor;
+  background-color: $navbarBtnBackgroundHover;
+  border-radius: 4px;
+  @include box-shadow($navbarBtnBoxShadowHover);
+  @include transition(#{box-shadow 0.3s ease, color 0.3s ease, background-color 0.3s ease});
+
+  &:hover {
+    color: darken($navbarLinkColor, 15%);
+  }
+
+  &.collapsed {
+    color: $navbarBtnColorCollapsed;
+    background-color: $navbarBtnBackground;
+    @include box-shadow($navbarBtnBoxShadow);
+
+    &:hover {
+      color: darken($navbarLinkColor, 15%);
+      background-color: $navbarBtnBackgroundHover;
+      @include box-shadow($navbarBtnBoxShadowHover);
+    }
+  }
+}
+
+
+
+// Desktop Navigation
+// =============================================================================
+
+.x-navbar .desktop .x-nav {
+  > li > a {
+    padding: 0;
+  }
+}
+
+
+
+// Mobile Navigation
+// =============================================================================
+
+//
+// Links.
+//
+
+.x-navbar .mobile .x-nav li > a {
+  margin: 0 0 -1px;
+  border: 1px solid darken($navbarBackground, 5%);
+  border-left: 0;
+  border-right: 0;
+  padding: 1em 0;
+  color: $navbarLinkColor;
+  background-color: transparent;
+}
+
+.x-navbar .mobile .x-nav li > a:hover,
+.x-navbar .mobile .x-nav .x-active > a,
+.x-navbar .mobile .x-nav .current-menu-item > a {
+  color: $dropdownCollapseLinkColorHover;
+}
+
+
+//
+// Sub toggle.
+//
+
+.x-sub-toggle {
+  width: 35px;
+}
+
+
+
+// Fixed Navbar
+// =============================================================================
+
+//
+// Left/right styles.
+//
+
+.x-navbar-fixed-left,
+.x-navbar-fixed-right {
+  .desktop .x-nav {
+    > li {
+      > a {
+        text-align: center;
+        padding: 20px 35px;
+      }
+    }
+  }
+
+  @include break(cubs) {
+    @include box-shadow(#{$baseBoxShadowNavbar});
+  }
+}
+
+
+//
+// Left styles.
+//
+
+.x-navbar-fixed-left {
+  border-right: 1px solid $navbarOuterBorder;
+  @include box-shadow(#{$navbarLeftBoxShadow});
+  @include break(cubs) {
+    border-right: 0;
+  }
+
+  .desktop .x-nav > li > a {
+    &:focus,
+    &:hover {
+      @include box-shadow(#{$navbarLeftLinkBoxShadowHover});
+    }
+  }
+}
+
+
+//
+// Right styles.
+//
+
+.x-navbar-fixed-right {
+  border-left: 1px solid $navbarOuterBorder;
+  @include box-shadow(#{$navbarRightBoxShadow});
+  @include break(cubs) {
+    border-left: 0;
+  }
+
+  .desktop .x-nav > li > a {
+    &:focus,
+    &:hover {
+      @include box-shadow(#{$navbarRightLinkBoxShadowHover});
+    }
+  }
+}
+
+
+
+// Search
+// =============================================================================
+
+.x-navbar .mobile .x-nav > li.x-menu-item-search {
+  margin: 25px 0 0;
+  text-align: center;
+
+  > a {
+    border: 1px solid;
+    border-radius: 4px;
+  }
+}

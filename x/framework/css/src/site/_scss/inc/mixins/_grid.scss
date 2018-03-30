@@ -1,0 +1,258 @@
+// =============================================================================
+// _GRID.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Section
+//   02. Column
+//   03. Content Band (Deprecated)
+// =============================================================================
+
+// Section
+// =============================================================================
+
+@mixin section() {
+  .x-section {
+    margin: 0 0 $baseMargin;
+    padding: 45px 0;
+    @include clearfix();
+
+    &.bg-image,
+    &.bg-pattern {
+      background-position: 50% 50%;
+
+      &.parallax {
+        background-attachment: fixed;
+      }
+    }
+
+    &.bg-image {
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &.bg-pattern {
+      background-repeat: repeat;
+    }
+
+    &.bg-video {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .x-container {
+      position: relative;
+
+      &.marginless-columns {
+        display: table;
+        table-layout: fixed;
+
+        &:not(.width) {
+          width: 100%;
+        }
+
+        &:before,
+        &:after {
+          display: none;
+        }
+
+        .x-column {
+          display: table-cell;
+          margin-right: 0;
+          float: none;
+          vertical-align: top;
+
+          &.x-1-1 { width: 100%;      }
+          &.x-1-2 { width: 50%;       }
+          &.x-1-3 { width: 33.33333%; }
+          &.x-2-3 { width: 66.66666%; }
+          &.x-1-4 { width: 25%;       }
+          &.x-3-4 { width: 75%;       }
+          &.x-1-5 { width: 20%;       }
+          &.x-2-5 { width: 40%;       }
+          &.x-3-5 { width: 60%;       }
+          &.x-4-5 { width: 80%;       }
+          &.x-1-6 { width: 16.66666%; }
+          &.x-5-6 { width: 83.33333%; }
+        }
+
+        @include break(middle-bear) {
+          display: block;
+
+          &:before,
+          &:after {
+            display: table;
+          }
+
+          .x-column[class*="x-"] {
+            display: block;
+            width: 100%;
+            vertical-align: inherit;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+// Column
+// =============================================================================
+
+@mixin column() {
+  .x-column {
+    float: left;
+    margin-right: 4%;
+
+    &.x-1-1 { width: 100%;      }
+    &.x-1-2 { width: 48%;       }
+    &.x-1-3 { width: 30.66666%; }
+    &.x-2-3 { width: 65.33332%; }
+    &.x-1-4 { width: 22%;       }
+    &.x-3-4 { width: 74%;       }
+    &.x-1-5 { width: 16.8%;     }
+    &.x-2-5 { width: 37.6%;     }
+    &.x-3-5 { width: 58.4%;     }
+    &.x-4-5 { width: 79.2%;     }
+    &.x-1-6 { width: 13.33332%; }
+    &.x-5-6 { width: 82.66666%; }
+
+    &.last,
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &.x-xs {
+      @include break(baby-bear) {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    &.x-sm {
+      @include break(middle-bear) {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    &.x-md {
+      @include break(cubs) {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    &[data-fade="true"] {
+      transition: opacity $easeOutQuint, transform $easeOutQuint;
+    }
+  }
+}
+
+
+
+// Content Band (Deprecated)
+// =============================================================================
+
+@mixin content_band() {
+  .x-content-band {
+    margin: 0 0 $baseMargin;
+    padding: 40px 0;
+    @include clearfix();
+
+    &.bg-image,
+    &.bg-pattern {
+      background-position: 50% 50%;
+
+      &.parallax {
+        background-attachment: fixed;
+      }
+    }
+
+    &.bg-image {
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &.bg-pattern {
+      background-repeat: repeat;
+    }
+
+    &.bg-video {
+      position: relative;
+      overflow: hidden;
+    }
+
+    &.border-top    { border-top:    1px solid rgba(0, 0, 0, 0.075); }
+    &.border-left   { border-left:   1px solid rgba(0, 0, 0, 0.075); }
+    &.border-right  { border-right:  1px solid rgba(0, 0, 0, 0.075); }
+    &.border-bottom { border-bottom: 1px solid rgba(0, 0, 0, 0.075); }
+
+    &.marginless-columns {
+      .x-container {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+
+        &:before,
+        &:after {
+          display: none;
+        }
+
+        .x-column {
+          display: table-cell;
+          margin-right: 0;
+          float: none;
+          vertical-align: top;
+
+          &.x-1-1 { width: 100%;      }
+          &.x-1-2 { width: 50%;       }
+          &.x-1-3 { width: 33.33333%; }
+          &.x-2-3 { width: 66.66666%; }
+          &.x-1-4 { width: 25%;       }
+          &.x-3-4 { width: 75%;       }
+          &.x-1-5 { width: 20%;       }
+          &.x-2-5 { width: 40%;       }
+          &.x-3-5 { width: 60%;       }
+          &.x-4-5 { width: 80%;       }
+          &.x-1-6 { width: 16.66666%; }
+          &.x-5-6 { width: 83.33333%; }
+        }
+      }
+
+      @include break(middle-bear) {
+        .x-container {
+          display: block;
+
+          &:before,
+          &:after {
+            display: table;
+          }
+
+          .x-column[class*="x-"] {
+            display: block;
+            width: 100%;
+            vertical-align: inherit;
+          }
+        }
+      }
+    }
+
+    &.vc .wpb_row,
+    &.vc .wpb_content_element {
+      margin-bottom: 0;
+    }
+
+    .x-container {
+      position: relative;
+    }
+  }
+}

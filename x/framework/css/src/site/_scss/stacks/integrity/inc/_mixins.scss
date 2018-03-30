@@ -1,0 +1,90 @@
+// =============================================================================
+// _MIXINS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Category and Tag Links
+//   02. Thumbnail Style
+// =============================================================================
+
+// Category and Tag Links
+// =============================================================================
+
+@mixin btn_simple($style: standard) {
+  & {
+    display: inline-block;
+    @if $style == standard {
+      float: left;
+    } @else if $style == breadcrumb {
+      float: none;
+    }
+    position: relative;
+    @if $style == standard {
+      margin: 0.615em 0.615em 0 0;
+    } @else if $style == breadcrumb {
+      margin: 0.45em 0.375em;
+    }
+    border: 1px solid $tagBorderColor;
+    border: 1px solid $tagBorderColorRgba;
+    padding: 0.692em 1.154em 0.769em;
+    cursor: pointer;
+    @include font-size(1.3);
+    line-height: 1.3;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: $tagColor;
+    color: $tagColorRgba;
+    background-color: transparent;
+    border-radius: 0.35em;
+    @include box-shadow(#{inset 0 0 0 rgba(0, 0, 0, 0), $tagBoxShadow});
+    @include transition(#{color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease});
+    @include break(middle-bear) {
+      @include font-size(1.1);
+    }
+    @include break(baby-bear) {
+      @include font-size(1.0);
+    }
+
+    &:hover {
+      color: $tagColorHover;
+      color: $tagColorHoverRgba;
+      border-color: $tagBorderColorHover;
+      border-color: $tagBorderColorHoverRgba;
+      background-color: $tagBackgroundColorHover;
+      background-color: $tagBackgroundColorHoverRgba;
+    }
+
+    &:active {
+      color: $tagColorActive;
+      color: $tagColorActiveRgba;
+      border-color: $tagBorderColorActive;
+      border-color: $tagBorderColorActiveRgba;
+      background-color: $tagBackgroundColorActive;
+      background-color: $tagBackgroundColorActiveRgba;
+      @include box-shadow(#{$tagBoxShadowActive});
+    }
+  }
+}
+
+
+
+// Thumbnail Style
+// =============================================================================
+
+@mixin img_thumbnail() {
+  & {
+    padding: 5px;
+    line-height: $baseLineHeight;
+    border: 1px solid $shortcodeBorderColor;
+    border: 1px solid $shortcodeBorderColorRgba;
+    background-color: $thumbnailBackground;
+    border-radius: 2px;
+    @include box-shadow(#{$thumbnailBoxShadow});
+    @include transition(#{border 0.3s ease, box-shadow 0.3s ease});
+  }
+}

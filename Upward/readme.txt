@@ -1,0 +1,1 @@
+Firstly, a huge thanks for purchasing this theme, your support is truly appreciated! I encourage you to read documentation thoroughly if you are experiencing any difficulties. For more information, please, check out Extended Documentation - http://strictthemes.com/documentation - as well.

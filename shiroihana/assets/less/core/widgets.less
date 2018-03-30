@@ -1,0 +1,533 @@
+
+/* ==========================================================================
+	9.1 Base Widget Styling
+============================================================================= */
+
+.widget {
+	.sidebar & {
+		background-color: @widget-box-bg;
+		margin-left: @grid-gutter-width / -2;
+		margin-right: @grid-gutter-width / -2;
+		padding: 35px;
+	}
+
+	.footer-widgets & {
+		font-size: @font-size-base - 1;
+
+		+ .widget {
+			margin-top: @grid-gutter-width * 1.5;
+		}
+	}
+}
+
+.widget-title {
+	position: relative;
+	margin: 0 0 20px;
+	> span {
+		position: relative;
+		z-index: 1;
+		display: inline-block;
+		background-color: @widget-box-bg;
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		margin-top: -1px;
+		border-style: dotted;
+		border-color: @dotted-border-color;
+		border-width: 1px 0;
+		height: 3px;
+		left: 0; right: 0;
+	}
+
+	.sidebar & {
+		text-align: center;
+		> span {
+			padding: 0 10px;
+		}
+	}
+
+	.footer-widgets & {
+		&, a {
+			color: @footer-link-color;
+		}
+		> span {
+			padding-right: 10px;
+			background-color: @footer-bg;
+		}
+		&:after {
+			border-color: @footer-base-border-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	9.2 Widget Form Elements
+============================================================================= */
+
+.widget {
+	select, 
+	textarea, 
+	input[type="text"], 
+	input[type="password"], 
+	input[type="datetime"], 
+	input[type="datetime-local"], 
+	input[type="date"], 
+	input[type="month"], 
+	input[type="time"], 
+	input[type="week"], 
+	input[type="number"], 
+	input[type="email"], 
+	input[type="url"], 
+	input[type="search"], 
+	input[type="tel"], 
+	input[type="color"] {
+		display: block;
+		width: 100%;
+		height: @input-height-base;
+		padding: @padding-base-vertical @padding-base-horizontal;
+		font-size: @font-size-base;
+		line-height: @line-height-base;
+		color: @input-color;
+		background-color: @input-bg;
+		background-image: none;
+		border: 1px solid @input-border;
+		border-radius: @input-border-radius;
+		.transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+
+		&:focus {
+			border-color: @input-border-focus;
+			outline: 0;
+		}
+
+		// Placeholder
+		.placeholder();
+
+		// Disabled and read-only inputs
+		//
+		// HTML5 says that controls under a fieldset > legend:first-child won't be
+		// disabled if the fieldset is disabled. Due to implementation difficulty, we
+		// don't honor that edge case; we style them as disabled anyway.
+		&[disabled],
+		&[readonly] {
+			background-color: @input-bg-disabled;
+			opacity: 1;
+		}
+
+		&[disabled] {
+			cursor: @cursor-disabled;
+		}
+	}
+
+	textarea {
+		height: auto;
+	}
+}
+
+/* ==========================================================================
+	9.3 WordPress Widgets
+============================================================================= */
+
+.widget_archive, 
+.widget_categories, 
+.widget_nav_menu, 
+.widget_meta, 
+.widget_pages, 
+.widget_recent_comments, 
+.widget_recent_entries, 
+.widget_rss {
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		ul {
+			padding-left: 1.5em;
+		}
+		li {
+			padding: 5px 0;
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
+		ul, li + li {
+			border-top: 1px solid @base-border-color;
+			.footer-widgets & {
+				border-top-color: @footer-base-border-color;
+			}
+		}
+	}
+}
+
+.widget_categories, 
+.widget_archive {
+	.screen-reader-text {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0,0,0,0);
+		border: 0;
+	}
+}
+
+/* ==========================================================================
+	9.4 WordPress Calendar Widget
+============================================================================= */
+
+.widget_calendar table {
+	width: 100%;
+	border: 1px solid @table-border-color;
+
+	caption {
+		text-align: center;
+		padding-top: 0;
+		font-size: @font-size-small;
+	}
+
+	th, td {
+		border: 1px solid @table-border-color;
+		padding: @table-condensed-cell-padding;
+		line-height: @line-height-base;
+		vertical-align: top;
+		text-align: center;
+	}
+
+	thead th {
+		border-bottom: 1px solid @table-border-color;
+		background-color: @table-bg-accent;
+
+		.footer-widgets & {
+			border-bottom-color: lighten(@footer-bg, 13.5%);
+			background-color: lighten(@footer-bg, 3.5%);
+		}
+	}
+
+	.footer-widgets & {
+		&, th, td {
+			border-color: lighten(@footer-bg, 13.5%);
+		}
+	}
+}
+
+/* ==========================================================================
+	9.5 WordPress Tagcloud Widget
+============================================================================= */
+
+.widget_tag_cloud .tagcloud {
+	.clearfix();
+	a {
+		float: left;
+		color: @text-muted;
+		padding: 4px 12px;
+		margin: 0 5px 5px 0;
+		letter-spacing: 1px;
+		font-family: "Inconsolata";
+		text-transform: uppercase;
+		font-size: @font-size-small !important;
+		border: 1px solid @base-border-color;
+		border-radius: 3px;
+		.transition-property(color, border-color, background-color;);
+		&:hover {
+			color: #fff;
+			border-color: @brand-primary;
+			background-color: @brand-primary;
+		}
+		.footer-widgets & {
+			border-color: @footer-base-border-color;
+			&:hover {
+				color: @footer-link-color;
+				border-color: @brand-primary;
+				background-color: @brand-primary;
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	9.6 Posts Widget
+============================================================================= */
+
+.youxi-posts-widget {
+	.hentry + .hentry {
+		margin-top: @grid-gutter-width / 2;
+		padding-top: @grid-gutter-width / 2;
+		border-top: 1px solid @base-border-color;
+		.footer-widgets & {
+			border-top-color: @footer-base-border-color;
+		}
+	}
+}
+
+.posts-widget-thumbnail {
+	width: 64px;
+	height: 64px;
+	float: left;
+	margin-right: 16px;
+	img {
+		border-radius: 3px;
+	}
+}
+
+.posts-widget-description {
+	overflow: hidden;
+
+	.entry-title {
+		line-height: 1.4;
+		margin: 0 0 1px;
+		.footer-widgets & a {
+			color: @footer-link-color;
+		}
+	}
+
+	.entry-meta {
+		color: @text-muted;
+		font-size: @font-size-small;
+	}
+}
+
+/* ==========================================================================
+	9.7 Social List Widget
+============================================================================= */
+
+.youxi-social-widget {
+	ul {
+		margin-left: -3px;
+		margin-right: -3px;
+		margin-bottom: -6px;
+		text-align: center;
+	}
+	li {
+		display: inline-block;
+		vertical-align: top;
+		padding: 0 3px;
+		margin-bottom: 6px;
+
+		a {
+			display: block;
+			text-align: center;
+			border-radius: 50%;
+			color: #fff;
+			font-size: 12px;
+			background-color: #2f2f2f;
+			.transition-property(color, background-color;);
+			&, .socicon {
+				width: 31px;
+				height: 31px;
+				line-height: 31px;
+			}
+		}
+
+		&.social-twitter > a {
+			&:hover {
+				background-color: @color-twitter;
+			}
+		}
+		&.social-facebook > a {
+			&:hover {
+				background-color: @color-facebook;
+			}
+		}
+		&.social-googleplus > a {
+			&:hover {
+				background-color: @color-google;
+			}
+		}
+		&.social-pinterest > a {
+			&:hover {
+				background-color: @color-pinterest;
+			}
+		}
+		&.social-linkedin > a {
+			&:hover {
+				background-color: @color-linkedin;
+			}
+		}
+		&.social-youtube > a {
+			&:hover {
+				background-color: @color-youtube;
+			}
+		}
+		&.social-vimeo > a {
+			&:hover {
+				background-color: @color-vimeo;
+			}
+		}
+		&.social-tumblr > a {
+			&:hover {
+				background-color: @color-tumblr;
+			}
+		}
+		&.social-instagram > a {
+			&:hover {
+				background-color: @color-instagram;
+			}
+		}
+		&.social-flickr > a {
+			&:hover {
+				background-color: @color-flickr;
+			}
+		}
+		&.social-dribbble > a {
+			&:hover {
+				background-color: @color-dribbble;
+			}
+		}
+		&.social-foursquare > a {
+			&:hover {
+				background-color: @color-foursquare;
+			}
+		}
+		&.social-forrst > a {
+			&:hover {
+				background-color: @color-forrst;
+			}
+		}
+		&.social-vkontakte > a {
+			&:hover {
+				background-color: @color-vkontakte;
+			}
+		}
+		&.social-wordpress > a {
+			&:hover {
+				background-color: @color-wordpress;
+			}
+		}
+		&.social-stumbleupon > a {
+			&:hover {
+				background-color: @color-stumbleupon;
+			}
+		}
+		&.social-yahoo > a {
+			&:hover {
+				background-color: @color-yahoo;
+			}
+		}
+		&.social-blogger > a {
+			&:hover {
+				background-color: @color-blogger;
+			}
+		}
+		&.social-soundcloud > a {
+			&:hover {
+				background-color: @color-soundcloud;
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+   9.8 Instagram & Flickr Widget
+============================================================================= */
+
+.youxi-instagram-widget, 
+.youxi-flickr-widget {
+	.feed-list {
+		margin-left: -4px;
+		margin-right: -4px;
+		margin-bottom: -8px;
+		padding: 0;
+
+		list-style: none;
+		li {
+			display: inline-block;
+			vertical-align: top;
+			width: 25%;
+			padding: 0 4px;
+			margin-bottom: 8px;
+		}
+
+		a {
+			position: relative;
+			display: block;
+			padding-top: 100%;
+			margin-bottom: 0;
+
+			> img {
+				position: absolute;
+				top: 0; left: 0;
+				max-width: none;
+				width: 100%;
+				border-radius: 3px;
+			}
+			&:after {
+				content: '';
+				z-index: 1;
+				position: absolute;
+				left: 0; top: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				background-color: rgba(255, 255, 255, 0.2);
+				border-radius: 3px;
+				.transition(opacity .25s);
+			}
+			&:hover:after {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	9.9 Twitter Widget
+============================================================================= */
+
+.youxi-twitter-widget {
+	.feed-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li + li {
+		margin-top: @grid-gutter-width / 2;
+		padding-top: @grid-gutter-width / 2;
+		border-top: 1px solid @base-border-color;
+		.footer-widgets & {
+			border-top-color: @footer-base-border-color;
+		}
+	}
+
+	.twitter-intents {
+		display: none;
+	}
+
+	.twitter-header {
+		.clearfix();
+		display: block;
+		margin-bottom: 5px;
+	}
+
+	.twitter-avatar {
+		float: left;
+		margin-right: 10px;
+		a {
+			display: block;
+		}
+	}
+
+	.twitter-info, 
+	.twitter-text {
+		display: block;
+	}
+
+	.twitter-info {
+		overflow: hidden;
+		line-height: 1.5;
+		a {
+			display: block;
+		}
+	}
+
+	.twitter-time {
+		font-size: @font-size-small;
+	}
+
+	.twitter-user, 
+	.twitter-time {
+		color: @text-muted;
+	}
+}

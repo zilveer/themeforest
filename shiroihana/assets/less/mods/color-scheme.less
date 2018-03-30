@@ -1,0 +1,512 @@
+ 
+// Responsive breakpoints
+@screen-sm: 768px;
+@screen-sm-min: @screen-sm;
+@screen-md: 992px;
+@screen-md-min: @screen-md;
+
+// Color variables
+@brand-primary: #a57a50;
+
+@base-box-bg: #ffffff;
+
+@body-bg: #f0f0f0;
+@text-color: #444;
+
+@headings-color: #101010;
+
+@base-border-color: #eaeaea;
+@dotted-border-color: #d5d5d5;
+
+@header-top-bg: #1d1d1d;
+@header-top-text-color: #a7a7a7;
+@header-top-link-hover-color: #ffffff;
+
+@header-bg: #ffffff;
+
+@menu-link-color: @text-color;
+@menu-link-hover-color: @headings-color;
+@menu-submenu-bg: #1d1d1d;
+@menu-submenu-link-color: #a7a7a7;
+@menu-submenu-link-hover-color: #ffffff;
+
+@footer-bg: #383838;
+@footer-text-color: #cccccc;
+@footer-link-color: #fafafa;
+@footer-link-hover-color: #ffffff;
+@footer-bottom-bg: #2f2f2f;
+
+@widget-box-bg: @base-box-bg;
+@widget-title-color: @headings-color;
+@widget-title-border-color: @dotted-border-color;
+@widget-border-color: @base-border-color;
+@widget-footer-title-color: #fafafa;
+@widget-footer-title-border-color: #4d4d4d;
+@widget-footer-border-color: #4d4d4d;
+
+/* ==========================================================================
+	Typography
+============================================================================= */
+
+body {
+	background-color: @body-bg;
+	color: @text-color;
+}
+
+blockquote {
+	color: @headings-color;
+
+	&:after {
+		border-top-color: @dotted-border-color;
+	}
+
+	&:before {
+		background-color: @base-box-bg;
+	}
+}
+
+h1, h2, h3, h4, h5, h6, 
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	color: @headings-color;
+	a:hover {
+		color: @brand-primary;
+	}
+
+	&.bordered {
+		> span {
+			background-color: @base-box-bg;
+		}
+
+		&:after {
+			border-color: @dotted-border-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	Header Top
+============================================================================= */
+
+.site-header-top {
+	background-color: @header-top-bg;
+	color: @header-top-text-color;
+}
+
+/* ==========================================================================
+	Header Social
+============================================================================= */
+
+.site-header-social {
+	ul li:hover {
+		background-color: lighten(@header-top-bg, 7%);
+		a {
+			color: @header-top-link-hover-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	Header Search
+============================================================================= */
+
+.site-header-search {
+	background-color: lighten(@header-top-bg, 6.25%);
+	&:hover, 
+	&.open {
+		.search-toggle {
+			color: @header-top-link-hover-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	Secondary Nav
+============================================================================= */
+
+.secondary-nav {
+	@media (min-width: @screen-sm-min) {
+		.mq-768 & {
+			ul li {
+				&:hover, 
+				&.current-menu-item {
+					> a {
+						color: @header-top-link-hover-color;
+					}
+				}
+			}
+
+			.menu {
+				ul {
+					background-color: @header-top-bg;
+				}
+				> li li + li {
+					border-top: 1px solid lighten(@header-top-bg, 10%);
+				}
+			}
+		}
+	}
+	@media (min-width: @screen-md-min) {
+		ul li {
+			&:hover, 
+			&.current-menu-item {
+				> a {
+					color: @header-top-link-hover-color;
+				}
+			}
+		}
+		.menu {
+			ul {
+				background-color: @header-top-bg;
+			}
+			> li li + li {
+				border-top: 1px solid lighten(@header-top-bg, 10%);
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	Header
+============================================================================= */
+
+.site-header {
+	background-color: @header-bg;
+}
+
+.site-header-middle {
+	@media (min-width: @screen-md-min) {
+		border-bottom-color: @base-border-color;
+	}
+}
+
+.affix-container.affix {
+	background-color: @header-bg;
+}
+
+/* ==========================================================================
+	Primary Nav
+============================================================================= */
+
+.primary-nav {
+
+	background-color: @header-bg;
+	border-bottom-color: @base-border-color;
+
+	.subnav-toggle {
+		border-left-color: @base-border-color;
+		&:after {
+			border-color: @text-color;
+		}
+	}
+
+	ul li {
+		border-top-color: @base-border-color;
+		a {
+			color: @menu-link-color;
+		}
+		&:hover, 
+		&.current-menu-item {
+			> a {
+				color: @menu-link-hover-color;
+			}
+		}
+	}
+
+	@media (min-width: @screen-sm-min) {
+		.mq-768 & {
+			background-color: transparent;
+			.menu {
+				ul {
+					background-color: @menu-submenu-bg;
+				}
+
+				> li {
+					ul {
+						border-left-color: lighten(@menu-submenu-bg, 6.25%);
+					}
+					li {
+						a {
+							color: @menu-submenu-link-color;
+						}
+						&:hover, 
+						&.current-menu-item {
+							> a {
+								color: @menu-submenu-link-hover-color;
+							}
+						}
+						+ li {
+							border-top-color: lighten(@menu-submenu-bg, 6.25%);
+						}
+					}
+					> ul:after {
+						border-bottom-color: @menu-submenu-bg;
+					}
+				}
+			}
+		}
+	}
+	@media (min-width: @screen-md-min) {
+		background-color: transparent;
+		.menu {
+			ul {
+				background-color: @menu-submenu-bg;
+			}
+
+			> li {
+				ul {
+					border-left-color: lighten(@menu-submenu-bg, 6.25%);
+				}
+				li {
+					a {
+						color: @menu-submenu-link-color;
+					}
+					&:hover, 
+					&.current-menu-item {
+						> a {
+							color: @menu-submenu-link-hover-color;
+						}
+					}
+					+ li {
+						border-top-color: lighten(@menu-submenu-bg, 6.25%);
+					}
+				}
+				> ul:after {
+					border-bottom-color: @menu-submenu-bg;
+				}
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	Entries Wrap
+============================================================================= */
+
+.entries-wrap {
+	background-color: @base-box-bg;
+
+	.hentry {
+		border-top-color: @base-border-color;
+	}
+
+	@media (min-width: @screen-sm-min) {
+
+		&.entries-wrap-grid {
+			&:after, &:before {
+				border-left-color: @base-border-color
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	Entries Nav
+============================================================================= */
+
+.entries-page-nav {
+	a {
+		.entries-page-nav-item {
+			border-color: @base-border-color;
+		}
+		&:hover .entries-page-nav-item {
+			border-color: @brand-primary;
+		}
+	}
+}
+
+.entries-nav ul li {
+	background-color: @base-box-bg;
+}
+
+/* ==========================================================================
+	More link
+============================================================================= */
+
+.entry-content .more-link-wrap .more-link {
+	border-color: @base-border-color;
+}
+
+/* ==========================================================================
+	Entry Footer
+============================================================================= */
+
+.entry-footer-section-inner, 
+.entry-comments-wrap {
+	border-top-color: @dotted-border-color;
+}
+
+/* ==========================================================================
+	Entry Related
+============================================================================= */
+
+.entry-related-section-title {
+	> span {
+		background-color: @base-box-bg;
+	}
+	&:before {
+		border-color: @dotted-border-color;
+	}
+}
+
+/* ==========================================================================
+	Entry Sharing
+============================================================================= */
+
+.entry-sharing .entry-sharing-label {
+	border-right-color: @dotted-border-color;
+}
+
+/* ==========================================================================
+	Site Footer
+============================================================================= */
+
+.site-footer {
+	background-color: @footer-bg;
+	color: @footer-text-color;
+	a {
+		color: @footer-link-color;
+		&:hover {
+			color: @footer-link-hover-color;
+		}
+	}
+}
+
+.footer-bottom {
+	background-color: @footer-bottom-bg;
+}
+
+/* ==========================================================================
+	Widget Base
+============================================================================= */
+
+.sidebar .widget {
+	background-color: @widget-box-bg;
+}
+
+.widget-title {
+	color: @widget-title-color;
+	> span {
+		background-color: @widget-box-bg;
+	}
+	&:after {
+		border-color: @widget-title-border-color;
+	}
+
+	.footer-widgets & {
+		&, a {
+			color: @widget-footer-title-color;
+		}
+		> span {
+			background-color: @footer-bg;
+		}
+		&:after {
+			border-color: @widget-footer-title-border-color;
+		}
+	}
+}
+
+.widget_archive, 
+.widget_categories, 
+.widget_nav_menu, 
+.widget_meta, 
+.widget_pages, 
+.widget_recent_comments, 
+.widget_recent_entries, 
+.widget_rss {
+	ul ul, ul li + li {
+		border-top-color: @widget-border-color;
+		.footer-widgets & {
+			border-top-color: @widget-footer-border-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	Tagcloud
+============================================================================= */
+
+.widget_tag_cloud .tagcloud a {
+	border-color: @widget-border-color;
+	.footer-widgets & {
+		border-color: @widget-footer-border-color;
+	}
+
+	&:hover {
+		border-color: @brand-primary;
+	}
+}
+
+/* ==========================================================================
+	Twitter & Post Widget
+============================================================================= */
+
+.youxi-twitter-widget li + li, 
+.youxi-posts-widget .hentry + .hentry {
+	border-top-color: @widget-border-color;
+	.footer-widgets & {
+		border-top-color: @widget-footer-border-color;
+	}
+}
+
+.posts-widget-description {
+	.entry-title a {
+		.footer-widgets & {
+			color: @footer-link-color;
+			&:hover {
+				color: @footer-link-hover-color;
+			}
+		}
+	}
+}
+
+/* ==========================================================================
+	Calendar Widget
+============================================================================= */
+
+#wp-calendar {
+	thead th {
+		border-bottom-color: @widget-border-color;
+		background-color: lighten(@widget-box-bg, 3.5%);
+	}
+
+	&, th, td {
+		border-color: @widget-border-color;
+	}
+
+	.footer-widgets & {
+		thead th {
+			border-bottom-color: @widget-footer-border-color;
+			background-color: lighten(@footer-bg, 3.5%);
+		}
+
+		&, th, td {
+			border-color: @widget-footer-border-color;
+		}
+	}
+}
+
+/* ==========================================================================
+	Pricing Table
+============================================================================= */
+
+.pricing-table {
+	border-color: @base-border-color;
+
+	.table-header {
+		border-bottom-color: @base-border-color;
+	}
+
+	.table-price {
+		border-bottom-color: @base-border-color;
+		background-color: @body-bg;
+	}
+
+	.table-features ul {
+		li {
+			border-bottom-color: @base-border-color;
+			&:nth-child(2n) {
+				background-color: @body-bg;
+			}
+		}
+	}
+}

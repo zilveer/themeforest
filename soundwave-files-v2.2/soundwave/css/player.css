@@ -1,0 +1,502 @@
+/* -------------------------------------------
+    AUDIO
+   ------------------------------------------- */
+   
+#fap-wrapper * {
+    margin: 0;
+    padding: 0;
+    list-style: none !important;
+    line-height: 12px;
+    outline: none !important;
+}
+
+#fap-wrapper {
+    min-width: 100%;
+    position: fixed;
+    left: 0;
+    z-index: 100000;
+    font-size: 12px;
+    background: url("../images/player/player-bg.png");
+}
+
+#fap-wrapper-switcher {
+    position: absolute;
+    right: -90px;
+    cursor: pointer;
+}
+
+.button-switcher-enter, .button-switcher-close {
+    width: 50px;
+    height: 35px;
+}
+
+#fap-init-text {
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+}
+
+.fap-wrapper-top #fap-init-text { bottom: 20px }
+
+.fap-wrapper-bottom #fap-init-text { top: 20px }
+
+#fap-main {
+    width: 1005px;
+    height: 100%;
+    position: relative;
+}
+
+#fap-meta-wrapper {
+    width: 430px;
+    float: left;
+    margin-top: 10px;
+}
+
+#fap-current-cover, #fap-cover-replacement {
+    text-align: center;
+    font-size: 18px;
+    float: left;
+    margin-top: 0px;
+}
+
+#fap-cover-icon {
+    background: url("../images/player/player-cover.png");
+    width: 32px;
+    height: 32px;
+    margin-top: -5px;
+}
+
+#fap-current-title {
+    font-weight: 400;
+    font-size: 14px;
+    padding-right: 20px;
+    margin-top: -1px;
+    margin-bottom: 0px;
+    color: #fff;
+	overflow: hidden;
+	height: 14px;
+}
+
+#fap-current-meta { 
+	font-size: 12px;
+}
+
+#fap-current-meta a {
+    font-size: 13px;
+    margin-top: -26px;
+    line-height: 20px;
+}
+
+#fap-current-meta a:hover { color: #fff }
+
+#fap-social-links { margin-top: 7px }
+
+#fap-social-links a {
+    font-size: 10px;
+    margin-right: 10px;
+    text-decoration: underline;
+}
+
+#fap-social-links a:hover { text-decoration: none }
+
+
+#fap-ui-wrapper { float: right }
+
+#fap-ui-wrapper > div, #fap-ui-wrapper > a { float: left }
+
+#fap-ui-nav {
+    position: relative;
+    width: 80px;
+    height: 40px;
+}
+
+#fap-ui-wrapper > div { margin-right: 11px }
+
+#fap-ui-wrapper > div:last-child { margin-right: 0 }
+
+#fap-ui-nav > a {
+    background-repeat: no-repeat;
+    display: block;
+    position: absolute;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+#fap-ui-nav .fap-play, #fap-ui-nav .fap-pause, #fap-ui-nav #fap-next, #fap-ui-nav #fap-previous {
+    transition: .0s ease-in-out;
+    -moz-transition: .0s ease-in-out;
+    -webkit-transition: .0s ease-in-out;
+}
+
+#fap-ui-nav #fap-previous, #fap-ui-nav #fap-next {
+    width: 31px;
+    height: 31px;
+    margin-top: 5px;
+}
+
+#fap-ui-nav #fap-play-pause {
+    top: 0;
+    left: 20px;
+    width: 41px;
+    height: 41px;
+    z-index: 3;
+}
+
+#fap-time-bar {
+    position: relative;
+    width: 300px;
+    height: 18px;
+    margin-top: 23px;
+    background: #2f3538;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding-right: 8px;
+}
+
+#fap-loading-bar {
+    background: #111;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+#fap-progress-bar {
+    margin-top: 4px;
+    margin-left: 4px;
+    height: 7px;
+}
+
+#fap-time-bar div {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#fap-time-bar div, #fap-volume-bar, #fap-volume-bar div { cursor: pointer }
+
+#fap-time-bar div { width: 0 }
+
+#fap-time-bar span { margin-top: 20px }
+
+#fap-volume-bar div { width: 100% }
+
+#fap-current-time, #fap-total-time { color: #666 }
+
+#fap-total-time { margin-right: -8px }
+
+#fap-time-bar #fap-current-time { float: left }
+
+#fap-time-bar #fap-total-time { float: right }
+
+#fap-volume-bar {
+    margin-right: 5px;
+    position: relative;
+    width: 90px;
+    height: 18px;
+    margin-top: 23px;
+    background: #2f3538;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding-right: 8px;
+}
+
+#fap-loading-volume {
+    background: #111;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+#fap-volume-progress {
+    margin-top: -10px;
+    margin-left: 4px;
+    height: 7px;
+}
+
+#fap-volume-sign {
+    background-image: url("../images/player/player-volume.png");
+    background-repeat: no-repeat;
+    background-position: 0 1px;
+    width: 24px;
+    height: 24px;
+    float: left;
+    margin-left: 10px;
+}
+
+#fap-time-bar div, #fap-volume-bar div {
+    height: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.antiscroll-wrap {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.antiscroll-wrap .box, .antiscroll-wrap .box .antiscroll-inner { width: 990px }
+
+.antiscroll-scrollbar {
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    position: absolute;
+    opacity: 0;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    -webkit-transition: linear 300ms opacity;
+    -moz-transition: linear 300ms opacity;
+    -o-transition: linear 300ms opacity;
+}
+
+.antiscroll-scrollbar-shown {
+    opacity: 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+
+.antiscroll-scrollbar-vertical {
+    width: 7px;
+    margin-top: 2px;
+    right: 2px;
+    top: 0;
+}
+
+.antiscroll-inner { overflow-y: scroll }
+
+.antiscroll-inner::-webkit-scrollbar, .antiscroll-inner::scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.clearfix:before, .clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+
+.clearfix:after { clear: both }
+
+.clearfix { zoom: 1 }
+
+.clear { clear: both }
+
+
+/* -------------------------------------------
+    RADIO
+   ------------------------------------------- */
+   
+#radio-wz {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+#radio-wz-hide {
+    width: 1005px;
+    margin: 0px auto 0px auto;
+}
+
+.radio-wz-open {
+    width: 50px;
+    height: 35px;
+    cursor: pointer;
+    margin-left: 1050px;
+}
+
+.radio-wz-open-hidden {
+    width: 50px;
+    height: 35px;
+    cursor: pointer;
+    margin-left: 1050px;
+}
+
+.radio-wz-hidden-open {
+    width: 50px;
+    height: 35px;
+}
+
+#radio-wz-source {
+    background: url("../images/player/player-bg.png");
+    width: 100%;
+    height: 64px;
+    text-decoration: none;
+}
+
+#radio-wz #radio-wz-col { display: none }
+
+#jp_container_1 {
+    left: 0;
+    bottom: 0;
+    z-index: 100000;
+    width: 100%;
+    background: none;
+}
+
+.jp-type-single { margin: 0px auto 0px auto }
+
+li.radio-title {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    margin-left: 26px;
+    margin-top: -3px;
+}
+
+li.radio-info {
+    font-size: 14px;
+    color: #666;
+    font-weight: 400;
+    clear: both;
+    margin-top: -23px;
+    margin-left: 108px;
+}
+
+.jp-type-single {
+    width: 1055px;
+    height: 100%;
+    position: relative;
+    margin: 0px auto 0px auto;
+}
+
+div.jp-audio, div.jp-audio-stream {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    background-color: #eee;
+}
+
+div.jp-interface ul.jp-controls {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+div.jp-audio ul.jp-controls {
+    width: 880px;
+    padding: 10px 20px 0 20px;
+}
+
+div.jp-audio-stream ul.jp-controls {
+    width: 142px;
+    padding: 20px 20px 0 20px;
+}
+
+div.jp-video div.jp-type-single ul.jp-controls {
+    width: 78px;
+    margin-left: 200px;
+}
+
+div.jp-video div.jp-type-playlist ul.jp-controls {
+    width: 134px;
+    margin-left: 172px;
+}
+
+div.jp-interface ul.jp-controls li {
+    display: inline;
+    float: left;
+}
+
+div.jp-interface ul.jp-controls a {
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+a.jp-repeat, a.jp-stop, a.jp-previous, a.jp-next, a.jp-repeat-off, a.jp-play, a.jp-pause {
+    transition: .0s ease-in-out;
+    -moz-transition: .0s ease-in-out;
+    -webkit-transition: .0s ease-in-out;
+}
+
+a.jp-play, a.jp-pause {
+    width: 41px;
+    height: 41px;
+    z-index: 10;
+    position: relative;
+}
+
+a.jp-repeat, a.jp-stop, a.jp-repeat-off {
+    width: 31px;
+    height: 31px;
+    margin-top: 5px;
+    margin-right: -7px;
+    z-index: 1;
+}
+
+div.jp-volume-bar {
+    position: relative;
+    overflow: hidden;
+    background: #2f3538;
+    width: 90px;
+    height: 18px;
+    cursor: pointer;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding-right: 8px;
+    float: right;
+    margin-top: -18px;
+}
+
+div.jp-audio div.jp-volume-bar {
+    top: 23px;
+    right: 0px;
+}
+
+div.jp-audio-stream div.jp-volume-bar {
+    top: 37px;
+    left: 92px;
+}
+
+div.jp-video div.jp-volume-bar {
+    top: 17px;
+    left: 72px;
+}
+
+div.jp-volume-bar-value {
+    width: 30px;
+    height: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+div.jp-volume-bar-loading {
+    background: #111;
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 90px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+div.jp-volume-sign {
+    background-image: url("../images/player/player-volume.png");
+    background-position: 0 2px;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    float: left;
+}
+
+div.jp-volume {
+    width: 144px;
+    float: right;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+}
+
+div.jp-current-time {
+    font-size: 24px;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 173px;
+}

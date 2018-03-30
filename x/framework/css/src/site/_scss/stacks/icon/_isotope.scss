@@ -1,0 +1,223 @@
+// =============================================================================
+// _ISOTOPE.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Isotope Filtering
+//   02. Isotope CSS3 Transitions
+//   03. Isotope Container
+//   04. Isotope Item
+//   05. Filters
+//   06. Loading Element
+// =============================================================================
+
+// Isotope Filtering
+// =============================================================================
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+// Isotope CSS3 Transitions
+// =============================================================================
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform;
+     -moz-transition-property:    -moz-transform;
+      -ms-transition-property:     -ms-transform;
+       -o-transition-property:         top, left;
+          transition-property:         transform;
+}
+
+
+//
+// Disabling Isotope CSS3 transitions.
+//
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+
+
+// Isotope Container
+// =============================================================================
+
+.x-iso-container {
+  margin: 10px;
+  @include box-sizing(content-box);
+}
+
+
+
+// Isotope Item
+// =============================================================================
+
+.x-iso-container > .hentry {
+  margin: 0;
+  opacity: 0;
+}
+
+.x-iso-container.cols-1 > .hentry {
+  width: 100%;
+}
+
+.x-iso-container.cols-2 > .hentry {
+  width: 49.95%;
+}
+
+.x-iso-container.cols-3 > .hentry {
+  width: 33.28%;
+  @include break(old-bear) {
+    width: 49.95%;
+  }
+}
+
+.x-iso-container.cols-4 > .hentry {
+  width: 33.28%;
+  @include break(papa-bear) {
+    width: 24.95%;
+  }
+  @include break(old-bear) {
+    width: 49.95%;
+  }
+}
+
+.x-iso-container[class*="cols-"] > .hentry {
+  @include break(middle-bear) {
+    width: 100%;
+  }
+}
+
+
+
+// Filters
+// =============================================================================
+
+.option-set {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  z-index: $zindexNavbar - 3;
+  @include translate3d(0, 0, 0);
+
+  li {
+    display: inline-block;
+    position: relative;
+  }
+}
+
+.x-portfolio-filters {
+  display: block;
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  @include font-size(2.4);
+  line-height: 40px;
+  text-align: center;
+  color: $baseModBackground;
+  background-color: $linkColor;
+
+  &:hover {
+    color: $baseModBackground;
+  }
+}
+
+.x-portfolio-filters-menu {
+  overflow: hidden;
+  position: absolute;
+  top: 125%;
+  right: 0;
+  width: 200px;
+  display: none;
+  margin: 0;
+  text-align: left;
+  background-color: $headingsColor;
+  @include translate3d(0, 0, 0);
+  z-index: $zindexNavbar - 2;
+
+  li {
+    display: block;
+    line-height: 1.3;
+
+    a {
+      display: block;
+      padding: 0.5em 1.75em;
+      color: $white;
+      @include opacity(0.35);
+
+      &:hover {
+        @include opacity(1);
+      }
+    }
+
+    &:first-child a {
+      padding-top: 1.35em;
+    }
+
+    &:last-child a {
+      padding-bottom: 1.35em;
+    }
+  }
+
+  .selected {
+    @include opacity(1);
+  }
+}
+
+.x-portfolio-filter {
+  display: inline-block;
+}
+
+
+
+// Loading Element
+// =============================================================================
+
+#x-isotope-loading {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  display: block;
+  width: 100px;
+  height: 9px;
+  margin-left: -50px;
+  background-image: url(../../../../img/global/loading.gif);
+}

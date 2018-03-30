@@ -1,0 +1,318 @@
+// =============================================================================
+// _NAVBAR.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Styles
+//   02. Brand
+//   03. Button
+//   04. All Navigation
+//   05. Desktop Navigation
+//   06. Mobile Navigation
+//   07. Fixed Navbar
+// =============================================================================
+
+// Base Styles
+// =============================================================================
+
+.x-navbar {
+  position: relative;
+  overflow: visible;
+  z-index: $zindexNavbar;
+
+  .x-container {
+    position: relative;
+  }
+}
+
+
+//
+// Navigation containers.
+//
+
+.x-nav-wrap {
+  &.desktop {
+    display: block;
+  }
+
+  &.mobile {
+    display: none;
+    clear: both;
+    overflow: hidden;
+  }
+
+  @include break(cubs) {
+    &.desktop {
+      display: none;
+    }
+
+    &.mobile {
+      display: block;
+
+      &.collapse {
+        display: none;
+
+        &.in {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+
+
+// Brand
+// =============================================================================
+
+.x-brand {
+  display: block;
+  float: left;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.masthead-stacked {
+  .x-brand {
+    display: inline-block;
+    float: none;
+  }
+}
+
+
+
+// Button
+// =============================================================================
+
+.x-btn-navbar {
+  display: none;
+  @include font-size(2.4);
+  line-height: 1;
+}
+
+@include break(cubs) {
+  .masthead-inline .x-btn-navbar {
+    display: block;
+    float: right;
+  }
+
+  .masthead-stacked .x-btn-navbar {
+    display: inline-block;
+  }
+}
+
+
+
+// All Navigation
+// =============================================================================
+
+.x-navbar .x-nav {
+  a {
+    @include transition(#{none});
+  }
+
+  > li > a > span {
+    display: inline-block;
+  }
+}
+
+
+//
+// Header layouts.
+//
+
+@include break(cubs) {
+  .masthead-stacked .x-navbar {
+    text-align: center;
+  }
+}
+
+
+
+// Desktop Navigation
+// =============================================================================
+
+.x-navbar .desktop .x-nav {
+  margin: 0;
+
+  > li {
+    float: left;
+
+    > a {
+      float: none;
+      line-height: 1;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  li > a {
+    > span:after {
+      content: "\f103";
+      margin-left: 0.35em;
+      @include font-awesome();
+    }
+
+    &:only-child > span:after {
+      content: "";
+      display: none;
+    }
+  }
+}
+
+.masthead-inline .desktop .x-nav {
+  display: block;
+  float: right;
+}
+
+.masthead-stacked .desktop .x-nav {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+// Mobile Navigation
+// =============================================================================
+
+.x-navbar .mobile .x-nav {
+  margin: 25px 0;
+
+  li > a {
+    display: block;
+    position: relative;
+    @include font-size(1.4);
+    line-height: 1.5;
+    white-space: normal;
+  }
+
+  ul {
+    margin: 0 0 0 2.25em;
+    list-style: none;
+  }
+}
+
+.masthead-stacked .mobile .x-nav {
+  text-align: initial;
+}
+
+
+//
+// Sub toggle.
+//
+
+.x-sub-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+
+  > span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin-top: -9px;
+    @include font-size(1.8);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+}
+
+
+
+// Fixed Navbar
+// =============================================================================
+
+//
+// Global fixed.
+//
+
+.x-navbar-fixed-top,
+.x-navbar-fixed-left,
+.x-navbar-fixed-right {
+  position: fixed;
+  z-index: $zindexNavbar;
+
+  @include break(cubs) {
+    position: relative;
+  }
+}
+
+
+//
+// Fixed top.
+//
+
+.x-navbar-fixed-top {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.x-navbar-fixed-top-active {
+  .x-navbar-wrap {
+    @include break(cubs) {
+      height: auto;
+    }
+  }
+}
+
+
+//
+// Fixed left and right.
+//
+
+.x-navbar-fixed-left,
+.x-navbar-fixed-right {
+  top: 0;
+  bottom: 0;
+  width: $navbarFixedSideWidth;
+
+  .x-navbar-inner {
+    height: 100%;
+
+    > .x-container.width {
+      width: 100%;
+    }
+  }
+
+  .x-brand {
+    float: none;
+    text-align: center;
+  }
+
+  .desktop .x-nav {
+    float: none;
+    margin-top: 2em;
+
+    > li {
+      float: none;
+    }
+  }
+
+  @include break(cubs) {
+    width: auto;
+
+    .x-brand {
+      float: left;
+    }
+  }
+}
+
+.x-navbar-fixed-left {
+  left: 0;
+}
+
+.x-navbar-fixed-right {
+  right: 0;
+}

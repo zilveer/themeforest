@@ -1,0 +1,104 @@
+/* 
+    Created on : 10.01.2015, 11:35:28
+    Author     : DFD
+	Styles for : Accordion
+*/
+ul.accordion {
+	margin: 0 0 22px 0;
+	border-bottom: none;
+	padding: 0;
+	list-style: none;
+
+	li {
+		 margin-bottom: 3px;
+		 background: transparent;
+		 .transition(~"background .3s ease-in-out, border-color .3s ease-in-out");
+		 
+		&:last-child {
+			.title {
+				border-bottom-width: 0;
+			}
+		}
+
+		.title {
+			.block();
+			.rel();
+			height: auto;
+			line-height: 1.6;
+			padding: 15px 0 15px 35px;
+			cursor: pointer;
+			border-bottom: 1px solid @border-color;
+			.icon {
+				@s: 18px;
+				.abs();
+				left: 0;
+				top: 50%;
+				margin-top: -@s / 2;
+				.block();
+				width: @s;
+				height: @s;
+				background: transparent;
+				border: 2px solid @border-color;
+				.rounded(50%);
+				.transition(~"background .3s ease-in-out, border-color .3s ease-in-out");
+
+				&:before {
+					content: "";
+					.block();
+					width: @s/3;
+					height: 2px;
+					.abs();
+					left: 50%;
+					top: 50%;
+					margin-top: -1px;
+					margin-left: -(@s/6);
+					background: @border-color;
+				}
+				&:after {
+					content:"";
+					.block();
+					width: 2px;
+					height: @s/3;
+					.abs();
+					left: 50%;
+					top: 50%;
+					margin-top: -(@s/6);
+					margin-left: -1px;
+					background: @border-color;
+					.opacity(1);
+					.transition(opacity .3s ease-in-out);
+				}
+			}
+		}
+		.content {
+			.hide();
+			.rel();
+			padding: 15px 0; 
+			color: @font-site-light-color;
+		}
+		&.active {
+
+			.title {
+				color: @second-site-light-color;
+
+				.icon {
+					background: @second-site-light-color;
+					border-color: @second-site-light-color;
+					&:after {
+						background: @main-site-dark-color;
+						.opacity(0);
+					}
+				}
+			}
+			.icon-wrap i {
+				color: @font-site-dark-color;
+			}
+			.content {
+				.block();
+			}
+		}
+		p {
+			margin: 0;
+		}
+	}
+}

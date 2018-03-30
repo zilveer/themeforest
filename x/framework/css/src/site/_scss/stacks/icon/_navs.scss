@@ -1,0 +1,341 @@
+// =============================================================================
+// _NAVS.SCSS
+// -----------------------------------------------------------------------------
+// Site styles.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Base Class
+//   02. Tabs
+//   03. Tabbable
+//   04. Article Navigation
+// =============================================================================
+
+// Base Class
+// =============================================================================
+
+.x-nav {
+  margin-left: 0;
+  margin-bottom: $baseMargin;
+  list-style: none;
+}
+
+
+//
+// Make links block level.
+//
+
+.x-nav > li > a {
+  display: block;
+}
+
+.x-nav > li > a:hover {
+  text-decoration: none;
+  background-color: transparent;
+}
+
+
+//
+// Redeclare float classes because of specifity.
+//
+
+.x-nav > .right {
+  float: right;
+}
+
+
+
+// Tabs
+// =============================================================================
+
+//
+// Give the tabs something to sit on.
+//
+
+.x-nav-tabs {
+  margin-bottom: 0;
+  border: 1px solid $baseBorderSolid;
+  border: 1px solid $baseBorderRgba;
+  border-bottom: 0;
+  @include clearfix();
+
+  > li {
+    float: left;
+    text-align: center;
+
+    > a {
+      padding: 0.75em 0.75em 0.95em;
+      @include font-size(1.4);
+      line-height: 1.3;
+      color: darken($baseModBackground, 17.5%);
+      background-color: darken($baseModBackground, 2%);
+
+      &:hover {
+        color: $textColor;
+        background-color: darken($baseModBackground, 2%);
+      }
+    }
+  }
+
+  &.top {
+    > li {
+      border-right: 1px solid $baseBorderSolid;
+      border-right: 1px solid $baseBorderRgba;
+
+      a {
+        border-bottom: 1px solid $baseBorderSolid;
+        border-bottom: 1px solid $baseBorderRgba;
+      }
+    }
+  }
+
+  &.left,
+  &.right {
+    width: 24%;
+    max-width: 200px;
+    border-bottom: 1px solid $baseBorderSolid;
+    border-bottom: 1px solid $baseBorderRgba;
+    @include break(cubs) {
+      float: none;
+      width: 100%;
+      max-width: none;
+    }
+
+    > .x-nav-tabs-item {
+      float: none;
+      width: 100%;
+      border-bottom: 1px solid $baseBorderSolid;
+      border-bottom: 1px solid $baseBorderRgba;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &.left {
+    margin-right: -1px;
+    border-right: 0;
+
+    > li a {
+      border-right: 1px solid $baseBorderSolid;
+      border-right: 1px solid $baseBorderRgba;
+    }
+
+    @include break(cubs) {
+      margin-right: 0;
+    }
+  }
+
+  &.right {
+    margin-left: -1px;
+    border-left: 0;
+
+    > li a {
+      border-left: 1px solid $baseBorderSolid;
+      border-left: 1px solid $baseBorderRgba;
+    }
+
+    @include break(cubs) {
+      margin-left: 0;
+    }
+  }
+
+  @include break(cubs) {
+    &.top,
+    &.left,
+    &.right {
+      border-bottom: 1px solid $baseBorderSolid;
+      border-bottom: 1px solid $baseBorderRgba;
+
+      > li.x-nav-tabs-item {
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid $baseBorderSolid;
+        border-bottom: 1px solid $baseBorderRgba;
+
+        > a,
+        &.active > a,
+        &.active > a:hover {
+          border-bottom: 0;
+        }
+
+        &:last-child > a,
+        &:last-child > a:hover {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    &.top > li.x-nav-tabs-item:last-child {
+      border-bottom: 0;
+    }
+
+    &.left > li.x-nav-tabs-item {
+      &.active > a,
+      &.active > a:hover {
+        border-right: 1px solid $baseBorderSolid;
+        border-right: 1px solid $baseBorderRgba;
+      }
+    }
+
+    &.right > li.x-nav-tabs-item {
+      &.active > a,
+      &.active > a:hover {
+        border-left: 1px solid $baseBorderSolid;
+        border-left: 1px solid $baseBorderRgba;
+      }
+    }
+  }
+}
+
+
+//
+// Active state, and it's :hover to override normal :hover.
+//
+
+.x-nav-tabs > .active > a,
+.x-nav-tabs > .active > a:hover {
+  color: $textColor;
+  background-color: $white;
+  cursor: default;
+}
+
+.x-nav-tabs {
+  &.top {
+    > .active > a,
+    > .active > a:hover {
+      border-bottom: 1px solid $baseModBackground;
+    }
+  }
+
+  &.left {
+    > .active > a,
+    > .active > a:hover {
+      border-right: 1px solid $baseModBackground;
+    }
+  }
+
+  &.right {
+    > .active > a,
+    > .active > a:hover {
+      border-left: 1px solid $baseModBackground;
+    }
+  }
+}
+
+
+//
+// Tab sizes.
+//
+
+.x-nav-tabs {
+  &.one-up > li   { width: 100%;      }
+  &.two-up > li   { width: 50%;       }
+  &.three-up > li { width: 33.33333%; }
+  &.four-up > li  { width: 25%;       }
+  &.five-up > li  { width: 20%;       }
+
+  &.two-up,
+  &.three-up,
+  &.four-up,
+  &.five-up {
+    > li {
+      @include break(cubs) {
+        float: none;
+        width: 100%;
+      }
+    }
+  }
+
+  &.top {
+    &.one-up > li:nth-child(1n),
+    &.two-up > li:nth-child(2n),
+    &.three-up > li:nth-child(3n),
+    &.four-up > li:nth-child(4n),
+    &.five-up > li:nth-child(5n) {
+      border-right: 0;
+    }
+  }
+}
+
+
+
+// Tabbable
+// =============================================================================
+
+//
+// Common styles.
+// 1. Prevent content from running below tabs.
+//
+
+.tabbable {
+  @include clearfix();
+}
+
+.x-tab-content {
+  overflow: auto;
+  margin-bottom: $baseMargin;
+  border: 1px solid $baseBorderSolid;
+  border: 1px solid $baseBorderRgba;
+  border-top: 0;
+
+  img,
+  .x-btn {
+    @include translate3d(0, 0, 0);
+  }
+
+  .x-tab-pane {
+    padding: 4%;
+    background-color: $white;
+  }
+}
+
+.x-nav-tabs {
+  &.left,
+  &.right {
+    + .x-tab-content {
+      border-top: 1px solid $baseBorderSolid;
+      border-top: 1px solid $baseBorderRgba;
+      @include break(cubs) {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+
+//
+// Show/hide tabbable areas.
+//
+
+.x-tab-content > .x-tab-pane {
+  display: none;
+}
+
+.x-tab-content > .active {
+  display: block;
+}
+
+
+
+// Article Navigation
+// =============================================================================
+
+.x-nav-articles {
+  float: right;
+  width: 10%;
+  text-align: right;
+  @include break(middle-bear) {
+    float: none;
+    width: 100%;
+    margin-top: 0.65em;
+    text-align: center;
+  }
+
+  .next {
+    margin-left: 0.5em;
+  }
+}

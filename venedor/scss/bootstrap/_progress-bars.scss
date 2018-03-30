@@ -1,0 +1,109 @@
+//
+// Progress bars
+// --------------------------------------------------
+
+
+// Bar animations
+// -------------------------
+
+// WebKit
+@-webkit-keyframes progress-bar-stripes {
+  from  { background-position: 40px 0; }
+  to    { background-position: 0 0; }
+}
+
+// Spec and IE10+
+@keyframes progress-bar-stripes {
+  from  { background-position: 40px 0; }
+  to    { background-position: 0 0; }
+}
+
+
+
+// Bar itself
+// -------------------------
+
+// Outer container
+.progress {
+  position: relative;
+  overflow: visible;
+  height: $line-height-computed;
+  margin-bottom: 28px;
+  background-color: $progress-bg;
+  border-radius: 0;
+  @include box-shadow(none);
+}
+
+// Bar of progress
+.progress-bar {
+  position: relative;
+  overflow: visible;
+  float: left;
+  width: 0%;
+  height: 100%;
+  font-size: $font-size-small;
+  line-height: $line-height-computed;
+  color: $progress-bar-color;
+  text-align: center;
+  background-color: $progress-bar-bg;
+  border-radius: 0;
+  @include box-shadow(none);
+  @include transition(width .6s ease);
+}
+
+// Striped bars
+.progress-striped .progress-bar {
+  @include gradient-striped();
+  background-size: 40px 40px;
+}
+
+// Call animation for the active one
+.progress.active .progress-bar {
+  @include animation(progress-bar-stripes 2s linear infinite);
+}
+
+
+
+// Variations
+// -------------------------
+
+@mixin progress-bar-after-border($color) {
+  border-top-color: $color; 
+  border-right-color: $color; 
+}
+
+@mixin progress-bar-before-border($color) {
+  border-left-color: $color; 
+}
+
+.progress-bar-success {
+  @include progress-bar-variant($progress-bar-success-bg);
+  &:after { 
+    @include progress-bar-before-border($progress-bar-success-bg);
+    @include progress-bar-after-border($progress-bar-success-bg);
+  }
+}
+
+.progress-bar-info {
+  @include progress-bar-variant($progress-bar-info-bg);
+  &:after { 
+    @include progress-bar-before-border($progress-bar-info-bg);
+    @include progress-bar-after-border($progress-bar-info-bg);
+  }
+}
+
+.progress-bar-warning {
+  @include progress-bar-variant($progress-bar-warning-bg);
+  &:after { 
+    @include progress-bar-before-border($progress-bar-warning-bg);
+    @include progress-bar-after-border($progress-bar-warning-bg);
+  }
+}
+
+.progress-bar-danger {
+  @include progress-bar-variant($progress-bar-danger-bg);
+  &:after { 
+    @include progress-bar-after-border($progress-bar-danger-bg);
+    @include progress-bar-before-border($progress-bar-danger-bg);
+  }
+}

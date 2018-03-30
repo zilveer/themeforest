@@ -1,0 +1,1 @@
+<?php MthemeSidebar::renderData(); ?>

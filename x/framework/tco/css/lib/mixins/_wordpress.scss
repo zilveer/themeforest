@@ -1,0 +1,34 @@
+// =============================================================================
+// _WORDPRESS.SCSS
+// -----------------------------------------------------------------------------
+// Mixin to reposition elements when the WordPress admin bar is enabled.
+// =============================================================================
+
+// =============================================================================
+// TABLE OF CONTENTS
+// -----------------------------------------------------------------------------
+//   01. Adminbar
+// =============================================================================
+
+// Adminbar
+// =============================================================================
+
+
+@mixin wp-admin-bar($mode:sm) {
+  @if $mode == lg {
+    @media screen and (max-width: 782px) { body.admin-bar & { @content; } }
+  }
+  @else {
+    body.admin-bar & { @content; }
+  }
+}
+
+@mixin wp-admin-bar-top($offset: 0) {
+  @if $offset == 0 {
+    @include wp-admin-bar() { top: $wp-bar-sm;}
+    @include wp-admin-bar(lg) { top: $wp-bar-lg;}
+  } @else {
+    @include wp-admin-bar() { top: calc(#{$wp-bar-sm} + #{$offset} ); }
+    @include wp-admin-bar(lg) { top: calc(#{$wp-bar-lg} + #{$offset} ); }
+  }
+}

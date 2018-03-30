@@ -1,0 +1,1 @@
+<input type="text" value="[ad id='<?php echo $post->ID; ?>']"  readonly="readonly">

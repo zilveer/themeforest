@@ -1,0 +1,3 @@
+DD_belatedPNG.fix
+
+('#left_nav li.arrow,.thumb_last a,.thumb a,.thumb_last h4,.pricing_header_right img,.thumb h4,.featured2,.join,.center_left_top h3,#main_content_index,.signup,.logo,#tweeter,.listing li,.selected a,.button,.search,#searchform,#top_light1,h1 a,#top_light2,.tagline,.right_margin_top,.getquote,.portfolio,#blogSliderWrap,#top_light5,.column .date,.column .recent_comment,#footer_nav .center a.footer_logo,.stripNav li.tab1 a.current,.stripNav li.tab2 a.current,.stripNav li.tab3 a.current,.stripNav li.tab4 a.current,#top_light4,.stripNav li.tab1 a,.stripNav li.tab2 a,.stripNav li.tab3 a,.stripNav li.tab4 a,.featured, #footer #get_recent_comments_wrap ul li, #top_light5 li.twitter-item, #nav li:hover, #nav li.current_page_item');

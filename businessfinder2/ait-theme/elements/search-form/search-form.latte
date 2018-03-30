@@ -1,0 +1,243 @@
+{*include $element->common('header')*}
+
+{* VARIABLES *}
+{var $type = $el->option('type') != "" ? $el->option('type') : 1}
+
+{var $selectedKey = isset($_REQUEST['s']) && $_REQUEST['s'] != "" ? $_REQUEST['s'] : ''}
+{var $selectedCat = isset($_REQUEST['category']) && $_REQUEST['category'] != "" ? $_REQUEST['category'] : ''}
+{var $selectedLoc = isset($_REQUEST['location']) && $_REQUEST['location'] != "" ? $_REQUEST['location'] : ''}
+{var $selectedRad = isset($_REQUEST['rad']) && $_REQUEST['rad'] != "" ? $_REQUEST['rad'] : ''}
+
+{capture $searchKeyword}
+	<span class="searchinput-wrap"><input type="text" name="s" id="searchinput-text" placeholder="{__ 'Search keyword'}" class="searchinput" value="{$selectedKey}"></span>
+{/capture}
+
+{capture $searchCategory}
+	{var $categories = get_categories(array('taxonomy' => 'ait-items', 'hide_empty' => 0, 'parent' => 0))}
+	{if isset($categories) && count($categories) > 0}
+		<div class="category-search-wrap" data-position="first">
+			{if $type == 3}
+				<span class="category-icon"><i class="fa fa-folder-open"></i></span>
+			{/if}
+			<span class="category-clear"><i class="fa fa-times"></i></span>
+
+			{if $type == 3}
+			<select name="category" class="category-search default-disabled" style="display: none;">
+			{else}
+			<select data-placeholder="{__ 'Category'}" name="category" class="category-search default-disabled" style="display: none;">
+			{/if}
+			<option value="">&nbsp;</option>
+			{!= recursiveCategory($categories, $selectedCat, 'ait-items', "")}
+			</select>
+		</div>
+	{/if}
+{/capture}
+
+{capture $searchLocation}
+	{var $locations = get_categories(array('taxonomy' => 'ait-locations', 'hide_empty' => 0, 'parent' => 0))}
+	{if isset($locations) && count($locations) > 0}
+		<div class="location-search-wrap" data-position="last">
+			{if $type == 3}
+				<span class="location-icon"><i class="fa fa-map-marker"></i></span>
+			{/if}
+			<span class="location-clear"><i class="fa fa-times"></i></span>
+
+			{if $type == 3}
+			<select name="location" class="location-search default-disabled" style="display: none;">
+			{else}
+			<select data-placeholder="{__ 'Location'}" name="location" class="location-search default-disabled" style="display: none;">
+			{/if}
+			<option value="">&nbsp;</option>
+			{!= recursiveCategory($locations, $selectedLoc, 'ait-locations', "")}
+			</select>
+		</div>
+	{/if}
+{/capture}
+
+{capture $searchRadius}
+	{var $radiusSet = $selectedRad != "" ? 'radius-set' : ''}
+	{if $type == 4}
+	<div class="search-radius-wrap">
+		<label>{$el->option('radiusHelp')}</label>
+	{/if}
+	<div class="radius {$radiusSet}">
+		<input type="hidden" name="lat" value="" id="latitude-search" class="latitude-search" disabled>
+		<input type="hidden" name="lon" value="" id="longitude-search" class="longitude-search" disabled>
+		<input type="hidden" name="runits" value="{$el->option('radiusUnits')}" disabled>
+
+	{if $type == 4}
+		<span onclick="toggleRadius(this)" class="radius-icon"><i class="fa fa-crosshairs" aria-hidden="true"></i></span>
+		<div class="range-input">
+			<input type="range" name="rad" class="radius-search" value="{$selectedRad ? $selectedRad : 0.1}" min="0.1" step="0.1" max="100" onchange="updateRadiusText(this)">
+		</div>
+		<span class="radius-distance"><span class="radius-value">{$selectedRad ? $selectedRad : 0.1}</span> {$el->option('radiusUnits')}</span>
+	{else}
+		{if $type != 2 && $type != 3}<div class="radius-toggle radius-input-visible">{__ 'Radius:'} {__ 'Off'}</div>{else}<div class="radius-toggle radius-input-visible">x {$el->option('radiusUnits')}</div>{/if}
+
+		<div class="radius-display radius-input-hidden">
+			<span class="radius-clear"><i class="fa fa-times"></i></span>
+			{if $type != 2 && $type != 3}<span class="radius-text">{__ 'Radius:'}</span>{/if}
+			{if $type == 2 || $type == 3}
+			<span class="radius-value"></span>
+			<span class="radius-units">{$el->option('radiusUnits')}</span>
+			{/if}
+		</div>
+
+		<div class="radius-popup-container radius-input-hidden">
+			<span class="radius-popup-close"><i class="fa fa-times"></i></span>
+			{if $type != 2 && $type != 3}
+			<span class="radius-value"></span>
+			<span class="radius-units">{$el->option('radiusUnits')}</span>
+			{/if}
+			<input type="range" name="rad" class="radius-search" value="{if $selectedRad}{$selectedRad}{else}0.1{/if}" min="0.1" step="0.1" max="100" disabled>
+			<span class="radius-popup-help">{$el->option('radiusHelp')}</span>
+		</div>
+	{/if}
+	</div>
+
+	{if $type == 4}
+	</div>
+	{/if}
+{/capture}
+{* VARIABLES *}
+
+<div id="{$htmlId}-main" class="{$htmlClass}-main">
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{if $el->option('type') == 3}
+	{if ($el->hasOption(title) and $el->option->title)}
+
+		<div n:class="elm-mainheader, $el->hasOption(headAlign) ? $el->option->headAlign">
+			{if $el->option->title}
+				<h2 class="elm-maintitle">{!$el->option->title}</h2>
+			{/if}
+		</div>
+
+	{/if}
+	{/if}
+
+	<div id="{$htmlId}-container" n:class='search-form-container, "search-type-{$type}"'>
+		<form action="{$homeUrl|noescape}" method="get" class="main-search-form">
+
+			<div class="elm-wrapper">
+
+				{if $type == 4}
+					<h2 class="title-type-4">{__ 'Map Search'}</h2>
+				{/if}
+
+				<div class="inputs-container">
+					<div class="search-content">
+					 	{if $type == 2}
+
+				 			{var $sentence = '<span class="label">'.$el->option('sentence').'</span>'}
+					 		{var $sentence = '<span class="label">'.$el->option('sentence').'</span>'}
+							{var $sentence = str_replace('{', '</span>{', $sentence)}
+							{var $sentence = str_replace('}', '}<span class="label">', $sentence)}
+
+					 		{if strpos($sentence, '{search-keyword}') !== false}
+					 			{var $sentence = str_replace('{search-keyword}', $searchKeyword, $sentence)}
+					 		{else}
+					 			<input type="hidden" name="s" value="">
+					 		{/if}
+
+					 		{var $sentence = str_replace('{search-category}', $searchCategory, $sentence)}
+					 		{var $sentence = str_replace('{search-location}', $searchLocation, $sentence)}
+
+					 		{var $sentence = str_replace('{search-radius}', $searchRadius, $sentence)}
+
+					 		{!$sentence}
+
+					 	{elseif $type == 3}
+
+					 		<div class="search-inputs-wrap">
+					 			{if $el->option('enableKeywordSearch')}
+					 				{!$searchKeyword}
+					 			{else}
+									<input type="hidden" name="s" value="">
+								{/if}
+
+					 			<!--<div class="searchsubmit-wrapper">-->
+					 				<div class="submit-main-button">
+										<div class="searchsubmit2">{__ 'Search'}</div>
+										<input type="submit" value="{__ 'Search'}" class="searchsubmit">
+									</div>
+								<!--</div>-->
+					 		</div>
+
+					 		{if $el->option('type') == 3}
+						 		{if ($el->hasOption(description) and $el->option->description)}
+									{if $el->option->description}
+										<p class="elm-maindesc">{!$el->option->description}</p>
+									{/if}
+								{/if}
+							{/if}
+
+					 		<div class="search-inputs-buttons-wrap">
+
+					 			{if $el->option('enableCategorySearch')}
+					 				{!$searchCategory}
+					 			{/if}
+
+					 			{if $el->option('enableLocationSearch')}
+									{!$searchLocation}
+								{/if}
+
+								{if $el->option('enableRadiusSearch')}
+									{!$searchRadius}
+								{/if}
+
+					 		</div>
+
+					 	{else}
+					 		<div class="search-inputs-wrap">
+								{if $el->option('enableKeywordSearch')}
+									{!$searchKeyword}
+								{else}
+									<input type="hidden" name="s" value="">
+								{/if}
+
+								{if $el->option('enableCategorySearch')}
+									{!$searchCategory}
+								{/if}
+
+								{if $el->option('enableLocationSearch')}
+									{!$searchLocation}
+								{/if}
+							</div>
+
+							{if $el->option('enableRadiusSearch')}
+								{!$searchRadius}
+							{/if}
+
+						{/if}
+
+						<input type="hidden" name="a" value="true"> <!-- Advanced search -->
+
+
+						{if $selectedKey}
+						<div class="searchinput search-input-width-hack" style="position: fixed; z-index: 99999; visibility: hidden" data-defaulttext="{__ 'Search keyword'}">{$selectedKey}</div>
+						{else}
+						<div class="searchinput search-input-width-hack" style="position: fixed; z-index: 99999; visibility: hidden" data-defaulttext="{__ 'Search keyword'}">{__ 'Search keyword'}</div>
+						{/if}
+					</div>
+					{if $type != 3}
+					<div class="searchsubmit-wrapper">
+						<div class="submit-main-button">
+							<div class="searchsubmit2">{__ 'Search'}</div>
+							<input type="submit" value="{__ 'Search'}" class="searchsubmit">
+						</div>
+					</div>
+					{/if}
+
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+</div>
+
+{includePart "ait-theme/elements/search-form/javascript"}
+
+</div>

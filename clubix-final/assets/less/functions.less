@@ -1,0 +1,130 @@
+.transition(@time:0.2s) {
+	-webkit-transition:all @time ease-out;
+	-moz-transition:all @time ease-out;
+	-o-transition:all @time ease-out;
+	-ms-transition:all @time ease-out;
+	transition:all @time ease-out;
+}
+
+.translateY(@translateY) {
+	-webkit-transform: translateY(@translateY);
+	-moz-transform: translateY(@translateY);
+	-o-transform: translateY(@translateY);
+	-ms-transform: translateY(@translateY);
+	transform: translateY(@translateY);
+}
+
+.rotate(@deg) {
+	-webkit-transform: rotate(@deg);
+	transform: rotate(@deg);
+}
+
+// .css-scroll(#505050,#0e0e0e);
+.css-scroll(@bg,@color) {
+	&::-webkit-scrollbar {
+		width: 4px;
+		background: @bg;
+	}
+	&::-webkit-scrollbar-thumb  {
+		background: @color;
+		width: 4px;
+		-webkit-box-shadow: inset 0 0 0 1px @bg;
+		-moz-box-shadow: inset 0 0 0 1px @bg;
+		box-shadow: inset 0 0 0 1px @bg;
+	}
+}
+
+.rotateY(@deg) {
+	-webkit-transform: rotateY(@deg);
+	transform: rotateY(@deg);
+}
+
+.rotateX(@deg) {
+	-webkit-transform: rotateX(@deg);
+	transform: rotateX(@deg);
+}
+
+.background-gradient(@start, @stop) {
+    background: mix(@start, @stop, 50%);
+    background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@stop));
+    background: -webkit-linear-gradient(top, @start, @stop);
+    background:    -moz-linear-gradient(top, @start, @stop);
+    background:      -o-linear-gradient(top, @start, @stop);
+    background:         linear-gradient(to bottom, @start, @stop);
+}
+
+.translateX(@translateX) {
+	-webkit-transform: translateX(@translateX);
+	-moz-transform: translateX(@translateX);
+	-o-transform: translateX(@translateX);
+	-ms-transform: translateX(@translateX);
+	transform: translateX(@translateX);
+}
+
+.skewY(@value){
+	-webkit-transform: skewY(@value);
+	-moz-transform: skewY(@value);
+	-o-transform: skewY(@value);
+	-ms-transform: skewY(@value);
+	transform: skewY(@value);
+}
+
+.bxs(@h,@v,@b,@color) {
+	-webkit-box-shadow: @h @v @b @color;
+	-moz-box-shadow: @h @v @b @color;
+	box-shadow: @h @v @b @color;
+}
+
+.bd(@bd-h:1px;@type-bd:solid;@color-bd:#000;) {
+	border: @bd-h @type-bd @color-bd;
+}
+
+.scale(@scale-val) {
+	-webkit-transform: scale(@scale-val);
+	-moz-transform: scale(@scale-val);
+	-o-transform: scale(@scale-val);
+	-ms-transform: scale(@scale-val);
+	transform: scale(@scale-val);
+}
+
+.button(@w;@lh:45px;@bg:#3498db;@color:#fff;@color-bxs: none;@radius:3px;@h:4px;@v:4px;@b:0px;) {
+	background: @bg;
+	.bxs(@h,@v,@b,@color-bxs);
+	color: @color !important;
+	line-height: @lh;
+	border-radius: @radius;
+	display: block;
+	text-align: center;
+	width: @w;
+	height: @lh;
+}
+
+.longShadow(@color, @size, @spread: 100, @flag: 1, @tmp: '') when (@size > 0) {
+  @percent: round(@flag / @size * 5) * @spread;
+  @shadowColor: fade(@color, @percent);
+  @shadow: ~"-@{size}px @{size}px 1px @{shadowColor}";
+  @ends: ~"@{shadow}, @{tmp}";
+  @shadowString: ~"@{ends} 0px 0px 0px rgba(0,0,0,0.075)";
+
+  .longShadowLoop(@string, @index) when (@index < 1) {
+    text-shadow: @string;
+  }
+
+  .longShadowLoop(@shadowString, @size - 1);
+  .longShadow(@color, @size - 1, @spread, @flag + 1, @ends);
+}
+
+.longBoxShadow(@color, @size, @spread: 100, @flag: 1, @tmp: '') when (@size > 0) {
+  @percent: round(@flag / @size * 5) * @spread;
+  @shadowColor: fade(@color, @percent);
+  @shadow: ~"-@{size}px @{size}px 1px @{shadowColor}";
+  @ends: ~"@{shadow}, @{tmp}";
+  @shadowString: ~"@{ends} 0px 0px 0px rgba(0,0,0,0.075)";
+
+  .longShadowLoop(@string, @index) when (@index < 1) {
+    box-shadow: @string;
+  }
+
+  .longShadowLoop(@shadowString, @size - 1);
+  .longBoxShadow(@color, @size - 1, @spread, @flag + 1, @ends);
+}

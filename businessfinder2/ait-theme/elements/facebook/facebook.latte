@@ -1,0 +1,46 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+	{var $lang = str_replace('-',"_",get_bloginfo('language'))}
+
+	<div id="fb-root"></div>
+
+	{if $el->option(type) == 'page'}
+		{var $url = $el->option(href) ? $el->option(href) : 'https://www.facebook.com/AitThemes'}
+
+		{var $dataAttrs = array(
+			'data-href="'.$url.'"',
+			$el->option(width) ? 'data-width="'.$el->option(width).'"' : '',
+			$el->option(height) ? 'data-height="'.$el->option(height).'"' : '',
+			$el->option(smallHeader) ? 'data-small-header="true"' : 'data-small-header="false"',
+			$el->option(adaptContainerWidth) ? 'data-adapt-container-width="true"' : 'data-adapt-container-width="false"',
+			$el->option(hideCover) ? 'data-hide-cover="true"' : 'data-hide-cover="false"',
+			$el->option(showFacepile) ? 'data-show-facepile="true"' : 'data-show-facepile="false"',
+			$el->option(showPosts) ? 'data-show-posts="true"' : 'data-show-posts="false"',
+			$el->option(hideCta) ? 'data-hide-cta="true"' : 'data-hide-cta="false"'
+		)}
+
+		<div class="fb-page" {!implode(' ', $dataAttrs)}>
+			<div class="fb-xfbml-parse-ignore">
+				<blockquote cite="{$url}">
+					<a href="{$url}">Facebook</a>
+				</blockquote>
+			</div>
+		</div>
+
+	{else if $el->option(type) == 'comments'}
+		{var $currURI = explode("?", $_SERVER['REQUEST_URI'])}
+		{var $currUrl = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$currURI[0] : "http://".$_SERVER['SERVER_NAME'].$currURI[0]}
+
+		<script>
+		jQuery(document).ready(function(){
+			jQuery('.fb-comments').attr({'data-width': jQuery('.fb-comments').parent().width()});
+			jQuery('.fb-comments').css({'width': jQuery('.fb-comments').parent().width()});
+		});
+		</script>
+		<div class="fb-comments" data-href="{$currUrl}" data-num-posts="{$el->option(posts)}"></div>
+	{/if}
+
+</div>
+
+{includePart "ait-theme/elements/facebook/javascript"}

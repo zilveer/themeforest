@@ -1,0 +1,93 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass} type-{$el->option(type)}">
+
+	{customQuery as $query,
+		type => toggle,
+		tax => toggles,
+		cat => $element->option(category),
+		limit => -1,
+		orderby => $element->option(orderby),
+		order => $element->option(order),
+	}
+
+	{if $query->havePosts}
+		{if $el->option(type) == 'accordion' || $el->option(type) == 'toggle'}
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('toggle-options')}
+				{var $hasImage = isset($meta->image) && $meta->image != "" ? true : false}
+				<div class="toggle-header">
+					<h3 class="toggle-title {if $meta->icon}has-icon{/if}">
+						{if $meta->icon}<span class="icon"><i class="fa {$meta->icon}"></i></span>{/if}{!$item->title}
+					</h3>
+				</div>
+				<div class="toggle-content">
+					<div class="toggle-container">
+						<div n:class="'toggle-wrap', $hasImage ? has-image">
+							{if $meta->image}<div class="entry-thumb"><img src="{imageUrl $meta->image, width => 640, crop => 1}" alt="thumbnail"></div>{/if}
+							<div class="entry-content">{!$item->content}</div>
+						</div>
+					</div>
+				</div>
+			{/customLoop}
+		{elseif $el->option(type) == 'htabs'}
+			{* responsive fallback to plain select *}
+			<select class="default-disabled responsive-tabs-select" style="display: none">
+				{customLoop from $query as $item}
+				<option value="#{!$htmlId}-{$iterator->getCounter()}">{!$item->title}</option>
+				{/customLoop}
+			</select>
+			{* responsive fallback to plain select *}
+
+			<div class="tabs-wrapper">
+				<div class="selected"></div>
+				<ul><!--
+				{customLoop from $query as $item}
+					{var $meta = $item->meta('toggle-options')}
+					--><li><a href="#{!$htmlId}-{$iterator->getCounter()}" class="{if $meta->icon}has-icon{/if}">{if $meta->icon}<span class="icon"><i class="fa {$meta->icon}"></i></span>{/if}{!$item->title}</a></li><!--
+				{/customLoop}
+				--></ul>
+			</div>
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('toggle-options')}
+				{var $hasImage = isset($meta->image) && $meta->image != "" ? true : false}
+				<div id="{!$htmlId}-{$iterator->getCounter()}" class="toggle-content">
+					<div n:class="'toggle-wrap', $hasImage ? has-image">
+						{if $meta->image}<div class="entry-thumb"><img src="{imageUrl $meta->image, width => 640, crop => 1}" alt="thumbnail"></div>{/if}
+						<div class="entry-content">{!$item->content}</div>
+					</div>
+				</div>
+			{/customLoop}
+		{else}
+			{* responsive fallback to plain select *}
+			<select class="default-disabled responsive-tabs-select" style="display: none">
+				{customLoop from $query as $item}
+				<option value="#{!$htmlId}-{$iterator->getCounter()}">{!$item->title}</option>
+				{/customLoop}
+			</select>
+			{* responsive fallback to plain select *}
+
+			<div class="tabs-wrapper">
+				<div class="selected"></div>
+				<ul>
+				{customLoop from $query as $item}
+					{var $meta = $item->meta('toggle-options')}
+					<li><a href="#{!$htmlId}-{$iterator->getCounter()}" class="{if $meta->icon}has-icon{/if}">{if $meta->icon}<span class="icon"><i class="fa {$meta->icon}"></i></span>{/if}{!$item->title}</a></li>
+				{/customLoop}
+				</ul>
+			</div>
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('toggle-options')}
+				{var $hasImage = isset($meta->image) && $meta->image != "" ? true : false}
+				<div id="{!$htmlId}-{$iterator->getCounter()}" class="toggle-content">
+					<div n:class="'toggle-wrap', $hasImage ? has-image">
+						{if $meta->image}<div class="entry-thumb"><img src="{imageUrl $meta->image, width => 640, crop => 1}" alt="thumbnail"></div>{/if}
+						<div class="entry-content">{!$item->content}</div>
+					</div>
+				</div>
+			{/customLoop}
+		{/if}
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/toggles/javascript"}

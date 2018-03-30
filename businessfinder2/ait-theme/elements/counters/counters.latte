@@ -1,0 +1,66 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass} counter-type-{$el->option(chartType)}">
+	{if $el->option(counters)}
+
+		{foreach $el->option(counters) as $counter}
+			<div class="counter {if $counter['title'] == ''}notitle{/if}" data-percent="{$counter[current]}">
+				<div class="counter-display">
+
+					{if $el->option(chartType) == gauge}
+
+						<canvas width="{$element->option(counterDimension)}" height="{$element->option(counterDimension)}">
+							{__ 'Your browser does not support the HTML5 canvas tag.'}
+						</canvas>
+
+						{if $counter['title'] != ''}
+							<div class="counter-title">
+								{!$counter['title']}
+							</div>
+						{else}
+							<div class="counter-title">
+								{!$counter['current']}<span class="counter-unit">%</span>
+							</div>
+						{/if}
+
+					{elseif $el->option(chartType) == line}
+
+						<canvas width="{$element->option(counterDimension)}" height="{$element->option(counterThickness)}">
+							{__ 'Your browser does not support the HTML5 canvas tag.'}
+						</canvas>
+
+						{if $counter['title'] != ''}
+							<div class="counter-title">
+								{!$counter['title']}
+							</div>
+						{else}
+							<div class="counter-title">
+								{!$counter['current']}<span class="counter-unit">%</span>
+							</div>
+						{/if}
+
+					{else}
+
+						<div class="type-text"></div>
+
+						{if $counter['title'] != ''}
+						<div class="counter-title">
+							{!$counter['title']}
+						</div>
+						{/if}
+
+					{/if}
+
+				</div>
+
+				{if $counter['description'] != ''}
+				<div class="counter-description">
+					{!$counter['description']}
+				</div>
+				{/if}
+			</div>
+		{/foreach}
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/counters/javascript"}

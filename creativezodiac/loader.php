@@ -1,0 +1,1 @@
+<div class="loader_wrapper"><img src="gfx/loader.gif" class="loader" /></div>

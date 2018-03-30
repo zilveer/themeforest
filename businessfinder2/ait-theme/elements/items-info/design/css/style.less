@@ -1,0 +1,29 @@
+
+@import "../../../@common/common.less";
+
+.widthCount() when (isnumber(@widthCount))	{ min-width: @widthCount; }
+.widthNum() when (isnumber(@widthNum))		{ min-width: @widthNum; }
+
+.customBorderColor() when (iscolor(@labelBorder))		{ border-color: @labelBorder; }
+.countBck() when (iscolor(@countBck))					{ background-color: @countBck; }
+.darkenCustomColor() when (iscolor(@lightAltColor))		{ background-color: darken(@lightAltColor, 10%); }
+.countNum() when (iscolor(@countNum))					{ color: @countNum; }
+.countTxt() when (iscolor(@countTxt))					{ color: @countTxt; }
+
+#@{el}-main
+{
+
+	.info-container.sep-enabled:before,
+	.info-container.sep-enabled:after		{ .darkenCustomColor(); }
+
+	.infobox		{ .widthCount(); .ltoCustomColor(); .customBorderColor(); }
+	.infobox:after	{ .darkenCustomColor(); }
+	.info-count		{ .widthNum(); .countBck(); .countNum(); }
+	.info-text		{ .titCustomColor(); }
+	.info-text		{ .countTxt(); }
+
+}
+
+.@{el}{
+	clear:both;
+}

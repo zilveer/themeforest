@@ -1,0 +1,42 @@
+.user-spaces(){
+	.marTop() when (isnumber(@margin-top)) 		{ margin-top: @margin-top; }
+	.padTop() when (isnumber(@padding-top)) 	{ padding-top: @padding-top; }
+	.padBot() when (isnumber(@padding-bottom))	{ padding-bottom: @padding-bottom; }
+	.marBot() when (isnumber(@margin-bottom))	{ margin-bottom: @margin-bottom; }
+	
+	.marTop();
+	.padTop();
+	.padBot();
+	.marBot();
+}
+
+.bgCustomColor() when (iscolor(@bg-color))			{ background-color: @bg-color; }
+.bgCustomImage() when not (@bg-image = url())		{ background-image: @bg-image; }
+.titCustomColor() when (iscolor(@titlesAltColor))	{ color: @titlesAltColor; }
+.txtCustomColor() when (iscolor(@textAltColor))		{ color: @textAltColor; }
+.lnkCustomColor() when (iscolor(@linkAltColor))		{ color: @linkAltColor; }
+.ltoCustomColor() when (iscolor(@lightAltColor))	{ background-color: @lightAltColor; }
+.ltoCustomBorder() when (iscolor(@lightAltColor))	{ border-color: @lightAltColor; }
+.customSize() when (isnumber(@customWidth))			{ max-width: @customWidth; margin-left: auto; margin-right: auto; }
+.carouselMargin() when (isnumber(@carouselOffset))	{ margin-top: @carouselOffset !important; }
+
+#@{el}-main 							{ .bgCustomColor();
+										  .bgCustomImage();
+										  background-repeat: @bg-repeat;
+										  background-attachment: @bg-scroll;
+										  background-position: @bg-position;
+										  .user-spaces; 
+										  .txtCustomColor();
+	h1, h2, h3, h4, h5, h6, strong		{ .titCustomColor(); }								  
+	a, a:hover							{ .lnkCustomColor(); }									  
+	.elm-maintitle::before, 
+	.elm-maintitle::after				{ .ltoCustomColor(); }
+	.elm-wrapper						{ .customSize(); }
+	
+	.carousel-standard-arrows .standard-arrow::before	{ .titCustomColor(); }		
+	.carousel-bottom-arrows								{ .ltoCustomColor(); .carouselMargin(); }
+}									  
+
+.elements-sidebar-wrap #@{el}-main 		{ .user-spaces;
+										  .elm-wrapper	{ .customSize(); } 
+}

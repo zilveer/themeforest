@@ -1,0 +1,283 @@
+/* 05.09. Main Navigation */
+@media (min-width: $screen-md-min) {
+	.navigation {
+		position: relative;
+		background-color: #f9f9f9;
+		background: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
+		box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+		margin-bottom: -37px;
+		text-align: center;
+		z-index: 210;
+	}
+}
+
+.navigation--main {
+	margin: 0;
+	padding: 10px;
+	font-family: $secondary-font;
+	font-weight: bold;
+
+	@media (min-width: $screen-md-min) {
+		padding: 0;
+	}
+
+	> li {
+		list-style: none;
+		position: relative;
+
+		@media (min-width: $screen-md-min) {
+			display: inline-block;
+		}
+
+		// Main Menu Desktop Links
+		> a {
+			position: relative;
+			display: block;
+			color: #dddddd;
+			padding: 6px 10px 6px 0;
+
+			@media (min-width: $screen-md-min) {
+				color: $text-color;
+				padding: 27px 22px;
+				margin-right: -4px;
+			}
+			@media (min-width: $screen-lg-min) {
+				padding-left: 30px;
+				padding-right: 30px;
+			}
+
+			&::before {
+				@media (min-width: $screen-md-min) {
+					position: absolute;
+					content: "";
+					width: 1px;
+					height: 15px;
+					right: 0;
+					top: 50%;
+					margin-top: -8px;
+					background: rgba(0,0,0,0.08);
+				}
+			}
+		}
+
+		&:hover,
+		&.is-hover {
+			> a {
+				text-decoration: none;
+				color: #ffffff;
+
+				@media (min-width: $screen-md-min) {
+					border-top: 3px solid $primary-color;
+					padding-top: 24px;
+					color: $dark-color;
+				}
+
+				&::after {
+					color: #ffffff;
+
+					@media (min-width: $screen-md-min) {
+						color: $dark-color;
+					}
+				}
+			}
+
+			> .sub-menu {
+				visibility: visible;
+				opacity: 1;
+				z-index: 1;
+			}
+		}
+
+		&:last-child {
+			a {
+				&::before {
+					display: none;
+				}
+			}
+		}
+	}
+
+	> .menu-item-has-children {
+		> a {
+		position: relative;
+
+			&::after {
+				position: absolute;
+				content: "\f0d7";
+				font-family: "FontAwesome";
+				right: 0;
+				color: #dddddd;
+
+				@media (min-width: $screen-md-min) {
+					right: calc(50% - 5px);
+					bottom: 10px;
+					color: $text-color;
+				}
+			}
+		}
+	}
+
+	.sub-menu {
+		display: block;
+		list-style: none;
+		text-align: left;
+		padding: 5px 10px;
+		font-weight: bold;
+		font-family: $primary-font;
+		transition: $primary-transition;
+
+		@media (min-width: $screen-md-min) {
+			border-top: 2px solid darken($primary-color, 6);
+			visibility: hidden;
+			width: auto;
+			opacity: 0;
+			left: 0;
+			top: 100%;
+			min-width: 180px;
+			position: absolute;
+			padding: 0 0 0 0;
+		}
+
+		> li {
+			position: relative;
+
+			> a {
+				color: #dddddd;
+				display: block;
+				padding: 3px 0;
+				white-space: nowrap;
+
+				@media (min-width: $screen-md-min) {
+					color: $dark-color;
+					background: $primary-color;
+					border-bottom: 1px solid darken($primary-color, 6);
+					padding: 12px 30px 12px 30px;
+				}
+
+				&:hover {
+					color: #ffffff;
+					text-decoration: none;
+
+					@media (min-width: $screen-md-min) {
+						background: darken($primary-color, 6);
+						color: $dark-color;
+					}
+				}
+			}
+
+			&:hover {
+				> .sub-menu {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+
+			> .sub-menu {
+				margin-top: 0;
+				left: 100%;
+				top: 0;
+
+				@media (min-width: $screen-md-min) {
+					border-left: 1px solid darken($primary-color, 6);
+					border-top: 0;
+					padding: 0;
+				}
+			}
+		}
+
+		> .menu-item-has-children {
+			> a {
+				position: relative;
+
+				&::after {
+					@media (min-width: $screen-md-min) {
+						position: absolute;
+						content: "\f0da";
+						font-family: "FontAwesome";
+						right: 15px;
+						bottom: calc(50% - 10px);
+						color: $dark-color;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Mobile Toggle Navigation
+.navbar-toggle {
+	background: $primary-color;
+	border-radius: 2px;
+	padding: 10px 12px;
+	margin: 10px 0;
+	transition: $primary-transition;
+
+	@media (min-width: $screen-xs-min) {
+		margin: 34px 0;
+	}
+
+	&:hover {
+		background: darken($primary-color, 6);
+	}
+
+	.icon-bar {
+		background: #454545;
+		width: 18px;
+		height: 3px;
+
+		& + .icon-bar {
+			margin-top: 3px;
+		}
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.navbar-toggle__text {
+	font-family: $secondary-font;
+	font-weight: bold;
+	color: #454545;
+	display: inline-block;
+	padding: 0 10px 0 0;
+}
+
+.navbar-toggle__icon-bar {
+	vertical-align: middle;
+	display: inline-block;
+	height: 18px;
+}
+
+.navbar-collapse {
+	padding: 0;
+	max-height: 100%;
+}
+
+// Sticky Navigation, .is-sticky-navbar is added via JS (StickyNavbar.js)
+@media (min-width: $screen-md-min) {
+	.is-sticky-navbar {
+		.navigation {
+			position: fixed;
+			top: 0;
+			width: ($container-md - 30px);
+		}
+
+		&.admin-bar {
+			.navigation	{
+				top: 32px;
+			}
+		}
+
+		.sticky-offset {
+			height: 37px;
+		}
+	}
+}
+@media (min-width: $screen-lg-min) {
+	.is-sticky-navbar {
+		.navigation {
+			width: ($container-lg - 30px);
+		}
+	}
+}

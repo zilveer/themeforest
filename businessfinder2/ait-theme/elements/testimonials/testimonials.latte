@@ -1,0 +1,143 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+
+	{customQuery as $query,
+		type    => testimonial,
+		tax     => testimonials,
+		cat     => $el->option(category),
+		limit   => $el->option(count),
+		orderby => $el->option(orderby),
+		order 	=> $el->option(order)
+	}
+
+	{if $query->havePosts}
+		{var $layout = $el->option->layout}
+		{var $addInfo = $el->option->addInfo}
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $imageHeight     = '1:1'}
+			{var $imgWidth = 640}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $imageHeight     = '1:1'}
+			{var $imgWidth = 220}
+		{/if}
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(testimonial-options)}
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $item->hasImage ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+
+					{if $item->hasImage}
+						{var $ratio = explode(":", $imageHeight)}
+						{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+						<div class="item-thumbnail"><img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}"></div>
+					{else}
+						<div class="item-thumbnail"><span class="default-icon"><span class="icon-wrap"><i class="fa fa-comments"></i></span></span></div>
+					{/if}
+
+					<div class="item-text">
+						<div class="item-excerpt"><p>{!$item->content|striptags}</p></div>
+					</div>
+
+					{if $addInfo}
+					<div class="item-info">
+						<div class="item-author">{$meta->author}</div>
+						<div class="item-rating" data-rating="{$meta->rating}"></div>
+					</div>
+					{/if}
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{else}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(testimonial-options)}
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $item->hasImage ? image-present'	data-id="{$iterator->counter}">
+
+          			{if $item->hasImage}
+						{var $ratio = explode(":", $imageHeight)}
+						{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+						<div class="item-thumbnail"><img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}"></div>
+					{else}
+						<div class="item-thumbnail"><span class="default-icon"><span class="icon-wrap"><i class="fa fa-comments"></i></span></span></div>
+					{/if}
+
+					<div class="item-text">
+						<div class="item-excerpt">
+							<p>{!$item->content|striptags}</p>
+						</div>
+					</div>
+          
+					{if $addInfo}
+					<div class="item-info">
+						<div class="item-author">{$meta->author}</div>
+						<div class="item-rating" data-rating="{$meta->rating}"></div>
+					</div>
+					{/if}
+
+
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{/if}
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Testimonials', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+
+</div>
+
+{includePart "ait-theme/elements/testimonials/javascript", enableCarousel => $enableCarousel}
+
+{if $el->option->layout == 'icon' && $enableCarousel}
+<div class="carousel-icon-arrows">
+	<div class="carousel-arrow-left icon-arrow icon-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right icon-arrow icon-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+
+</div> <!-- icon-container-content -->
+{/if}
+
+
+{if $el->option->layout != 'icon' && $enableCarousel}
+<div class="carousel-standard-arrows">
+	<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+<div class="carousel-bottom-arrows">
+	<div class="carousel-nav-text">{__ 'Navigation'}</div>
+	<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+{/if}

@@ -1,0 +1,70 @@
+@include: common.neon
+
+type:
+	label: Type
+	type: select
+	selected: pages
+	default:
+		pages: Pages
+		posts: Posts
+	help: "Select type of items"
+
+number:
+	label: Count
+	type: number
+	default: '0' # all posts
+	help: 'Count of items listed on page. Enter 0 for all items.'
+
+order:
+	label: Order
+	type: select
+	selected: ASC
+	default:
+		ASC: Ascending
+		DESC: Descending
+	help: 'Select order of items listed on page'
+
+- section(id: pages, title: Pages Parameters)
+pagesOrderby:
+	label: Order By
+	type: select
+	selected: menu_order
+	# see http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters
+	default:
+		post_name: Alphabetically
+		menu_order: Item Order
+	help: 'Select order of items listed on page'
+
+depth:
+	label: Depth
+	type: number
+	default: 0
+	help: "Depth of listed items"
+
+- section(id: posts, title: Posts Parameters)
+postsOrderby:
+	label: Order By
+	type: select
+	selected: date
+	# see http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters
+	default:
+		title: Alphabetically
+		date: Creation Date
+	help: 'Select order of items listed on page'
+
+comments-count:
+	label: Comments Count
+	type: on-off
+	default: on
+	help: 'Display or hide count of comments'
+
+category:
+	label: Category
+	type: categories
+	default: 0
+	help: 'Select category displayed on page'
+
+author:
+	label: Author
+	type: code
+	help: "ID number of author, or multiple IDs delimited by comma"

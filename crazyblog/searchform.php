@@ -1,0 +1,1 @@
+<form action="<?php echo esc_url( home_url( '/' ) ); ?>" class="searchform" method="get" role="search">    <input type="text" placeholder="<?php esc_attr_e( 'Search Your Post', 'crazyblog' ); ?>" name="s" value="<?php echo get_search_query(); ?>">    <button><i class="fa fa-search"></i></button></form>

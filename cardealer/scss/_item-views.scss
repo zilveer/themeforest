@@ -1,0 +1,342 @@
+/* -------------------------------------------------- */
+/* Item View Mode
+/* -------------------------------------------------- */
+
+.tmm-view-mode {
+	font-size: 0;
+
+	&:before {
+		display: table;
+		content: " ";
+	}
+
+	&:after {
+		display: table;
+		content: " ";
+		clear: both;
+	}
+
+	// Grid View styles
+	&.item-grid {
+		article {
+			margin-bottom: 40px;
+
+			.list-entry {
+				li {
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+				}
+			}
+		}
+
+		.title-item {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+
+	// List View styles
+	&.item-list {
+		article {
+			@extend .clearfix;
+
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 20px;
+				right: 20px;
+				border-top: 1px solid #dddcdc;
+			}
+
+			&:first-child {
+				padding-top: 0 !important;
+
+				&:before {border: none;}
+
+				.detailed .price {top: 0;}
+			}
+
+			&:last-child {
+				margin-bottom: 15px;
+			}
+
+			&[class*="col-md-"] {
+				width: auto;
+				float: none;
+				padding-top: 20px;
+				padding-bottom: 20px;
+
+				.image-post {
+					float: left;
+					margin-right: 20px;
+					margin-bottom: 0;
+				}
+			}
+
+			&.col-md-2 {
+				margin-bottom: 0;
+
+				.image-post {
+					width: calc(16.666666666666664% - 34px);
+				}
+
+				.detailed {
+					width: calc(83.33333333333334% + 12px);
+				}
+
+				.list-entry {
+					li {
+						display: inline-block;
+						margin-right: 20px;
+					}
+				}
+			}
+
+			&.col-md-3 {
+				.image-post {
+					width: calc(25% - 30px);
+				}
+
+				.detailed {
+					width: calc(75% + 10px);
+				}
+			}
+
+			&.col-md-4 {
+				.image-post {
+					width: calc(33.33333333333333% - 26.5px);
+				}
+
+				.detailed {
+					width: calc(66.66666666666666% + 5px);
+				}
+			}
+
+			.detailed {
+				float: right;
+
+				.price {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+				}
+
+				.button {
+					margin-right: 0;
+					position: absolute;
+					bottom: 20px;
+					right: 20px;
+				}
+			}
+		}
+	}
+
+	// General styles for items
+	article {
+		&.col-md-2 {
+			margin-bottom: 40px;
+
+			.image-post {
+				.ribbon {
+					bottom: -5px;
+					padding: 0 2px;
+					font-size: 8px;
+					letter-spacing: 0.5px;
+				}
+
+				.video-icon, .picture-icon {
+					font: 8px/8px 'fontello';
+					width: 13px;
+					height: 13px;
+					padding: 2px;
+				}
+
+				.video-icon {
+					right: 22px;
+				}
+			}
+
+			.title-item {
+				font-size: 14px;
+			}
+
+			.list-entry {
+				li {
+					font-size: 11px;
+					b {font-size: 11px;}
+				}
+			}
+
+			.price {
+				font-size: 16px;
+			}
+		}
+
+		.image-post {
+			overflow: hidden;
+			margin-bottom: 10px;
+
+			.single-image {
+				margin-bottom: 0;
+			}
+		}
+
+		.title-item {
+			margin-bottom: 0;
+			font-size: 19px;
+
+			a {color: #232527;}
+		}
+
+		.detailed {
+			.button {
+				vertical-align: middle;
+				margin-right: 10px;
+			}
+
+			// for user cars page
+			.detailed-foot {
+				float: right;
+				margin-right: 0;
+				position: absolute;
+				bottom: 20px;
+				right: 10px;
+
+				.button {
+					margin-right: 10px;
+					position: relative;
+					bottom: auto;
+					right: auto;
+				}
+			}
+		}
+
+		.list-entry {
+			margin: 0 0 10px;
+
+			li {
+				font-size: 14px;
+				line-height: 22px;
+				list-style: none;
+
+				b {
+					color: #232527;
+					font-weight: 600;
+					font-size: 13px;
+				}
+			}
+		}
+
+		.compare {
+			height: 22px;
+			vertical-align: middle;
+			display: inline-block;
+			cursor: pointer;
+			opacity: 0;
+
+			-webkit-transform: translateY(40px);
+			transform: translateY(40px);
+
+			-webkit-transition: all .35s ease;
+			transition: all .35s ease;
+
+			label {
+				color: #ffa500;
+				display: inline-block;
+				cursor: pointer;
+				position: relative;
+				margin-right: 10px;
+				font-size: 13px;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+
+		&:hover .compare {
+			opacity: 1;
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+
+
+	}
+}
+
+// Car Price
+
+.price {
+	display: inline-block;
+	color: #ff600a;
+	font-size: 19px;
+	line-height: 1.4;
+	font-weight: 600;
+	font-family: 'Roboto Condensed', sans-serif;
+	margin-bottom: 5px;
+	position: relative;
+
+	&:before {
+		content: '';
+		position: absolute;
+		width: 100%;
+		bottom: 2px;
+		border-bottom-width: 1px;
+		border-bottom-style: dashed;
+		border-bottom-color: #ff600a;
+		@include transition(opacity 0.25s ease-in-out, bottom 0.25s ease-in-out);
+	}
+
+	&:hover {
+		color: #7f858b;
+		border-bottom-color: transparent;
+
+		&:before {
+			bottom: -5px;
+			@include opacity(0);
+			@include transition(opacity 0.35s ease-in-out, bottom 0.35s ease-in-out);
+			@include animation(fadeOutBorder 0.35s ease-in-out);
+		}
+	}
+}
+
+@include keyframes(fadeOutBorder) {
+	0% { @include opacity(1); }
+	100% { @include opacity(0); }
+}
+
+.col-md-6 {
+	> .item-grid {
+		>[class*="col-md-"] {
+			.compare {margin-top: 10px;}
+		}
+	}
+}
+
+.col-md-8 {
+	> .item-grid {
+		>[class*="col-md-"] {
+			.compare {margin-top: 10px;}
+		}
+	}
+}
+
+.col-md-9 {
+	> .item-grid {
+		>.col-md-2,
+		>.col-md-3 {
+			.compare {margin-top: 10px;}
+		}
+	}
+}
+
+.col-md-12 {
+	> .item-grid {
+		>.col-md-2 {
+			.compare {margin-top: 10px;}
+		}
+	}
+}

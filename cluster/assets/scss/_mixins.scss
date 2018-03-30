@@ -1,0 +1,89 @@
+$responsive: "true";
+
+
+// MIXINS
+@mixin wh($width: 1230px, $p: "no"){
+  @if($responsive == "true"){
+    max-width: $width;
+    margin-left: auto;
+    margin-right: auto;
+    @if $p != "no"{
+      padding: 30px;
+    }
+  }@else{
+    width: $width;
+  }
+}
+
+$phone:        320px;
+$phone-wide:   480px;
+$tablet:       768px;
+$large-screen: 992px;
+
+@mixin at-least($device-width) {
+  @media screen and (min-width: $device-width) {
+    @content
+  }
+}
+
+@mixin until($device-width) {
+  @media screen and (max-width: $device-width - 1) {
+    @content
+  }
+}
+
+.site-width{
+  @include wh;
+}
+
+
+@mixin md($class){
+    .#{$class} &{
+        @content;
+    }
+}
+
+@mixin user-select($val: none){
+  -webkit-user-select: $val;
+  -moz-user-select: $val;
+  user-select: $val;
+}
+
+$base_font_size: 16;
+
+@mixin font($pixels) {
+  font-size: $pixels + px;
+  font-size: ( $pixels / $base_font_size ) + rem;
+}
+
+@mixin the-bg($trans: 1){
+  background: url(assets/img/pixel-#{$trans}.png) repeat;
+  background: rgba(black, ($trans/10));
+}
+
+
+@mixin keyframes ($animation_name) {
+    @-webkit-keyframes $animation_name {
+        @content;
+    }
+
+    @-moz-keyframes $animation_name {
+        @content;
+    }
+
+    @-o-keyframes $animation_name {
+        @content;
+    }
+
+    @keyframes $animation_name {
+        @content;
+    }
+}
+
+@mixin animation($val1){
+  -webkit-animation:  $val1;
+  -moz-animation:     $val1;
+  -ms-animation:      $val1;
+  -o-animation:       $val1;
+  animation:          $val1;
+}

@@ -1,0 +1,149 @@
+// Vars
+// --------------------------------------------------
+$nav-color: 				#2f322b;
+$section-bg: 				#292b27;
+$footer-bg: 				$section-bg;
+$footer-secondary-bg: 		#1c1d1c;
+$alert-color: 				#f4bf73;
+$border-color: 				#b2b2b2;
+
+$highlight-bg: 				#f7f5f1;
+
+$heading-font: 'BebasNeue';
+$content-width: 1170px;
+
+$mobile-menu-breakpoint: 1024px;
+
+// Mixins
+// --------------------------------------------------
+
+// Requires StagTools WordPress Plugin to work
+@mixin iconify( $code: null ){
+	@if $code {
+		content: "#{$code}";
+	} @else {
+		@content;
+	}
+	font-family: 'FontAwesome';
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: inherit;
+	-webkit-font-smoothing: antialiased;
+	*margin-right: .3em;
+}
+
+//Disable selection
+@mixin no-select {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	   	-ms-user-select: none;
+	   		user-select: none;
+}
+
+//Rem generator
+$baseline-px: 16px;
+
+//Media queries
+@mixin for($media, $breakpoint) {
+	@if $media == min {
+		@media screen and (min-width: $breakpoint) { @content; }
+	}
+	@else if $media == max {
+		@media screen and (max-width: $breakpoint) { @content; }
+	}
+}
+
+@mixin rem($property, $px-values) {
+	// Convert the baseline into rems
+	$baseline-rem: $baseline-px / 1rem;
+	// Print the first line in pixel values
+	#{$property}: $px-values;
+	// If there is only one (numeric) value, return the property/value line for it.
+	@if type-of($px-values) == "number" {
+		#{$property}: $px-values / $baseline-rem; }
+	@else {
+		// Create an empty list that we can dump values into
+		$rem-values: unquote("");
+		@each $value in $px-values {
+			// If the value is zero, return 0
+			@if $value == 0 {
+				$rem-values: append($rem-values, $value); }
+			@else {
+				$rem-values: append($rem-values, $value / $baseline-rem); } }
+		// Return the property and its list of converted values
+		#{$property}: $rem-values; } }
+
+
+$default-feature: min-width;
+// Usage:
+// @include media(500px){ …css stuff… }, will output - (min-width: 500px)
+// @include media(max-width 500px){ …css stuff… }, will output - (max-width: 500px)
+// @include media(max-width 500px min-width 800px){ …css stuff… }, will output - (max-width: 500px) and (min-width: 800px)
+@mixin media( $query: $feature $value ) {
+	@if length($query) == 1 {
+		@media screen and ($default-feature: nth($query, 1)) {
+			@content;
+		}
+	}
+
+	@else if length($query) == 2 {
+		@media screen and (nth($query, 1): nth($query, 2)) {
+			@content;
+		}
+	}
+
+	@else if length($query) == 4 {
+		@media screen and (nth($query, 1): nth($query, 2)) and (nth($query, 3): nth($query, 4)) {
+			@content;
+		}
+	}
+
+	@else {
+		@warn "Wrong number of arguments for breakpoint(). Read the documentation for more details.";
+	}
+}
+
+// Extends
+// --------------------------------------------------
+%clearfix{
+	zoom: 1;
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+%inside{
+	max-width: $content_width;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+%button{
+	border: none;
+	color: white;
+	text-transform: uppercase;
+	padding: 10px 10px;
+	line-height: 1;
+	display: inline-block;
+	max-width: 100%;
+	opacity: 1;
+	@include transition(all 100ms ease-in);
+	&:hover {
+		opacity: .9;
+	}
+}
+
+%hide {
+	display: none;
+}
+
+%vertical-align {
+	position: relative;
+	top: 50%;
+	@include transform(translateY(-50%));
+}

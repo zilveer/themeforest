@@ -1,0 +1,36 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+	{if $element->option(type) == 'pages'}
+		<ul>
+		{!= wp_list_pages(array(
+			'echo' 			=> true,
+			'title_li' 		=> '',
+			'depth' 		=> (int)$element->option(depth),
+			'number' 		=> $element->option(number),
+			'sort_column' 	=> $element->option(pagesOrderby),
+			'sort_order'	=> $element->option(order)
+		))}
+		</ul>
+	{else}
+		{var $query = new WP_Query(array(
+			'posts_per_page' 	=> (int)$element->option(number),
+			'post_type' 		=> 'post',
+			'cat' 				=> $element->option(category),
+			'author' 			=> $element->option(author),
+			'orderby'			=> $element->option(postsOrderby),
+			'order'				=> $element->option(order)
+		))}
+
+		<ul>
+		{while $query->have_posts()}
+			{$query->the_post()}
+			{!= sprintf('<li><a href="%s" rel="bookmark" title="%s">%s</a>%s</li>', get_permalink(), sprintf(__("Permalink to %s", 'ait'), the_title_attribute('echo=0')), get_the_title(), $element->option(comments-count) ? sprintf(" (%s)", get_comments_number()) : '')}
+		{/while}
+		</ul>
+
+		{!= wp_reset_query()}
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/sitemap/javascript"}

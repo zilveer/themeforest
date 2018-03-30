@@ -1,0 +1,433 @@
+// ================================================================
+// TMM Mixins
+// ================================================================
+
+
+//
+// @variables
+//
+$icon-width: 45;
+$icon-height: 45;
+$icon-font-size: 13;
+$icon-font-color: #b4b4b4;
+$icon-background-color: transparent;
+$icons-array:("twitter"     "\e986" "#47c0d8")
+             ("facebook"    "\ea85" "#49699f")
+             ("linkedin"    "\ea8e" "#2c7cb7")
+             ("rss"         "\e88d" "#fe9900")
+             ("pinterest"   "\ede9" "#c21c21")
+             ("gplus"       "\e974" "#c33d19")
+             ("instagram"   "\ea9b" "#517fa3")
+             ("dribbble"    "\e969" "#e65992")
+             ("dropbox"     "\e96a" "#5da3e8")
+             ("youtube"     "\e98d" "#b72d24")
+             ("blogger"     "\ee56" "#f38f33")
+             ("evernote"    "\ea9d" "#73b122")
+             ("behance"     "\eaa7" "#18a3fe")
+             ("skype"       "\e97f" "#24b0e4")
+             ("vimeo"       "\ea81" "#568799")
+             ("digg"        "\edf3" "#2882c6")
+             ("appstore"    "\edf8" "#606060")
+             ("wordpress"   "\ee29" "#33759d")
+             ("stubleupon"  "\ef76" "#eb4924")
+             ("deviantart"  "\ee58" "#5f7162")
+             ("github"      "\e96f" "#7292a2")
+             ("email"       "\e826" "#65a413")
+             ("cv"          "\ec9e" "#424246")
+             ("flickr"      "\ea7f" "#e82c88");
+
+//
+// @MIXIN
+//
+// Social icons
+//
+// $width - Sets width of the icon
+// $height - Sets height of the icon
+// $margin-right - If "true" then set margin-right
+// $margin-bottom - If "true" then set margin-bottom
+// $icons - Sets an array of the icons
+// $font-size - Sets font size for the icons
+// $color - Sets font color for icon
+// $background - Sets background-color for the icon
+
+@mixin social-icons(
+    $width: $icon-width,
+    $height: $icon-height,
+    $margin-right: 2,
+    $margin-bottom: 5,
+    $icons: $icons-array,
+    $font-size: $icon-font-size,
+    $color: $icon-font-color,
+    $background: $icon-background-color) {
+
+    position: relative;
+    display: inline-block;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+
+    & li {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        border: none;
+	    margin-right: rem-calc($margin-right);
+	    margin-bottom: rem-calc($margin-bottom);
+
+        a {
+            display: block;
+            width: rem-calc($width);
+            height: rem-calc($height);
+            cursor: pointer;
+            text-align: center;
+            &:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                line-height: #{$height}px;
+                background-color: $background;
+                color: $color;
+                content: "";
+                font: {
+                    family: 'fontello';
+                    size: rem-calc($font-size);
+                }
+               
+                @include transition;
+            }
+        }
+
+        @each $content in $icons-array {
+            &.#{(nth($content,1))} a:before {
+                content: (nth($content,2));
+            }
+            &.#{nth($content,1)} a:hover:before {
+                background-color: (#{nth($content,3)});
+                color: $white;
+            }
+        }
+    }
+}
+
+//
+// @MIXIN
+//
+// Box Shadow
+//
+
+$default-box-shadow:         0 1px 5px 1px #dddddd;
+$default-focus-box-shadow:   0 1px 10px 1px rgba($focus-border-color, 0.5);
+$footer-box-shadow:          0 1px 5px 1px transparent;
+$footer-focus-box-shadow:    0 1px 10px 1px $focus-border-color;
+$required-box-shadow:        0 1px 10px 1px rgba(255, 97, 94, 0.5);
+
+@mixin box-shadow($properties) {
+	-webkit-box-shadow: $properties;
+	   -moz-box-shadow: $properties;
+	    -ms-box-shadow: $properties;
+	        box-shadow: $properties;
+}
+
+//
+// @MIXIN
+//
+// Sloping Border
+//
+
+@mixin sloping-border($top: false) {
+    position: relative;
+    &:after {
+        position: absolute;
+        @if($top) {
+            top: 0;
+        } @else {
+            bottom: 0;
+        }
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-image: url('../images/doted-border.png');
+        content: "";
+    }    
+}
+
+//
+// @MIXIN
+//
+// Transition
+//
+
+$default-transition: all .35s ease;
+
+@mixin transition($properties...) {
+    @if length($properties) >= 1 {
+        -webkit-transition: $properties;
+           -moz-transition: $properties;
+            -ms-transition: $properties;
+                transition: $properties;
+    } @else {
+        -webkit-transition: $default-transition;
+           -moz-transition: $default-transition;
+            -ms-transition: $default-transition;
+                transition: $default-transition;
+    }
+}
+
+//
+// @MIXIN
+//
+// Transform Transition
+//
+$webkit-prefix: -webkit-;
+$moz-prefix: -moz-;
+
+@mixin transform-transition($properties...) {
+    -webkit-transition: $webkit-prefix + $properties;
+       -moz-transition: $moz-prefix + $properties;
+        -ms-transition: $properties;
+            transition: $properties; 
+}
+
+//
+// @MIXIN
+//
+// Box Border
+//
+
+$global-border-width: 3px;
+$global-border-style: solid;
+$global-border-color: #262626;
+
+@mixin border($side:all, $width:$global-border-width, $style:$global-border-style, $color:$global-border-color) {
+	@if ($side == all) {
+		border: $width $style $color;
+	} @else if ($side == none) {
+		border: none;
+	} @else if ($side == top) {
+		border-top: $width $style $color;
+	} @else if ($side == right) {
+		border-right: $width $style $color;
+	} @else if ($side == bottom) {
+		border-bottom: $width $style $color;
+	} @else {
+		border-left: $width $style $color;
+	}
+}
+
+//
+// @MIXIN
+//
+// Border Radius
+//
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+            border-radius: $radius;
+}
+
+
+//
+// @MIXIN
+//
+// Vertical Align
+//
+
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
+@mixin align-element($x: 50%, $y: 50%) {
+	position: absolute;
+	top: $x;
+	left: $y;
+	-webkit-transform: translate(-$x, -$y);
+	    -ms-transform: translate(-$x, -$y);
+	        transform: translate(-$x, -$y);
+}
+
+@mixin transform($params) {
+	-webkit-transform: $params;
+	-moz-transform: $params;
+	-o-transform: $params;
+	-ms-transform: $params;
+	transform: $params;
+}
+
+//
+// @MIXIN
+//
+// Animation 
+//
+
+$animation-parameters: 'loading 1s linear infinite forwards';
+
+@mixin animation($animation-parameters...) {
+    -webkit-animation: $animation-parameters;
+       -moz-animation: $animation-parameters;
+        -ms-animation: $animation-parameters;
+            animation: $animation-parameters;
+}
+
+//
+// @MIXIN
+//
+// Animation Delay
+//
+
+$delay: '.1s';
+@mixin animation-delay($delay) {
+    -webkit-animation-delay: $delay;
+       -moz-animation-delay: $delay;
+        -ms-animation-delay: $delay;
+            animation-delay: $delay;
+}
+
+//
+// @MIXIN
+//
+// Left Shadow
+//
+
+$left-shadow-color: #6e6e6e;
+
+@mixin left-shadow($left: 6px) {
+    &:before {
+        position: absolute;
+        bottom: 18px;
+        left: $left;
+        right: auto;
+        width: 52%;
+        top: 61%;
+        max-width: 300px;
+        background: #6e6e6e;
+        content: "";
+                    
+        @include box-shadow(0 16px 6px $left-shadow-color);
+
+        -webkit-transform: rotate(-3deg);
+                transform: rotate(-3deg);
+    }
+}
+
+//
+// @MIXIN
+//
+// Right Shadow
+//
+
+$right-shadow-color: #6e6e6e;
+
+@mixin right-shadow($right: 6px) {
+    &:after {
+        position: absolute;
+        bottom: 18px;
+        right: $right;
+        left: auto;
+        width: 52%;
+        top: 61%;
+        max-width: 300px;
+        background: #6e6e6e;
+        content: "";
+                    
+        @include box-shadow(0 16px 6px $right-shadow-color);
+
+        -webkit-transform: rotate(3deg);
+                transform: rotate(3deg);
+    }
+}
+
+//
+// @MIXIN
+//
+// Widget Box Style
+//
+
+@mixin widget-box-style ($bg-color, $border-width, $border-color, $border-style, $shadow-top, $shadow-left, $shadow-blur, $shadow-color) {
+    background-color: $bg-color;
+	border: {
+		width: $border-width;
+		color: $border-color;
+		style: $border-style;
+	}
+	@include box-shadow($shadow-top, $shadow-left, $shadow-blur, $color: $shadow-color, $inset: false);
+}
+
+
+@mixin translateY($sub-menu-position: $sub-menu-position) {
+    -webkit-transform: translateY($sub-menu-position);
+            transform: translateY($sub-menu-position);
+}
+
+//
+// @MIXIN
+//
+// Long Word Wrap
+//
+
+@mixin word-wrap() {
+    word-break:     break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens:    auto;
+    hyphens:         auto;
+}
+
+//
+// @MIXIN
+//
+// Flexbox Mixins
+//
+
+@mixin flexbox() {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+@mixin flex($values) {
+	-webkit-box-flex: $values;
+	-moz-box-flex:  $values;
+	-webkit-flex:  $values;
+	-ms-flex:  $values;
+	flex:  $values;
+}
+
+@mixin order($val) {
+	-webkit-box-ordinal-group: $val;
+	-moz-box-ordinal-group: $val;
+	-ms-flex-order: $val;
+	-webkit-order: $val;
+	order: $val;
+}
+
+//
+// @MIXIN
+//
+// Keyframes Mixins
+//
+
+@mixin keyframes($animationName) {
+	@-webkit-keyframes #{$animationName} {
+		@content;
+	}
+	@-moz-keyframes #{$animationName} {
+		@content;
+	}
+	@-o-keyframes #{$animationName} {
+		@content;
+	}
+	@keyframes #{$animationName} {
+		@content;
+	}
+}

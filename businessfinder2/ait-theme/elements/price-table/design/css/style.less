@@ -1,0 +1,25 @@
+
+@import "../../../@common/common.less";
+
+.standardColor('dark') when (iscolor(@standard))	{ background: @standard; }
+.featuredColor('dark') when (iscolor(@featured))	{ background: @featured !important; }
+
+.ltoColorLight1() when (iscolor(@lightAltColor))	{ background-color: lighten(@lightAltColor, 10%); }
+.ltoColorLight2() when (iscolor(@lightAltColor))	{ background-color: lighten(@lightAltColor, 5%); }
+
+.butColor() when (iscolor(@butColor))				{ background-color: @butColor; }
+
+#@{el}{
+
+	.ptable-item .table-header								{ .standardColor('dark'); }
+	.ptable-item.table-featured .table-header				{ .featuredColor('dark'); }
+
+	.table-body								{ .ltoColorLight1(); }
+	.table-body .table-row:nth-child(2n)	{ .ltoColorLight2(); }
+	.table-footer							{ .ltoCustomColor(); }
+	.table-button a							{ .butColor(); }
+}
+
+.@{el} {
+	clear:both;
+}

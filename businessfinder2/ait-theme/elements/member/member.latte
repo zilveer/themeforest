@@ -1,0 +1,116 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{customQuery as $query,
+		id => $el->option('member'),
+		type => 'member'
+	}
+
+	{if $query->havePosts}
+		{customLoop from $query as $member}
+			{var $meta = $member->meta('member')}
+			{var $memberdesc = $el->option->memberdesc}
+			{var $textRows = $el->option->textRows}
+			{var $imageHeight = $el->option->imageHeight}
+			{var $imagePresent = ''}
+			{var $displayData = $el->option->displayData}
+			{var $target = $el->option('linksInNewWindow') ? 'target="_blank"'}
+			{var $hasContacts = is_array($meta->contacts) && count($meta->contacts) > 0 ? true : false}
+			{var $hasIcons = is_array($meta->icons) && count($meta->icons) > 0 ? true : false}
+
+			{if $member->hasImage and $imageHeight != 'none'} {var $imagePresent = 'yes'} {else} {var $imagePresent = ''} {var $imageHeight = ''}{/if}
+			{if !$displayData} {var $imagePresent = ''} {var $imageHeight = ''} {/if}
+
+			<div n:class='member-container, "desc-{$memberdesc}", !$displayData ? nodata, $imagePresent ? image-present : noimage, $imageHeight == "round" ? image-round, !$hasIcons ? icons-disabled, !$hasContacts ? contacts-disabled'>
+
+				{if !$imagePresent or $memberdesc == 'none'}
+				<div class="desc-wrap desc-wrap-title">
+					<div class="member-title">
+						<h3>{!$member->title}</h3>
+						{if $meta->position}
+							<div class="member-position">{!$meta->position}</div>
+						{/if}
+					</div>
+				</div>
+				{/if}
+
+				{if $displayData}
+					<div class="member-card">
+
+					{if $imagePresent}
+						{if $imageHeight != 'round'}
+							{var $ratio = explode(":", $element->option(imageHeight))}
+							{var $iWidth = 640}
+							{var $iHeight = ($iWidth / $ratio[0]) * $ratio[1]}
+						{else}
+							{var $iWidth = 300}
+							{var $iHeight = 300}
+						{/if}
+						<div class="photo-wrap">
+							<img src="{imageUrl $member->imageUrl, width => $iWidth, height => $iHeight, crop => 1}" alt="photo">
+						</div>
+					{/if}
+
+					{if is_array($meta->contacts) && count($meta->contacts) > 0}
+						<div class="contact-wrap">
+							<div class="item-contacts">
+								<ul class="member-contacts"><!--
+								{foreach $meta->contacts as $contact}
+									--><li>{if $contact[url]}<a href="{$contact[url]}" {!$target}>{/if}<span>{$contact[title]}</span>{if $contact[url]}</a>{/if}</li><!--
+								{/foreach}
+								--></ul>
+							</div>
+						</div>
+					{/if}
+
+					{if is_array($meta->icons) && count($meta->icons) > 0}
+						<div class="social-wrap">
+							<div class="item-social-icons">
+								<ul class="member-icons"><!--
+								{foreach $meta->icons as $icon}
+									--><li><a href="{$icon[url]}" {!$target} title="{!$icon[title]}"><i class="fa {$icon[icon]}"></i></a></li><!--
+								{/foreach}
+								--></ul>
+							</div>
+						</div>
+					{/if}
+
+					</div>
+				{/if}
+
+				{if $memberdesc != 'none'}
+					<div class="desc-wrap desc-wrap-text">
+						{if $imagePresent}
+						<div class="member-title">
+							<h3>{!$member->title}</h3>
+							{if $meta->position}
+								<div class="member-position">{!$meta->position}</div>
+							{/if}
+						</div>
+						{/if}
+
+						{if $memberdesc == 'short'}
+							<div class="entry-content-short">{$meta->aboutShort}</div>
+						{else}
+							<div class="entry-content txtrows-{$textRows}">{!$meta->about}</div>
+							{if $el->option("hideRows")}
+								<span class="entry-content-hider state-more">{__ 'Read more'}</span>
+								<span class="entry-content-hider state-less" style="display: none;">{__ 'Read less'}</span>
+							{/if}
+						{/if}
+					</div>
+				{/if}
+			</div>
+		{/customLoop}
+
+	{else}
+		<div class="member-container">
+			<div class="alert alert-info">
+				{_x 'Member', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: Select some member in the Member element, please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/member/javascript"}

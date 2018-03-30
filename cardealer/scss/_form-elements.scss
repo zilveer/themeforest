@@ -1,0 +1,237 @@
+
+$form-icon-font-family:			'fontello';
+$form-icon-color:				#ff600a;
+$form-icon-color-alternate:		#ffcf00;
+
+$form-text-font-family:			'Arial', Tahoma, Verdana;
+
+$form-placeholder-color:		#dddcdc;
+
+$form-text-color:				#8f8f8f;
+$form-text-color-hover:			#8f8f8f;
+$form-bg-color:					#ffffff;
+$form-bg-color-hover:			#ffffff;
+$form-border-color:				#dddcdc;
+$form-border-color-alternate:	#ffffff;
+$form-border-color-hover:		#acaaaa;
+$form-border-color-focus:		#acaaaa;
+$form-border-color-disabled:	#f6f6f6;
+$form-border-color-required:	#ff600a;
+
+/* -------------------------------------------------- */
+/*	Form Elements
+/* -------------------------------------------------- */
+
+input, select, textarea {
+	font-size: 100%;
+	vertical-align: baseline;
+	display: inline-block;
+	margin: 0;
+	padding: 6px 10px;
+	width: 100%;
+	height: 28px;
+	outline: none;
+	border: 1px solid $form-border-color;
+	background-color: $form-bg-color;
+	color: $form-text-color;
+	font-family: $form-text-font-family;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-border-radius: 0;
+	@include transition(border .35s ease-in-out, background .35s ease-in-out);
+
+	&:hover {
+		border-color: $form-border-color-hover;
+	}
+
+	&:focus {
+		border-color: $form-border-color-focus;
+	}
+
+	&[disabled]:hover, &[readonly] {
+		border-color: $form-border-color-hover;
+	}
+
+	&[disabled] {
+		background-color: $form-border-color-disabled;
+	}
+
+	&.required, #{".required"} & {
+		border-color: $form-border-color-required;
+	}
+
+	&::-moz-input-placeholder {
+		color: $form-placeholder-color;
+	}
+
+	&::-webkit-input-placeholder {
+		color: $form-placeholder-color;
+	}
+
+	&[type="image"] {
+		width: auto;
+		height: auto;
+		margin: 0 auto;
+		display: block;
+		background-color: transparent;
+		border: none;
+	}
+}
+
+.ie9 select { padding-right: 5px; }
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	width: auto;
+	cursor: pointer;
+	-webkit-appearance: button;
+}
+
+input[type="hidden"] {
+	height: 0;
+	width: 0;
+}
+
+textarea {
+	min-height: 70px;
+	resize: vertical;
+}
+
+label {
+	display: inline-block;
+}
+
+
+// todo: remove all .sel elements
+.sel {
+	position: relative;
+
+	&:after {
+		position: absolute;
+		z-index: 8;
+		top: 1px;
+		right: 1px;
+		display: block;
+		width: 24px;
+		height: 26px;
+		outline: none;
+		background-color: transparent;
+		background-image: url(../images/select.png);
+		background-position: right top;
+		background-repeat: no-repeat;
+		content: '';
+		pointer-events: none;
+	}
+
+	&.disabled {
+		&:after {
+			background-position: right bottom;
+		}
+	}
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+/* Fix for Mobile Safari */
+input[type="checkbox"] {
+	-webkit-appearance: checkbox;
+}
+
+input[type="radio"] {
+	-webkit-appearance: radio;
+}
+
+
+/* ======= Radio & Checkbox Elements ======= */
+
+input[type="checkbox"],
+input[type="radio"] {
+	width: 14px;
+	height: 14px;
+	top: -1000vh;
+	opacity: 0;
+	position: absolute;
+	display: none;
+	vertical-align: middle;
+	cursor: pointer;
+
+	+ label {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		margin: 5px 0;
+		cursor: pointer;
+
+		&:before {
+			content: '';
+			position: relative;
+			top: -1px;
+			left: 0;
+			background-color: #fff;
+			display: inline-block;
+			vertical-align: middle;
+			width: 13px;
+			height: 13px;
+			margin-right: 5px;
+			outline: none;
+			border: 1px solid $form-border-color;
+			@include transition(background .35s ease-in);
+		}
+
+		&:after {
+			content: '';
+			opacity: 0;
+			position: absolute;
+			left: 2px;
+			top: 2px;
+			font: {
+				family:  $form-icon-font-family;
+				size: 16px;
+			}
+			line-height: 16px;
+			color: $form-icon-color;
+			@include transition(all .35s ease-in);
+		}
+	}
+}
+
+input[type="checkbox"] {
+	+ label {
+		&:after {
+			content: '\2713';
+		}
+	}
+	&:checked {
+		+ label {
+			&:after {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+input[type="radio"] {
+	+ label {
+		&:before {
+			margin-right: 8px;
+			width: 10px;
+			height: 10px;
+			border: 2px solid $form-border-color-alternate;
+			border-radius: 50%;
+			box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+		}
+	}
+
+	&:checked {
+		+ label {
+			&:before {
+				background-color: $form-icon-color-alternate;
+			}
+		}
+	}
+}

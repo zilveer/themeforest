@@ -1,0 +1,66 @@
+
+.bgCustomColor() when (iscolor(@bg-color))			{ background-color: @bg-color; }
+.bgCustomImage() when not (@bg-image = url())		{ background-image: @bg-image; }
+.titCustomColor() when (iscolor(@titlesAltColor))	{ color: @titlesAltColor; }
+.txtCustomColor() when (iscolor(@textAltColor))		{ color: @textAltColor; }
+.lnkCustomColor() when (iscolor(@linkAltColor))		{ color: @linkAltColor; }
+.ltoCustomColor() when (iscolor(@lightAltColor))	{ background-color: @lightAltColor; }
+.ltoCustomBorder() when (iscolor(@lightAltColor))	{ border-color: @lightAltColor; }
+.customSize() when (isnumber(@customWidth))			{ max-width: @customWidth; margin-left: auto; margin-right: auto; }
+
+#@{el}-main 							{ .bgCustomColor();
+										  .bgCustomImage();
+										  background-repeat: @bg-repeat;
+										  background-attachment: @bg-scroll;
+										  background-position: @bg-position;
+										  .txtCustomColor();
+	h1, h2, h3, h4, h5, h6, strong		{ .titCustomColor(); }
+	a, a:hover							{ .lnkCustomColor(); }
+	.elm-maintitle::before,
+	.elm-maintitle::after				{ .ltoCustomColor(); }
+	.elm-wrapper						{ .customSize(); }
+
+	.carousel-standard-arrows .standard-arrow::before	{ .titCustomColor(); }
+	.carousel-bottom-arrows								{ .ltoCustomColor(); margin-top: @carouselOffset; }
+}
+
+.elements-sidebar-wrap #@{el}-main 		{ .elm-wrapper	{ .customSize(); }
+}
+
+.bgCustomColorType3() when (iscolor(@bg-color))			{ /*padding-top: 30px; padding-bottom: 30px;*/ .elm-search-form { background-color: @bg-color; } .elm-wrapper { /*padding-top: 40px;*/ } }
+.bgCustomColorSearch() when not (iscolor(@bg-color))	{ border: none; }
+.bgCustomColorSearch() when (iscolor(@bg-color))		{ background: none; }
+.bgDarkenSearch() when (iscolor(@bg-color))				{ background-color: darken(@bg-color, 3%); }
+.buttonColor() when (iscolor(@buttonColor))				{ background: @buttonColor; border: none; }
+.respBck() when (iscolor(@responsiveBck))				{ background: @responsiveBck; }
+
+#@{el}-main { background: none; }
+
+#@{el}{
+
+	.bgCustomColor();
+	.bgCustomImage();
+	background-repeat: @bg-repeat;
+	background-attachment: @bg-scroll;
+	background-position: @bg-position;
+
+}
+
+.search-form-type-3 #@{el}-main
+{
+	.bgCustomColorType3();
+
+	.elm-maindesc 			{ .txtCustomColor(); }
+	.category-search-wrap,
+	.location-search-wrap,
+	.radius 				{ .bgCustomColorSearch(); .buttonColor(); }
+}
+
+.search-form-type-3 .search-collapsed #@{el}-main 	{ .respBck(); }
+@media all and (max-width: 640px)					{ .search-form-type-3 .header-layout #@{el}-main {.respBck();} }
+
+.@{el}{
+	clear:both;
+}
+
+

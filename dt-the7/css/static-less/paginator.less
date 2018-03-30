@@ -1,0 +1,217 @@
+/* #Paginator
+================================================== */
+.paginator {
+	position: relative;
+	margin: 30px 0 0 0;
+	z-index: 10;
+	.flex-display(@display: flex);
+	 .flex-flow( row wrap);
+	.align-items(@align: center);
+	.justify-content(@justify: center);
+}
+	.paginator:before {
+		content: "";
+		display: table;
+	}
+
+	.paginator:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	
+		.paginator:not(.paginator-more-button) a {
+			.box-sizing (border-box);
+		}
+		.paginator .disabled:hover {
+			cursor: default;
+		}
+
+		a,
+		span {
+			.paginator:not(.paginator-more-button) & {
+				position: relative;
+				display: inline-block;
+				padding: 1px 8px;
+				margin: 0 6px;
+				text-align: center;
+				text-decoration: none;
+				font-weight: bold;
+				&:after {
+					position: absolute;
+					left: 0;
+					bottom: -2px;
+					width: 100%;
+					height: 2px;
+					content: "";
+					opacity: 0;
+
+					-webkit-transition: opacity 0.3s ease;
+				 	transition: opacity 0.3s ease;
+				}
+				&.disabled {
+					opacity: 0;
+				}
+				&.nav-next,
+				&.nav-prev {
+					padding: 0;
+					font-size: 14px;
+					line-height: 1;
+					-webkit-transition: transform 0.3s ease;
+				 	transition: transform 0.3s ease;
+				 	-webkit-transform: translateX(0);
+				 	transform: translateX(0);
+				}
+				&.nav-next:not(.disabled):hover {
+					-webkit-transform: translateX(4px);
+					transform: translateX(4px);
+				}
+				&.nav-prev:not(.disabled):hover {
+
+				 	-webkit-transform: translateX(-4px);
+				 	transform: translateX(-4px);
+				}
+				&.nav-next:after,
+				&.nav-prev:after {
+					display: none;
+				}
+				&.act:after,
+				&:hover:after {
+					opacity: 1;
+				}
+			}
+		}
+		
+		.paginator .nav-prev,
+		.paginator .nav-next {
+			position: relative;
+			display: inline-block;
+			text-decoration: none;
+		}
+			
+			
+/*Load more button*/
+.paginator.paginator-more-button {
+	text-align: center;
+}
+.justified-grid .paginator.paginator-more-button {
+	width: 100%;
+}
+	.paginator .button-load-more,
+	.paginator .loading-ready {
+		position: relative;
+		display: inline-block;
+		float: none;
+		text-decoration: none;
+	}
+		.paginator .button-load-more {
+			.flex-display(@display: flex);
+			.align-items(@align: center);
+			.justify-content(@justify: center);
+			width: 220px;
+			height: 50px;
+			border: 2px solid;
+			.box-sizing (border-box);
+			-webkit-transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+			transition: all 400ms cubic-bezier(0.19, 1, 0.22, 1);
+
+			& .stick {
+				display: none;
+				opacity: 0;
+
+				-webkit-transition: opacity 0.1s ease;
+				transition: opacity 0.1s ease;
+
+			}
+			& .button-caption {
+				display: block;
+				margin: 0;
+				font-weight: bold;
+
+				-webkit-transition: opacity 0.01s ease, color 0.2s ease;
+				transition: opacity 0.01s ease, color 0.2s ease;
+				&:before {
+					content: "\f13a";
+					margin-right: 5px;
+					font: normal normal normal 14px/1 FontAwesome;
+				}
+			}
+			&.animate-load,
+			&.button-lazy-loading {
+				width: 50px;
+				height: 50px;
+				.static-border-radius;
+
+				& .button-caption {
+					opacity: 0;
+					text-indent: -9999px;
+				}
+				& .stick {
+
+					display: block;
+					
+					-webkit-animation: spin 1s infinite linear 0.2s;
+					animation: spin 1s infinite linear 0.2s;
+					-webkit-animation-delay: 0.4s;
+				    animation-delay: 0.4s;
+				    border-bottom-color: transparent;
+					border-left-color: transparent;
+				}
+			}
+			
+		}
+		.pace.iso-preloader .pace-activity {
+			&:before {
+				border-color: transparent;
+				border-top-color: #fff;
+				border-right-color: #fff !important;
+			}
+		}
+		.iso-preloader .pace-activity:after {
+			display: none;
+		}
+		.stick:first-child,
+		.iso-preloader .pace-activity:before,
+		.rsPreloader .pace-activity:before {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -15px 0 0 -15px;
+			width: 50px;
+			height: 50px;
+			// -webkit-border-radius: 40px;
+			// border-radius: 40px;
+			.static-border-radius(40px);
+			.box-sizing (border-box);
+			background-color: transparent;
+			border: 2px solid;
+			-webkit-animation: spin 1s infinite linear 0.2s;
+			animation: spin 1s infinite linear 0.2s;
+		}
+		.stick:first-child {
+			top: -2px;
+			left: -2px;
+			margin: 0;
+		}
+		@-webkit-keyframes spin{ 
+			0% {
+		        opacity: 1;
+		    }
+			100% { 
+		        opacity: 1;
+				-webkit-transform: rotate(360deg); 
+				
+			}
+		}
+		@keyframes spin{ 
+			0% {
+		        opacity: 1;
+		    }
+			100% { 
+
+		        opacity: 1;
+				transform: rotate(360deg); 
+				
+			}
+		}
+

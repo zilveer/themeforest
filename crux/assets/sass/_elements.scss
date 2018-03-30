@@ -1,0 +1,283 @@
+*,*:after,*:before{
+  @include box-sizing(border-box);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+a{
+	outline: 0;
+}
+
+input[type="submit"],
+button,
+.button{
+  @extend %button;
+  @include transition(all 200ms linear);
+  &:hover{
+  	@include opacity(.8);
+  }
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="button"],
+button,
+.button {
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+
+.button-stroked {
+	background: transparent !important;
+	border: 2px solid white;
+	color: white;
+	padding: 7px 14px;
+}
+
+.button-secondary{
+  background-color: $nav-color !important;
+}
+
+label{
+  display: inline-block;
+  color: $nav-color;
+  text-transform: uppercase;
+  cursor: pointer;
+  .required{
+    border: none;
+    color: lighten(#c00, 30%);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  color: #2f322b;
+  font-family: $heading-font;
+  font-weight: normal;
+  margin-top: 0;
+  a{
+    color: inherit;
+  }
+}
+
+img{
+  vertical-align: bottom;
+  max-width: 100%;
+  height: auto;
+  &:not([src]) {
+    visibility: hidden;
+  }
+}
+
+a{
+  text-decoration: none;
+  @include transition(all .1s);
+}
+
+blockquote{
+	@include rem('margin', 20px 0);
+	@include rem('font-size', 25px);
+	color: #bbbbbb;
+}
+
+select{
+  @include appearance(none);
+  text-indent: .01px;
+  text-overflow: '';
+  outline: none;
+  background: transparent url('assets/img/select-bg.gif') no-repeat 95% 50%;
+  background-size: 10px 5px;
+  max-width: 100%;
+  @include box-shadow(none);
+  border: 1px solid #b2b2b2;
+  padding: 10px;
+  @include border-radius(0);
+  padding-right: 30px;
+  .gecko & {
+    background: none;
+  }
+}
+
+table{
+  width: 100%;
+  max-width: 100%;
+  th{
+    text-align: left;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="password"],
+.input-text,
+textarea{
+  border: none;
+  padding: 10px;
+  line-height: 1;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+}
+
+textarea{
+	color: $nav-color;
+	line-height: 1.2;
+}
+
+.button{
+  line-height: 1;
+}
+
+li > ul,
+li > ol, {
+	margin: 0;
+}
+
+ol {
+	li {
+		list-style: decimal;
+	}
+}
+
+.select-dropdown{
+  position: relative;
+  width: auto;
+  min-width: 80px;
+  height: 38px;
+  padding-right: 30px;
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  max-width: 100%;
+  border: 1px solid $border-color;
+  color: $nav-color;
+
+  div,
+  li,
+  div::after{
+    @include transition(all 150ms ease-in-out);
+  }
+
+  select{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+
+  &.touch select{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+
+  .selected,
+  li{
+    display: block;
+    line-height: 1.1;
+    padding: 9px 12px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .old{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+  }
+
+  div{
+    position: absolute;
+    height: 0;
+    left: -1px;
+    right: -1px;
+    top: 100%;
+    margin-top: -1px;
+    background: #FFF;
+    border: 1px solid #CCC;
+    overflow: hidden;
+    opacity: 0;
+
+  }
+
+  .selected::after
+  &.div::after{
+    -webkit-pointer-events: none;
+    -moz-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+  }
+
+  &.open{
+    z-index: 2;
+    div{
+      opacity: 1;
+      z-index: 2;
+    }
+  }
+
+  ul{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    overflow: hidden;
+  }
+
+  &.scrollable.open ul{
+    overflow-y: auto;
+  }
+
+  li{
+    border-top: 1px solid $border-color;
+    margin: 0 !important;
+    &:first-child{
+      border-top: none;
+    }
+    &:hover, &.active{
+      background: whitesmoke;
+    }
+  }
+
+  &.open{
+    .carat::before{
+      @include transform(rotate(180deg));
+    }
+  }
+
+  .carat{
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 30px;
+    height: 100%;
+    text-align: center;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    padding-top: 7px;
+    &::before{
+    	display: block;
+    	@include transition(all 200ms);
+      	@include iconify("\f107");
+    }
+  }
+}

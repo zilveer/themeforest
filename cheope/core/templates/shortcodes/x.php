@@ -1,0 +1,1 @@
+<i class="yit-sc-tick icon-ok" style="color: <?php echo $color; ?>; font-size: <?php echo $size; ?>px;"></i>

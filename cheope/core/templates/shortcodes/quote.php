@@ -1,0 +1,1 @@
+<blockquote><p><?php echo do_shortcode($content); ?></p></blockquote>

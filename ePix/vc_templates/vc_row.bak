@@ -1,0 +1,97 @@
+<?php
+$output = $el_class = $bg_image = $bg_color = $bg_slider = $bg_video = $bg_image_repeat = $font_color = $padding = $margin_bottom = $css = $background_css = $background_image = $background_style = $parallax_image_src = '';
+extract(shortcode_atts(array(
+	'el_class'        => '',
+	'bg_image'        => '',
+	'bg_color'        => '',
+	'bg_image_repeat' => '',
+	'font_color'      => '',
+	'full_width' 		=> false,
+	'padding'         => '',
+	'margin_bottom'   => '',
+	'custom_background' => '',
+	'parallax' => '',
+	'anchor_link' => '',
+    'css' => '',
+	'row_height' => '',
+	'min_height' => '',
+), $atts));
+
+
+wp_enqueue_script( 'wpb_composer_front_js' );
+
+
+$el_class = $this->getExtraClass($el_class);
+
+// Scrape Background CSS
+if(preg_match('/\bbackground\b/i', $css))
+{
+    $background_css = 'yes';
+}
+
+// Parallax
+if( !empty( $parallax ) ) 
+{	
+	preg_match_all('/background(-image)??\s*?:.*?url\(["|\']??(.+)["|\']??\)/', $css, $matches, PREG_SET_ORDER);
+	
+	if( !empty( $matches ) )
+	{
+		$parallax_image_src = $matches[0][2];	
+		$css = str_replace( $matches[0][0] . ' !important;', '', $css );
+	}
+}
+
+
+$css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, 'wpb_row ' . get_row_css_class() . $el_class . ( !empty( $full_width ) ? ' '. $full_width : '' ) . ( !empty( $anchor_link ) ? ' link_anchor anchor-'.$anchor_link : '' ) . ( !empty( $background_image ) && !empty( $parallax ) ? ' parallax' : '' ) . ( $row_height == 'full_height' ? ' full-row-height' : '' ) . ( !empty( $parallax ) || !empty( $row_height ) || !empty( $background_css ) || !empty( $inherit_shaded_color )  ? ' custom-row' : '' ) . vc_shortcode_custom_css_class( $css, ' ' ), $this->settings['base'], $atts );
+
+// Parallax
+if( !empty( $parallax ) ) 
+{
+	if( $parallax == 'yes' )
+	{
+		$parallax = 'content-moving';
+	}
+	
+	wp_enqueue_script( 'vc_jquery_skrollr_js' );
+	
+	$css_class .= ' custom-row parallax vc_general vc_parallax vc_parallax-' . $parallax;
+	
+	if( strpos( $parallax, 'fade' ) ) : $css_class .= ' js-vc_parallax-o-fade'; endif;
+}
+
+// Anchor Links
+if( !empty( $anchor_link ) )
+{
+	wp_register_script('waypoints', get_template_directory_uri().'/js/waypoints.min.js', array('jquery'), true );
+	wp_enqueue_script('waypoints');	
+
+	wp_register_script('anchor-waypoints', get_template_directory_uri().'/js/anchor-waypoints.min.js', array('waypoints'), true );
+	wp_enqueue_script('anchor-waypoints');								
+}
+
+if( $custom_background == 'inherit' )
+{
+	$style = $this->buildStyle($bg_image, '', $bg_image_repeat, $font_color, $padding, $margin_bottom);
+	$css_class .= ' custom-row-inherit';	
+}
+else
+{
+	$style = $this->buildStyle($bg_image, $bg_color, $bg_image_repeat, $font_color, $padding, $margin_bottom);
+}
+
+$bgSpeed = 1.8;
+
+$output .= '<div class="'. $css_class .'" '. $style .' '. ( !empty( $anchor_link ) ? ' data-anchor-link="'. $anchor_link .'"'  : '' ) . ( ! empty( $full_width ) ? ' data-vc-full-width="true" data-vc-full-width-init="false" ' . ( $full_width == 'stretch_row_content' || $full_width == 'stretch_row_content_no_spaces' ? ' data-vc-stretch-content="true"' : '' ) : '' ) . ( !empty( $parallax ) ? ' data-vc-parallax="' . $bgSpeed . '"' . ' data-vc-parallax-image="' . $parallax_image_src . '"' . ( strpos( $parallax, 'fade' ) ? ' data-vc-parallax-o-fade="on"' : '' ) : '' ) . '>';
+$output .= '<div class="row-inner-wrap clearfix">';
+$output .= '<div class="parallax-wrap"><div class="parallax-content" '. ( !empty( $min_height ) ? 'style="height:'. $min_height .'px"' : '' ) .'>';
+$output .=  wpb_js_remove_wpautop($content);
+$output .= '</div>';
+$output .= '</div>';
+$output .= '</div>';
+$output .= '</div>'.$this->endBlockComment('row');
+
+if ( ! empty( $full_width ) ) {
+	$output .= '<div class="vc_row-full-width"></div>';
+}
+
+echo $output;

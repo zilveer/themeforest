@@ -1,0 +1,66 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass} layout-{$el->option(layout)}">
+
+	{customQuery as $query,
+		type => price-table,
+		tax => tables,
+		cat => $el->option(category),
+		limit => -1,
+		orderby => $el->option(orderby),
+		order => $el->option(order),
+	}
+
+	{if $query->havePosts}
+		<div class="ptable-container">
+			<div class="ptable-wrap">
+			{var $maxRows = 0}
+			{customLoop from $query as $table}
+				{var $meta = $table->meta(table-data)}
+				{if $maxRows < count($meta->rows)}
+					{var $maxRows = count($meta->rows)}
+				{/if}
+			{/customLoop}
+
+			{customLoop from $query as $table}
+				{var $meta = $table->meta(table-data)}
+				{if $meta->rows == ""}
+					{var $meta->rows = array()}
+				{/if}
+				{var $aRow = $maxRows - count($meta->rows)}
+				<div class="ptable-item{if $meta->featured} table-featured{/if}">
+					<div class="ptable-item-wrap">
+						<div class="table-header">
+						{if $meta->title != ""}<h3><span class="ptab-title">{!$meta->title}</span></h3>{/if}
+						{if $meta->description != ""}<div class="table-description">{!$meta->description}</div>{/if}
+						{if $meta->price != ""}<div class="table-price">{!$meta->price}</div>{/if}
+						{if $meta->subtitle !== ""}<div class="table-subtitle">{!$meta->subtitle}</div>{/if}
+						</div>
+						<div class="table-body">
+						{foreach $meta->rows as $row}
+							<div class="table-row">{if $row[description] != ""}{!$row[description]}{else}&nbsp;{/if}</div>
+						{/foreach}
+						{for $i = 0; $i < $aRow; $i++}
+							<div class="table-row empty-row">&nbsp;</div>
+						{/for}
+						</div>
+						<div class="table-footer">
+						{if !empty($meta->buttonText) && !empty($meta->buttonLink)}<div class="table-button"><div class="table-button-wrap"><a href="{$meta->buttonLink}">{$meta->buttonText}</a></div></div>{/if}
+						</div>
+					</div>
+				</div>
+			{/customLoop}
+
+			</div>
+		</div>
+	{else}
+		<div class="ptable-container">
+			<div class="alert alert-info">
+				{_x 'Price tables', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/price-table/javascript"}
+

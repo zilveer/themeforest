@@ -1,0 +1,23 @@
+/*
+@import "../../../@common/common.less";
+*/
+
+.videoHeight() when (isnumber(@height))				{ height: @height; }
+.overlayColor() when (iscolor(@overlay-color))		{ background-color: @overlay-color; }
+.overlayImage() when not (@overlay-image = url())	{ background-image: @overlay-image; }
+
+#@{el}{
+
+	 .videoHeight();
+
+	.video-overlay	{ .overlayImage();
+					  .overlayColor();
+					  background-repeat: @overlay-repeat;
+					  background-attachment: @overlay-scroll;
+					  background-position: @overlay-position;
+					}
+}
+
+.@{el}{
+	clear:both;
+}

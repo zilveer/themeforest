@@ -1,0 +1,66 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass} easy-pager-{$el->option(pagerType)} pager-pos-{$el->option(pagerPosition)}">
+
+	<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+
+	{var $OffsetClass = ''}
+	{if $el->option->descVoffset == ""}	{var $el->option->descVoffset = 0}	{/if}
+	{if $el->option->descHoffset == ""}	{var $el->option->descHoffset = 0}	{/if}
+
+	{if $el->option->descVoffset != 0 }	{var $OffsetClass = 'V-Offset'}		{/if}
+	{if $el->option->descHoffset != 0 }	{var $OffsetClass = 'H-Offset'}		{/if}
+
+	{if $el->option->descVoffset != 0 and $el->option->descHoffset != 0}
+		{var $OffsetClass = 'VH-Offset'}
+	{/if}
+
+	{if $el->option(slides)}
+	<ul class="easy-slider {$OffsetClass} descanimation-{$el->option(descriptionAnimation)}">
+	{foreach $el->option(slides) as $slide}
+		{var $ratio = explode(":", $element->option(imageFormat))}
+		{if $el->option("contentSize") == "fullsize"}
+		{var $iWidth = 1920}
+		{else}
+		{var $iWidth = $options->theme->general->websiteWidth}
+		{/if}
+
+		{var $iHeight = ($iWidth / $ratio[0]) * $ratio[1]}
+		<li class="{$slide['descriptionPosition']}">
+			{if $slide['link']}<a href="{$slide['link']}" {if $el->option->linkTarget}target="_blank"{/if}>{/if}
+				<img src="{imageUrl $slide['image'], width => $iWidth, height => $iHeight, crop => 1}" alt="{$slide[title]}" />
+				{if $slide['title'] != "" || $slide['description'] != ""}
+				<div class="bx-caption">
+					<div class="bx-caption-wrap">
+						<div class="bx-cap-table"><div class="bx-cap-row"><div class="bx-cap-cell">
+
+							<div class="bx-caption-desc" style="{if $slide['descWidth'] != ""}width: {$slide['descWidth']}px;{/if}">
+								<div class="bx-caption-desc-wrap {$slide['descriptionAlign']}">
+									{if $slide['title'] != ""}<h3 class="bx-title">{!$slide['title']}</h3>{/if}
+									{if $slide['description'] != ""}<p>{!$slide['description']}</p>{/if}
+									{if $slide['button'] != ""}<span class="bx-link-button">{$slide['button']}</span>{/if}
+								</div>
+							</div>
+
+						</div></div></div>
+					</div>
+				</div>
+				{/if}
+			{if $slide['link']}</a>{/if}
+		</li>
+	{/foreach}
+	</ul>
+	{/if}
+
+
+	{if $el->option(pagerType) == "thumbnails"}
+	<div class="easy-slider-pager">
+	{foreach $el->option(slides) as $slide}<!--
+		--><a data-slide-index="{$iterator->getCounter()-1}" href="#"><img src="{imageUrl $slide['image'], width => 100, height => 70, crop => 1}" alt="{!$slide[title]}" /></a><!--
+	-->{/foreach}
+	</div>
+	{/if}
+
+</div>
+
+{includePart "ait-theme/elements/easy-slider/javascript"}

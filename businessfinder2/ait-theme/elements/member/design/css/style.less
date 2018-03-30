@@ -1,0 +1,42 @@
+
+@import "../../../@common/common.less";
+
+.ltoDarkenColor1() when (iscolor(@lightAltColor))	{ background-color: darken(@lightAltColor, 5%); }
+.ltoDarkenColor2() when (iscolor(@lightAltColor))	{ background-color: darken(@lightAltColor, 10%); }
+
+.positionColor() when (iscolor(@positionColor))		{ color: @positionColor; }
+.dataTxtColor() when (iscolor(@dataTxtColor))		{ color: @dataTxtColor; }
+.dataLnkColor() when (iscolor(@dataLnkColor))		{ color: @dataLnkColor; }
+
+.customHiderColor() when (iscolor(@linkAltColor))	{ color: @linkAltColor; border-color: @linkAltColor;
+													  &:hover { color: darken(@linkAltColor, 10%); border-color: darken(@linkAltColor, 10%); } }
+
+
+#@{el}-main{
+
+	.member-container.desc-none		{ max-width: @maxMemberWidth; margin-left: auto; margin-right: auto; }
+
+	.member-card .photo-wrap,
+	ul.member-contacts				{ .ltoCustomColor(); }
+	ul.member-contacts li			{ .ltoDarkenColor1(); }
+	.item-social-icons				{ .ltoDarkenColor2(); }
+
+	.member-title .member-position	{ .positionColor(); }
+	ul.member-contacts li			{ .dataTxtColor(); }
+	.member-card a					{ .dataLnkColor(); }
+
+	.entry-content-hider			{ .customHiderColor(); }
+
+}
+
+
+#@{el}-main .desc-none,
+.column-narrow #@{el}-main
+{
+	.desc-wrap-title .member-title	{ .ltoCustomColor(); }
+}
+
+
+.@{el}{
+	clear:both;
+}

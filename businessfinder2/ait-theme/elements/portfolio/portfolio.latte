@@ -1,0 +1,241 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{var $portfolios = $wp->categories(portfolios)}
+	{var $textRows = $el->option->textRows}
+
+	{if !$portfolios}
+		<div class="alert alert-info">
+			{_x 'Portfolio', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+		</div>
+	{else}
+
+		<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+
+		{* filter menu *}
+
+		{if $el->option->showFilter}
+		<div class="filters-wrapper">
+			<div class="filter-wrapper category-wrap">
+
+				{if $el->option->category == 0}
+					<div class="selected">{__ 'Category:'} <span>{__ 'All'}</span></div>
+					{var $children = get_categories(array('taxonomy' => 'ait-portfolios', 'hide_empty' => 1, 'parent' => $el->option->category))}
+					{if $el->option('subcategoryItems')}
+						<ul class="category">
+							<li><a href="#" data-ait-portfolio-filter="all" data-ait-portfolio-title="{__ 'All'}">{__ 'All'}</a></li>
+							{!= AitPortfolioElement::recursiveCategory($children, "portfolio-category-", "")}
+						</ul>
+					{else}
+						<ul class="category">
+							<li><a href="#" data-ait-portfolio-filter="all" data-ait-portfolio-title="{__ 'All'}">{__ 'All'}</a></li>
+							{foreach $children as $child}
+							<li><a href="#" data-ait-portfolio-filter="portfolio-category-{$child->slug}" data-ait-portfolio-title="{$child->name}">{$child->name}</a></li>
+							{/foreach}
+						</ul>
+					{/if}
+				{else}
+					<div class="selected">{__ 'Category:'} <span>{$portfolios[$el->option->category]->title}</span></div>
+					{if $el->option('subcategoryItems')}
+						{var $children = get_categories(array('taxonomy' => 'ait-portfolios', 'hide_empty' => 1, 'parent' => $el->option->category))}
+						{if is_array($children) && count($children) > 0}
+						<ul class="category">
+							<li><a href="#" data-ait-portfolio-filter="all" data-ait-portfolio-title="{$portfolios[$el->option->category]->title}">{$portfolios[$el->option->category]->title}</a></li>
+							{!= AitPortfolioElement::recursiveCategory($children, "portfolio-category-", "&nbsp;&nbsp;")}
+						</ul>
+						{/if}
+					{/if}
+				{/if}
+
+			</div><!--
+			--><div class="filter-wrapper sort-by-wrap">
+				{if $el->option('orderby') == 'date'}
+				<div class="selected" data-ait-portfolio-sort="date">{__ 'Sort by:'} <span>{__ 'Creation Date'}</span></div>
+				{elseif $el->option('orderby') == 'rand'}
+				<div class="selected" data-ait-portfolio-sort="random">{__ 'Sort by:'} <span>{__ 'Random'}</span></div>
+				{else}
+				<div class="selected" data-ait-portfolio-sort="numeric">{__ 'Sort by:'} <span>{__ 'Item Order'}</span></div>
+				{/if}
+
+				<ul class="sort-by">
+					<!--<li><a href="#" data-ait-portfolio-sort="alphabetical">{__ 'Alphabetical'}</a></li>-->
+					<li><a href="#" data-ait-portfolio-sort="date">{__ 'Creation Date'}</a></li>
+					<li><a href="#" data-ait-portfolio-sort="numeric">{__ 'Item Order'}</a></li>
+					<li><a href="#" data-ait-portfolio-sort="random">{__ 'Random'}</a></li>
+				</ul>
+			</div><!--
+			--><div class="filter-wrapper order-wrap">
+				{if $el->option('order') == "ASC"}
+				<div class="selected" data-ait-portfolio-order="ascending">{__ 'Order:'} <span>{__ 'Ascending'}</span></div>
+				{else}
+				<div class="selected" data-ait-portfolio-order="descending">{__ 'Order:'} <span>{__ 'Descending'}</span></div>
+				{/if}
+				<ul class="order">
+					<li><a href="#" data-ait-portfolio-order="ascending">{__ 'Ascending'}</a></li>
+					<li><a href="#" data-ait-portfolio-order="descending">{__ 'Descending'}</a></li>
+				</ul>
+			</div>
+		</div>
+		{/if}
+
+		{* portfolio items *}
+
+		{* computing dimensions *}
+		{var $websiteMaxWidth = $options->theme->general->websiteWidth + $el->option->imageOffset}
+		{if $el->betweenSidebars == true}
+			{var $lSidebar = $wp->hasSidebar(left) ? ($options->theme->general->leftSidebarWidth + $options->theme->general->sidebarGap) : 0}
+			{var $rSidebar = $wp->hasSidebar(right) ? ($options->theme->general->rightSidebarWidth + $options->theme->general->sidebarGap) : 0}
+			{var $sidebarsWidth = (($options->theme->general->websiteWidth + $el->option->imageOffset) * ($lSidebar + $rSidebar)) / 100}
+		{else}
+			{var $sidebarsWidth = 0}
+		{/if}
+		{var $maxW = $websiteMaxWidth - $sidebarsWidth}
+
+		{var $width = $height = round(($maxW - (($el->option->columns) * $el->option->imageOffset)) / $el->option->columns)}
+		{if (($width+$el->option->imageOffset) * $el->option->columns) > $maxW}
+			{var $width = $width - 1}
+		{/if}
+
+		{var $grOpt = $el->option('@bg')}
+		{var $elemCol = $grOpt['color']}
+		{var $elemImg = $grOpt['image']}
+
+		{if $elemCol != "" and $el->betweenSidebars == true}
+			{var $maxW = $maxW - 40}
+		{/if}
+		{* computing dimensions *}
+
+		<ul class="portfolio-items-wrapper"><!--
+
+		{if $el->option->category == 0}
+			{if $el->option('subcategoryItems')}
+			{customQuery as $query,
+				type    => portfolio-item,
+				tax     => portfolios,
+				cat     => $el->option->category,
+				limit   => $el->option->count,
+				orderby => $el->option->orderby,
+				order	=> $el->option->order,
+			}
+			{else}
+			{var $cats = get_categories(array('taxonomy' => 'ait-portfolios', 'hide_empty' => 1, 'parent' => $el->option->category))}
+			{var $terms = array()}
+			{foreach $cats as $cat}
+				{? array_push($terms, $cat->term_id)}
+			{/foreach}
+			{var $querydata = array(
+				'post_type' => 'ait-portfolio-item',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'ait-portfolios',
+						'field' => 'term_id',
+						'terms' => $terms,
+						'include_children' => false,
+					),
+				),
+				'posts_per_page'   => $el->option->count,
+				'orderby' => $el->option->orderby,
+				'order'	=> $el->option->order,
+			)}
+			{customQuery as $query, $querydata}
+			{/if}
+		{else}
+			{if $el->option('subcategoryItems')}
+			{customQuery as $query,
+				type    => portfolio-item,
+				tax     => portfolios,
+				cat     => $el->option->category,
+				limit   => $el->option->count,
+				orderby => $el->option->orderby,
+				order	=> $el->option->order,
+			}
+			{else}
+			{var $querydata = array(
+				'post_type' => 'ait-portfolio-item',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'ait-portfolios',
+						'field' => 'term_id',
+						'terms' => $el->option->category,
+						'include_children' => false
+					),
+				),
+				'posts_per_page'   => $el->option->count,
+				'orderby' => $el->option->orderby,
+				'order'	=> $el->option->order,
+			)}
+			{customQuery as $query, $querydata}
+			{/if}
+		{/if}
+
+		{if $query->havePosts}
+		{customLoop from $query as $item}
+
+			{* shortcut var *}
+			{var $meta = $item->meta('portfolio-item')}
+
+			{if $el->option('orderby') == 'rand'}
+				{if $el->option('order') == "ASC"}
+				{var rand = $iterator->getCounter()}
+				{else}
+				{var rand = $el->option->count-$iterator->getCounter()}
+				{/if}
+			{else}
+				{var rand = rand()}
+			{/if}
+
+		{var $hasDesc = $el->option->imageDescription ? 'desc-present' : 'desc-missing'}
+
+		{if $el->option('subcategoryItems')}
+		--><li data-id="id-{$iterator->counter}" class="portfolio-item {$hasDesc} {$item->catSlugs('ait-portfolios', ' ', 'portfolio-category-')}" {dataAttr portfolio-sort-params, numeric => $item->menuOrder, alphabetical => $item->title, date => $item->date('Y-m-d h:i:s'), random => $rand}>
+		{else}
+		--><li data-id="id-{$iterator->counter}" class="portfolio-item {$hasDesc} {$item->categoriesSlugs('portfolio-category')}" {dataAttr portfolio-sort-params, numeric => $item->menuOrder, alphabetical => $item->title, date => $item->date('Y-m-d h:i:s'), random => $rand}>
+		{/if}
+				<div class="portfolio-item-img portfolio-item-type-{$meta->type}">
+
+					{if $meta->type == 'image' and $el->option->display == 'colorbox' and $item->hasImage}
+						{var $url = $item->imageUrl}
+					{elseif $meta->type == 'video' and $el->option->display == 'colorbox' and $meta->videoUrl}
+						{var $url = $meta->videoUrl}
+					{elseif $meta->type == 'website' and $el->option->display == 'colorbox'}
+						{var $url = $meta->websiteUrl}
+					{else}
+						{var $url = $item->permalink}
+					{/if}
+
+					<a href="{$url}" class="disable-default-colorbox" {if $meta->type == 'website' and $el->option->display == 'colorbox' and $meta->linkTarget}target="_blank"{/if} data-rel="portfolio-item-{$el->getHtmlId()}">
+
+						{if $item->hasImage}
+						<div class="portfolio-item-img-wrap item-image-small item-visible">
+
+							{if $el->option->imageHeight != 0}
+								{var $height = (int) $el->option->imageHeight}
+							{/if}
+
+							<img src="{imageUrl $item->imageUrl, width => $width, height => $height, crop => 1, crop_from_position => $meta->cropFromPosition}" data-width="{$width}" alt="{!$item->title}">
+
+						</div>
+						{/if}
+
+					</a>
+				</div>
+
+				{if $el->option->imageDescription}
+					<div class="portfolio-item-desc-wrap">
+						<div class="portfolio-item-desc">
+							<h3><a href="{$url}" {if $meta->type == 'website' and $el->option->display == 'colorbox'}target="_blank"{/if} data-rel="portfolio-item-{$el->getHtmlId()}">{!$item->title}</a></h3>
+							<p class="txtrows-{$textRows}">{!$item->excerpt(150)|striptags}</p>
+						</div>
+					</div>
+				{/if}
+
+			</li><!--
+		{/customLoop}
+		{/if}
+		--></ul>
+	{/if}
+
+</div>
+
+{includePart "ait-theme/elements/portfolio/javascript"}

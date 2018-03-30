@@ -1,0 +1,220 @@
+/*
+ * jQuery FlexSlider v1.8
+ * http://flex.madebymufffin.com
+ *
+ * Copyright 2011, Tyler Smith
+ * Free to use under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+ 
+/* Browser Resets */
+.flex-container a:active,
+.flexslider a:active {outline: none;}
+.slides,
+.flex-control-nav,
+.flex-direction-nav {margin: 0; padding: 0; list-style: none;} 
+
+/* FlexSlider Necessary Styles
+*********************************/ 
+.flexslider {width: 100%; margin: 0; padding: 0;}
+.flexslider .slides > li {display: none;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides img {max-width: 100%; display: block;}
+.flex-pauseplay span {text-transform: capitalize;}
+
+/* Clearfix for the .slides element */
+.slides:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;} 
+html[xmlns] .slides {display: block;} 
+* html .slides {height: 1%;}
+
+/* No JavaScript Fallback */
+/* If you are not using another script, such as Modernizr, make sure you
+ * include js that eliminates this class on page load */
+.no-js .slides > li:first-child {display: block;}
+
+
+/* FlexSlider Default Theme
+*********************************/
+.flexslider {position: relative; zoom: 1;}
+.flexslider .slides {zoom: 1;}
+.flexslider .slides > li {position: relative;}
+/* Suggested container for "Slide" animation setups. Can replace this with your own, if you wish */
+.flex-container {zoom: 1; position: relative;}
+
+/* Caption style */
+/* IE rgba() hack */
+.flex-caption {
+	background:none; 
+	zoom: 1;
+}
+.flex-caption {
+	width: 920px;
+	padding:10px 30px 10px 30px;
+	position: absolute; 
+	right: 0; 
+	bottom: 0; 
+	background: rgba(50, 50, 50, 0.6); 
+	color: #fff; 
+	font-size: 14px; 
+	line-height: 21px;
+	font-family: Georgia, "Times New Roman", serif;
+	font-style: italic;
+	font-weight:lighter;
+	outline: none;
+}
+
+#home-slider{
+	position: relative;
+}
+
+/* Direction Nav */
+#home-slider .flex-direction-nav li a {
+	width: 30px; 
+	height: 30px; 
+	margin: 0px 0 0; 
+	display: block; 
+	background: #000000; 
+	position: absolute; 
+	bottom: 41px; 
+	cursor: pointer; 
+	text-indent: -9999px;
+	outline: none;
+}
+#home-slider .flex-direction-nav li a:hover{
+	background-color: rgba(50, 50, 50, 1);
+}
+#home-slider .flex-direction-nav li .next {
+	background: rgba(50, 50, 50, 0.8) url(../images/next.png) no-repeat 13px 10px;
+	right: 0px;
+}
+#home-slider .flex-direction-nav li .prev {
+	background: rgba(50, 50, 50, 0.8) url(../images/prev.png) no-repeat 13px 10px;
+	right: 30px;
+}
+#home-slider .flex-direction-nav li .disabled {opacity: .3; filter:alpha(opacity=30); cursor: default;}
+
+#work-slider .flex-direction-nav{
+	z-index: 9999;
+}
+#work-slider .flex-direction-nav li a{
+	width: 30px; 
+	height: 30px; 
+	margin: 0 0 0; 
+	display: block; 
+	background: #000000; 
+	position: absolute; 
+	top: 0;
+	cursor: pointer; 
+	text-indent: -9999px;
+	outline: none;
+}
+
+#work-slider .flex-direction-nav li .next {
+	background: rgba(50, 50, 50, 0.5) url(../images/next.png) no-repeat 13px 10px;
+	left: 30px;
+}
+#work-slider .flex-direction-nav li .prev {
+	background: rgba(50, 50, 50, 0.5) url(../images/prev.png) no-repeat 13px 10px;
+	left: 0px;
+}
+#work-slider .flex-direction-nav li a:hover{
+	background-color: rgba(50, 50, 50, 0.8);
+}
+#work-slider .flex-direction-nav li .disabled {opacity: .3; filter:alpha(opacity=30); cursor: default;}
+
+/* Control Nav */
+#home-slider .flex-control-nav { 
+	width: 980px; 
+	height:5px; 
+	position: absolute; 
+	bottom: -5px; 
+	margin:0; 
+	background: #f5f5f5;
+}
+#home-slider .flex-control-nav li {
+	margin: 0px; 
+	padding:0px;
+	height:5px;
+	display: block;
+	float: left; 
+	zoom: 1;
+}
+#home-slider .flex-control-nav li:first-child {margin: 0;}
+#home-slider .flex-control-nav li a {
+	width: 163px; 
+	height: 5px; 
+	padding:0; 
+	margin:0; 
+	display: block; 
+	background: #d0d0d0 no-repeat 0 0; 
+	cursor: pointer; 
+	text-indent: -9999px;
+	float:left;
+}
+#home-slider .flex-control-nav li a:hover {
+	background: #ec7100;
+}
+#home-slider .flex-control-nav li a.active {
+	background: #ec7100;
+	cursor: default;
+}
+
+
+/* ----------------------------------------------------- */
+
+.inpageslider ul, .inpageslider ol{
+	list-style: none !important;
+	margin:0 !important;
+	padding:0 !important;
+}
+.inpageslider .flex-control-nav{
+	clear: both;
+}
+.inpageslider .flex-control-nav li{
+	margin:0;
+	padding:0;
+	list-style: none;
+}
+.inpageslider .flex-control-nav li a{
+	list-style: none;
+	display: block;
+	float: left;
+	width:32px;
+	height:6px;
+	background: #cccccc;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+.inpageslider .flex-control-nav li a.active{
+	background: #999999;
+}
+.inpageslider .flex-control-nav li a:hover{
+	background: #999999;
+}
+
+.inpageslider .flex-direction-nav{
+	z-index: 9999;
+}
+.inpageslider .flex-direction-nav li a{
+	width: 30px; 
+	height: 30px; 
+	margin: 0 0 0; 
+	display: block; 
+	background: #000000; 
+	position: absolute; 
+	top: 0;
+	cursor: pointer; 
+	text-indent: -9999px;
+	outline: none;
+}
+
+.inpageslider .flex-direction-nav li .next {
+	background: rgba(50, 50, 50, 0.5) url(../images/next.png) no-repeat 13px 10px;
+	left: 30px;
+}
+.inpageslider .flex-direction-nav li .prev {
+	background: rgba(50, 50, 50, 0.5) url(../images/prev.png) no-repeat 13px 10px;
+	left: 0px;
+}
+.inpageslider .flex-direction-nav li a:hover{
+	background-color: rgba(50, 50, 50, 0.8);
+}

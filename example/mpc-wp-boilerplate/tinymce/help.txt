@@ -1,0 +1,56 @@
+/*-----------------------------------------------------------------------------------*/
+	
+	MPC Shortcodes
+	version: 0.9
+	creator: MassivePixelCreation
+	
+	Shortcode list:
+	 - Alerts
+	 - Toggle
+	 - Tabs
+	 - Buttons
+	 - YouTube
+	 - Vimeo
+	 
+	 Files Requires:
+	 > Theme folder:
+		* functions folder:
+	 		- theme-shortcodes.php <- contains shortcodes source
+		* css folder:
+	 		- shortcodes-styles.css <- contains shortcodes styles
+	 	* js folder:
+	 		- shortcodes.js <- contains jQuery used by shortcodes
+	 	* tinymce folder - contains all the files required for tinymce to work
+	 	* images/shortcodes - contains images used by the shortcodes
+	  
+/*-----------------------------------------------------------------------------------*/
+
+Adding New Shortcodes
+1. PHP goes to theme-shortcodes.php
+2. CSS goes to shortcodes-styles.css
+3. jQuery / JS goes to shortcodes.js
+4. Setting up the tinymce:
+	* edit the path to the icon for the tinymce button, open the tinymce/main.js find the line: image: "../wp-content/themes/twentyeleven/tinymce/images/	  	  add.png" (around line 21) and change the line to point the icon.
+	* open tinymce/main.js in button.onRenderMenu.add(function (fst, sec) { }) (around line 26) add you menu items like this:
+	  h.addWithPopup( sec, "Alerts", "alert" );
+	  You are only interseted in the second and third attribute. The second attribute is the displayed name for the shortcode and the second is the name of    	  the main shortcode tag.
+	* now you need to setup the shortcode in tinymce/setup.php:
+	  - each of the shortcodes is based on an array the name of the $mpc_shortcodes field must match the name that you specified in the main.js.
+	  - each shortcode has few attributes to choose from:
+	    * preview: you can choose between: 
+	    	- true - the preview will be shown normally
+	    	- partial - the preview will be show along with an information that the preview may look a little bit off. Please use this for shortcodes like 	
+	    				because when you add too many tabs the preview will mess up because of the small space…
+	    	- false - there is no preview at all, use for the shortcodes that cannot be previewed in such small space, for example columns.
+	    * title - specifies the title of the Shortcode window
+	    * shortcode - defines the structure of the shortcode the name of the attributes in the structure must match the names of the attributes in the fields
+	    			  array.
+	    * fields - this array contains all of the fields that are used to setup the shortcodes, each field has few attributes:
+	    	- std - this is default value for a field
+	    	- type - type of the field (text, select, textarea)	    
+	    	- title - title for the field
+	    	- desc - description for the field (displayed under the field)
+	    	- options - when you choose type => 'select' then you need to specify the options array which will contain the options for the select.
+	  	* for more complex shortcodes with two level sctrucutre like: [tabs][tab]Something[/tab][tab]Something[/tab][/tabs] you need to use more complex setup 
+	  	  array (look setup for tabs shortcode)
+	

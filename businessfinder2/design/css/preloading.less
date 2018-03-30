@@ -1,0 +1,230 @@
+
+
+@import "mixins.less";
+
+/**************************************************/
+/*** && PROGRESSIVE LOADING FUNCTIONS           ***/
+/**************************************************/
+
+/*** global timing effects ************************/
+
+.itemDelay(@tag, @tagInside, @speed)
+{
+		@count = 1;
+		@max = 20;
+
+		.loopingClass(@count) when (@count < @max)
+		{
+			@trDelay = (@count * @speed) + 0s;
+			(~"@{tag}:nth-child(@{count}) @{tagInside}") 	{ -webkit-transition-delay: @trDelay; transition-delay: @trDelay; }
+			.loopingClass(@count + 1);
+		}
+
+		.loopingClassMore()
+		{
+			@trDelay = (@max * @speed) + 0s;
+			(~"@{tag}:nth-child(n + @{max}) @{tagInside}") 	{ -webkit-transition-delay: @trDelay; transition-delay: @trDelay; }
+		}
+
+		.loopingClass(1);
+		.loopingClassMore();
+}
+
+.typeDelay(@tag, @tagInside, @speed)
+{
+		@count = 1;
+		@max = 20;
+
+		.loopingClass(@count) when (@count < @max)
+		{
+			@trDelay = (@count * @speed) + 0s;
+			(~"@{tag}:nth-of-type(@{count}) @{tagInside}") 	{ -webkit-transition-delay: @trDelay; transition-delay: @trDelay; }
+			.loopingClass(@count + 1);
+		}
+
+		.loopingClassMore()
+		{
+			@trDelay = (@max * @speed) + 0s;
+			(~"@{tag}:nth-of-type(n + @{max}) @{tagInside}") { -webkit-transition-delay: @trDelay; transition-delay: @trDelay; }
+		}
+
+		.loopingClass(1);
+		.loopingClassMore();
+}
+
+
+/*** global effects *******************************/
+
+.fullFade(@elmClass)
+{
+	(~".@{elmClass}-main > .elm-wrapper")					{ opacity: 0; .transition(opacity 0.5s); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper")		{ opacity: 1; }
+}
+
+.fullFadeOff(@elmClass)
+{
+	(~".@{elmClass}-main > .elm-wrapper")					{ opacity: 1; .transition(none); }
+}
+
+.customZoom(@elmClass, @tagInside)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tagInside}")								{ .scale(0); .transition(all 0.5s); .timing(cubic-bezier(0.25,0.1,0.25,1.5)); }
+	(~".@{elmClass}-main > .elm-wrapper @{tagInside} img")							{ .scale(1); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tagInside}.load-finished")	{ .scale(1); }
+}
+
+.itemFade(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .transition(opacity 0.5s); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.itemFadeOff(@elmClass, @tag, @tagInside)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 1; .transition(none); }
+}
+
+.itemZoom(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ .scale(0); .transition(transform 0.5s); -webkit-transition: -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1.5)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ .scale(1); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.typeZoom(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ .scale(0); .transition(transform 0.5s); -webkit-transition: -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1.5)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ .scale(1); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .typeDelay(@tag, @tagInside, @speed); }
+}
+
+.itemZoom2(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .scale(0); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .scale(1); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.typeZoom2(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .scale(0); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .scale(1); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .typeDelay(@tag, @tagInside, @speed); }
+}
+
+.itemJump(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .translate(~"0px,40px"); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,3)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .translate(~"0px,0px"); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.itemUpMove(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .translate(~"0px,40px"); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .translate(~"0px,0px"); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.itemDownMove(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .translate(~"0px,-40px"); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .translate(~"0px,0px"); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.itemLeftMove(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .translate(~"-40px,0px"); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .translate(~"0px,0px"); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+.itemRightMove(@elmClass, @tag, @tagInside, @speed)
+{
+	(~".@{elmClass}-main > .elm-wrapper @{tag} @{tagInside}")					{ opacity: 0; .translate(~"40px,0px"); .transition(~"opacity 0.5s, transform 0.5s"); -webkit-transition: opacity 0.5s, -webkit-transform 0.5s; .timing(cubic-bezier(0.25,0.1,0.25,1)); }
+	(~".@{elmClass}-main.load-finished > .elm-wrapper @{tag} @{tagInside}")		{ opacity: 1; .translate(~"0px,0px"); }
+	(~".@{elmClass}-main > .elm-wrapper")										{ .itemDelay(@tag, @tagInside, @speed); }
+}
+
+/* && end of PROGRESSIVE LOADING FUNCTIONS */
+
+
+/**************************************************/
+/*** && PROGRESSIVE LOADING ELEMENTS            ***/
+/**************************************************/
+
+.preloading-enabled
+{
+
+	.fullFade		('elm');
+	.fullFadeOff	('elm-columns');
+	.fullFadeOff	('elm-rule');
+	.fullFadeOff	('elm-content');
+	.fullFadeOff	('elm-text');
+	.fullFadeOff	('elm-widget-area');
+	.fullFadeOff	('elm-matches');
+
+	.itemFade		('elm-comments', 'li.comment', '', 0.2);
+	.itemZoom		('elm-comments', 'li.comment', 'img.avatar', 0.2);
+	.itemZoom2		('elm-comments', 'form p', '', 0.2);
+
+	.typeZoom2		('elm-contact-form', 'form p', '', 0.15);
+
+	.customZoom		('elm-content', '.entry-content img');
+	.customZoom		('elm-content', '.entry-content .wp-caption');
+	.customZoom		('elm-text', '.entry-content img');
+	.customZoom		('elm-text', '.entry-content .wp-caption');
+
+	.itemZoom		('elm-countdown', '.clock-item', '', 0.2);
+
+	.itemFade		('elm-events', '.item', '', 0.2);
+	.itemZoom		('elm-events', '.item', '.item-thumbnail .item-thumbnail-wrap', 0.2);
+	.itemDownMove	('elm-events', '.item', '.item-thumbnail .entry-date', 0.5);
+
+	.itemFade		('elm-faq', 'div.one-faq', '', 0.2);
+
+	.itemFade		('elm-job-offers', '.item', '', 0.2);
+	.itemZoom		('elm-job-offers', '.layout-box .item', '.item-thumbnail img', 0.2);
+	.itemUpMove		('elm-job-offers', '.layout-list .item', '.item-thumbnail img', 0.2) ;
+
+	.itemZoom		('elm-member', '.photo-wrap', '', 0.2);
+	.itemJump		('elm-member', '.member-icons li', '', 0.2);
+
+	.itemFade		('elm-members', '.item', '', 0.2);
+	.itemZoom		('elm-members', '.item', '.item-thumbnail img', 0.2);
+	.itemZoom		('elm-members', '.item', '.item-icons li', 0.2);
+
+	.itemZoom2		('elm-opening-hours', '.day-wrapper', '', 0.2);
+
+	.itemFade		('elm-partners', 'li', '', 0.1);
+
+	.itemZoom		('elm-portfolio', 'ul li', '', 0.2);
+
+	.itemFade		('elm-posts', '.item', '', 0.2);
+	.itemZoom		('elm-posts', '.item', '.item-thumbnail .item-thumbnail-wrap', 0.2);
+
+	.itemJump		('elm-price-table', '.layout-horizontal div.ptable-item', '', 0.2);
+	.itemLeftMove	('elm-price-table', '.layout-vertical div.ptable-item:nth-child(even)', '', 0.2);
+	.itemRightMove	('elm-price-table', '.layout-vertical div.ptable-item:nth-child(odd)', '', 0.2);
+
+	.itemFade		('elm-services', '.item', '', 0.2);
+	.itemZoom		('elm-services', '.item', '.item-thumbnail img', 0.2);
+
+	.itemRightMove	('elm-sitemap', 'li', '', 0.1);
+	.itemZoom		('elm-sitemap', 'li', '> a:before', 0.1);
+
+	.itemFade		('elm-testimonials', '.item', '', 0.2);
+	.itemZoom		('elm-testimonials', '.item', '.item-thumbnail img', 0.2);
+
+	.itemFade		('elm-toggles', '.ait-tabs ul.ait-tabs-nav li', '', 0.2); 				.itemFadeOff	('elm-toggles', '.ait-tabs ul.ait-tabs-nav li:first-child', '');
+	.itemFade		('elm-toggles', '.type-accordion > div', '', 0.1); 						.itemFadeOff	('elm-toggles', '.type-accordion > div:first-child', '');
+	.itemFade		('elm-toggles', '.type-toggle > div', '', 0.1); 						.itemFadeOff	('elm-toggles', '.type-toggle > div:first-child', '');
+
+	.itemFade		('elm-twitter', 'li.twitter-item', '', 0.2);
+	.itemZoom		('elm-twitter', 'li.twitter-item', 'img.twicon', 0.2);
+
+}
+
+/* && end of PROGRESSIVE LOADING ELEMENTS */

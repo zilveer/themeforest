@@ -1,0 +1,40 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{customQuery as $query,
+		type => partner,
+		tax => partners,
+		cat => $element->option(category),
+		limit => -1,
+		orderby => $element->option(orderby),
+		order => $element->option(order),
+	}
+
+	{if $query->havePosts}
+		<div class="elm-partners-container">
+			<ul class="partners"><!--
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(partner-options)}
+				--><li>
+					{if $meta->link}
+						<a href="{$meta->link}" title="{!$item->title}" {if $meta->linkTarget}target="_blank"{/if}>
+					{/if}
+							<span class="thumb"><img src="{$item->imageUrl}" alt="{!$item->title}" /></span>
+					{if $meta->link}
+						</a>
+					{/if}
+				</li><!--
+			{/customLoop}
+			--></ul>
+		</div>
+	{else}
+		<div class="elm-partners-container">
+			<div class="alert alert-info">
+				{_x 'Partners', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/partners/javascript"}

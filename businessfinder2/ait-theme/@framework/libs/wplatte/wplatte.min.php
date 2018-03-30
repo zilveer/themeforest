@@ -1,0 +1,631 @@
+<?php
+
+define('WPLATTE_VERSION','2.9.0');class
+WpLatte{public
+static$config=array();public
+static$params=array();protected
+static$translationsForDomain;protected
+static$templatesStorage=array();protected
+static$entitiesClasses=array('Archive'=>'WpLatteArchiveEntity','Attachment'=>'WpLatteAttachmentEntity','Category'=>'WpLatteCategoryEntity','Comment'=>'WpLatteCommentEntity','CommentAuthor'=>'WpLatteCommentAuthorEntity','Post'=>'WpLattePostEntity','PostAuthor'=>'WpLattePostAuthorEntity','Tag'=>'WpLatteTagEntity','TaxonomyTerm'=>'WpLatteTaxonomyTermEntity','Wp'=>'WpLatteWpEntity');static
+function
+init($args=array()){self::$config=array('themeDir'=>get_template_directory(),'childThemeDir'=>get_stylesheet_directory(),'langDomain'=>'wplatte');if(isset($args['config'])and!empty($args['config']))self::$config=array_merge(self::$config,$args['config']);if(isset($args['params'])and!empty($args['params']))self::$params=array_merge(self::$params,$args['params']);if(self::$config['langDomain']!='wplatte'){self::$translationsForDomain=get_translations_for_domain(self::$config['langDomain']);}self::$entitiesClasses=apply_filters('wplatte-entities-classes',self::$entitiesClasses);WpLatteTemplateHierarchy::register();add_filter('template_include',__CLASS__.'::templateIncludeCallback',1999);add_filter('woocommerce_before_template_part',__CLASS__.'::woocommerceTemplateIncludeCallback',1999,4);add_action('get_header',array(__CLASS__,'headerTemplateCallback'));add_action('get_footer',array(__CLASS__,'footerTemplateCallback'));add_action('get_sidebar',array(__CLASS__,'sidebarTemplateCallback'));add_filter('comments_template',array(__CLASS__,'commentsTemplateCallback'),1999);add_filter('get_search_form',array(__CLASS__,'searchFormTemplateCallback'));if(self::$config['langDomain']!='wplatte'){add_filter('gettext',array(__CLASS__,'gettextCallback'),10,3);add_filter('gettext_with_context',array(__CLASS__,'gettextWithContextCallback'),10,4);add_filter('ngettext',array(__CLASS__,'ngettextCallback'),10,5);add_filter('ngettext_with_context',array(__CLASS__,'ngettextWithContextCallback'),10,6);}global$pagenow;if(isset($pagenow)and$pagenow==='wp-signup.php'){self::fixSignupPage();}}static
+function
+templateIncludeCallback($template){self::render($template);}static
+function
+woocommerceTemplateIncludeCallback($templateName,$templatePath,$located,$args){if($templateName=='archive-product.php'){self::render($located,$args);exit;}}static
+function
+render($template,$params=array()){self::$params['homeUrl']=home_url('/');self::$params=array_merge(self::$params,$params);$layoutParams=apply_filters('wplatte-layout-params',self::$params);ob_start();self::createTemplate($template,$layoutParams)->render();$content=ob_get_clean();$content=self::removeRawIncludedContent(did_action('get_header'),$content,'header');$content=self::removeRawIncludedContent(did_action('get_footer'),$content,'footer');$content=self::removeRawIncludedContent(did_action('get_sidebar'),$content,'sidebar');do_action('wplatte-before-output',$content);echo$content;do_action('wplatte-after-output',$content);}static
+function
+headerTemplateCallback($name){remove_action('wp_head','wpmu_activate_stylesheet');self::renderHeaderFooterSidebarTemplate('header',$name);}static
+function
+footerTemplateCallback($name){self::renderHeaderFooterSidebarTemplate('footer',$name);}static
+function
+sidebarTemplateCallback($name){self::renderHeaderFooterSidebarTemplate('sidebar',$name);}static
+function
+commentsTemplateCallback($commentsTemplate){global$post;if(!NStrings::contains($commentsTemplate,self::$config['childThemeDir']))return$commentsTemplate;$layoutParams=apply_filters('wplatte-layout-params',self::$params);$templates=array();$template=str_replace(trailingslashit(self::$config['childThemeDir']),'',$commentsTemplate);if($template!=='comments.php')$templates[]=$template;$templates[]='comments-'.get_post_type().'.php';$templates[]='comments-'.WpLatteUtils::stripPrefix('post',get_post_type()).'.php';$templates[]='comments.php';$template=locate_template($templates);$blank=get_template_directory().'/ait-theme/@framework/libs/wplatte/blank-comments-template.php';if(post_password_required())return$blank;self::createTemplate($template,array('post'=>self::createEntity('Post',$post))+$layoutParams)->render();return$blank;}static
+function
+searchFormTemplateCallback($form){$layoutParams=apply_filters('wplatte-layout-params',self::$params);$templates=array('parts/search-form.php','search-form.php','searchform.php');$template=locate_template($templates);$return=(string)self::createTemplate($template,$layoutParams)->render();return$return;}static
+function
+renderHeaderFooterSidebarTemplate($template,$name){$layoutParams=apply_filters('wplatte-layout-params',self::$params);$templates=array();if(!empty($name)){$templates[]="{$template}-{$name}.latte";$templates[]="{$template}-{$name}.php";}$templates[]="$template.latte";$templates[]="$template.php";self::$templatesStorage[$template][$name]=locate_template($templates);self::createTemplate(self::$templatesStorage[$template][$name],$layoutParams)->render();}static
+function
+removeRawIncludedContent($condition,$content,$template){if($condition){foreach((array)self::$templatesStorage[$template]as$i=>$file){$f=file_get_contents($file);$content=str_replace($f,'',$content);}return$content;}return$content;}static
+function
+createTemplateEntities(){$entities=array();$entities['blog']=null;if(is_tax()){$entities['taxonomyTerm']=self::createEntity('TaxonomyTerm',get_queried_object());}elseif(is_category()){$entities['category']=self::createEntity('Category',get_queried_object());}elseif(is_tag()){$entities['tag']=self::createEntity('Tag',get_queried_object());}elseif(is_author()){$entities['author']=self::createEntity('PostAuthor',get_queried_object());}elseif(is_archive()){$entities['archive']=self::createEntity('Archive');}elseif(is_singular()){$entities['post']=self::createEntity('Post',get_queried_object());}elseif(is_home()){$obj=get_queried_object();if(isset($obj->post_status)or$obj
+instanceof
+WP_Post){$entities['blog']=$obj?self::createEntity('Post',$obj):null;}}return$entities;}static
+function
+createTemplate($template,$params=array()){$name=basename($template,'.php');$entities=self::createTemplateEntities();$params=array_merge($params,$entities);$params=apply_filters("wplatte-template-{$name}-params",self::$params+$params,$template);$params['wp']=self::createEntity('Wp');$params['currentTemplate']=$template;$params['currentTemplateName']=$name;$wplattetemplate=self::setupTemplating();$wplattetemplate->setFile($template);$wplattetemplate->setParameters($params);return$wplattetemplate;}protected
+static
+function
+setupTemplating(){if($result=WpLatteObjectCache::load('setup-templating'))return$result;$template=new
+WpLatteFileTemplate();$fakePresenter=new
+WpLatteFakePresenter;$fakePresenter->paths=array('child'=>self::$config['childThemeDir'],'theme'=>self::$config['themeDir']);$template->_control=$fakePresenter;$template->registerHelperLoader('WpLatteTemplateHelpers::loader');$template->registerHelperLoader('NTemplateHelpers::loader');$template->setCacheStorage(new
+NPhpFileStorage(realpath(self::$config['cacheDir'])));$template->onPrepareFilters[]=callback('WpLatte::createLatteFilterCallback');WpLatteObjectCache::save('setup-templating',$template);return$template;}static
+function
+createLatteFilterCallback($template){$latte=new
+NLatteFilter;WpLatteMacros::install($latte->compiler,self::$config);$template->registerFilter($latte);}static
+function
+createEntity($entity,$params=null){if(isset(self::$entitiesClasses[$entity])){$class=self::$entitiesClasses[$entity];}else{trigger_error("There isn't specified class for entity '{$entity}'",E_USER_ERROR);}$params=func_get_args();array_shift($params);switch($entity){case'Archive':return
+new$class();case'Comment':case'CommentAuthor':return
+new$class($params[0],$params[1]);case'Attachment':return
+new$class($params[0],$params[1],$params[2]);case'Wp':return
+call_user_func(array($class,'getInstance'));case'Post':$obj=$params[0];if($obj->post_type!='attachment'){$entity=WpLatteUtils::camelize($obj->post_type);if(isset(self::$entitiesClasses[$entity])){$class=self::$entitiesClasses[$entity];}}return
+new$class($obj);default:return
+new$class($params[0]);}}static
+function
+getEntityClass($entity){if(isset(self::$entitiesClasses[$entity])){$class=self::$entitiesClasses[$entity];return
+self::$entitiesClasses[$entity];}else{trigger_error("There isn't such entity class '{$entity}'");return
+false;}}static
+function
+gettextCallback($translated,$text,$domain){if($domain=='wplatte')$translated=self::$translationsForDomain->translate($text);return$translated;}static
+function
+gettextWithContextCallback($translated,$text,$context,$domain){if($domain=='wplatte')$translated=self::$translationsForDomain->translate($text,$context);return$translated;}static
+function
+ngettextCallback($translated,$single,$plural,$number,$domain){if($domain=='wplatte')$translated=self::$translationsForDomain->translate_plural($single,$plural,$number);return$translated;}static
+function
+ngettextWithContextCallback($translation,$single,$plural,$number,$context,$domain){if($domain=='wplatte')$translated=self::$translationsForDomain->translate_plural($single,$plural,$number,$context);return$translated;}protected
+static
+function
+fixSignupPage(){$obStartCb=create_function('','ob_start();');add_action('wp',$obStartCb,2000);add_action('before_signup_form',array(__CLASS__,'fixHeaderOnSignupPage'),0);add_action('after_signup_form',$obStartCb,0);add_action('shutdown',array(__CLASS__,'fixFooterOnSignupPage'),0);}static
+function
+fixHeaderOnSignupPage(){$headerHtml=ob_get_clean();echo
+self::removeRawIncludedContent(did_action('get_header'),$headerHtml,'header');do_action('wplatte-after-signup-header');}static
+function
+fixFooterOnSignupPage(){$footerHtml=ob_get_clean();do_action('wplatte-before-signup-footer');echo
+self::removeRawIncludedContent(did_action('get_footer'),$footerHtml,'footer');}}class
+WpLatteBaseEntity
+extends
+NObject{protected$cache=array();function&__get($name){$fn=self::camel2underscore($name);if(method_exists($this,$name)and
+is_callable(array($this,$name))){$return=$this->$name();return$return;}elseif(property_exists($this,$name)){$return=$this->$name;return$return;}elseif(substr($fn,0,3)=='is_'and
+function_exists($fn)){$return=$fn();return$return;}else{trigger_error(sprintf("You maybe did a typo in template. Property or method with name '%s' doesn't exist in class '%s'.",$name,get_class($this)));$return=null;return$return;}}protected
+static
+function
+camel2underscore($s){$s=preg_replace('#(.)(?=[A-Z])#','$1_',$s);$s=strtolower($s);return$s;}}class
+WpLatteArchiveEntity
+extends
+WpLatteBaseEntity{function
+date($format=''){return
+get_the_date($format);}function
+dateI18n($format=''){return$this->date($format);}function
+rawDate(){$post=get_post();return$post->post_date;}function
+title(){if(is_post_type_archive())return
+post_type_archive_title('',false);else
+return'';}}class
+WpLatteAttachmentEntity
+extends
+WpLatteBaseEntity{protected$id;protected$parentId;protected$mimeType;protected$metadata;function
+__construct($postId,$parentId,$mimeType){$this->id=$postId;$this->parentId=$parentId;$this->mimeType=$mimeType;$this->metadata=wp_get_attachment_metadata($postId);}function
+isImage(){return
+preg_match('!^image/!',$this->mimeType);}function
+isVideo(){return
+preg_match('#^video/#',$this->mimeType);}function
+isAudio(){return
+preg_match('#^audio/#',$this->mimeType);}function
+permalink(){return
+get_attachment_link();}function
+url(){return
+wp_get_attachment_url($this->id);}function
+path(){return
+get_attached_file($this->id);}function
+filename(){return
+wp_basename($this->path());}function
+nextAttachmentUrl(){if($return=WpLatteObjectCache::load("next-attachment-{$this->id}->{$this->parentId}"))return$return;$url=wp_get_attachment_url();$attachments=array_values(get_children(array('post_parent'=>$this->parentId,'post_status'=>'inherit','post_type'=>'attachment','post_mime_type'=>'image','order'=>'ASC','orderby'=>'menu_order ID')));if(count($attachments)>1){foreach($attachments
+as$k=>$attachment)if($attachment->ID==$this->id)break;$k++;if(isset($attachments[$k]))$url=get_attachment_link($attachments[$k]->ID);else$url=get_attachment_link($attachments[0]->ID);}WpLatteObjectCache::save("next-attachment-{$this->id}->{$this->parentId}",$url);return$url;}function
+thumbUrl(){return
+wp_get_attachment_thumb_url();}function
+metadata(){if($this->metadata)return(object)$this->metadata;return
+false;}function
+sizes(){if($this->metadata
+and
+isset($this->metadata['sizes']))return(object)$this->metadata['sizes'];return
+false;}function
+width(){if($this->metadata
+and
+isset($this->metadata['width']))return$this->metadata['width'];return
+false;}function
+height(){if($this->metadata
+and
+isset($this->metadata['height']))return$this->metadata['height'];return
+false;}function
+image($size='thumbnail'){return
+wp_get_attachment_image($this->id,$size);}function
+video(){$meta=$this->metadata;$w=!empty($meta['width'])?min($meta['width'],600):0;$h=0;if(!empty($meta['height']))$h=$meta['height'];if($h&&$w<$meta['width'])$h=round(($meta['height']*$w)/$meta['width']);$shortcode=sprintf('[video src="%s"%s%s]',$this->url(),empty($meta['width'])?'':sprintf(' width="%d"',$w),empty($meta['height'])?'':sprintf(' height="%d"',$h));return
+do_shortcode($shortcode);}function
+audio(){return
+do_shortcode('[audio src="'.$this->url().'"]');}}class
+WpLatteCategoryEntity
+extends
+WpLatteBaseEntity{protected$id;protected$parentId;protected$count;protected$slug;protected$rawTitle;function
+__construct($category){if(is_numeric($category))$category=get_category($category);$this->id=(int)$category->term_id;$this->parentId=(int)$category->parent;$this->count=(int)$category->count;$this->slug=$category->slug;$this->rawTitle=$category->name;}function
+title(){return
+apply_filters('single_cat_title',$this->rawTitle);}function
+description(){return
+category_description($this->id);}function
+url(){return
+get_category_link($this->id);}function
+id(){return$this->id;}}class
+WpLatteCommentEntity
+extends
+WpLatteBaseEntity{protected$id;protected$postId;protected$parent;protected$commenterId;protected$postAuthorId;protected$karma;protected$isApproved;protected$browser;protected$author;protected$rawDate;public$loopData;function
+__construct($comment,$postAuthorId){$this->postAuthorId=(int)$postAuthorId;$this->author=WpLatte::createEntity('CommentAuthor',$comment,$this->postAuthorId);$this->id=(int)$comment->comment_ID;$this->postId=(int)$comment->comment_post_ID;$this->parent=(int)$comment->comment_parent;$this->commenterId=(int)$comment->user_id;$this->rawDate=$comment->comment_date;$this->karma=(int)$comment->comment_karma;$this->isApproved=(bool)$comment->comment_approved;$this->browser=$comment->comment_agent;}function
+text(){$comment=get_comment($this->id);return
+apply_filters('comment_text',get_comment_text(),$comment);}function
+isNormal(){switch($this->type){case'pingback':case'trackback':return
+false;default:return
+true;}}function
+htmlClass($class='',$withAttr=true){$class=implode(' ',get_comment_class($class,null,null));if($withAttr){return' class="'.$class.'" ';}else{return$class;}}function
+htmlId($prefix='',$withAttr=true){$id="{$prefix}comment-{$this->id}";if($withAttr){return' id="'.$id.'" ';}else{return$id;}}function
+editLink($linkText){ob_start();edit_comment_link($linkText);return
+ob_get_clean();}function
+replyLink($linkText){$a=array_merge($this->loopData['args'],array('reply_text'=>$linkText,'depth'=>$this->loopData['depth']));return
+get_comment_reply_link($a);}function
+url(){return
+get_comment_link($this->id);}function
+time($d='',$gmt=false){return
+get_comment_time($d,$gmt);}function
+date($d=''){return
+get_comment_date($d);}function
+type(){return
+get_comment_type();}}class
+WpLatteCommentAuthorEntity
+extends
+WpLatteBaseEntity{protected$id;protected$postAuthorId;function
+__construct($comment,$postAuthorId){$this->id=(int)$comment->user_id;$this->postAuthorId=$postAuthorId;}function
+__toString(){return
+apply_filters('comment_author',get_comment_author());}function
+isPostAuthor(){return$this->id==$this->postAuthorId;}function
+link(){return
+get_comment_author_link();}function
+avatar($size='96'){return
+get_avatar($this->email(),$size);}function
+email(){return
+apply_filters('author_email',get_comment_author_email());}function
+url(){return
+apply_filters('comment_url',get_comment_author_url());}}class
+WpLattePostEntity
+extends
+WpLatteBaseEntity{protected$id;protected$type;protected$postId;protected$parentId;protected$menuOrder=0;protected$isCpt=false;protected$author;protected$slug;protected$rawExcerpt;protected$rawDate;protected$rawTitle;protected
+static$isInAnyCategory=false;function
+__construct($post){$this->id=(int)$post->ID;$this->postId=$this->id;$this->type=$post->post_type;$this->slug=$post->post_name;$this->parentId=isset($post->post_parent)?(int)$post->post_parent:0;$this->menuOrder=isset($post->menu_order)?(int)$post->menu_order:0;$this->isCpt=WpLatteUtils::isCpt($post->post_type);$this->rawExcerpt=$post->post_excerpt;$this->rawDate=$post->post_date;$this->rawTitle=$post->post_title;$this->author=WpLatte::createEntity('PostAuthor',$post->post_author);}function
+parent(){if($parent=WpLatteObjectCache::load("parent-{$this->postId}-{$this->parentId}"))return$parent;$parent=new
+self(get_post($this->parentId));WpLatteObjectCache::save("parent-{$this->postId}-{$this->parentId}",$parent);return$parent;}function
+title(){return
+get_the_title($this->postId);}function
+hasTitle(){$t=$this->title();return!empty($t);}function
+content($moreLinkText=null,$stripteaser=false){$funcParams=func_get_args();if($content=WpLatteObjectCache::load("content-{$this->postId}",$funcParams))return$content;$object=get_queried_object();$blogPage=0;if(get_option('show_on_front')=='page'){$blogPage=get_option('page_for_posts');}if(is_home()and$object
+and$this->postId==$blogPage
+and(isset($object->post_status)or$object
+instanceof
+WP_Post)){$content=$object->post_content;}else{$content=get_the_content($moreLinkText,$stripteaser);}$content=apply_filters('the_content',$content);$content=str_replace(']]>',']]&gt;',$content);$funcParams=func_get_args();WpLatteObjectCache::save("content-{$this->postId}",$content,$funcParams);return$content;}function
+hasContent(){$c=$this->content();return!empty($c);}function
+guid(){return
+get_the_guid($this->postId);}function
+excerpt($wordsCount=null){if($wordsCount){if($this->hasPassword())return
+__('There is no excerpt because this is a protected post.','wplatte');$excerpt=$this->rawExcerpt;if($excerpt==''){$excerpt=get_the_content('');$excerpt=strip_shortcodes($excerpt);remove_filter('the_content','do_shortcode');$excerpt=apply_filters('the_content',$excerpt);$excerpt=str_replace(']]>',']]&gt;',$excerpt);if(!has_filter('the_content','do_shortcode')){add_filter('the_content','do_shortcode',11);}}$excerptLength=apply_filters('excerpt_length',$wordsCount);$excerptMore=apply_filters('excerpt_more',' '.'[&hellip;]');$excerpt=wp_trim_words($excerpt,$excerptLength,$excerptMore);remove_filter('get_the_excerpt','wp_trim_excerpt');$excerpt=apply_filters('wp_trim_excerpt',$excerpt,apply_filters('get_the_excerpt',$this->rawExcerpt));return
+apply_filters('the_excerpt',$excerpt);}return
+apply_filters('the_excerpt',get_the_excerpt());}function
+hasExcerpt(){return(!empty($this->rawExcerpt));}function
+permalink(){return
+apply_filters('the_permalink',get_permalink($this->postId));}function
+shortUrl(){return
+wp_get_shortlink($this->postId);}function
+taxonomies(){$objectTaxonomies=get_object_taxonomies($this->type);$publicObjectTaxonomies=array();foreach($objectTaxonomies
+as$objectTaxonomy){$objectTaxonomy=get_taxonomy($objectTaxonomy);if($objectTaxonomy&&$objectTaxonomy->public){$publicObjectTaxonomies[]=$objectTaxonomy->name;}}return$publicObjectTaxonomies;}function
+categoryList($separator='',$parents='',$taxonomy=''){if(!$this->isCpt){return
+get_the_category_list($separator,$parents,$this->postId);}else{$objectTaxonomies=get_object_taxonomies($this->type);$publicObjectTaxonomies=array();foreach($objectTaxonomies
+as$objectTaxonomy){if($objectTaxonomy==='language')continue;$objectTaxonomy=get_taxonomy($objectTaxonomy);if($objectTaxonomy&&$objectTaxonomy->public){$publicObjectTaxonomies[]=$objectTaxonomy->name;}}if(count($publicObjectTaxonomies)==1
+or$taxonomy){$tax=$publicObjectTaxonomies[0];if($taxonomy)$tax=$taxonomy;return
+get_the_term_list($this->postId,$tax,'',$separator);}else{$list=array();foreach($publicObjectTaxonomies
+as$tax){$list[]=get_the_term_list($this->postId,$tax,'',$separator);}if($separator=='')$separator=' ';return
+implode($separator,$list);}}}function
+categories($taxonomy='category'){$funcParams=func_get_args();if($return=WpLatteObjectCache::load("post-categories-{ $this->postId}",$funcParams))return$return;$registeredTaxonomies=get_object_taxonomies($this->type);$registeredTaxonomies=array_diff($registeredTaxonomies,array('language','post_translations'));if($this->isCpt
+and$taxonomy=='category'and
+count($registeredTaxonomies)==1){$taxonomy=array_pop($registeredTaxonomies);}elseif($this->isCpt
+and$this->type!=='product'and$taxonomy=='category'and
+count($registeredTaxonomies)>1){if(!self::$isInAnyCategory){trigger_error('You must specify concrete taxonomy name in the '.__METHOD__.'($taxonomy)');}}$terms=get_the_terms($this->postId,WpLatteUtils::addPrefix('taxonomy',$taxonomy));if(!$terms
+or
+is_wp_error($terms))$terms=array();if(!$this->isCpt
+and$taxonomy=='category'){$terms=apply_filters('get_the_categories',array_values($terms));}$terms=array_filter((array)$terms);$return=array();foreach($terms
+as$i=>$term){if(WpLatteUtils::isCustomTax($term->taxonomy)){$c=WpLatte::createEntity('TaxonomyTerm',$term);}else{$c=WpLatte::createEntity('Category',$term);}$return[$c->id]=$c;}unset($terms);$funcParams=func_get_args();WpLatteObjectCache::save("post-categories-{ $this->postId}",$return,$funcParams);return$return;}function
+recursiveCategoriesSlugs($id,$type,$taxonomy,$separator,$prefix="",$suffix=""){$result="";if($type=="post"){$terms=get_the_terms($id,$taxonomy);$term=reset($terms);}else{$term=get_term_by("id",$id,$taxonomy);}$result.=$prefix.$term->slug.$suffix.$separator;if($term->parent!=0){$result.=$this->recursiveCategoriesSlugs($term->parent,"cat",$taxonomy,$separator,$prefix,$suffix);}return$result;}function
+catSlugs($taxonomy,$separator,$prefix="",$suffix=""){$result="";$cats=$this->categories($taxonomy);foreach($cats
+as$key=>$cat){if($cat->parentId==0){$result.=$prefix.$cat->slug.$suffix.$separator;unset($cats[$key]);}}foreach($cats
+as$cat){$result.=$this->recursiveCategoriesSlugs($cat->id,"cat",$taxonomy,$separator,$prefix,$suffix);}$slugs=explode(" ",$result);$result=implode(" ",array_unique($slugs));return$result;}function
+categoriesSlugs($prefix='',$suffix='',$asString=true,$taxonomy='category'){$funcParams=func_get_args();if($return=WpLatteObjectCache::load("categories-slugs-{$this->postId}",$funcParams))return$return;$cats=$this->categories($taxonomy);$slugs=array();$prefix=$prefix!==''?"{$prefix}-":$prefix;$suffix=$suffix!==''?"-{$suffix}":$suffix;foreach($cats
+as$i=>$cat){$slugs[$i]=$prefix.$cat->slug.$suffix;}$return=$asString?implode(' ',$slugs):$slugs;$funcParams=func_get_args();WpLatteObjectCache::save("categories-slugs-{$this->postId}",$return,$funcParams);return$return;}function
+isInAnyCategory(){self::$isInAnyCategory=true;$cats=$this->categories();self::$isInAnyCategory=false;return!empty($cats);}function
+hasCategory($category=''){return
+has_term($category,'category',$this->postId);}function
+hasTaxonomy($taxonomy){return
+in_array(WpLatteUtils::addPrefix('taxonomy',$taxonomy),get_object_taxonomies($this->type));}function
+tagList($separator=', '){return
+get_the_tag_list('',$separator,'',$this->postId);}function
+hasTag($tag=''){return
+has_term($tag,'post_tag',$this->postId);}function
+status(){return
+get_post_status($this->postId);}function
+hasFormat($format){$has=has_post_format($format,$this->postId);if($has===false
+and$format=='standard'){return
+true;}return$has;}function
+formatTitle($format=''){if($format)return
+get_post_format_string($format);else
+return
+get_post_format_string($this->formatName());}function
+formatName(){return
+get_post_format($this->postId);}function
+gallery(){return
+get_post_gallery($this->postId,true);}function
+hasImage(){return(bool)get_post_thumbnail_id($this->postId==0?null:$this->postId);}function
+imageUrl($size='full'){if($return=WpLatteObjectCache::load("image-url-{$size}-{$this->postId}"))return$return;$id=get_post_thumbnail_id($this->postId==0?null:$this->postId);if(in_the_loop()){update_post_thumbnail_cache();}$args=wp_get_attachment_image_src($id,$size);if($args!==false)$return=$args[0];else$return='';WpLatteObjectCache::save("image-url-{$size}-{$this->postId}",$return);return$return;}function
+imageAlt(){$image_id=get_post_thumbnail_id($this->postId==0?null:$this->postId);$image_alt=get_post_meta($image_id,'_wp_attachment_image_alt',true);return$image_alt!=""?$image_alt:$this->title();}function
+image($size='post-thumbnail'){return
+get_the_post_thumbnail($this->postId==0?null:$this->postId,$size);}function
+date($format='',$translate=false){if($translate==='translate'){$translate=true;}$post=get_post($this->postId);$the_date='';if(''==$format){$the_date.=mysql2date(get_option('date_format'),$post->post_date,$translate);}else{$the_date.=mysql2date($format,$post->post_date,$translate);}return
+apply_filters('get_the_date',$the_date,$format);}function
+dateI18n($format=''){return$this->date($format,'translate');}function
+time($d=''){return
+apply_filters('the_time',get_the_time($d,$this->postId),$d);}function
+dayArchiveUrl(){return
+get_day_link(get_the_time('Y',$this->postId),get_the_time('m',$this->postId),get_the_time('d',$this->postId));}function
+monthArchiveUrl(){return
+get_month_link(get_the_time('Y',$this->postId),get_the_time('m',$this->postId));}function
+yearArchiveUrl(){return
+get_year_link(get_the_time('Y',$this->postId));}function
+htmlClass($class='',$withAttr=true){$class=implode(' ',get_post_class($class,$this->postId));if($withAttr){return' class="'.$class.'" ';}else{return$class;}}function
+htmlId($withAttr=true){$id=$this->type.'-'.$this->id;if($withAttr){return' id="'.$id.'" ';}else{return$id;}}function
+hasPassword(){return
+post_password_required($this->postId);}function
+isSticky(){return
+is_sticky($this->postId);}function
+linkPages($args=array()){if(is_array($args)){$args['echo']=false;if(!isset($args['before']))$args['before']='<div class="page-links">'.__('Pages:','wplatte');if(!isset($args['after']))$args['after']='</div>';}return
+wp_link_pages($args);}function
+editLink($linkText){ob_start();edit_post_link($linkText,'','',$this->postId);return
+ob_get_clean();}function
+hasComments(){return
+have_comments();}function
+commentsNumber(){return(int)get_comments_number($this->postId);}function
+commentsUrl(){if($this->commentsNumber()==0)return
+get_permalink().'#respond';else
+return
+get_comments_link();}function
+willCommentsPaginate(){return(get_comment_pages_count($this->postId)>1
+and
+get_option('page_comments'));}function
+hasCommentsOpen(){return
+comments_open($this->postId);}function
+hasCommentsClosed(){return(!comments_open($this->postId)and
+get_comments_number($this->postId)!='0'and
+post_type_supports(get_post_type($this->postId),'comments'));}function
+attachment(){if($return=WpLatteObjectCache::load("attachment-{$this->postId}-{$this->parentId}"))return$return;$return=WpLatte::createEntity('Attachment',$this->postId,$this->parentId,$this->mimeType());WpLatteObjectCache::save("attachment-{$this->postId}-{$this->parentId}",$return);return$return;}function
+mimeType(){return
+get_post_mime_type($this->postId);}function
+meta($metaboxId,$key=null){$metaboxKey="_{$this->type}_{$metaboxId}";if($return=WpLatteObjectCache::load("metabox-{$metaboxKey}-{$key}-{$this->postId}"))return$return;$postmeta=get_post_meta($this->postId,$metaboxKey,true);if($postmeta===""){$postmeta=get_post_meta($this->postId,$metaboxId,true);}$postmeta=apply_filters('wplatte-post-meta',$postmeta,$metaboxId,$metaboxKey,$key,$this->isCpt,$this->type);if(is_array($postmeta)){if($key!==null
+and
+isset($postmeta[$key]))$return=$postmeta[$key];else$return=(object)$postmeta;}else{$return=$postmeta;}WpLatteObjectCache::save("metabox-{$metaboxKey}-{$key}-{$this->postId}",$return);return$return;}}class
+WpLattePostAuthorEntity
+extends
+WpLatteBaseEntity{protected$id;protected$email;protected$displayName;function
+__construct($author){if(is_numeric($author)){$a=get_userdata($author);if($a){$this->id=(int)$a->ID;$this->email=$a->user_email;$this->displayName=$a->display_name;}}else{$this->id=(int)$author->ID;$this->email=$author->user_email;$this->displayName=$author->display_name;}}function
+postsUrl(){return
+get_author_posts_url($this->id);}function
+bio(){return
+get_the_author_meta('description',$this->id);}function
+isMulti(){return
+is_multi_author();}function
+avatar($size='96'){return
+get_avatar($this->email,$size);}function
+meta($metaboxId,$key=null){$metaboxKey="_user_{$metaboxId}";if($return=WpLatteObjectCache::load("metabox-{$metaboxKey}-{$key}-{$this->id}"))return$return;$usermeta=get_the_author_meta($metaboxKey,$this->id);if($usermeta===""){$usermeta=get_post_meta($metaboxId,$this->id);}if(is_array($usermeta)){if($key!==null
+and
+isset($usermeta[$key]))$return=$usermeta[$key];else$return=(object)$usermeta;}else{$return=$usermeta;}WpLatteObjectCache::save("metabox-{$metaboxKey}-{$key}-{$this->id}",$return);return$return;}function
+__toString(){return
+apply_filters('the_author',$this->displayName);}}class
+WpLatteTagEntity
+extends
+WpLatteBaseEntity{protected$id;protected$parentId;protected$count;function
+__construct($tag){if(is_numeric($tag))$tag=get_tag($tag);$this->id=(int)$tag->term_id;$this->parentId=(int)$tag->parent;$this->count=(int)$tag->count;}function
+title(){return
+single_tag_title('',false);}function
+description(){return
+tag_description($this->id);}}class
+WpLatteTaxonomyTermEntity
+extends
+WpLatteBaseEntity{protected$id;protected$parentId;protected$count;protected$slug;protected$rawTitle;protected$taxonomy;function
+__construct($term,$taxonomy='category'){if(is_numeric($term))$term=get_term($term,$taxonomy);$this->id=(int)$term->term_id;$this->parentId=(int)$term->parent;$this->count=(int)$term->count;$this->taxonomy=$term->taxonomy;$this->slug=$term->slug;$this->rawTitle=$term->name;}function
+title(){return
+apply_filters('single_term_title',$this->rawTitle);}function
+description(){return
+term_description($this->id,$this->taxonomy);}function
+url(){return
+get_term_link($this->id,$this->taxonomy);}}class
+WpLatteWpEntity
+extends
+WpLatteBaseEntity{private
+static$instance;static
+function
+getInstance(){if(self::$instance===null)self::$instance=new
+self;return
+self::$instance;}function&__get($name){$blogInfo=array('url','wpurl','description','rdfUrl','rssUrl','rss2Url','atomUrl','commentsAtomUrl','commentsRss2Url','pingbackUrl','stylesheetUrl','stylesheetDirectory','templateDirectory','templateUrl','adminEmail','charset','htmlType','version','language','textDirection','name');$fn=self::camel2underscore($name);if(method_exists($this,$name)and
+is_callable(array($this,$name))){$return=$this->$name();return$return;}elseif(in_array($name,$blogInfo)){$return=get_bloginfo($fn,'display');return$return;}elseif(substr($fn,0,2)=='is'and
+function_exists($fn)){$return=$fn();return$return;}else{trigger_error(sprintf("Maybe you did a typo in a template. Property or method with name '%s' doesn't exist in class '%s'.",$name,get_class($this)));$return=null;return$return;}}function
+is404(){return
+is_404();}function
+isHomepage($page=''){return
+is_front_page($page);}function
+isBlog($page=''){global$wp_query;return
+is_home()and$wp_query->is_posts_page;}function
+isPage($page=''){return
+is_page($page);}function
+isSingle($post=''){return
+is_single($post);}function
+isPost(){return
+is_single();}function
+isSingular($postTypes=''){return
+is_singular(WpLatteUtils::addPrefix('post',$postTypes));}function
+isPostTypeArchive($postTypes=''){return
+is_post_type_archive(WpLatteUtils::addPrefix('post',$postTypes));}function
+isAuthor($author=''){return
+is_author($author);}function
+isCategory($category=''){return
+is_category($category);}function
+isTag($slug=''){return
+is_tag($slug);}function
+isTax($taxonomy='',$term=''){return
+is_tax(WpLatteUtils::addPrefix('taxonomy',$taxonomy),$term);}function
+isPaged(){return
+is_paged();}function
+isMobile(){$ua=$_SERVER['HTTP_USER_AGENT'];return(stripos($ua,'safari')!==false&&stripos($ua,'mobile')!==false)||(stripos($ua,'android')!==false&&stripos($ua,'mobile')!==false);}function
+isIpad(){$ua=$_SERVER['HTTP_USER_AGENT'];return
+strpos($ua,'iPad')!==false;}function
+isIphone(){$ua=$_SERVER['HTTP_USER_AGENT'];return(strpos($ua,'iPhone')!==false||strpos($ua,'iPod')!==false);}function
+canCurrentUser($capability){return
+current_user_can($capability);}function
+isUserLoggedIn(){return
+is_user_logged_in();}function
+maxNumPages($query){if(empty($query)){global$wp_query;return$wp_query->max_num_pages;}return$query->max_num_pages;}function
+willPaginate($query=array()){return$this->maxNumPages($query)>1;}function
+hasPreviousPosts(){$prev=get_previous_posts_link();return$prev?true:false;}function
+hasNextPosts(){$next=get_next_posts_link();return$next?true:false;}function
+hasPreviousPost(){global$post;return(bool)($post
+and
+is_attachment())?get_post($post->post_parent):get_adjacent_post(false,'',true);}function
+hasNextPost(){return(bool)get_adjacent_post(false,'',false);}function
+dateFormat(){return
+get_option('date_format');}function
+timeFormat(){return
+get_option('time_format');}function
+searchQuery(){return
+get_search_query();}function
+adminUrl($path=''){return
+admin_url($path);}function
+blogUrl(){$id=get_option('page_for_posts');if(!$id)return
+home_url('/');return
+get_permalink($id);}function
+havePosts(){return
+have_posts();}function
+bodyHtmlClass($withAttr=true){$c=implode(' ',get_body_class());if($withAttr)return'class="'.$c.'"';else
+return$c;}function
+categories($args='category'){$funcParams=func_get_args();if($return=WpLatteObjectCache::load('wp-categories',$funcParams))return$return;if(is_string($args)){$a=array();$a['taxonomy']=WpLatteUtils::addPrefix('taxonomy',$args);$args=$a;}else{if(isset($args['taxonomy'])){$args['taxonomy']=WpLatteUtils::addPrefix('taxonomy',$args['taxonomy']);}}$terms=get_categories($args);$return=array();foreach($terms
+as$i=>$term){if(!is_object($term))continue;if(WpLatteUtils::isCustomTax($term->taxonomy)){$c=WpLatte::createEntity('TaxonomyTerm',$term);}else{$c=WpLatte::createEntity('Category',$term);}$return[$c->id]=$c;}unset($terms);$funcParams=func_get_args();WpLatteObjectCache::save('wp-categories',$return,$funcParams);return$return;}function
+isWidgetAreaActive($areaId){return
+is_active_sidebar($areaId);}}class
+WpLatteBreadcrumbs{static
+function
+breadcrumbs($args=array()){$breadcrumb='';$defaults=array('container'=>'nav','separator'=>'&raquo;','before'=>__('You are here:','wplatte'),'after'=>false,'frontpage'=>true,'showHome'=>__('Home','wplatte'),'network'=>false);if(is_singular()){$post=get_queried_object();$defaults["singular_{$post->post_type}_taxonomy"]=false;$defaults["singular_{$post->post_type}_taxonomy"]=apply_filters('breadcrumbs_singular_taxonomy',false,$post);}$args=apply_filters('WpLatteBreadcrumbsArgs',$args);$args=wp_parse_args($args,$defaults);if(function_exists('is_woocommerce')and
+is_woocommerce()){return
+self::woocommerceBreadcrumbs($args);}$trail=self::getItems($args);if(!empty($trail)&&is_array($trail)){$breadcrumb='<'.tag_escape($args['container']).' class="breadcrumbs">';$breadcrumb.=(!empty($args['before'])?'<span class="breadcrumbs-before">'.$args['before'].'</span> ':'');if(1<count($trail))array_unshift($trail,'<span class="breadcrumb-begin">'.array_shift($trail).'</span>');array_push($trail,'<span class="breadcrumb-end">'.array_pop($trail).'</span>');$separator=(!empty($args['separator'])?'<span class="breadcrumb-sep">'.$args['separator'].'</span>':'<span class="sep">/</span>');$breadcrumb.=join(" {$separator} ",$trail);$breadcrumb.=(!empty($args['after'])?' <span class="breadcrumbs-after">'.$args['after'].'</span>':'');$breadcrumb.='</'.tag_escape($args['container']).'>';}$breadcrumb=apply_filters('WpLatteBreadcrumbs',$breadcrumb,$args);return$breadcrumb;}static
+function
+getItems($args=array()){global$wp_rewrite;$trail=array();$path='';if(!is_front_page()&&$args['showHome']){if(is_multisite()&&$args['network']){$trail[]='<a href="'.network_home_url().'">'.$args['showHome'].'</a>';$trail[]='<a href="'.home_url().'" title="'.esc_attr(get_bloginfo('name')).'" rel="home" class="breadcrumb-begin">'.get_bloginfo('name').'</a>';}else{$trail[]='<a href="'.home_url().'" title="'.esc_attr(get_bloginfo('name')).'" rel="home" class="breadcrumb-begin">'.$args['showHome'].'</a>';}}if(function_exists('is_bbpress')&&is_bbpress()){$trail=array_merge($trail,self::getBBpressItems());}elseif(is_front_page()){if(!is_paged()&&$args['showHome']&&$args['frontpage']){if(is_multisite()&&$args['network']){$trail[]='<a href="'.network_home_url().'">'.$args['showHome'].'</a>';$trail[]=get_bloginfo('name');}else{$trail[]=$args['showHome'];}}elseif(is_paged()&&$args['showHome']&&$args['frontpage']){if(is_multisite()&&$args['network']){$trail[]='<a href="'.network_home_url().'">'.$args['showHome'].'</a>';$trail[]='<a href="'.home_url().'" title="'.esc_attr(get_bloginfo('name')).'" rel="home" class="breadcrumb-begin">'.get_bloginfo('name').'</a>';}else{$trail[]='<a href="'.home_url().'" title="'.esc_attr(get_bloginfo('name')).'" rel="home" class="breadcrumb-begin">'.$args['showHome'].'</a>';}}}elseif(is_home()){$home_page=get_page(get_queried_object_id());$trail=array_merge($trail,self::getParents($home_page->post_parent,''));if(is_paged())$trail[]='<a href="'.get_permalink($home_page->ID).'" title="'.esc_attr(get_the_title($home_page->ID)).'">'.get_the_title($home_page->ID).'</a>';else$trail[]=get_the_title($home_page->ID);}elseif(is_singular()){$post=get_queried_object();$post_id=absint(get_queried_object_id());$post_type=$post->post_type;$parent=absint($post->post_parent);$post_type_object=get_post_type_object($post_type);if('post'==$post_type){$path.=trailingslashit($wp_rewrite->front);if(!empty($path))$trail=array_merge($trail,self::getParents('',$path));$trail=array_merge($trail,self::mapRewriteTags($post_id,get_option('permalink_structure'),$args));}elseif('attachment'==$post_type){$parent_id=$post->post_parent;if(0<$parent_id){$parent_post_type=get_post_type($parent_id);if('post'==$parent_post_type){$path.=trailingslashit($wp_rewrite->front);if(!empty($path))$trail=array_merge($trail,self::getParents('',$path));$trail=array_merge($trail,self::mapRewriteTags($post->post_parent,get_option('permalink_structure'),$args));}elseif('page'!==$parent_post_type){$parent_post_type_object=get_post_type_object($parent_post_type);if($parent_post_type_object->rewrite['with_front']&&$wp_rewrite->front)$path.=trailingslashit($wp_rewrite->front);if(!empty($parent_post_type_object->rewrite['slug']))$path.=$parent_post_type_object->rewrite['slug'];if(!empty($path))$trail=array_merge($trail,self::getParents('',$path));if(!empty($parent_post_type_object->has_archive)){$label=!empty($parent_post_type_object->labels->archive_title)?$parent_post_type_object->labels->archive_title:$parent_post_type_object->labels->name;$trail[]='<a href="'.get_post_type_archive_link($parent_post_type).'" title="'.esc_attr($label).'">'.$label.'</a>';}}}}elseif('page'!==$post_type){if(isset($post_type_object->rewrite['with_front'])&&$post_type_object->rewrite['with_front']&&$wp_rewrite->front)$path.=trailingslashit($wp_rewrite->front);if(!empty($post_type_object->rewrite['slug']))$path.=$post_type_object->rewrite['slug'];if(!empty($path))$trail=array_merge($trail,self::getParents('',$path));if(!empty($post_type_object->has_archive)&&apply_filters('wplatte-breadcrumbs-enable-cpt-archive',true,$post_type)){$label=!empty($post_type_object->labels->archive_title)?$post_type_object->labels->archive_title:$post_type_object->labels->name;$trail[]='<a href="'.get_post_type_archive_link($post_type).'" title="'.esc_attr($label).'">'.$label.'</a>';}}if((empty($path)&&0!==$parent)||('attachment'==$post_type))$trail=array_merge($trail,self::getParents($parent,''));elseif(0!==$parent&&is_post_type_hierarchical($post_type))$trail=array_merge($trail,self::getParents($parent,''));if(!empty($args["singular_{$post_type}_taxonomy"])&&$terms=get_the_term_list($post_id,$args["singular_{$post_type}_taxonomy"],'',', ','')){$trail[]=apply_filters('wplatte-breadcrumbs-terms-list',$terms,$post_type,$post_id,$args);}$post_title=single_post_title('',false);if(1<get_query_var('page')&&!empty($post_title))$trail[]='<a href="'.get_permalink($post_id).'" title="'.esc_attr($post_title).'">'.$post_title.'</a>';elseif(!empty($post_title))$trail[]=$post_title;}elseif(is_archive()){if(is_tax()||is_category()||is_tag()){$term=get_queried_object();$taxonomy=get_taxonomy($term->taxonomy);if(is_category())$path=get_option('category_base');elseif(is_tag())$path=get_option('tag_base');else{if(isset($taxonomy->rewrite['with_front'])&&$taxonomy->rewrite['with_front']&&$wp_rewrite->front)$path=trailingslashit($wp_rewrite->front);$path.=$taxonomy->rewrite['slug'];}if($path)$trail=array_merge($trail,self::getParents('',$path));if($taxonomy->rewrite['slug']){$post_types=get_post_types(array('public'=>true,'has_archive'=>$taxonomy->rewrite['slug']),'objects');if(!empty($post_types)){foreach($post_types
+as$post_type_object){if($taxonomy->rewrite['slug']===$post_type_object->has_archive){$label=!empty($post_type_object->labels->archive_title)?$post_type_object->labels->archive_title:$post_type_object->labels->name;$trail[]='<a href="'.get_post_type_archive_link($post_type_object->name).'" title="'.esc_attr($label).'">'.$label.'</a>';break;}}}}if(is_taxonomy_hierarchical($term->taxonomy)&&$term->parent)$trail=array_merge($trail,self::getTermParents($term->parent,$term->taxonomy));if(is_paged())$trail[]='<a href="'.esc_url(get_term_link($term,$term->taxonomy)).'" title="'.esc_attr(single_term_title('',false)).'">'.single_term_title('',false).'</a>';else$trail[]=single_term_title('',false);}elseif(is_post_type_archive()){$post_type_object=get_post_type_object(get_query_var('post_type'));if(isset($post_type_object->rewrite['with_front'])&&$post_type_object->rewrite['with_front']&&$wp_rewrite->front)$path.=trailingslashit($wp_rewrite->front);if(!empty($post_type_object->rewrite['slug']))$path.=$post_type_object->rewrite['slug'];if(!empty($path))$trail=array_merge($trail,self::getParents('',$path));if(is_paged())$trail[]='<a href="'.esc_url(get_post_type_archive_link($post_type_object->name)).'" title="'.esc_attr(post_type_archive_title('',false)).'">'.post_type_archive_title('',false).'</a>';else$trail[]=post_type_archive_title('',false);}elseif(is_author()){$user_id=get_query_var('author');if(!empty($wp_rewrite->front))$path.=trailingslashit($wp_rewrite->front);if(!empty($wp_rewrite->author_base))$path.=$wp_rewrite->author_base;if(!empty($path))$trail=array_merge($trail,self::getParents('',$path));if(is_paged())$trail[]='<a href="'.esc_url(get_author_posts_url($user_id)).'" title="'.esc_attr(get_the_author_meta('display_name',$user_id)).'">'.__('Author:','wplatte').' '.get_the_author_meta('display_name',$user_id).'</a>';else$trail[]=__('Author:','wplatte').' '.get_the_author_meta('display_name',$user_id);}elseif(is_time()){if(get_query_var('minute')&&get_query_var('hour'))$trail[]=get_the_time(__('g:i a','wplatte'));elseif(get_query_var('minute'))$trail[]=sprintf(__('Minute %1$s','wplatte'),get_the_time(__('i','wplatte')));elseif(get_query_var('hour'))$trail[]=get_the_time(__('g a','wplatte'));}elseif(is_date()){if($wp_rewrite->front)$trail=array_merge($trail,self::getParents('',$wp_rewrite->front));if(is_day()){$trail[]='<a href="'.get_year_link(get_the_time('Y')).'" title="'.get_the_time(esc_attr__('Y','wplatte')).'">'.get_the_time(__('Y','wplatte')).'</a>';$trail[]='<a href="'.get_month_link(get_the_time('Y'),get_the_time('m')).'" title="'.get_the_time(esc_attr__('F','wplatte')).'">'.get_the_time(__('F','wplatte')).'</a>';if(is_paged())$trail[]='<a href="'.get_day_link(get_the_time('Y'),get_the_time('m'),get_the_time('d')).'" title="'.get_the_time(esc_attr__('d','wplatte')).'">'.get_the_time(__('d','wplatte')).'</a>';else$trail[]=get_the_time(__('d','wplatte'));}elseif(get_query_var('w')){$trail[]='<a href="'.get_year_link(get_the_time('Y')).'" title="'.get_the_time(esc_attr__('Y','wplatte')).'">'.get_the_time(__('Y','wplatte')).'</a>';if(is_paged())$trail[]=get_archives_link(add_query_arg(array('m'=>get_the_time('Y'),'w'=>get_the_time('W')),home_url()),sprintf(__('Week %1$s','wplatte'),get_the_time(esc_attr__('W','wplatte'))),false);else$trail[]=sprintf(__('Week %1$s','wplatte'),get_the_time(esc_attr__('W','wplatte')));}elseif(is_month()){$trail[]='<a href="'.get_year_link(get_the_time('Y')).'" title="'.get_the_time(esc_attr__('Y','wplatte')).'">'.get_the_time(__('Y','wplatte')).'</a>';if(is_paged())$trail[]='<a href="'.get_month_link(get_the_time('Y'),get_the_time('m')).'" title="'.get_the_time(esc_attr__('F','wplatte')).'">'.get_the_time(__('F','wplatte')).'</a>';else$trail[]=get_the_time(__('F','wplatte'));}elseif(is_year()){if(is_paged())$trail[]='<a href="'.get_year_link(get_the_time('Y')).'" title="'.esc_attr(get_the_time(__('Y','wplatte'))).'">'.get_the_time(__('Y','wplatte')).'</a>';else$trail[]=get_the_time(__('Y','wplatte'));}}}elseif(is_search()){if(is_paged())$trail[]='<a href="'.get_search_link().'" title="'.sprintf(esc_attr__('Search results for &quot;%1$s&quot;','wplatte'),esc_attr(get_search_query())).'">'.sprintf(__('Search results for &quot;%1$s&quot;','wplatte'),esc_attr(get_search_query())).'</a>';else$trail[]=sprintf(__('Search results for &quot;%1$s&quot;','wplatte'),esc_attr(get_search_query()));}elseif(is_404()){$trail[]=__('404 Not Found','wplatte');}if(is_paged())$trail[]=sprintf(__('Page %d','wplatte'),absint(get_query_var('paged')));elseif(is_singular()&&1<get_query_var('page'))$trail[]=sprintf(__('Page %d','wplatte'),absint(get_query_var('page')));return
+apply_filters('WpLatteBreadcrumbsItems',$trail,$args);}static
+function
+getBBpressItems($args=array()){$trail=array();$post_type_object=get_post_type_object(bbp_get_forum_post_type());if(!empty($post_type_object->has_archive)&&!bbp_is_forum_archive())$trail[]='<a href="'.get_post_type_archive_link(bbp_get_forum_post_type()).'">'.bbp_get_forum_archive_title().'</a>';if(bbp_is_forum_archive()){$trail[]=bbp_get_forum_archive_title();}elseif(bbp_is_topic_archive()){$trail[]=bbp_get_topic_archive_title();}elseif(bbp_is_topic_tag()){$trail[]=bbp_get_topic_tag_name();}elseif(bbp_is_topic_tag_edit()){$trail[]='<a href="'.bbp_get_topic_tag_link().'">'.bbp_get_topic_tag_name().'</a>';$trail[]=__('Edit','wplatte');}elseif(bbp_is_single_view()){$trail[]=bbp_get_view_title();}elseif(bbp_is_single_topic()){$topic_id=get_queried_object_id();$trail=array_merge($trail,self::getParents(bbp_get_topic_forum_id($topic_id)));if(bbp_is_topic_split()||bbp_is_topic_merge()||bbp_is_topic_edit())$trail[]='<a href="'.bbp_get_topic_permalink($topic_id).'">'.bbp_get_topic_title($topic_id).'</a>';else$trail[]=bbp_get_topic_title($topic_id);if(bbp_is_topic_split())$trail[]=__('Split','wplatte');elseif(bbp_is_topic_merge())$trail[]=__('Merge','wplatte');elseif(bbp_is_topic_edit())$trail[]=__('Edit','wplatte');}elseif(bbp_is_single_reply()){$reply_id=get_queried_object_id();$trail=array_merge($trail,self::getParents(bbp_get_reply_topic_id($reply_id)));if(bbp_is_reply_edit()){$trail[]='<a href="'.bbp_get_reply_url($reply_id).'">'.bbp_get_reply_title($reply_id).'</a>';$trail[]=__('Edit','wplatte');}else{$trail[]=bbp_get_reply_title($reply_id);}}elseif(bbp_is_single_forum()){$forum_id=get_queried_object_id();$forum_parent_id=bbp_get_forum_parent_id($forum_id);if(0!==$forum_parent_id)$trail=array_merge($trail,self::getParents($forum_parent_id));$trail[]=bbp_get_forum_title($forum_id);}elseif(bbp_is_single_user()||bbp_is_single_user_edit()){if(bbp_is_single_user_edit()){$trail[]='<a href="'.bbp_get_user_profile_url().'">'.bbp_get_displayed_user_field('display_name').'</a>';$trail[]=__('Edit','wplatte');}else{$trail[]=bbp_get_displayed_user_field('display_name');}}return
+apply_filters('WpLatteBreadcrumbsBBpressItems',$trail,$args);}static
+function
+mapRewriteTags($post_id='',$path='',$args=array()){$trail=array();if(empty($path)||empty($post_id))return$trail;$post=get_post($post_id);if(empty($post)||is_wp_error($post)||'post'!==$post->post_type)return$trail;$path=trim($path,'/');$matches=explode('/',$path);if(is_array($matches)){foreach($matches
+as$match){$tag=trim($match,'/');if('%year%'==$tag)$trail[]='<a href="'.get_year_link(get_the_time('Y',$post_id)).'" title="'.get_the_time(esc_attr__('Y','wplatte'),$post_id).'">'.get_the_time(__('Y','wplatte'),$post_id).'</a>';elseif('%monthnum%'==$tag)$trail[]='<a href="'.get_month_link(get_the_time('Y',$post_id),get_the_time('m',$post_id)).'" title="'.get_the_time(esc_attr__('F Y','wplatte'),$post_id).'">'.get_the_time(__('F','wplatte'),$post_id).'</a>';elseif('%day%'==$tag)$trail[]='<a href="'.get_day_link(get_the_time('Y',$post_id),get_the_time('m',$post_id),get_the_time('d',$post_id)).'" title="'.get_the_time(esc_attr__('F j, Y','wplatte'),$post_id).'">'.get_the_time(__('d','wplatte'),$post_id).'</a>';elseif('%author%'==$tag)$trail[]='<a href="'.get_author_posts_url($post->post_author).'" title="'.esc_attr(get_the_author_meta('display_name',$post->post_author)).'">'.get_the_author_meta('display_name',$post->post_author).'</a>';elseif('%category%'==$tag&&'category'!==$args["singular_{$post->post_type}_taxonomy"]){$terms=get_the_category($post_id);if($terms){usort($terms,'_usort_terms_by_ID');$term=get_term($terms[0],'category');if(0!==$term->parent)$trail=array_merge($trail,self::getTermParents($term->parent,'category'));$trail[]='<a href="'.get_term_link($term,'category').'" title="'.esc_attr($term->name).'">'.$term->name.'</a>';}}}}return$trail;}static
+function
+getParents($post_id='',$path=''){$trail=array();$path=trim($path,'/');if(empty($post_id)&&empty($path))return$trail;if(empty($post_id)){$parent_page=get_page_by_path($path);if(!empty($parent_page))$post_id=$parent_page->ID;}if($post_id==0&&!empty($path)){$path=trim($path,'/');preg_match_all("/\/.*?\z/",$path,$matches);if(isset($matches)){$matches=array_reverse($matches);foreach($matches
+as$match){if(isset($match[0])){$path=str_replace($match[0],'',$path);$parent_page=get_page_by_path(trim($path,'/'));if(!empty($parent_page)&&$parent_page->ID>0){$post_id=$parent_page->ID;break;}}}}}while($post_id){$page=get_page($post_id);$parents[]='<a href="'.get_permalink($post_id).'" title="'.esc_attr(get_the_title($post_id)).'">'.get_the_title($post_id).'</a>';$post_id=$page->post_parent;}if(isset($parents))$trail=array_reverse($parents);return$trail;}static
+function
+getTermParents($parent_id='',$taxonomy=''){$trail=array();$parents=array();if(empty($parent_id)||empty($taxonomy))return$trail;while($parent_id){$parent=get_term($parent_id,$taxonomy);$parents[]='<a href="'.get_term_link($parent,$taxonomy).'" title="'.esc_attr($parent->name).'">'.$parent->name.'</a>';$parent_id=$parent->parent;}if(!empty($parents))$trail=array_reverse($parents);return$trail;}static
+function
+woocommerceBreadcrumbs($args){$breadcrumbs=new
+WC_Breadcrumb();if($args['showHome']){$breadcrumbs->add_crumb($args['showHome'],apply_filters('woocommerce_breadcrumb_home_url',home_url()));if(!is_shop()){$shopPage=get_page(woocommerce_get_page_id('shop'));$breadcrumbs->add_crumb(get_the_title($shopPage),get_permalink($shopPage));}}$trails=$breadcrumbs->generate();$output='';$output.='<'.tag_escape($args['container']).' class="breadcrumbs">';$output.=(!empty($args['before'])?'<span class="breadcrumbs-before">'.$args['before'].'</span> ':'');foreach($trails
+as$i=>$trail){if($i===0){$output.='<span class="breadcrumb-begin">';}elseif(empty($trail[1])and
+count($trails)===($i+1)){$output.='<span class="breadcrumb-end">';}if(!empty($trail[1])and
+count($trails)!==($i+1)){$output.='<a href="'.esc_url($trail[1]).'">'.esc_html($trail[0]).'</a>';}else{$output.=esc_html($trail[0]);}if($i===0){$output.='</span>';}elseif(empty($trail[1])and
+count($trails)===($i+1)){$output.='</span>';}if(count($trails)!==($i+1)){$output.=(!empty($args['separator'])?' <span class="breadcrumb-sep">'.$args['separator'].'</span> ':' <span class="sep">/</span> ');}}$output.='</'.tag_escape($args['container']).'>';return$output;}}if(!class_exists('NPresenter')){class
+NPresenter{}}class
+WpLatteFakePresenter
+extends
+NPresenter{public$paths=array();function
+findLayoutTemplateFile(){extract($this->paths);$prefixes=array('@','');$_404=array();foreach($prefixes
+as$prefix){$mask="/%slayout.php";$layout=sprintf($mask,$prefix);$layoutPath=$child.$layout;if(file_exists($layoutPath))return$layoutPath;else$_404[]=$layoutPath;$layoutPath=$theme.$layout;if(file_exists($layoutPath))return$layoutPath;else$_404[]=$layoutPath;}if(!empty($_404)){throw
+new
+FileNotFoundException(sprintf("One of these layout template files must exists:\n%s\n",implode(", \n",array_unique($_404))));}}}class
+WpLatteFileTemplate
+extends
+NFileTemplate{function
+render(){if($this->getFile()==NULL){throw
+new
+InvalidStateException("Template file name was not specified.");}$cache=new
+NCache($storage=$this->getCacheStorage(),'wplatte');if($storage
+instanceof
+NPhpFileStorage){$storage->hint=str_replace(dirname(dirname($this->getFile())),'',$this->getFile());}$cached=$compiled=$cache->load($this->getFile());if($compiled===NULL){try{$compiled="<?php\n\n// source file: {$this->getFile()}\n\n?>".$this->compile();}catch(NTemplateException$e){$e->setSourceFile($this->getFile());throw$e;}$cache->save($this->getFile(),$compiled,array(NCache::FILES=>$this->getFile(),NCache::CONSTS=>apply_filters('wplatte-cache-constants',array('NFramework::REVISION','WPLATTE_VERSION'))));$cached=$cache->load($this->getFile());}if($cached!==NULL&&$storage
+instanceof
+NPhpFileStorage){NLimitedScope::load($cached['file'],$this->getParameters());}else{NLimitedScope::evaluate($compiled,$this->getParameters());}}}class
+WpLatteLoopIterator
+implements
+Iterator{protected$loop;protected$counter=0;protected$valid=true;function
+__construct($wpQuery=null){global$wp_query;$this->loop=$wpQuery?$wpQuery:$wp_query;}function
+valid(){if($this->loop->have_posts()){$this->valid=true;return
+true;}else{$this->valid=false;return
+false;}}function
+current(){$this->loop->the_post();global$post;return
+WpLatte::createEntity('Post',$post);}function
+rewind(){$this->loop->rewind_posts();$this->counter=$this->valid?1:0;}function
+key(){return$this->counter;}function
+next(){if($this->valid)$this->counter++;}function
+isFirst($width=NULL){return$this->counter===1||($width&&$this->counter!==0&&(($this->counter-1)%$width)===0);}function
+isLast($width=NULL){$hasNext=(($this->counter+1)<=$this->loop->post_count);return!$hasNext||($width&&($this->counter
+%$width)===0);}function
+isOdd(){return$this->counter
+%
+2===1;}function
+isEven(){return$this->counter
+%
+2===0;}function
+getCounter(){return$this->counter;}function
+__call($name,$args){return
+NObjectMixin::call($this,$name,$args);}function&__get($name){return
+NObjectMixin::get($this,$name);}function
+__set($name,$value){return
+NObjectMixin::set($this,$name,$value);}function
+__isset($name){return
+NObjectMixin::has($this,$name);}function
+__unset($name){NObjectMixin::remove($this,$name);}}class
+WpLatteMacros
+extends
+NMacroSet{public$config;static
+function
+install(NLatteCompiler$compiler,$config=null){$me=new
+self($compiler);$me->config=$config;$me->addMacro('_',array($me,'macroTranslate'),array($me,'macroTranslate'));$me->addMacro('getHeader','get_header(%node.word ? %node.word : null)');$me->addMacro('getFooter','get_footer(%node.word ? %node.word : null)');$me->addMacro('getSidebar','get_sidebar(%node.word ? %node.word : null)');$me->addMacro('searchForm','get_search_form()');$me->addMacro('widgetArea','dynamic_sidebar(%node.args);');$me->addMacro('wpHead','wp_head();');$me->addMacro('wpFooter','wp_footer();');$me->addMacro('menu',__CLASS__.'::menu(%node.word, %node.array);');$me->addMacro('wpNavMenu','wp_nav_menu(%node.args);');$me->addMacro('title','wp_title(%node.args)');$me->addMacro('commentForm','comment_form(%node.args);');$me->addMacro('prevCommentsLink','previous_comments_link(__(%node.word, \'wplatte\'))');$me->addMacro('nextCommentsLink','next_comments_link(__(%node.word, \'wplatte\'))');$me->addMacro('prevPostsLink','previous_posts_link(%node.args)');$me->addMacro('nextPostsLink','next_posts_link(%node.args)');$me->addMacro('prevPostLink','previous_post_link("%link", %node.args)');$me->addMacro('nextPostLink','next_post_link("%link", %node.args)');$me->addMacro('pagination','echo '.__CLASS__.'::pagination(%node.array);');$me->addMacro('prevImageLink','previous_image_link(%node.args)');$me->addMacro('nextImageLink','next_image_link(%node.args)');$me->addMacro('breadcrumbs','echo '.__CLASS__.'::breadcrumbs(%node.array)');$me->addMacro('includePart',array($me,'macroIncludePart'));$me->addMacro('loop',array($me,'macroLoop'),array($me,'macroLoopEnd'));$me->addMacro('customQuery',array($me,'macroCustomQuery'));$me->addMacro('customLoop',array($me,'macroCustomLoop'),array($me,'macroLoopEnd'));$me->addMacro('comments','if(is_singular() and (comments_open() or get_comments_number() != \'0\')): comments_template(%node.args); endif;');$me->addMacro('loopComments','',array($me,'macroLoopComments'));$me->addMacro('languageAttributes','language_attributes();');$me->addMacro('doAction','do_action(%node.args)');do_action('wplatte-macros',$compiler,$config);}function
+macroIncludePart(NMacroNode$node,NPhpWriter$writer){$slug=$node->tokenizer->fetchWord();$params=self::prepareIncludePartParams($writer->formatArray());$slug=$writer->formatWord($slug);$name=$writer->formatWord($params['name']);return$writer->write('NCoreMacros::includeTemplate('.__CLASS__.'::getTemplatePart('.$slug.', '.$name.'), '.$params['params'].' + get_defined_vars(), $_l->templates[%var])->render()',$this->getCompiler()->getTemplateId());}function
+macroTranslate(NMacroNode$node,$writer){$fn='__  (';if($node->closing){return$writer->write("echo  %modify({$fn}ob_get_clean(), 'wplatte'))");}elseif($node->isEmpty=($node->args!=='')){$name=$node->tokenizer->fetchWord();$args=$writer->formatArgs();if(!in_array($name,array('_','n','x','nx'))){if($writer->canQuote($node->tokenizer))$name="'$name'";return$writer->write("echo %modify($fn{$name}, 'wplatte'))");}return$writer->write("echo %modify(_{$name}({$args}, 'wplatte'))");}else{return'ob_start()';}}function
+macroLoop(NMacroNode$node,NPhpWriter$writer){$node->tokenizer->fetchWord();$node->openingCode=$writer->write('<?php foreach($iterator = new WpLatteLoopIterator() as %node.word): ?>');}function
+macroCustomLoop(NMacroNode$node,NPhpWriter$writer){$node->tokenizer->fetchWord();$placeholder=$node->tokenizer->fetchWord();$node->tokenizer->fetchWord();return$writer->write('foreach ($iterator = new WpLatteLoopIterator('.$placeholder.') as %node.word):');}function
+macroCustomQuery(NMacroNode$node,NPhpWriter$writer){$node->tokenizer->fetchWord();$placeholder=$node->tokenizer->fetchWord();$args=$writer->formatArray();return$writer->write($placeholder.' = WpLatteMacros::prepareCustomWpQuery('.$args.');');}function
+macroLoopEnd(NMacroNode$node,NPhpWriter$writer){$code='endforeach;';if($node->name=='customLoop')$code.=' wp_reset_postdata();';return$code;}function
+macroLoopComments(NMacroNode$node,NPhpWriter$writer){$node->tokenizer->fetchWord();$tpldId=$this->getCompiler()->getTemplateId().time();$node->openingCode=$writer->write("<?php
+				global \$__wplattetemplate__;
+				\$__wplattetemplate__ = \$template;
+				if(!function_exists('__WpLatteListComments_{$tpldId}')):
+					function __WpLatteListComments_{$tpldId}(\$__comment__, \$args, \$depth){
+						global \$__wplattetemplate__, \$post;
+						\$template = \$__wplattetemplate__; // bypassing \$template object
+						\$GLOBALS['comment'] = \$__comment__;
+						%node.word = WpLatte::createEntity('Comment', \$__comment__, \$post->post_author);
+						%node.word->loopData = array('args' => \$args, 'depth' => \$depth);
+			?>");$node->closingCode="
+			<?php 	} /* __WpLatteListComments_{$tpldId} */
+				endif;
+				wp_list_comments(array('callback' => '__WpLatteListComments_{$tpldId}', 'style' => 'ol'));
+			?>";}static
+function
+menu($location,$args){$defaults=array('theme_location'=>$location);$args=apply_filters('wplatte-menu-args',$location,array_merge($args,$defaults));wp_nav_menu($args);}static
+function
+breadcrumbs($args){if(is_numeric(key($args))){$args=$args[0];}return
+WpLatteBreadcrumbs::breadcrumbs($args);}static
+function
+pagination($args=array()){global$wp_rewrite,$wp_query;$maxNumPages=isset($args['max'])?intval($args['max']):intval($wp_query->max_num_pages);if(1>=$maxNumPages){return;}$current=(get_query_var('paged')?absint(get_query_var('paged')):1);$paginationBase=$wp_rewrite->pagination_base;$defaults=array('base'=>add_query_arg('paged','%#%'),'format'=>'','total'=>$maxNumPages,'current'=>$current,'prev_next'=>false,'show_all'=>true,'end_size'=>1,'mid_size'=>2,'add_fragment'=>'','type'=>'plain','before'=>'','after'=>'','echo'=>true);if($wp_rewrite->using_permalinks()and!is_search()){$pagenumLink=html_entity_decode(get_pagenum_link());$queryArgs=array();$urlParts=explode('?',$pagenumLink);if(isset($urlParts[1])){wp_parse_str($urlParts[1],$queryArgs);}$pagenumLink=remove_query_arg(array_keys($queryArgs),$pagenumLink);$defaults['base']=user_trailingslashit(trailingslashit($pagenumLink)."{$paginationBase}/%#%");if(!empty($queryArgs)){$defaults['base'].='?'.build_query($queryArgs);}}$args=apply_filters('wplatte-pagination-args',$args);$args=wp_parse_args($args,$defaults);if($args['type']=='array'){$args['type']='plain';}$pageLinks=paginate_links($args);$pageLinks=$args['before'].$pageLinks.$args['after'];$pageLinks=apply_filters('wplatte-pagination-output',$pageLinks);return$pageLinks;}static
+function
+prepareCustomWpQuery($args){if(!isset($args[0])){$defaults=array('type'=>'','tax'=>'','cat'=>'','field'=>'id','limit'=>0,'orderby'=>'menu_order','order'=>'ASC','status'=>'publish');$o=(object)array_merge($defaults,$args);$query=array('post_type'=>WpLatteUtils::addPrefix('post',$o->type),'post_status'=>$o->status);if(isset($o->id)){$o->id=$o->id==0?-1:$o->id;$query['p']=$o->id;$query['limit']=1;}else{$query['orderby']=$o->orderby;$query['order']=$o->order;$query['posts_per_page']=$o->limit;}if($o->cat){$query['tax_query']=array(array('taxonomy'=>WpLatteUtils::addPrefix('taxonomy',$o->tax),'field'=>$o->field,'terms'=>$o->cat));}}else{$query=$args[0];if(isset($query['post_type']))$query['post_type']=WpLatteUtils::addPrefix('post',$query['post_type']);if(isset($query['tax_query'])){foreach($query['tax_query']as$i=>$taxQuery){if(isset($taxQuery['taxonomy']))$query['tax_query'][$i]['taxonomy']=WpLatteUtils::addPrefix('taxonomy',$taxQuery['taxonomy']);}}}$query=apply_filters('wplatte-custom-wpquery-args',$query,isset($o)?$o:null);return
+new
+WpLatteWpQuery($query);}static
+function
+getTemplatePart($slug,$name=null){do_action("get_template_part_{$slug}",$slug,$name);$templates=array();if($name){if(!is_singular())$templates[]="{$slug}-{$name}-loop.php";$templates[]="{$slug}-{$name}.php";}if(!is_singular())$templates[]="{$slug}-loop.php";$templates[]="{$slug}.php";$templates=apply_filters("wplatte-get-template-part",$templates,$slug,$name);if(is_string($templates)and
+file_exists($templates)){return$templates;}return
+locate_template($templates,false,false);}private
+static
+function
+prepareIncludePartParams($params){$return=array('name'=>false,'params'=>'array()');$p=explode(',',substr($params,6,-1));if(count($p)>=1
+and!NStrings::contains($p[0],'=>')){$p=is_string($p)?trim($p):$p;if(!empty($p)){$return['name']=!NStrings::startsWith($p[0],'$')?substr($p[0],1,-1):$p[0];unset($p[0]);$return['params']=implode(',',$p);}}elseif(count($p)>=1
+and
+NStrings::contains($p[0],'=>')){if(!empty($p)){$return['name']=false;$return['params']=implode(',',$p);}}$return['params']='array('.$return['params'].')';return$return;}}class
+WpLatteObjectCache{protected
+static$group='wplatte';protected
+static
+function
+cacheKey($args){return
+md5(serialize($args));}static
+function
+save($key,$data,$args=array()){if($args){$args[]=$key;$key=self::cacheKey($args);}return
+wp_cache_add($key,$data,self::$group);}static
+function
+load($key,$args=array()){if($args){$args[]=$key;$key=self::cacheKey($args);}return
+wp_cache_get($key,self::$group);}}class
+WpLatteTemplateHelpers{private
+static$helpers=array('printf'=>'sprintf','shortcode'=>'do_shortcode');private
+static$originalDateFormat;static
+function
+loader($helper){self::$originalDateFormat=get_option('date_format');if(method_exists(__CLASS__,$helper)){return
+callback(__CLASS__,$helper);}elseif(isset(self::$helpers[$helper])){return
+self::$helpers[$helper];}}static
+function
+striptags($string,$allowedTags=''){$string=preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si','',$string);$string=strip_tags($string);return
+trim($string);}static
+function
+stripAllTags($string){$string=preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si','',$string);$string=strip_tags($string);return
+trim($string);}static
+function
+stripTagsExcept($string,$allowedTags=''){$string=preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si','',$string);$string=strip_tags($string,$allowedTags);return
+trim($string);}static
+function
+trimWords($string,$numberOfWords=55,$more=null){if($more===null)$more=__('&hellip;','wplatte');$originalString=$string;if(_x('words','word count: "words" or "characters"?','wplatte')=='characters'and
+preg_match('/^utf\-?8$/i',get_option('blog_charset'))){$string=trim(preg_replace("/[\n\r\t ]+/",' ',$string),' ');preg_match_all('/./u',$string,$wordsArray);$wordsArray=array_slice($wordsArray[0],0,$numberOfWords+1);$sep='';}else{$wordsArray=preg_split("/[\n\r\t ]+/",$string,$numberOfWords+1,PREG_SPLIT_NO_EMPTY);$sep=' ';}if(count($wordsArray)>$numberOfWords){array_pop($wordsArray);$string=implode($sep,$wordsArray);$string=$string.$more;}else{$string=implode($sep,$wordsArray);}return
+apply_filters('wp_trim_words',$string,$numberOfWords,$more,$originalString);}static
+function
+date($rawMySqlDate,$format=''){if(empty($rawMySqlDate)){return'';}if(!$format){$format=self::$originalDateFormat;}return
+mysql2date($format,$rawMySqlDate,false);}static
+function
+dateI18n($rawMySqlDate,$format=''){if(empty($rawMySqlDate)){return'';}if(!$format){$format=self::$originalDateFormat;}return
+mysql2date($format,$rawMySqlDate,true);}}class
+WpLatteTemplateHierarchy{static
+function
+register(){add_filter('date_template',array(__CLASS__,'dateTemplate'),11);add_filter('author_template',array(__CLASS__,'userTemplate'),11);add_filter('taxonomy_template',array(__CLASS__,'taxonomyTemplate'),11);add_filter('archive_template',array(__CLASS__,'archiveTemplate'),11);add_filter('single_template',array(__CLASS__,'singularTemplate'),11);add_filter('page_template',array(__CLASS__,'singularTemplate'),11);add_filter('attachment_template',array(__CLASS__,'singularTemplate'),11);}static
+function
+dateTemplate($template){$templates=array();if(is_time()){if(get_query_var('minute'))$templates[]='minute.php';elseif(get_query_var('hour'))$templates[]='hour.php';$templates[]='time.php';}elseif(is_day())$templates[]='day.php';elseif(get_query_var('w'))$templates[]='week.php';elseif(is_month())$templates[]='month.php';elseif(is_year())$templates[]='year.php';$templates[]='date.php';$templates[]='archive.php';return
+locate_template($templates);}static
+function
+userTemplate($template){$templates=array();$name=get_the_author_meta('user_nicename',get_query_var('author'));$user=new
+WP_User(absint(get_query_var('author')));$templates[]="author-{$name}.php";$templates[]="user-{$name}.php";if(is_array($user->roles)){foreach($user->roles
+as$role)$templates[]="user-role-{$role}.php";}$templates[]='author.php';$templates[]='user.php';$templates[]='archive.php';return
+locate_template($templates);}static
+function
+taxonomyTemplate($template){$term=get_queried_object();$slug=(($term->taxonomy=='post_format')?str_replace('post-format-','',$term->slug):$term->slug);$originalTax=$term->taxonomy;$unprefixedTax=WpLatteUtils::stripPrefix('taxonomy',$term->taxonomy);return
+locate_template(array("taxonomy-{$originalTax}-{$slug}.php","taxonomy-{$originalTax}.php","taxonomy-{$unprefixedTax}-{$slug}.php","taxonomy-{$unprefixedTax}.php",'taxonomy.php','archive.php'));}static
+function
+archiveTemplate($template){$postTypes=array_filter((array)get_query_var('post_type'));$templates=array();if(count($postTypes)==1){$postType=reset($postTypes);$originalType=$postType;$unprefixedType=WpLatteUtils::stripPrefix('post',$postType);$templates[]="archive-{$originalType}.php";$templates[]="archive-{$unprefixedType}.php";}$templates[]='archive.php';return
+locate_template($templates);}static
+function
+singularTemplate($template){$templates=array();$post=get_queried_object();$originalType=$post->post_type;$unprefixedType=WpLatteUtils::stripPrefix('post',$post->post_type);$custom=get_post_meta(get_queried_object_id(),"_wp_{$unprefixedType}_template",true);if(!$custom){$custom=get_post_meta(get_queried_object_id(),"_wp_{$originalType}_template",true);}if($custom){$templates[]=$custom;}if(is_attachment()){$mimeType=explode('/',get_post_mime_type());$templates[]="{$mimeType[0]}-{$mimeType[1]}.php";$templates[]="attachment-{$mimeType[0]}-{$mimeType[1]}.php";$templates[]="attachment-{$mimeType[0]}.php";$templates[]="attachment-{$mimeType[1]}.php";}else{$templates[]="{$originalType}-{$post->post_name}.php";$templates[]="{$originalType}-{$post->ID}.php";if($originalType!=$unprefixedType){$templates[]="{$unprefixedType}-{$post->post_name}.php";$templates[]="{$unprefixedType}-{$post->ID}.php";}}$templates[]="{$originalType}.php";if($originalType!=$unprefixedType){$templates[]="{$unprefixedType}.php";}$templates[]="single-{$originalType}.php";if($originalType!=$unprefixedType){$templates[]="single-{$unprefixedType}.php";}$templates[]='single.php';$templates[]="singular.php";$templates=array_unique($templates);return
+locate_template($templates);}}class
+WpLatteUtils{protected
+static$cptPrefixes=array('post'=>'','taxonomy'=>'');protected
+static$already=false;static
+function
+addPrefix($type,$item){if(empty($item))return$item;if(!self::$already){self::$cptPrefixes=apply_filters('wplatte-cpt-prefixes',self::$cptPrefixes);self::$already=true;}$prefix=self::$cptPrefixes[$type];if($type=='taxonomy'){if(is_array($item)){foreach($item
+as$i=>$tax){if(self::needsPrefix($tax,'taxonomy')){$item[$i]=$prefix.$tax;}}}else{if(self::needsPrefix($item,'taxonomy')){$item=$prefix.$item;}}return$item;}if($type=='post'){if(is_array($item)){foreach($item
+as$i=>$cpt){if(self::needsPrefix($cpt,'post')){$item[$i]=$prefix.$cpt;}}}else{if(self::needsPrefix($item,'post')){$item=$prefix.$item;}}return$item;}}static
+function
+stripPrefix($type,$item){if(!self::$already){self::$cptPrefixes=apply_filters('wplatte-cpt-prefixes',self::$cptPrefixes);self::$already=true;}$prefix=self::$cptPrefixes[$type];$len=strlen($prefix);if($len
+and
+strpos($item,$prefix)!==false)return
+substr($item,$len);else
+return$item;}static
+function
+isCpt($type){$t=array('post'=>true,'page'=>true,'attachment'=>true,'revision'=>true,'nav_menu_item'=>true);return!isset($t[$type]);}static
+function
+isCustomTax($tax){$t=array('category'=>true,'post_tag'=>true,'nav_menu'=>true,'link_category'=>true,'post_format'=>true);return!isset($t[$tax]);}static
+function
+needsPrefix($item,$type){if($type=='taxonomy'){return
+self::isSpecificCustomTax($item);}return
+self::isSpecificCpt($item);}static
+function
+isSpecificCpt($type){$cpts=apply_filters('wplatte-cpts',array());if(!self::$already){self::$cptPrefixes=apply_filters('wplatte-cpt-prefixes',self::$cptPrefixes);self::$already=true;}$prefix=self::$cptPrefixes['post'];return
+isset($cpts["{$prefix}{$type}"]);}static
+function
+isSpecificCustomTax($tax){$taxs=apply_filters('wplatte-taxs',array());if(!self::$already){self::$cptPrefixes=apply_filters('wplatte-cpt-prefixes',self::$cptPrefixes);self::$already=true;}$prefix=self::$cptPrefixes['taxonomy'];return
+isset($taxs["{$prefix}{$tax}"]);}static
+function
+camelize($s){$s=ucwords(strtolower(str_replace(array('-','_'),' ',$s)));return
+str_replace(' ','',$s);}}class
+WpLatteWpQuery
+extends
+WP_Query{function
+__get($name){$fn=self::camel2underscore($name);if(isset($this->$name)){return$this->$name;}elseif(isset($this->$fn)){return$this->$fn;}elseif(method_exists($this,$fn)and
+is_callable(array($this,$fn))){return$this->$fn();}else{trigger_error(sprintf("You maybe did a typo in template. Property or method with name '%s' doesn't exist in class '%s'.",$name,get_class($this)));return
+null;}}private
+static
+function
+camel2underscore($s){$s=preg_replace('#(.)(?=[A-Z])#','$1_',$s);$s=strtolower($s);return$s;}}

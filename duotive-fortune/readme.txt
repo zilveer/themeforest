@@ -1,0 +1,1 @@
+Please view the documentation folder inside the package you downloaded from Themeforest.

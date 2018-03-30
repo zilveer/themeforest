@@ -1,0 +1,52 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{var $faqs = $wp->categories(faqs)}
+	{var $cat = $el->option(category)}
+
+	{customQuery as $query,
+		type => faq,
+		tax => faqs,
+		cat => $cat,
+		limit => $el->option(count),
+		orderby => $el->option(orderby),
+		order => $el->option(order)}
+
+	{if $query->havePosts}
+
+		{if isset($faqs[$cat]) and $el->option(showCategoryData)}
+			<div class="faq-category">
+				{if $faqs[$cat]->title}
+					<h3 class="faq-category-title">{$faqs[$cat]->title}</h3>
+				{/if}
+				{if $faqs[$cat]->description}
+					<div class="entry-content faq-category-description">{!$faqs[$cat]->description}</div>
+				{/if}
+			</div>
+		{/if}
+
+		<div class="elm-faq-container">
+
+		{customLoop from $query as $faq}
+			{var $meta = $faq->meta(faq-data)}
+			<div class="one-faq">
+				<div class="faq-header">
+					<h4 class="faq-question"><span class="faq-q"></span> {$meta->question}</h4>
+				</div>
+                <div class="entry-content faq-answer">{!$meta->answer|shortcode}</div>
+			</div>
+		{/customLoop}
+
+		</div>
+	{else}
+		<div class="elm-faq-container">
+			<div class="alert alert-info">
+				{_x 'FAQ', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+
+</div>
+
+{includePart "ait-theme/elements/faq/javascript"}

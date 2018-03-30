@@ -1,0 +1,1 @@
+<p class="no-release"><?php _e( 'No release yet', 'wolf' ); ?></p>

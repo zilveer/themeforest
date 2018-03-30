@@ -1,0 +1,272 @@
+/* #Filter
+================================================== */
+.filter {
+	position: relative;
+	.flex-display(@display: flex);
+	.align-items(@align: center);
+	.justify-content(@justify: center);
+	z-index: 10;
+}
+	.filter:before {
+		content: "";
+		display: table;
+	}
+	.filter:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	.filter-categories,
+	.filter-extras,
+	.filter-by,
+	.filter-sorting,
+	.filter-categories a {
+		 display: inline-block;
+		// -webkit-box-sizing:	border-box;
+		// box-sizing:			border-box;
+		.box-sizing (border-box);
+	}
+	.filter-by,
+	.filter-sorting,
+	.filter-categories {
+		.flex-display(@display: inline-flex);
+		.align-items(@align: center);
+	}
+	.filter-categories,
+	.filter-extras {
+		.flex-display(@display: flex);
+		.align-items(@align: center);
+		.justify-content(@justify: center);
+		.flex-flow( row wrap);
+	}
+	.filter-categories {
+		position: relative;
+		 & .hasCustomSelect {
+		 	display: none;
+		 	left: 0;
+		 	z-index: 1;
+		 }
+		 #page & {
+		 	& .customSelect {
+		 		position: relative;
+		 		padding: 0;
+		 		background: none;
+		 		display: none !important;
+		 		&:after {
+		 			position: relative;
+		 			right: 0;
+		 			width: 20px;
+		 			height: 20px;
+		 			font: normal normal normal 14px/1 FontAwesome;
+		 			content: "\f0dc";
+		 		}
+	 			& .customSelectInner {
+	 				background: none;
+	 			}
+		 	}
+		 }
+	}
+	
+		.filter .filter-categories a,
+		.filter .filter-extras a {
+			position: relative;
+			text-decoration: none;
+		}
+		
+		//Categorization & sorting -> Style
+		.filter-categories a {
+			white-space: nowrap;
+			&:first-child {
+				margin-left: 0;
+			}
+			.extras-off & {
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+
+			.filter-bg-decoration & {
+				overflow: hidden;
+				backface-visibility: hidden;
+				&:after {
+					position: absolute;
+					z-index: -1;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					content: "";
+					opacity: 0;
+				}
+				&.act:after {
+					opacity: 1;
+				}
+			}
+			.filter-underline-decoration & {
+				&:after {
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					width: 100%;
+					content: "";
+					opacity: 0;
+					-webkit-transition: opacity 0.3s ease;
+				 	transition: opacity 0.3s ease;
+				}
+				&.act:after,
+				&:hover:after {
+					opacity: 1;
+				}
+			}
+		}
+		.filter .filter-extras a .fa {
+			font-size: 14px;
+			line-height: 1;
+		}
+		.filter .filter-extras > div {
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.filter-popup {
+			.filter & {
+				position: absolute;
+				.horizontal-centering;
+				bottom: 100%;
+				padding: 2px 6px;
+				margin-bottom: 8px;
+				background: #000;
+				color: #fff !important;
+				font: normal  10px / 14px Arial, Verdana, sans-serif;
+				letter-spacing: 0.3px;
+				white-space: nowrap;
+				//visibility: hidden;
+				opacity: 0;
+				visibility: hidden;
+				-webkit-transform: translate3d(-50%,10px, 0);
+				    transform: translate3d(-50%,10px, 0);
+				  -webkit-transition: all .25s ease-out;
+				          transition: all .25s ease-out;
+				// -webkit-border-radius: 2px;
+				// border-radius: 2px;
+				.static-border-radius (@radius: 2px);
+				// -webkit-font-smoothing: antialiased;
+				/* CSS Triangle*/
+				&:after {
+					position: absolute;
+					left: 50%;
+					bottom: -5px;
+					margin-left: -5px;
+					width: 0; 
+					height: 0; 
+					border-left: 5px solid transparent;
+					border-right: 5px solid transparent;
+				  
+					border-top: 5px solid #000;
+					content: "";
+				}
+				/* This bridges the gap so you can mouse into the tooltip without it disappearing */
+				&:before {
+				 	position: absolute;
+				 	left: 0;
+					bottom: -20px;
+				  	content: " ";
+				  	display: block;
+				  	width: 100%;
+				  	height: 20px;
+				}  
+
+			}
+		}
+
+
+		/* IE can just show/hide with no transition */
+		.lte8 .filter-popup {
+		  display: none;
+		}
+
+		.lte8 .filter-extras a:hover .filter-popup {
+		  display: block;
+		}
+		.filter-extras > div > a:hover > .filter-popup {
+			visibility: visible;
+			opacity: 1;
+			 pointer-events: auto;
+			  -webkit-transform: translate3d(-50%,0, 0);
+			          transform: translate3d(-50%,0, 0);
+		}
+		
+	
+
+		.filter-switch {
+			position: relative;
+			display: inline-block;
+			width: 19px;
+			height: 7px;
+			margin: 0 10px;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		.filter-switch,
+		//.filter-switch:before,
+		.filter-switch-toggle {
+			// -webkit-border-radius:	8px;
+			// border-radius:			8px;
+			.static-border-radius (@radius: 8px);
+		}
+		//.filter-switch:before,
+		.filter-switch-toggle {
+			position: absolute;
+			top: -1px;
+			left: 0;
+			width: 9px;
+			height: 9px;
+			background-color: #fff;
+			content: "";
+
+			-webkit-transition:	left 300ms ease-out;
+			transition:			left 300ms ease-out;
+		}
+		.filter-switch.right-act .filter-switch-toggle {
+			left: 9px;
+		}
+
+			.pressed .filter-switch-toggle:after,
+			.filter-extras a.pressed:after {
+				-webkit-animation: anim-effect-boris 0.450s ease-out forwards;
+				animation: anim-effect-boris 0.450s ease-out forwards;
+			}
+
+		@-webkit-keyframes anim-effect-boris {
+			0% {
+				-webkit-transform: scale(0);
+				transform: scale(0);
+			}
+			25%, 50% {
+				opacity: 1;
+			}
+			to {
+				opacity: 0;
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+		}
+
+		@keyframes anim-effect-boris {
+			0% {
+				-webkit-transform: scale(0);
+				transform: scale(0);
+			}
+			25%, 50% {
+				opacity: 1;
+			}
+			to {
+				opacity: 0;
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+		}
+
+

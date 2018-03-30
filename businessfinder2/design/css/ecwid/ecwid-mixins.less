@@ -1,0 +1,134 @@
+/*
+ * AIT WordPress Theme
+ *
+ * Copyright (c) 2015, Affinity Information Technology, s.r.o. (http://ait-themes.club)
+ */
+
+/*
+
+DOCUMENTATION:
+
+This file is imported in main style.less ("../design/css/mixins.less")
+Therefore it inherited all of the mixins and variables previously defined
+
+Do not modify this file
+All customization is done in ("../design/css/ecwid/ecwid-mixins-custom.less"),
+of your child theme.
+
+*/
+
+/*** VARIABLES ***/
+
+/* Buttons */
+
+@button-radius     = 2px;
+@button-bg         = @theme-general-decColor;
+@button-bg-hover   = @theme-general-hvrColor;
+@button-bg-active  = @theme-general-hvrColor;
+@button-padding    = 4px 15px;
+@button-border     = none;
+@button-shadow     = none;
+@button-font       = 700;
+
+/* Inputs */
+
+@input-radius      = 0;
+@input-bg          = @theme-general-pageBgColor;
+@input-padding     = 4px 10px;
+@input-border      = 1px solid @theme-general-linesColor;
+@input-shadow      = none;
+@input-font        = 400;
+
+/* Pagination */
+
+@pg-link-size      = 35px;
+
+/* Widgets */
+
+@widget-padding    = 0;
+
+/* Action Colors */
+
+@negative-color    = @ntferrorcolor;
+@positive-color    = @ntfsuccesscolor;
+
+/*** VARIABLES ***/
+
+/*** MIXIN EXTENDERS ***/
+
+.ecwidButton-extend() { /* Edited only in custom styles */ }
+
+/*** MIXIN EXTENDERS ***/
+
+/*** Mixins Customization ***/
+@import "ecwid/ecwid-mixins-custom.less";
+
+/**************************************************/
+/*** && MIXINS                                  ***/
+/**************************************************/
+
+.font(@weight, @style = normal){
+	font-family: @theme-typography-titleFont-family;
+	font-weight: @weight;
+	font-style: @style;
+}
+
+.textContrast(@background) when (lightness(@background) < 65%)	{
+	color: #ffffff;
+}
+
+.translateX(@pos1:0)	{
+	-moz-transform:       translate3d(@pos1, 0, 0);
+	-webkit-transform:    translate3d(@pos1, 0, 0);
+	-ms-transform:        translate3d(@pos1, 0, 0);
+	transform:            translate3d(@pos1, 0, 0);
+}
+
+.ecwidButton(@radius: @button-radius, @background: @button-bg, @padding: @button-padding, @border: @button-border, @box-shadow: @button-shadow, @font-weight: @button-font) {
+
+	display: inline-block; vertical-align: top; text-transform: uppercase; text-decoration: none;
+
+	padding: @padding;
+	background-color: @background;
+	border: @border;
+
+	.border-radius(@radius);
+	.box-shadow(@box-shadow);
+	.textContrast(@background);
+	.transition(all 0.4s);
+	.bodysize;
+	.font(@font-weight) !important;
+
+	.borderbox;
+
+	&:hover,
+	&:focus	{ padding: @padding; background: @button-bg-hover; .textContrast(@button-bg-hover); border: @border; .box-shadow(none); }
+
+	.ecwidButton-extend();
+
+}
+
+.ecwidInput(@radius: @input-radius, @background: @input-bg, @padding: @input-padding, @border: @input-border, @box-shadow: @input-shadow, @font-weight: @input-font) {
+
+	padding: @padding;
+	background-color: @background;
+	color: @theme-general-txtColor;
+	border: @border;
+
+	.border-radius(@radius);
+	.box-shadow(@box-shadow);
+	.textContrast(@background);
+	.bodysize;
+	.fontTXT(@font-weight) !important;
+
+	.borderbox;
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	&:focus 				{ outline: none; }
+	&::-moz-focus-inner 	{ border: 0; }
+}
+
+/* && end of MIXINS */

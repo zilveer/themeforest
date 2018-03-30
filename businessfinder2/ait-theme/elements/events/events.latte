@@ -1,0 +1,251 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+
+	{var $metaQuery = array()}
+	{var $taxQuery = array()}
+	{var $orderBy = array()}
+	{var $lang = AitLangs::getCurrentLanguageCode()}
+	{var $postType = 'ait-event'}
+
+	{if $el->option(category) != 0}
+		{? array_push($taxQuery, array(
+			'taxonomy' 	=> 'ait-events',
+			'field'		=> 'term_id',
+			'terms'		=> $el->option(category)
+		))}
+	{/if}
+
+	{* meta query makes sense only if we order by eventDate *}
+	{* I added NOT EXISTS comparator to include also events
+		which do not have separately saved dateFrom meta *}
+	{if $el->option(orderby) == 'eventDate'}
+		{var $metaQuery = array(
+			'relation' => 'OR',
+			'date_is_not' => array(
+				'key' => 'event_date_from',
+				'compare' => 'NOT EXISTS',
+			),
+			'date_is' => array(
+				'key' => 'event_date_from',
+				'compare' => 'EXISTS',
+				'type' => 'date,'
+			),
+		)}
+		{var $orderBy['date_is'] = $el->option(order)}
+	{else}
+		{var $orderBy[$el->option(orderby)] = $el->option(order)}
+	{/if}
+
+
+	{var $args = array(
+		'lang'           => $lang,
+		'post_type'      => $postType,
+		'posts_per_page' => $el->option(count),
+		'meta_query'     => $metaQuery,
+		'tax_query'      => $taxQuery,
+		'orderby'        => $orderBy,
+	)}
+
+	{var $query = new WpLatteWpQuery($args)}
+
+	{var $dateFormat 		= 'j M Y'}
+	{var $dateFormatFull 	= 'D, j M Y'}
+
+	{if $query->havePosts}
+		{var $layout = $el->option->layout}
+		{var $textRows = $el->option->textRows}
+		{var $addInfo = $el->option->addInfo}
+		{var $imagePresent = ''}
+
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $imageHeight     = $el->option->boxImageHeight}
+			{var $imgWidth = 640}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $imageHeight     = $el->option->listImageHeight}
+			{var $imgWidth = 80}
+		{/if}
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('event-data')}
+
+				{if $item->hasImage  and $imageHeight != 'none'} {var $imagePresent = 'yes'} {else} {var $imagePresent = ''} {/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $imagePresent ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+					<a href="{$item->permalink}">
+
+						<div class="item-thumbnail">
+						{if $imagePresent}
+							{var $ratio = explode(":", $imageHeight)}
+							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+							<div class="item-thumbnail-wrap">
+								<img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}">
+						  </div>
+
+						<div class="item-text-wrap">
+							<div class="item-text">
+								<div class="item-excerpt txtrows-{$textRows}">{!$item->excerpt(200)}</div>
+							</div>
+						</div>
+						{/if}
+
+              			{if $meta->dateFrom != ''}
+							<div class="event-date">
+								<div class="entry-date event-date-from">
+									<time class="date" datetime="{$meta->dateFrom|date:'c'}">
+										{capture $dayFormat}{_x 'j', 'day date format'}{/capture}
+										<span class="link-day">{$meta->dateFrom|dateI18n: $dayFormat}</span>
+										{capture $monthFormat}{_x 'M', 'month date format'}{/capture}
+										<span class="link-month">{$meta->dateFrom|dateI18n: $monthFormat}</span>
+										{capture $yearFormat}{_x 'Y',  'year date format'}{/capture}
+										<span class="link-year">{$meta->dateFrom|dateI18n: $yearFormat}</span>
+									</time>
+								</div>
+							</div>
+						{/if}
+
+						</div>
+
+						<div class="item-data">
+							<div class="item-title"><h3>{!$item->title}</h3></div>
+							{if $addInfo}
+								{if $meta->dateTo != ''}
+								<div class="item-info">
+									<div class="item-duration">
+										<time class="item-from" datetime="{$meta->dateFrom|dateI18n:'c'}">{$meta->dateFrom|dateI18n: $dateFormat}</time>
+										<span class="item-sep">-</span>
+										<time class="item-to" datetime="{$meta->dateTo|dateI18n:'c'}">{$meta->dateTo|dateI18n: $dateFormat}</time>
+									</div>
+								</div>
+								{/if}
+							{/if}
+						</div>
+					</a>
+
+					{if !$imagePresent}
+					<div class="item-text">
+						<div class="item-excerpt txtrows-{$textRows}">{!$item->excerpt(200)}</div>
+					</div>
+					{/if}
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{else}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('event-data')}
+
+				{if $item->hasImage  and $imageHeight != 'none'} {var $imagePresent = 'yes'} {else} {var $imagePresent = ''} {/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $imagePresent ? image-present'	data-id="{$iterator->counter}">
+					<a href="{$item->permalink}">
+
+						<div class="item-thumbnail">
+						{if $meta->dateFrom != ''}
+							<div class="event-date">
+								<div class="entry-date event-date-from">
+									<time class="date" datetime="{$meta->dateFrom|date:'c'}">
+										{capture $dayFormat}{_x 'j', 'day date format'}{/capture}
+										<span class="link-day">{$meta->dateFrom|dateI18n: $dayFormat}</span>
+										{capture $monthFormat}{_x 'M', 'month date format'}{/capture}
+										<span class="link-month">{$meta->dateFrom|dateI18n: $monthFormat}</span>
+										{capture $yearFormat}{_x 'Y',  'year date format'}{/capture}
+										<span class="link-year">{$meta->dateFrom|dateI18n: $yearFormat}</span>
+									</time>
+								</div>
+							</div>
+						{/if}
+
+						{if $imagePresent}
+							{var $ratio = explode(":", $imageHeight)}
+							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+							<div class="item-thumbnail-wrap">
+								<img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}">
+							</div>
+						{/if}
+						</div>
+
+
+						<div class="item-title">
+							<h3>{!$item->title}</h3>
+						</div>
+
+					</a>
+
+					<div class="item-text">
+						<div class="item-excerpt txtrows-{$textRows}">{!$item->excerpt(200)}</div>
+					</div>
+
+					{if $addInfo}
+						{if $meta->dateTo != ''}
+						<div class="item-info">
+							<div class="item-duration">
+								<i class="fa fa-calendar"></i>
+								<time class="item-from" datetime="{$meta->dateFrom|dateI18n:'c'}">{$meta->dateFrom|dateI18n: $dateFormat}</time>
+								<span class="item-sep">-</span>
+								<time class="item-to" datetime="{$meta->dateTo|dateI18n:'c'}">{$meta->dateTo|dateI18n: $dateFormat}</time>
+							</div>
+						</div>
+						{/if}
+					{/if}
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{/if}
+
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Events', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{if $enableCarousel}
+	<div class="carousel-standard-arrows">
+		<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+		<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+	</div>
+	<div class="carousel-bottom-arrows">
+		<div class="carousel-nav-text">{__ 'Navigation'}</div>
+		<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+		<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+	</div>
+{/if}
+
+{includePart "ait-theme/elements/events/javascript", enableCarousel => $enableCarousel}
+
+
+
+

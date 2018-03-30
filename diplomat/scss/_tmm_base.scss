@@ -1,0 +1,242 @@
+@import "global";
+@import "tmm_mixins";
+
+// Must be 100% for off canvas to work
+html, body { height: 100%; }
+
+// Set box-sizing globally to handle padding and border widths
+*,
+*:before,
+*:after {
+	@include box-sizing(border-box);
+}
+
+html,
+body { font-size: $base-font-size; }
+
+// Default body styles
+body {
+	background: $body-bg;
+	color: $body-font-color;
+	padding: 0;
+	margin: 0;
+	font-family: $body-font-family;
+	font-size: $paragraph-font-size;
+	font-weight: $body-font-weight;
+	font-style: $body-font-style;
+	line-height: $base-line-height; // Set to $base-line-height to take on browser default of 150%
+	position: relative;
+}
+
+a:hover { cursor: pointer; }
+
+// Grid Defaults to get images and embeds to work properly
+img { max-width: 100%; height: auto; }
+
+img { -ms-interpolation-mode: bicubic; }
+
+#map_canvas,
+.map_canvas {
+	img,
+	embed,
+	object { max-width: none !important;
+	}
+}
+
+// Miscellaneous useful HTML classes
+.left { float: left !important; }
+.right { float: right !important; }
+
+.clear {
+    clear: both;
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+}
+
+.clearfix:after {
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+    content: ".";
+}
+
+// Hide visually and from screen readers
+.hide {
+	display: none !important;
+	visibility: hidden;
+}
+
+// Hide visually and from screen readers, but maintain layout
+.invisible { visibility: hidden; }
+
+// Font smoothing
+// Antialiased font smoothing works best for light text on a dark background.
+// Apply to single elements instead of globally to body.
+// Note this only applies to webkit-based desktop browsers and Firefox 25 (and later) on the Mac.
+.antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+// Get rid of gap under images by making them display: inline-block; by default
+img {
+	display: inline-block;
+	vertical-align: middle;
+	@include transform-transition(transform .35s ease, opacity .35s ease);
+}
+
+//
+// Global resets for forms
+//
+
+// Make sure textarea takes on height automatically
+textarea { height: auto; min-height: 50px; }
+
+// Make select elements 100% width by default
+select { width: 100%; }
+
+// WP General Classes
+.align-center { text-align: center; }
+.align-left	  { text-align: left; }
+.align-right  { text-align: right; }
+
+.aligncenter  { display: block; margin: 0 auto; }
+.alignleft  { float: left; }
+.alignright { float: right; display: inline; }
+
+img.alignleft  { margin-right: 20px; }
+img.alignright { margin-left: 20px; }
+
+.hide		{ display: none;  }
+.show		{ display: block; }
+.invisible  { visibility: hidden; }
+.affix		{ position: fixed; }
+
+.wp-caption { max-width: 100%; }
+.wp-caption-text { }
+.sticky { }
+.gallery-caption { }
+.bypostauthor { }
+.center { text-align: center; }
+
+.theme-default-bg { background-color: $link-color; }
+
+body:before,
+#wrapper:before {
+	content: '';
+	float: left;
+	height: 100%;
+	margin-top: -999em;
+}
+
+#wrapper {
+	position: relative;
+	z-index: 2;
+	overflow: hidden;
+	min-height: 100%;
+	margin: 0 auto;
+	&:after {
+		content: '';
+		height: 90px;
+		display: block;
+	}
+}
+
+#content {
+	padding-top: rem-calc(40);
+	margin-bottom: rem-calc(90);
+}
+
+.sbr#content #main { float: left; min-height: 300px; }
+.sbl#content #main { float: right; min-height: 300px; }
+
+// Custom Grid
+.custom-grid {
+	.row {
+		margin-left: rem-calc(10);
+		margin-right: rem-calc(10);
+	}
+	.columns,
+	.columns {
+		padding-left: rem-calc(5);
+		padding-right: rem-calc(5);
+	}
+
+	.post { padding-bottom: rem-calc(10); }
+}
+
+// Section
+// ================================================================
+
+.section {
+	position: relative;
+	background-color: transparent;
+	margin: rem-calc(0);
+
+	&.margin-off     { margin: 0; }
+	&.margin-top-off { margin-top: 0; }
+
+	.relative {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+.shortcode-section {
+	position: relative;
+	padding-top: rem-calc(30);
+	padding-bottom: rem-calc(40);
+	@include sloping-border;
+
+	&.padding-off        { padding: 0; }
+	&.padding-top-off    { padding-top: 0; }
+	&.padding-bottom-off { padding-bottom: 0; }
+}
+
+.section-title {
+	color: $section-title-color;
+	text-transform: uppercase;
+	margin-bottom: rem-calc(40);
+	font-size: $section-title-font-size;
+	font-weight: $font-weight-bold;
+	padding: {
+		top: rem-calc(10);
+		bottom: rem-calc(12);
+	}
+	@include border(bottom);
+	@include border(top, 1px, dashed, #ababab);
+}
+
+.section-title-alternate {
+	color: $section-title-color;
+	text-transform: uppercase;
+	font-size: $section-title-font-size;
+	font-weight: $font-weight-bold;
+	margin-bottom: rem-calc(30);
+	padding: 0;
+}
+
+// Theme Dividers
+.divider {
+    position: relative;
+    width: 100%;
+    margin: rem-calc(10 0 30 0);
+}
+
+.divider-1 {
+    @extend .divider;
+    height: 1px;
+    border-top: 1px dashed $divider-color-1;
+}
+
+.divider-2 {
+    @extend .divider;
+    height: 3px;
+    background-image: url('../images/doted-border.png');
+}
+
+.divider-3 {
+    @extend .divider;
+    border-top: 3px solid $divider-color-3;
+}

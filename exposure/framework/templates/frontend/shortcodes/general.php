@@ -1,0 +1,1 @@
+<<?php echo $tag; ?> class="<?php echo implode(' ', $class); ?>"><?php echo thb_text_format($content); ?></<?php echo $tag; ?>>

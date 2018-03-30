@@ -1,0 +1,325 @@
+// ================================================================
+// Header
+// ================================================================
+
+//
+// @variables
+//
+
+// Header Top Colors
+$header-top-bg: #e1e1e1 !default;
+$header-top-bg-2: #3a3a3c !default;
+$header-top-bg-3: #000 !default;
+
+// Header Middle Colors
+$header-middle-bg:   #f5f5f5 !default;
+$header-middle-bg-2: #424246 !default;
+$header-middle-bg-3: #11547b !default;
+
+$box-shadow-color: #d8d8d8 !default;
+
+// Logo Colors
+$logo-first-part-color: #262626 !default;
+$logo-second-part-color: #969696 !default;
+$logo-second-part-color-2: #b4b4b4 !default;
+
+$logo-first-part-color-2: $white !default;
+
+$logo-font-size: rem-calc(34) !default;
+
+$logo-font-family : "Roboto Slab", serif !default;
+
+// Account Colors
+$account-link-color: #818181 !default;
+$account-icon-color: #d5d5d6 !default;
+
+$account-icons:("user" "\e82d")
+               ("lock" "\e9b6");
+
+$full-width: "full-width";
+$grid-width: "grid-width";
+$fixed-menu: ".header-fixed";
+
+
+//
+// Header
+//  
+
+@mixin header(
+    $header-top-bg: $header-top-bg,
+    $header-middle-bg: $header-middle-bg,
+    $header-bottom: $full-width) {
+
+    // Header Top
+    & .header-top {
+        width: 100%;
+        background-color:rgba(0, 0, 0, .3);
+        position: relative;
+
+        .social-icons {
+            float: right;
+            @include social-icons($width: 30, $height: 30, $margin-right: 0, $margin-bottom: 0, $color: #b4b4b4, $font-size: 13);
+        }
+    }
+
+    // Header Middle
+    & .header-middle {
+        background-color: $header-middle-bg;
+
+        .header-middle-entry {
+            text-align: justify;
+            position: relative;
+            vertical-align: middle;
+
+            &:after {
+                display: inline-block;
+                vertical-align: middle;
+                width: 100%;
+                content: "";
+            }
+
+            > * { display: inline-block; }
+
+            .logo {
+                position: relative;
+                padding: rem-calc(20 0);
+
+                h1 {
+                    margin: 0;
+                    a {
+                        color: $logo-first-part-color;
+                        text-transform: uppercase;
+                        font:{
+                            family: $logo-font-family;
+                            size: $logo-font-size;
+                            weight: $font-weight-bold;
+                        }
+
+                        b { color: $logo-second-part-color; }
+                    }
+                }
+            }
+
+            .account {
+                position: relative;
+                vertical-align: bottom;
+                padding-right: rem-calc(165);
+                padding-bottom: rem-calc(14);
+
+                > * {
+                    margin: 0;
+                    display: inline-block;
+                }
+
+                li {
+                    display: inline-block;
+                    list-style: none;
+                    position: relative;
+                    padding: rem-calc(0 20 0 17);
+                    @include transition(color .35s ease);
+
+                    a {
+                        text-decoration: none;
+                        color: $account-link-color;
+                        font: {
+                            family: $font-family-sans-serif;
+                            size: rem-calc(13);
+                        }
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            color: $account-icon-color;
+                            content: "";
+                            font: {
+                                family: $icon-font-family;
+                                size: rem-calc(13);
+                            }
+                        }
+                    }
+
+                    @each $icon in $account-icons {
+                        &.#{nth($icon,1)} a:before {
+                            content: ('#{nth($icon,2)}');
+                        }
+                    }
+
+                    &:hover a { color: $link-color; }
+                }
+            }
+        }
+
+        @if ($header-middle-bg == $header-middle-bg-2) {
+            background-color: $header-middle-bg;
+            .header-middle-entry {
+                .logo h1 a {
+                    color: $logo-first-part-color-2;
+                    b { color: $logo-second-part-color-2; }
+                }
+	            .account li a {
+		            color: $white;
+	            }
+            }
+        } @else if ( $header-middle-bg == $header-middle-bg-3) {
+            background-color: $header-middle-bg;
+            .header-middle-entry {
+                .logo h1 a {
+                    color: $logo-first-part-color-2;
+                    b { color: $logo-second-part-color-2; }
+                }
+	            .account li a {
+		            color: $white;
+	            }
+            }
+        }
+    }
+
+    // Header bottom
+    & .header-bottom {
+
+        @if $header-bottom == $grid-width {
+            background-color: transparent;
+	        @include box-shadow(none);
+
+            .navigation {
+                background-color: $white;
+                position: relative;
+                @include box-shadow(0 1px 3px $box-shadow-color);
+                @include left-shadow($left: 3px);
+                @include right-shadow($right: 3px);
+            }
+        }
+
+        // Fixed header donate button
+        .navigation {
+	        .donate {
+		        z-index: 11;
+		        line-height: 1.2;
+		        position: absolute;
+		        bottom: 0;
+		        right: 0;
+		        margin-bottom: 0;
+		        padding: rem-calc(12 40);
+		        opacity: 0;
+		        visibility: hidden;
+		        -webkit-transform: translateY(-50px);
+		        transform: translateY(-50px);
+		        @include transform-transition(transform .25s ease-in-out, opacity .25s ease, background .35s ease-in);
+
+		        &:hover {
+			        background-color: #b4142b;
+		        }
+	        }
+        }
+    }
+}// @header
+
+.header {
+
+    &.type-1 {
+
+        background-color: $header-middle-bg;
+
+        @include header(
+            $header-top-bg: $header-top-bg,
+            $header-middle-bg: $header-middle-bg,
+            $header-bottom: $full-width);
+
+        .header-top {
+            background-color:rgba(0, 0, 0, .6);
+        }
+    }
+
+    &.type-2 {
+
+        background-color: $header-middle-bg-2;
+
+        @include header(
+            $header-top-bg: $header-top-bg-2,
+            $header-middle-bg: $header-middle-bg-2,
+            $header-bottom: $full-width);
+    }
+
+    &.type-3 {
+
+        background-color: $header-middle-bg-3;
+
+        @include header(
+            $header-top-bg: $header-top-bg-3,
+            $header-middle-bg: $header-middle-bg-3,
+            $header-bottom: $full-width);
+    }
+
+    &.type-4 {
+
+        background-color: $header-middle-bg;
+
+        @include header(
+            $header-top-bg: $header-top-bg,
+            $header-middle-bg: $header-middle-bg,
+            $header-bottom: $grid-width);
+
+        .header-top {
+            background-color:rgba(0, 0, 0, .6);
+        }
+    }
+
+    .donate {
+	    color: $white;
+	    position: absolute;
+	    bottom: 0;
+	    right: 0;
+	    z-index: 12;
+	    padding: rem-calc(14 40);
+	    background-color: $donate-button-bg;
+	    font-weight: 600;
+	    text-transform: uppercase;
+	    border-color: transparent;
+	    @include transition(padding .3s cubic-bezier(1.000, 0.005, 0.000, 1.850));
+
+	    &:hover {
+		    padding: rem-calc(20 40 25);
+	    }
+    }
+
+    &.shrink-bottom-line .header-bottom {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 99999;
+        @include transition(opacity .35s ease);
+
+        .navigation > div > ul > li {
+            &:hover > .sub-menu,
+            &:hover > ul,
+            &.is-mega-menu:hover .mega-menu {
+                @include translateY($sub-menu-position: -17px);
+            }
+
+            > a {
+                padding: rem-calc(8 25);
+                @include transition(padding .35s ease);
+                &:before { top: 14px; }
+            }
+        }
+
+        .navigation {
+            .donate {
+                opacity: 1;
+	            visibility: visible;
+                -webkit-transform: translateY(0);
+                        transform: translateY(0);
+                @include transform-transition(transform .35s ease-in-out .2s, opacity .35s ease .2s, background .35s ease-in);
+            }
+        }
+    }
+}
+
+.logged-in #header.header.shrink-bottom-line .header-bottom {
+    top: 32px;
+}
+
+.not-ie .header-middle-entry { font: 0/0 a; }
+
+@media screen and (min-width: 0\0 ) {
+    .not-ie .header-middle-entry { font-size: 14px; }
+}

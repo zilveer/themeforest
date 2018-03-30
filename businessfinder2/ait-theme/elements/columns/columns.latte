@@ -1,0 +1,30 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="column-grid {$element->gridCssClass}">
+	{? global $post}
+	{foreach $element->columnsCssClasses as $i => $class}
+		<div n:class="column, $class, $element->isNarrowColumn($class) ? column-narrow, $iterator->first ? column-first, $iterator->last ? column-last">
+
+			{foreach $element->getElementsOfColumn($i) as $columnElement}
+				{if $columnElement->id == 'comments'  && !comments_open($post->ID) && get_comments_number($post->ID) == 0}
+
+					<!-- COMMENTS DISABLED -->
+
+				{else}
+					<section n:if="$columnElement->display and $columnElement->sortable" id="{$columnElement->htmlId}-main" class="{$columnElement->htmlClasses}">
+
+						<div class="elm-wrapper {$columnElement->htmlClass}-wrapper">
+
+							{includeElement $columnElement}
+
+						</div><!-- .elm-wrapper -->
+
+					</section>
+				{/if}
+			{/foreach}
+
+		</div>
+
+	{/foreach}
+
+</div>

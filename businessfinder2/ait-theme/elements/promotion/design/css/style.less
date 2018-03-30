@@ -1,0 +1,28 @@
+
+@import "../../../@common/common.less";
+
+.imgCustom() when not (@image = url())		{ background-image: @image; }
+.txtHeight() when not (@textHeight = '')    { min-height: @textHeight; }
+
+.butColor() when (iscolor(@buttonColor))		{ 			  background-color: @buttonColor; 
+												  &:hover 	{ background-color: darken(@buttonColor, 10%); }
+												}
+
+.butTitColor() when (iscolor(@buttonTitColor))	{ color: @buttonTitColor; }
+
+.butDesColor() when (iscolor(@buttonDescColor))	{ .description 			{ color: fade(@buttonDescColor, 70%);} 
+												  &:hover .description 	{ color: @buttonDescColor; }
+												}
+
+#@{el}{
+
+	.promotion-image 				{ .imgCustom(); }
+	.promotion-text .entry-content	{ .txtHeight(); }
+	
+	.promotion-footer .ait-sc-button			{ .butColor(); .butDesColor(); }
+	.promotion-footer .ait-sc-button .title		{ .butTitColor(); }
+}
+
+.@{el}{
+	clear:both;
+}

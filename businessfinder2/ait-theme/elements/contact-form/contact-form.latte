@@ -1,0 +1,323 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+	<form method="post">
+	<div class="form-container">
+		{var $check = rand()}
+		<input type="hidden" name="response-email-check" value="{$check}">
+		<input type="hidden" name="response-email-address" value="{$element->option(address)}">
+		<input type="hidden" name="response-email-sender" value="{$element->option(sender)}">
+		<input type="hidden" name="response-email-subject" value="{$element->option(subject)}">
+		<input type="hidden" name="response-email-content" value="{$element->option(content)}">
+
+
+	{?
+		$inputs = $element->option(inputs);
+		if($inputs == '') $inputs = array();
+	}
+
+	{var $inputCount = count($inputs)+20}
+
+	{var $isDivOpened = false}
+	{var $inputIterator = 0}
+
+	{foreach $inputs as $input}
+		{if $input['size'] == "halftwo"}
+			{if $inputIterator == 0}
+				<div class="halfrow">
+				{var $isDivOpened = true}
+			{/if}
+		{else}
+			{if $inputIterator == 1}
+				</div>
+				{var $isDivOpened = false}
+				{var $inputIterator = 0}
+			{/if}
+		{/if}
+
+		{if $input['type'] == "textarea"}
+			<p class="input-textarea {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<label for="{$htmlId}-{$input['name']}" class="label">{$input['label']}</label>
+					</span>
+					{/if}
+					<span class="input-wrap">
+						<textarea {if $input['required']}class="input-required"{/if} name="{$input['name']}" id="{$htmlId}-{$input['name']}" placeholder="{$input['placeholder']}">{$input['value']}</textarea>
+					</span>
+				</span>
+			</p>
+		{elseif $input['type'] == "select"}
+			{var $values = array()}
+			<p class="input-select {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<label for="{$htmlId}-{$input['name']}" class="label">{$input['label']}</label>
+					</span>
+					{/if}
+					<span class="input-wrap">
+						<select {if $input['required']}class="input-required"{/if} name="{$input['name']}" id="{$htmlId}-{$input['name']}">
+						{foreach explode(";",$input['value']) as $option}
+							{if $el->option('escapeFormInputs')}
+								{var $value = AitUtils::webalize($option)}
+							{else}
+								{var $value = $option}
+							{/if}
+							{if in_array($value, $values)}
+								{var $counts = array_count_values($values)}
+								<option value="{$value}-{$counts[$value]}">{trim($option)}</option>
+								{? array_push($values, $value)}
+							{else}
+								<option value="{$value}">{trim($option)}</option>
+								{? array_push($values, $value)}
+							{/if}
+						{/foreach}
+						</select>
+					</span>
+				</span>
+			</p>
+		{elseif $input['type'] == "checkbox-horizontal"}
+			{var $values = array()}
+			<p class="input-chbox-horizontal {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<span class="label">{$input['label']}</span>
+					</span>
+					{/if}
+					<span class="input-wrap">
+					{foreach explode(";",$input['value']) as $option}
+						{if $el->option('escapeFormInputs')}
+							{var $value = AitUtils::webalize($option)}
+						{else}
+							{var $value = $option}
+						{/if}
+						{if in_array($value, $values)}
+							{var $counts = array_count_values($values)}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="checkbox" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}-{$counts[$value]}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{else}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="checkbox" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{/if}
+					{/foreach}
+					</span>
+				</span>
+			</p>
+		{elseif $input['type'] == "checkbox-vertical"}
+			{var $values = array()}
+			<p class="input-chbox-vertical {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<span class="label">{$input['label']}</span>
+					</span>
+					{/if}
+					<span class="input-wrap">
+					{foreach explode(";",$input['value']) as $option}
+						{if $el->option('escapeFormInputs')}
+							{var $value = AitUtils::webalize($option)}
+						{else}
+							{var $value = $option}
+						{/if}
+						{if in_array($value, $values)}
+							{var $counts = array_count_values($values)}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="checkbox" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}-{$counts[$value]}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{else}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="checkbox" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{/if}
+					{/foreach}
+					</span>
+				</span>
+			</p>
+		{elseif $input['type'] == "radio-horizontal"}
+			{var $values = array()}
+			<p class="input-rbutt-horizontal {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<span class="label">{$input['label']}</span>
+					</span>
+					{/if}
+					<span class="input-wrap">
+					{foreach explode(";",$input['value']) as $option}
+						{if $el->option('escapeFormInputs')}
+							{var $value = AitUtils::webalize($option)}
+						{else}
+							{var $value = $option}
+						{/if}
+						{if in_array($value, $values)}
+							{var $counts = array_count_values($values)}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="radio" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}-{$counts[$value]}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{else}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="radio" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{/if}
+					{/foreach}
+					</span>
+				</span>
+			</p>
+		{elseif $input['type'] == "radio-vertical"}
+			{var $values = array()}
+			<p class="input-rbutt-vertical {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<span class="label">{$input['label']}</span>
+					</span>
+					{/if}
+					<span class="input-wrap">
+					{foreach explode(";",$input['value']) as $option}
+						{if $el->option('escapeFormInputs')}
+							{var $value = AitUtils::webalize($option)}
+						{else}
+							{var $value = $option}
+						{/if}
+						{if in_array($value, $values)}
+							{var $counts = array_count_values($values)}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="radio" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}-{$counts[$value]}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{else}
+							<span>
+								<label>
+								<input {if $input['required']}class="input-required"{/if} type="radio" name="{$input['name']}" id="{$htmlId}-{$input['name']}-{$iterator->getCounter()}" value="{$value}">{trim($option)}
+								{? array_push($values, $value)}
+								</label>
+							</span>
+						{/if}
+					{/foreach}
+					</span>
+				</span>
+			</p>
+		{elseif $input['type'] == "date"}
+			<p class="input-date {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<label for="{$htmlId}-{$input['name']}" class="label">{$input['label']}</label>
+					</span>
+					{/if}
+					<span class="input-wrap">
+						<input class="input-datepicker {if $input['required']}input-required{/if}" type="text" name="{$input['name']}" id="{$htmlId}-{$input['name']}" value="{$input['value']}" placeholder="{$input['placeholder']}">
+					</span>
+				</span>
+			</p>
+		{else}
+			<p class="input-text {if $input['size'] == "halfone"}half-size{elseif $input['size'] == "halftwo"}half-size-fl{else}full-size{/if} {if $input['label'] == ''}nolabel{/if} {if $input['required']}mark-required{/if}" style="z-index: {$inputCount}">
+				<span class="input-row">
+					{if $input['label']}
+					<span class="input-label">
+						<label for="{$htmlId}-{$input['name']}" class="label">{$input['label']}</label>
+					</span>
+					{/if}
+					<span class="input-wrap">
+						<input {if $input['required']}class="input-required"{/if} type="{$input['type']}" name="{$input['name']}" id="{$htmlId}-{$input['name']}" value="{$input['value']}" placeholder="{$input['placeholder']}">
+					</span>
+				</span>
+			</p>
+		{/if}
+
+		{if $input['size'] == "halftwo"}
+			{if $inputIterator == 1}
+				</div>
+				{var $isDivOpened = false}
+				{var $inputIterator = 0}
+			{else}
+				{var $inputIterator = $inputIterator + 1}
+			{/if}
+		{/if}
+
+		{var $inputCount = $inputCount -1}
+	{/foreach}
+
+	{if $isDivOpened}
+	</div>
+	{/if}
+
+	{if $element->option(inputs) != null}
+		{if $element->option(captchaInclude)}
+			<p class="input-captcha full-size {if $element->option(captchaLabel) == ''}nolabel{/if} mark-required">
+				<span class="input-row">
+					{if $element->option(captchaLabel) != ''}
+					<span class="input-label">
+						<label for="{$htmlId}-captcha-check" class="label">{$element->option(captchaLabel)}</label>
+					</span>
+					{/if}
+					<span class="input-wrap">
+						<input class="input-required" type="text" name="captcha-check" id="{$htmlId}-captcha-check" value="" style="display: none">
+						{if $element->option(captchaText) != ''}
+							<span class="captcha-text"><i class="fa fa-refresh fa-spin" style="margin-right: 10px"></i> {$element->option(captchaText)}</span>
+						{/if}
+					</span>
+				</span>
+			</p>
+		{/if}
+		<p class="input-submit full-size">
+			<span class="input-row">
+				<span class="submit-wrap">
+					<input class="input-required" type="submit" name="form-submit" value="{__ 'Submit'}">
+
+					{if $element->option(resetButtonDisplay)}
+					<input class="input-required" type="reset" name="form-reset" value="{__ 'Reset'}">
+					{/if}
+				</span>
+			</span>
+		</p>
+	{/if}
+
+	</div>
+	</form>
+	<div class="loading" style="display: none"><span class="ait-preloader">Loading ...</span></div>
+	<div class="notifications">
+		<div class="ait-sc-notification success" style="display: none">
+			<div class="notify-wrap">
+				<p>{!$element->option(msgsuccess)}</p>
+			</div>
+		</div>
+		<div class="ait-sc-notification attention" style="display: none">
+			<div class="notify-wrap">
+				<p>{!$element->option(msgwarning)}</p>
+			</div>
+		</div>
+		<div class="ait-sc-notification error" style="display: none">
+			<div class="notify-wrap">
+				<p>{!$element->option(msgerror)}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+{includePart "ait-theme/elements/contact-form/javascript"}

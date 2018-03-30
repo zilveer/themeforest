@@ -1,0 +1,261 @@
+// ================================================================
+// TMM Gallery and Albums
+// ================================================================
+
+//
+// @variables
+//
+
+// Icons
+$icon-gallery-back: '\e8d4' !default;
+
+// Gallery
+.filter-container {
+    text-align: center;
+    margin-bottom: rem-calc(50);
+
+    .portfolio-filter {
+        display: inline-block;
+        font-size: 0;
+        margin: 0;
+
+        li {
+            display: inline-block;
+            list-style: none;
+            margin-right: rem-calc(20);
+            padding: 0!important;
+            &:last-child { margin-right: 0; }
+
+            a.filter {
+                text-align: center;
+                padding: rem-calc(15 30);
+                background-color: $pagination-bg;
+                color: $pagination-font-color;
+                font-size: $font-size-default;
+                @include transition(all .35s ease-in-out);
+
+                &:hover,
+                &.active {
+                    background-color: $pagination-hover-bg !important;
+                    color: $white !important;
+                }
+            }
+        }
+    }
+}
+
+.portfolio-items {
+    font-size: 0;
+    margin: rem-calc(0 -22);
+
+    .mix { display: none; }
+
+    article {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        margin-bottom: rem-calc(15);
+        padding: rem-calc(0 22);
+    }
+
+    &.col-2 article { width: 50%; }
+    &.col-3 article { width: 33.3333%; }
+    &.col-4 article { width: 25%; }
+
+    .work-item {
+        overflow: hidden;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+
+        h4.caption {
+            margin-top: rem-calc(15);
+            color: $default-font-color;
+            font-size: $font-size-default;
+            font-weight: $font-weight-normal;
+            @include transition(color .35s ease);
+        }
+
+        &:hover h4.caption { color: $link-color; }
+    }
+}// .portfolio-items
+
+.portfolio-paging,
+.post-load-more {
+    text-align: center;
+}
+
+.load-more {
+    display: inline-block;
+    margin: 0 0 $button-margin-bottom;
+    line-height: 1;
+    outline: none;
+    color: $button-font-color;
+    background-color: $button-bg-color;
+    position: relative;
+    text-decoration: none;
+    text-align: $button-font-align;
+    -webkit-appearance: none;
+    border-radius:0;
+    cursor: pointer;
+    padding: rem-calc(12 28);
+    font-size: rem-calc(15);
+    border: {
+        style: solid;
+        width: 2px;
+        color: transparent;
+    }
+    font: {
+        family: $font-family-sans-serif;
+        weight: $font-weight-normal;
+        size: $button-font-size;
+    }
+    @include transition;
+
+    &:hover,
+    &:focus {
+        background-color: transparent;
+        color: $default-font-color;
+        border:{
+            width: 2px;
+            style: solid;
+            color: #000;
+        }
+    }
+}
+
+.mfp-s-loading .mfp-arrow { display: none; } // magnific popup control buttons
+
+// Albums
+.gallery-back {
+    position: absolute;
+    right: 15px;
+    top: -90px;
+    margin: rem-calc(-20 0 0 -20);
+    display: none;
+    font: 0/0 a;
+    text-align: center;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    @include transition(border-color .2s linear);
+    @include animation(.35s linear normal unrotate);
+
+    &:before {
+        display: block;
+        color: $black;
+        font-size: rem-calc(22);
+        font-family: $icon-font-family;
+        line-height: 35px;
+        text-align: center;
+        content: $icon-gallery-back;
+        @include transition(color .2s linear);
+    }
+
+    &:hover {
+        border-color: $link-color;
+        @include animation(.35s linear normal rotate);
+    }
+}
+
+.tp-grid {
+    text-align: justify;
+    position: relative;
+    list-style-type: none;
+    display: block;
+    z-index: 99;
+
+    li {
+        height: 260px;
+        width: 335px;
+        position: absolute;
+        cursor: pointer;
+        border: 10px solid #fff;
+        @include box-shadow(0 2px 3px rgba(0,0,0,0.2));
+        display: none;
+        overflow: hidden;
+        -webkit-backface-visibility: hidden;
+           -moz-backface-visibility: hidden;
+            -ms-backface-visibility: hidden;
+             -o-backface-visibility: hidden;
+                backface-visibility: hidden;
+
+        #{".no-js"} & {
+            position: relative;
+            display: inline-block;
+        }
+
+        a {
+            display: block;
+            outline: none;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+    }
+
+    .tp-info,
+    .tp-title {
+        padding: rem-calc(10 45 10 10);
+        text-transform: uppercase;
+        font-weight: $font-weight-normal;
+    }
+}
+
+.tp-info,
+.tp-title {
+    position: absolute;
+    background: #fff;
+    line-height: 20px;
+    color: #333;
+    top: 40%;
+    width: 75%;
+    text-align: right;
+    left: -100%;
+	@include box-shadow(
+		(1px 1px 1px rgba(0,0,0,0.1))
+		(5px 0 5px -3px rgba(0,0,0,0.4))
+		(inset 0 0 5px rgba(0,0,0,0.04))
+	);
+}
+
+.touch .tp-info {
+    left: 0px;
+    @include transition(all .3s ease-in-out);
+}
+
+.no-touch .tp-grid li:hover .tp-info {
+    -webkit-transition-delay: 150ms;
+    -moz-transition-delay: 150ms;
+    -o-transition-delay: 150ms;
+    -ms-transition-delay: 150ms;
+    transition-delay: 150ms;
+}
+
+.no-touch .tp-open li:hover .tp-info { left: 0px; }
+
+.tp-title {
+    padding: rem-calc(10 35 10 10);
+    left: 0px;
+
+    span:nth-child(2){
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        height: 100%;
+        line-height: 40px;
+        color: #aaa;
+        padding: rem-calc(0 12);
+        background: #F7F7F7;
+    }
+}

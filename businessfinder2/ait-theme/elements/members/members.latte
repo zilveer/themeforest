@@ -1,0 +1,227 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+
+	{customQuery as $query,
+		type    => member,
+		tax     => members,
+		cat     => $el->option->category,
+		limit   => $el->option->count,
+		orderby => $el->option->orderby,
+		order 	=> $el->option->order
+	}
+
+	{if $query->havePosts}
+		{var $layout = $el->option->layout}
+		{var $showContact = $el->option->showContact}
+		{var $showSocial = $el->option->showSocial}
+		{var $target = $el->option('linksInNewWindow') ? 'target="_blank"'}
+
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $imagePresent = ''}
+			{var $imageHeight     = $el->option->boxImageHeight}
+			{var $imgWidth = 640}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $imageHeight     = $el->option->listImageHeight}
+			{var $imgWidth = 220}
+		{/if}
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(member)}
+
+				{if $item->hasImage and $imageHeight != 'none'} {var $imagePresent = 'yes'} {else} {var $imagePresent = ''} {/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				<div n:class='item, "item{$iterator->counter}",	$enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $imagePresent ? image-present : noimage, $imageHeight == "round" ? image-round, $boxAlign ? $boxAlign'	data-id="{$iterator->counter}">
+
+					<div class="item-thumbnail">
+					{if $imagePresent}
+						{if $imageHeight != 'round'}
+							{var $ratio = explode(":", $imageHeight)}
+							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+						{else}
+							{var $imgWidth = 300}
+							{var $imgHeight = 300}
+						{/if}
+						<div class="item-thumbnail-wrap">
+							<img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}">
+						</div>
+					{/if}
+
+						<div class="item-text-wrap">
+							<div class="item-text">
+							{if $meta->aboutShort}
+								<div class="item-excerpt"><p>{$meta->aboutShort}</p></div>
+							{elseif $meta->about}
+								<div class="item-excerpt"><p>{!$meta->about|striptags|trimWords: 50}</p></div>
+							{/if}
+							</div>
+						</div>
+					</div>
+
+					<div class="item-title">
+						<h3>{$item->title}</h3>
+						{if $meta->position}
+							<div class="member-position">{!$meta->position}</div>
+						{/if}
+					</div>
+
+					{if $showContact or $showSocial}
+					<div class="item-data">
+						{if $showContact}
+							{if is_array($meta->contacts) && count($meta->contacts) > 0}
+								<div class="contact-wrap">
+									<div class="item-contacts">
+										<ul class="member-contacts"><!--
+										{foreach $meta->contacts as $contact}
+											--><li>{if $contact[url]}<a href="{$contact[url]}" {!$target}>{/if}<span>{$contact[title]}</span>{if $contact[url]}</a>{/if}</li><!--
+										{/foreach}
+										--></ul>
+									</div>
+								</div>
+							{/if}
+						{/if}
+
+						{if $showSocial}
+							{if is_array($meta->icons) && count($meta->icons) > 0}
+								<div class="social-wrap">
+									<div class="item-social-icons">
+										<ul class="member-icons"><!--
+										{foreach $meta->icons as $icon}
+											--><li><a href="{$icon[url]}" {!$target} title="{!$icon[title]}"><i class="fa {$icon[icon]}"></i></a></li><!--
+										{/foreach}
+										--></ul>
+									</div>
+								</div>
+							{/if}
+						{/if}
+					</div>
+					{/if}
+
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{else}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(member)}
+
+				{if $item->hasImage and $imageHeight != 'none'} {var $imagePresent = 'yes'} {else} {var $imagePresent = ''} {/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+				<div n:class='item, "item{$iterator->counter}",	$enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $imagePresent ? image-present : noimage, $imageHeight == "round" ? image-round'	data-id="{$iterator->counter}">
+
+				{if $imagePresent}
+					{if $imageHeight != 'round'}
+						{var $ratio = explode(":", $imageHeight)}
+						{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+					{else}
+						{var $imgHeight = $imgWidth}
+					{/if}
+
+					<div class="item-thumbnail">
+						<img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}">
+					</div>
+				{/if}
+
+					<div class="item-title">
+						<h3>{$item->title}</h3>
+						{if $meta->position}
+							<div class="member-position">{!$meta->position}</div>
+						{/if}
+					</div>
+
+					<div class="item-text">
+						{if $meta->aboutShort}
+							<div class="item-excerpt"><p>{$meta->aboutShort}</p></div>
+						{elseif $meta->about}
+							<div class="item-excerpt"><p>{!$meta->about|striptags|trimWords: 50}</p></div>
+						{/if}
+
+						{if $showContact}
+							{if is_array($meta->contacts) && count($meta->contacts) > 0}
+								<div class="item-contacts">
+									<ul class="member-contacts"><!--
+									{foreach $meta->contacts as $contact}
+										--><li>{if $contact[url]}<a href="{$contact[url]}" {!$target}>{/if}<span>{$contact[title]}</span>{if $contact[url]}</a>{/if}</li><!--
+									{/foreach}
+									--></ul>
+								</div>
+							{/if}
+						{/if}
+
+						{if $showSocial}
+							{if $meta->icons}
+								<div class="item-icons">
+									<ul class="member-icons">
+									{foreach $meta->icons as $icon}
+										<li><a href="{$icon['url']}" {!$target}><i class="fa {$icon['icon']}"></i></a></li>
+									{/foreach}
+									</ul>
+								</div>
+							{/if}
+						{/if}
+					</div>
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{/if}
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Members', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/members/javascript", enableCarousel => $enableCarousel}
+
+{if $el->option->layout == 'icon' && $enableCarousel}
+<div class="carousel-icon-arrows">
+	<div class="carousel-arrow-left icon-arrow icon-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right icon-arrow icon-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+
+</div> <!-- icon-container-content -->
+{/if}
+
+
+{if $el->option->layout != 'icon' && $enableCarousel}
+<div class="carousel-standard-arrows">
+	<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+<div class="carousel-bottom-arrows">
+	<div class="carousel-nav-text">{__ 'Navigation'}</div>
+	<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+{/if}

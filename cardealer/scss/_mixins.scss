@@ -1,0 +1,281 @@
+// ================================================================
+// TMM Mixins
+// ================================================================
+
+//
+// @MIXIN
+//
+// Box Shadow
+//
+
+$default-box-shadow:         0 1px 5px 1px #dddddd;
+$default-focus-box-shadow:   0 1px 10px 1px rgba(20, 179, 228, 0.5);
+$footer-box-shadow:          0 1px 5px 1px transparent;
+$footer-focus-box-shadow:    0 1px 10px 1px #306070;
+$required-box-shadow:        0 1px 10px 1px rgba(255, 97, 94, 0.5);
+
+@mixin box-shadow($properties) {
+	-webkit-box-shadow: $properties;
+	-moz-box-shadow: $properties;
+	-ms-box-shadow: $properties;
+	box-shadow: $properties;
+}
+
+//
+// @MIXIN
+//
+// Filters
+//
+// multiple calls like this:
+//.filtered {
+//	@include filter(blur(4px) brightness(1.3) saturate(1.5));
+//}
+
+//
+// @MIXIN
+//
+// Transition
+//
+
+$default-transition: all .35s ease;
+
+@mixin transition($properties...) {
+	@if length($properties) >= 1 {
+		-webkit-transition: $properties;
+		-moz-transition: $properties;
+		-ms-transition: $properties;
+		transition: $properties;
+	} @else {
+		-webkit-transition: $default-transition;
+		-moz-transition: $default-transition;
+		-ms-transition: $default-transition;
+		transition: $default-transition;
+	}
+}
+
+//
+// @MIXIN
+//
+// Transform Transition
+//
+$webkit-prefix: -webkit-;
+$moz-prefix: -moz-;
+
+@mixin transform-transition($properties...) {
+	-webkit-transition: $webkit-prefix + $properties;
+	-moz-transition: $moz-prefix + $properties;
+	-ms-transition: $properties;
+	transition: $properties;
+}
+
+//
+// @MIXIN
+//
+// Box Border
+//
+
+$global-border-width: 3px;
+$global-border-style: solid;
+$global-border-color: #262626;
+
+@mixin border($side:all, $width:$global-border-width, $style:$global-border-style, $color:$global-border-color) {
+	@if ($side == all) {
+		border: $width $style $color;
+	} @else if ($side == none) {
+		border: none;
+	} @else if ($side == top) {
+		border-top: $width $style $color;
+	} @else if ($side == right) {
+		border-right: $width $style $color;
+	} @else if ($side == bottom) {
+		border-bottom: $width $style $color;
+	} @else {
+		border-left: $width $style $color;
+	}
+}
+
+//
+// @MIXIN
+//
+// Border Radius
+//
+
+@mixin border-radius($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	border-radius: $radius;
+}
+
+//
+// @MIXIN
+//
+// Clearfix
+//
+
+@mixin clearfix {
+	clear: both;
+	content: "";
+	display: table;
+}
+
+
+//
+// @MIXIN
+//
+// Vertical Align
+//
+
+@mixin vertical-align {
+	position: relative;
+	top: 50%;
+
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+@mixin align-element($x: 50%, $y: 50%) {
+	position: absolute;
+	left: $x;
+	top: $y;
+	-webkit-transform: translate(-$x, -$y);
+	-ms-transform: translate(-$x, -$y);
+	transform: translate(-$x, -$y);
+}
+
+@mixin transform($params) {
+	-webkit-transform: $params;
+	-moz-transform: $params;
+	-o-transform: $params;
+	-ms-transform: $params;
+	transform: $params;
+}
+
+//
+// @MIXIN
+//
+// Animation
+//
+
+$animation-parameters: 'loading 1s linear infinite forwards';
+
+@mixin animation($animation-parameters...) {
+	-webkit-animation: $animation-parameters;
+	-moz-animation: $animation-parameters;
+	-ms-animation: $animation-parameters;
+	animation: $animation-parameters;
+}
+
+//
+// @MIXIN
+//
+// Animation Delay
+//
+
+$delay: '.1s';
+@mixin animation-delay($delay) {
+	-webkit-animation-delay: $delay;
+	-moz-animation-delay: $delay;
+	-ms-animation-delay: $delay;
+	animation-delay: $delay;
+}
+
+//
+// @MIXIN
+//
+// Widget Box Style
+//
+
+@mixin widget-box-style ($bg-color, $border-width, $border-color, $border-style, $shadow-top, $shadow-left, $shadow-blur, $shadow-color) {
+	background-color: $bg-color;
+	border: {
+		width: $border-width;
+		color: $border-color;
+		style: $border-style;
+	}
+	@include box-shadow($shadow-top, $shadow-left, $shadow-blur, $color: $shadow-color, $inset: false);
+}
+
+
+@mixin translateY($sub-menu-position: $sub-menu-position) {
+	-webkit-transform: translateY($sub-menu-position);
+	transform: translateY($sub-menu-position);
+}
+
+//
+// @MIXIN
+//
+// Long Word Wrap
+//
+
+@mixin word-wrap() {
+	word-break:     break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens:    auto;
+	hyphens:         auto;
+}
+
+//
+// @MIXIN
+//
+// Flexbox Mixins
+//
+
+@mixin flexbox() {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+@mixin flex($values) {
+	-webkit-box-flex: $values;
+	-moz-box-flex:  $values;
+	-webkit-flex:  $values;
+	-ms-flex:  $values;
+	flex:  $values;
+}
+
+@mixin order($val) {
+	-webkit-box-ordinal-group: $val;
+	-moz-box-ordinal-group: $val;
+	-ms-flex-order: $val;
+	-webkit-order: $val;
+	order: $val;
+}
+
+//
+// @MIXIN
+//
+// Keyframes Mixins
+//
+
+@mixin keyframes($animationName) {
+	@-webkit-keyframes #{$animationName} {
+		@content;
+	}
+	@-moz-keyframes #{$animationName} {
+		@content;
+	}
+	@-o-keyframes #{$animationName} {
+		@content;
+	}
+	@keyframes #{$animationName} {
+		@content;
+	}
+}
+
+//
+// @MIXIN
+//
+// Opacity Mixin
+//
+
+@mixin opacity ( $value: 0.5 ) {
+	opacity: $value;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" $value * 100 ")";
+	filter: alpha(opacity= $value * 100 );
+	zoom: 1;
+}

@@ -1,0 +1,37 @@
+{include $element->common('header')}
+
+{var $textWidth		= $el->option->textContainerWidth}
+{var $textPosition 	= $el->option->textContainerPosition}
+{var $promoImage 	= $el->option->image}
+
+{var $buttonTitle 	= $el->option->buttonTitle}
+{var $buttonDesc 	= $el->option->buttonDesc}
+{var $buttonLink 	= $el->option->buttonLink}
+
+<div id="{$htmlId}" class="{$htmlClass} position-{$textPosition}">
+
+	<div n:class='text-container, "column-{$textWidth}"'>
+		<div class="promotion-image">
+			<img src="{imageUrl $promoImage, width => 640, crop => 1}" alt="" class="promo-img">
+		</div>
+		<div class="promotion-text">
+			<div class="entry-content">
+				{!$el->option('text')}
+			</div>
+			
+			{if $buttonLink}
+			<div class="promotion-footer">
+			     <a href="{!$buttonLink}" class="ait-sc-button {if !$buttonDesc}simple{/if}">
+					<span class="promo-button">
+						<span class="title">{if $buttonTitle}{!$buttonTitle}{else}{!__ 'Read more'}{/if}</span>
+						{if $buttonDesc}<span class="description">{!$buttonDesc}</span>{/if}
+					</span>
+				</a>
+			</div>
+			{/if}
+		</div>
+	</div>
+
+</div>
+
+{includePart "ait-theme/elements/promotion/javascript"}

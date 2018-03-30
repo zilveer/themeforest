@@ -1,0 +1,46 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{customQuery as $query,
+		type 		=> ad-space,
+		tax 		=> spaces,
+		cat 		=> $element->option(category),
+		limit 		=> -1,
+		orderby 	=> $element->option(orderby),
+		order 		=> $element->option(order),
+	}
+
+	{if $query->havePosts}
+		<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+
+		<div class="elm-advertisment-spaces-container">
+		{customLoop from $query as $item}
+			{var $meta = $item->meta('space')}
+			<div n:class='advertisment-space, "adSpace-{$iterator->counter}", $iterator->counter == 1 ? active' style="z-index: {$query->post_count - $iterator->counter}; {if $iterator->counter == 1}display: block{/if}">
+				<div class="adSpace-item {if $meta->content == ""}nocontent{/if}">
+				{if $meta->image != ""}
+					<a href="{$meta->link}" {if $element->option(linkTarget)}target="_blank"{/if}>
+						<img src="{$meta->image}" alt="{!$item->title}" class="ads-image"/>
+					</a>
+				{/if}
+				{if $meta->content != ""}
+					<div class="entry-content">
+						{!$meta->content|shortcode}
+					</div>
+				{/if}
+				</div>
+			</div>
+		{/customLoop}
+		</div>
+	{else}
+
+			<div class="alert alert-info">
+				{_x 'Advertisements', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+
+	{/if}
+
+</div>
+
+{includePart "ait-theme/elements/advertising-spaces/javascript"}

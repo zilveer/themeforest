@@ -1,0 +1,45 @@
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	<div class="video-overlay"></div>
+
+	{if $el->option('type') == 'media'}
+		{if $el->option('mediaLink')}
+			{var $clipControls = array()}
+			{if $el->option('mediaAutoplay')}
+				{? array_push($clipControls, 'autoplay')}
+			{/if}
+			{if $el->option('mediaLoop')}
+				{? array_push($clipControls, 'loop')}
+			{/if}
+
+			<video width="750" height="420" {!implode(' ', $clipControls)}>
+				<source src="{$el->option('mediaLink')}" type="video/mp4">
+				{__ 'Your browser does not support the video tag.'}
+			</video>
+		{/if}
+	{elseif $el->option('type') == 'vimeo'}
+		{if $el->option('vimeoLink')}
+			{var $clipAutoplay = intval($el->option('vimeoAutoplay'))}
+			{var $clipLoop = intval($el->option('vimeoLoop'))}
+
+			<iframe id="{!$htmlId}-vimeo-player" src="{videoEmbedUrl $el->option('vimeoLink')}&amp;autoplay={$clipAutoplay}&amp;loop={$clipLoop}" width="750" height="420" data-sound="{$el->option('vimeoVideoSound')}"></iframe>
+		{/if}
+	{else}
+		{if $el->option('youtubeLink')}
+			{var $parse = parse_url($el->option('youtubeLink'))}
+			{!= parse_str($parse['query'], $query)}
+			{var $clipId = $query['v']}
+			{var $clipAutoplay = intval($el->option('youtubeAutoplay'))}
+			{var $clipLoop = intval($el->option('youtubeLoop'))}
+			{var $clipPlaylist = $clipLoop == 1 ? '&amp;playlist='.$query['v'] : ''} {* hack from https://developers.google.com/youtube/player_parameters loop parameter *}
+
+			<!-- <iframe id="{!$htmlId}-youtube-player" src="//www.youtube.com/embed/{$clipId}?autoplay={$clipAutoplay}&amp;controls=0&amp;loop={$clipLoop}&amp;rel=0{$clipPlaylist}" width="750" height="420"></iframe> -->
+			<iframe id="{!$htmlId}-youtube-player" src="{videoEmbedUrl $el->option('youtubeLink')}&amp;autoplay={$clipAutoplay}&amp;controls=0&amp;loop={$clipLoop}&amp;rel=0{$clipPlaylist}" width="750" height="420" data-sound="{$el->option('youtubeVideoSound')}"></iframe>
+		{/if}
+	{/if}
+
+	<div class="video-alternative" style="background-image: url('{!$el->option('alternative')}');"></div>
+</div>
+
+{includePart "ait-theme/elements/header-video/javascript"}

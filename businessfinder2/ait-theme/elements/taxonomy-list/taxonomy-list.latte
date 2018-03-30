@@ -1,0 +1,281 @@
+{include $element->common('header')}
+
+{if $el->option->layout == box}
+	{var $enableCarousel  = $el->option->boxEnableCarousel}
+{elseif $el->option->layout == icon}
+	{var $enableCarousel  = $el->option->iconEnableCarousel}
+{else}
+	{var $enableCarousel  = $el->option->listEnableCarousel}
+{/if}
+
+{if $el->option->layout == 'icon' && $enableCarousel}
+<div class="icon-container-content">
+<div class="icon-container">
+{/if}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+
+	{var $taxonomy = $el->option('taxonomy') == 'aititems' ? 'ait-items' : 'ait-locations'}
+
+	{var $terms = get_terms($taxonomy, array(
+		'orderby' => $el->option(orderby),
+		'order' => $el->option(order),
+		'parent' => 0
+	))}
+
+	{if is_array($terms) && count($terms) > 0}
+		{var $layout = $el->option->layout}
+		{var $imageGrey = $el->option->imageGrey}
+		{var $imageDisplay = $taxonomy == 'ait-locations' ? $el->option->imageDisplay : 'icon'}
+		
+		{if $imageDisplay == 'image1'} 			{var $imageHeight = 'small'} 
+												{var $imageDisplay = 'image'}
+		
+		{elseif $imageDisplay == 'image2'}		{var $imageHeight = 'large'} 
+												{var $imageDisplay = 'image'}
+		
+		{else}									{var $imageHeight = 'small'}
+		{/if}
+		
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $displayDesc	  = $el->option->boxDisplayDesc}
+			{var $textRows 		  = $el->option->boxTextRows}
+			{if $taxonomy == 'ait-locations'}		{var $imgWidth = 160}
+			{else}									{var $imgWidth = 80}{/if}
+		{elseif $layout == icon}
+			{var $enableCarousel  = $el->option->iconEnableCarousel}
+			{var $boxAlign 		  = $el->option->iconAlign}
+			{var $numOfRows       = 1}
+			{var $numOfColumns    = 6}
+			{var $imgWidth = 80}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $displayDesc	  = $el->option->listDisplayDesc}
+			{var $textRows 		  = $el->option->listTextRows}
+			{var $imgWidth = 80}
+		{/if}
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+			{* box layout *}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", "img-type-{$imageDisplay}", "img-size-{$imageHeight}", $imageGrey ? greyscale, $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil(count($terms) / $numOfRows)}">
+			{foreach $terms as $term}
+				{var $title = $term->name}
+				{var $desc = $term->description}
+				{var $link = get_term_link( $term )}
+
+				{var $image = "" }
+				{var $term_meta = get_option($term->taxonomy . "_category_" . $term->term_id)}
+				{if is_array($term_meta)}
+					{if $term->taxonomy == 'ait-items'}
+						{var $image = isset($term_meta['icon']) && $term_meta['icon'] != "" ? $term_meta['icon'] : $options->theme->items->categoryDefaultIcon }
+					{else}
+						{var $image = isset($term_meta['icon']) && $term_meta['icon'] != "" ? $term_meta['icon'] : $options->theme->items->locationDefaultIcon }
+					{/if}
+
+					{if $imageDisplay == 'image'}
+						{var $image = isset($term_meta['taxonomy_image']) ? $term_meta['taxonomy_image'] : "" }
+					{/if}
+				{/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $image != "" ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+					<a href="{$link}">
+						{if $image}
+
+							{if $imageHeight == "small" || $imageHeight == "medium" || $imageHeight == "large"}
+								{var $ratio = explode(":", "1:1")}
+							{else}
+								{var $ratio = explode(":", $imageHeight)}
+							{/if}
+
+							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+
+									<img src="{imageUrl $image, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$title}">
+
+								</div>
+							</div>
+						{/if}
+
+						<div class="item-title"><h3>{!$title}</h3></div>
+
+					</a>
+					{if $displayDesc}
+					<div class="item-text">
+						<div class="item-excerpt txtrows-{$textRows}"><p>{!$desc|striptags|trimWords: 50}</p></div>
+					</div>
+					{/if}
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/foreach}
+			</div>
+		{elseif $layout == icon}
+			{* icon layout *}
+			<div n:class='elm-item-organizer-container, "img-type-{$imageDisplay}", "img-size-{$imageHeight}", $imageGrey ? greyscale, $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil(count($terms) / $numOfRows)}">
+			{foreach $terms as $term}
+				{var $title = $term->name}
+				{var $desc = $term->description}
+				{var $link = get_term_link( $term )}
+
+				{var $image = "" }
+				{var $term_meta = get_option($term->taxonomy . "_category_" . $term->term_id)}
+				{if is_array($term_meta)}
+					{if $term->taxonomy == 'ait-items'}
+						{var $image = isset($term_meta['icon']) && $term_meta['icon'] != "" ? $term_meta['icon'] : $options->theme->items->categoryDefaultIcon }
+					{else}
+						{var $image = isset($term_meta['icon']) && $term_meta['icon'] != "" ? $term_meta['icon'] : $options->theme->items->locationDefaultIcon }
+					{/if}
+
+					{if $imageDisplay == 'image'}
+						{var $image = isset($term_meta['taxonomy_image']) ? $term_meta['taxonomy_image'] : "" }
+					{/if}
+				{/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $image != "" ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+					<a href="{$link}">
+						{if $image}
+
+							{if $imageHeight == "small" || $imageHeight == "medium" || $imageHeight == "large"}
+								{var $ratio = explode(":", "1:1")}
+							{else}
+								{var $ratio = explode(":", $imageHeight)}
+							{/if}
+
+							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+									<img src="{imageUrl $image, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$title}">
+								</div>
+							</div>
+						{/if}
+
+						<div class="item-title"><h3>{!$title}</h3></div>
+					</a>
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/foreach}
+			</div>
+		{else}
+			{* list layout *}
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", "img-type-{$imageDisplay}", "img-size-{$imageHeight}", $imageGrey ? greyscale, $imageHeight == small ? icon-thumb, $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil(count($terms) / $numOfRows)}">
+			{foreach $terms as $term}
+				{var $title = $term->name}
+				{var $desc = $term->description}
+				{var $link = get_term_link( $term )}
+
+				{var $image = "" }
+				{var $term_meta = get_option($term->taxonomy . "_category_" . $term->term_id)}
+				{if is_array($term_meta)}
+					{if $term->taxonomy == 'ait-items'}
+						{var $image = isset($term_meta['icon']) && $term_meta['icon'] != "" ? $term_meta['icon'] : $options->theme->items->categoryDefaultIcon }
+					{else}
+						{var $image = isset($term_meta['icon']) && $term_meta['icon'] != "" ? $term_meta['icon'] : $options->theme->items->locationDefaultIcon }
+					{/if}
+
+					{if $imageDisplay == 'image'}
+						{var $image = isset($term_meta['taxonomy_image']) ? $term_meta['taxonomy_image'] : "" }
+					{/if}
+				{/if}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $image ? image-present'	data-id="{$iterator->counter}">
+					<a href="{$link}">
+						{if $image}
+
+							{if $imageHeight == "small" || $imageHeight == "medium" || $imageHeight == "large"}
+								{var $ratio = explode(":", "1:1")}
+							{else}
+								{var $ratio = explode(":", $imageHeight)}
+							{/if}
+
+							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+
+									<img src="{imageUrl $image, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$title}">
+
+								</div>
+							</div>
+						{/if}
+
+						<div class="item-title"><h3>{!$title}</h3></div>
+					</a>
+
+					{if $displayDesc}
+					<div class="item-text">
+						<div class="item-excerpt txtrows-{$textRows}"><p>{!$desc|striptags|trimWords: 50}</p></div>
+					</div>
+					{/if}
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/foreach}
+			</div>
+		{/if}
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Taxonomy List', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no taxonomies created, add some please.'}
+			</div>
+		</div>
+	{/if}
+
+</div>
+
+{if $el->option->layout == 'icon'}
+</div>	<!-- icon-container -->
+{/if}
+
+{includePart "ait-theme/elements/taxonomy-list/javascript", enableCarousel => $enableCarousel}
+
+{if $el->option->layout == 'icon' && $enableCarousel}
+<div class="carousel-icon-arrows">
+	<div class="carousel-arrow-left icon-arrow icon-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right icon-arrow icon-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+
+</div> <!-- icon-container-content -->
+{/if}
+
+
+{if $el->option->layout != 'icon' && $enableCarousel}
+<div class="carousel-standard-arrows">
+	<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+<div class="carousel-bottom-arrows">
+	<div class="carousel-nav-text">{__ 'Navigation'}</div>
+	<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+{/if}
+
+

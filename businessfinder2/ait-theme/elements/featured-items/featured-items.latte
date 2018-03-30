@@ -1,0 +1,112 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+
+	{customQuery as $query, type => item, tax => items, cat => $el->option(category), limit => -1, orderby => $el->option(orderby), order => $el->option(order)}
+
+	{var $featuredItems = array()}
+
+	{if $query->havePosts}
+		{customLoop from $query as $item}
+			{var $meta = $item->meta('item-featured')}
+			{if $meta->featured}
+				{? array_push($featuredItems, $item)}
+			{/if}
+		{/customLoop}
+	{/if}
+
+
+	{if count($featuredItems) > 0}
+		{*var $addInfo = $el->option->addInfo*}
+		{var $noFeatured = $options->theme->item->noFeatured}
+		{* Unified variables and data *}
+
+		{var $enableCarousel  = $el->option->boxEnableCarousel}
+		{var $boxAlign 		  = $el->option->boxAlign}
+		{var $numOfRows       = $el->option->boxRows}
+		{var $numOfColumns    = $el->option->boxColumns}
+		{var $imageHeight     = $el->option->boxImageHeight}
+		{var $imgWidth = 640}
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-box", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+		{foreach $featuredItems as $item}
+			{if $iterator->counter <= $el->option(count)}
+				{var $meta = $item->meta('item-data')}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+
+					<a href="{$item->permalink}">
+						{var $ratio = explode(":", $imageHeight)}
+						{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+						<div class="item-thumbnail">
+							<div class="item-thumbnail-wrap">
+								{if $item->hasImage}
+								<img src="{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}">
+								{else}
+								<img src="{imageUrl $noFeatured, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}">
+								{/if}
+							</div>
+							<div class="item-text">
+								<div class="item-excerpt"><p>{!$item->excerpt(200)|striptags}</p></div>
+								<div class="item-location"><p>{$meta->map['address']}</p></div>
+							</div>
+						</div>
+						<div class="item-title"><h3>{!$item->title}</h3></div>
+						<div class="item-categories">
+							{foreach $item->categories('ait-items') as $cat}
+								<span class="item-category">{!$cat->title}</span>
+							{/foreach}
+						</div>
+					</a>
+
+					{*if $addInfo*}
+					{*
+					<!--<div class="item-info">
+							<div class="item-date">{$item->date('c')}</div>
+							<div class="item-author">{__ 'posted by '}<a href="{$item->author->postsUrl}">{$item->author}</a></div>
+					</div>-->
+					*}
+
+					<!-- rating goes here
+					{*if $itemRating*}
+					{*item rating*}
+					{*else*}
+					{*Rate now link*}
+					{*/if*}
+					-->
+
+					{*/if*}
+
+					{if defined('AIT_REVIEWS_ENABLED')}
+						{includePart "portal/parts/carousel-reviews-stars", item => $item, showCount => false}
+					{/if}
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/if}
+		{/foreach}
+
+		</div>
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Featured Items', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no featured items.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/featured-items/javascript", enableCarousel => $enableCarousel}
+
+{if defined('AIT_REVIEWS_ENABLED')}
+	{includePart "portal/parts/carousel-reviews-stars-js"}
+{/if}

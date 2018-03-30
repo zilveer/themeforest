@@ -1,0 +1,191 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+
+	{customQuery as $query,
+		type    => service-box,
+		tax     => boxes,
+		cat     => $el->option(category),
+		limit   => $el->option(count),
+		orderby => $el->option->orderby,
+		order 	=> $el->option->order
+	}
+
+	{if $query->havePosts}
+		{var $layout = $el->option->layout}
+		{var $textRows = $el->option->textRows}		
+		{var $addInfo = $el->option->addInfo}
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $imageHeight     = $el->option->boxImageHeight}
+			{var $imgWidth = 640}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $imageHeight     = $el->option->listImageHeight}
+			{var $imgWidth = 220}
+		{/if}
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(box-data)}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				
+				{if $imageHeight != 'font'}
+					{var $hasImage = $meta->image != '' ? true : false}
+				{else}
+					{var $hasImage = $meta->iconFont != '' ? true : false}
+				{/if}
+				
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $hasImage ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+					{if $meta->link != ""}<a href="{$meta->link}">{/if}
+						{if $hasImage}
+							<div class="item-thumbnail {if $imageHeight != 'font' and $meta->hoverImage}thumb-hover{else}thumb-nohover{/if}">
+
+								{if $imageHeight != 'icon' and $imageHeight != 'font'}
+									{var $ratio = explode(":", $imageHeight)}
+									{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+									<div class="item-thumb-img"><img src="{imageUrl $meta->image, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}" /></div>
+									{if $meta->hoverImage}
+									<div class="item-thumb-hvr"><img src="{imageUrl $meta->hoverImage, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}" /></div>
+									{/if}
+								{else}
+									{if $imageHeight == 'font'}
+										<div class="item-thumb-img iconFont"><i class="fa {$meta->iconFont}"></i></div>
+									{else}
+										<div class="item-thumb-img icon"><img src="{$meta->image}" alt="{!$item->title}" /></div>
+										{if $meta->hoverImage}
+										<div class="item-thumb-hvr icon"><img src="{$meta->hoverImage}" alt="{!$item->title}" /></div>
+										{/if}
+									{/if}
+								{/if}
+
+							</div>
+						{/if}
+
+						<div class="item-title">
+							<h3>{!$item->title}</h3>
+							{if $addInfo}{if $meta->subtitle}<p>{!$meta->subtitle}</p>{/if}{/if}
+						</div>
+					{if $meta->link != ""}</a>{/if}
+
+					<div class="item-text">
+						{if $meta->description}<div class="item-excerpt txtrows-{$textRows}"><p>{!$meta->description|striptags|trimWords: 100}</p></div>{/if}
+						{if $addInfo}
+							{if $meta->readMoreText != ''}<span class="readmore"><a href="{$meta->link}">{!$meta->readMoreText}</a></span>{/if}
+						{/if}
+					</div>
+				</div>
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+
+		{else}
+
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta(box-data)}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+				
+				{if $imageHeight != 'font'}
+					{var $hasImage = $meta->image != '' ? true : false}
+				{else}
+					{var $hasImage = $meta->iconFont != '' ? true : false}
+				{/if}
+				
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $hasImage ? image-present'	data-id="{$iterator->counter}">
+					{if $meta->link != ""}<a href="{$meta->link}">{/if}
+						{if $hasImage}
+							<div class="item-thumbnail {if $imageHeight != 'font' and $meta->hoverImage}thumb-hover{else}thumb-nohover{/if}">
+
+								{if $imageHeight != 'icon' and $imageHeight != 'font'}
+									{var $ratio = explode(":", $imageHeight)}
+									{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
+									<div class="item-thumb-img"><img src="{imageUrl $meta->image, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}" /></div>
+									{if $meta->hoverImage}
+									<div class="item-thumb-hvr"><img src="{imageUrl $meta->hoverImage, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$item->title}" /></div>
+									{/if}
+								{else}
+									{if $imageHeight == 'font'}
+										<div class="item-thumb-img iconFont"><i class="fa {$meta->iconFont}"></i></div>
+									{else}
+										<div class="item-thumb-img icon"><img src="{$meta->image}" alt="{!$item->title}" /></div>
+										{if $meta->hoverImage}
+										<div class="item-thumb-hvr icon"><img src="{$meta->hoverImage}" alt="{!$item->title}" /></div>
+										{/if}
+									{/if}
+								{/if}
+
+							</div>
+						{/if}
+
+						<div class="item-title">
+							<h3>{!$item->title}</h3>
+							{if $addInfo}{if $meta->subtitle}<p>{!$meta->subtitle}</p>{/if}{/if}
+						</div>
+					{if $meta->link != ""}</a>{/if}
+
+					<div class="item-text">
+						{if $meta->description}<div class="item-excerpt txtrows-{$textRows}"><p>{!$meta->description|striptags|trimWords: 100}</p></div>{/if}
+						{if $addInfo}
+							{if $meta->readMoreText != ''}<span class="readmore"><a href="{$meta->link}">{!$meta->readMoreText}</a></span>{/if}
+						{/if}
+					</div>
+				</div>
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{/if}
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Services', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/services/javascript", enableCarousel => $enableCarousel}
+
+{if $el->option->layout == 'icon' && $enableCarousel}
+<div class="carousel-icon-arrows">
+	<div class="carousel-arrow-left icon-arrow icon-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right icon-arrow icon-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+
+</div> <!-- icon-container-content -->
+{/if}
+
+
+{if $el->option->layout != 'icon' && $enableCarousel}
+<div class="carousel-standard-arrows">
+	<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+<div class="carousel-bottom-arrows">
+	<div class="carousel-nav-text">{__ 'Navigation'}</div>
+	<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+{/if}

@@ -1,0 +1,24 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	<div id="{$htmlId}-container" class="google-map-container" style="height: {$el->option(height)}px;">
+
+	</div>
+
+	{*
+	{var $centerCode = ($el->option(latitude) == 0 && $el->option(longitude) == 0 && trim($el->option(address)) != "") ? "" : "center:[{$el->option('latitude')}, {$el->option('longitude')}],"}
+	{var $latLngCode = $el->option(latitude) == 0 && $el->option(longitude) == 0 && trim($el->option(address)) != "" ? "" : "latLng:[{$el->option('latitude')}, {$el->option('longitude')}],"}
+	{var $addressCode = $centerCode != "" ? "" : "address: '{$el->option('address')}',"}
+	*}
+
+	{var $address = $el->option('address')}
+	{if isset($address['address']) == false}
+		{* backwards compatibility *}
+		{var $address = AitLangs::getCurrentLocaleText($address)}
+	{/if}
+	{var $scrollWheel = $el->option(mousewheelZoom) ? "true" : "false"}
+
+	{includePart "ait-theme/elements/google-map/javascript"}
+
+</div>

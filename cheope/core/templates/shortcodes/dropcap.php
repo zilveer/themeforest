@@ -1,0 +1,1 @@
+<p class="dropcap"><?php echo do_shortcode($content); ?></p>

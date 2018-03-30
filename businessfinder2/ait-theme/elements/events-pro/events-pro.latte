@@ -1,0 +1,304 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
+	{var $enableCarousel = false}
+
+	{var $selectedOrder   = $el->option(order)}
+	{var $selectedOrderBy = $el->option(orderby)}
+	{var $selectedCount   = $el->option(count)}
+
+
+	{var $postType = 'ait-event-pro'}
+	{var $lang = AitLangs::getCurrentLanguageCode()}
+	{var $orderBy = array()}
+	{var $metaQuery = array('relation' => 'AND')}
+	{var $taxQuery = array()}
+
+	{if $el->option(category) != 0}
+		{? array_push($taxQuery, array(
+			'taxonomy' 	=> 'ait-events-pro',
+			'field'		=> 'term_id',
+			'terms'		=> $el->option(category)
+		))}
+	{/if}
+
+	{if $el->option(location) != 0}
+		{? array_push($taxQuery, array(
+			'taxonomy' 	=> 'ait-locations',
+			'field'		=> 'term_id',
+			'terms'		=> $el->option(location)
+		))}
+	{/if}
+
+
+	{var $metaQuery = array(
+		'dates_clause' => array(
+			'key' => 'ait-event-recurring-date',
+			'value' => date('Y-m-d'),
+			'compare' => '>',
+			'type' => 'date,'
+		)
+	)}
+
+	{if $selectedOrderBy == 'eventDate'}
+		{var $orderBy['dates_clause'] = $selectedOrder}
+	{else}
+		{var $orderBy[$selectedOrderBy] = $selectedOrder}
+	{/if}
+
+
+	{var $args = array(
+		'lang'           => $lang,
+		'post_type'      => $postType,
+		'posts_per_page' => $selectedCount,
+		'meta_query'     => $metaQuery,
+		'tax_query'      => $taxQuery,
+		'orderby'        => $orderBy,
+	)}
+
+
+	{var $query = new WpLatteWpQuery($args)}
+
+
+	{if $query->havePosts}
+		{var $layout = $el->option->layout}
+		{var $textRows = $el->option->textRows}
+		{var $itemCategories = $el->option->itemCategories}
+		{var $itemExcerpt = $el->option->itemExcerpt}
+		{var $itemLocation = $el->option->itemLocation}
+		{var $noFeatured = $eventsProOptions['noFeatured']}
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $imageHeight     = $el->option->boxImageHeight}
+			{var $imgWidth = 768}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $imageHeight     = 640}
+			{var $imgWidth        = 640}
+		{/if}
+
+		{******** INCLUDE RECURRING EVENTS *********}
+		{* we need list of original event entities indexed by their ID *}
+		{var $originalEvents = array()}
+		{var $allEvents = array()}
+
+		{foreach new WpLatteLoopIterator($query) as $event }
+			{var $originalEvents[$event->id] = $event}
+			{var $recurrings = aitGetRecurringDates($event, date('Y-m-d'))}
+			{foreach $recurrings as $recurring}
+				{var $allEvents[] = array(
+					'id' => $event->id,
+					'dateFrom' => $recurring['dateFrom'],
+					'dateTo' => $recurring['dateTo'],
+					'order'	=> strtotime($recurring['dateFrom']),
+					'excerpt' => $event->excerpt(200)
+				)}
+			{/foreach}
+		{/foreach}
+
+		{* if orderby is: *}
+			{* creation date or title - after each original event push its recurring dates *}
+			{* random - we shuffle a set of original and recurring events *}
+			{* event date - after each original event push its recurring dates and then sort them by dateFrom *}
+
+		{if $selectedOrderBy == 'eventDate'}
+			{if $selectedOrder == 'ASC'}
+				{? usort($allEvents, 'aitSortByDateASC')}
+			{else}
+				{? usort($allEvents, 'aitSortByDateDESC')}
+			{/if}
+		{elseif $selectedOrderBy == 'rand'}
+			{? shuffle($allEvents)}
+		{/if}
+
+		{* slice and return only number of events specified in element *}
+		{var $allEvents = array_slice($allEvents, 0, $selectedCount)}
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil(count($allEvents) / $numOfRows)}">
+			{foreach $allEvents as $recurring}
+				{if $iterator->counter <= $el->option(count)}
+					{var $item = $originalEvents[$recurring['id']]}
+					{var $meta = $item->meta('event-pro-data')}
+
+					{*var $dbFeatured = get_post_meta($item->id, '_ait-item_item-featured', true)*}
+					{*var $isFeatured = $dbFeatured != "" ? (bool)$dbFeatured : false *}
+					{var $isFeatured = false }
+
+					{if $enableCarousel and $iterator->isFirst($numOfRows)}
+						<div n:class="item-box, $enableCarousel ? carousel-item">
+					{/if}
+
+					<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, image-present, $boxAlign ? $boxAlign, $isFeatured ? item-featured, defined("AIT_REVIEWS_ENABLED") ? reviews-enabled' data-id="{$iterator->counter}">
+
+						<a href="{$item->permalink}">
+							{var $imgHeight = ($imgWidth / 4) * 3}
+							<div class="item-thumbnail">
+								{if $item->hasImage}
+								<div class="item-thumbnail-wrap" style="background-image: url('{imageUrl $item->imageUrl, width => $imgWidth, height => $imgHeight, crop => 1}')"></div>
+								{else}
+								<div class="item-thumbnail-wrap" style="background-image: url('{imageUrl $noFeatured, width => $imgWidth, height => $imgHeight, crop => 1}')"></div>
+								{/if}
+							</div>
+
+							{var $date_timestamp = $recurring['order']}
+							{var $day = date_i18n('d', $date_timestamp)}
+							{var $month = date_i18n('M', $date_timestamp)}
+							{var $year = date_i18n('Y', $date_timestamp)}
+
+
+							<div class="entry-date">
+								<div class="day">{$day}</div>
+								<span class="month">{$month}</span>
+								<span class="year">{$year}</span>
+							</div>
+
+
+
+							<div class="item-title"><h3>{!$item->title}</h3></div>
+						</a>
+						<div class="item-text{if !$itemExcerpt and !$itemLocation} categories-only{/if}">
+
+							{if $itemExcerpt}
+								<div class="item-excerpt txtrows-{$textRows}"><p>{!$recurring['excerpt']|striptags}</p></div>
+							{/if}
+
+							{if $itemLocation or $itemCategories}
+							<div class="item-taxonomy">
+
+								{if $itemCategories}
+									<div class="item-categories">{includePart "portal/parts/event-taxonomy", itemID => $item->id, taxonomy => 'ait-events-pro', onlyParent => true, count => 3}</div>
+								{/if}
+
+								{if $itemLocation}
+								<div class="item-location">
+									{foreach $item->categories('ait-locations') as $loc}
+										<a href="{$loc->url()}" class="location">{!$loc->title}</a>
+									{/foreach}
+								</div>
+								{/if}
+
+							</div>
+							{/if}
+						</div>
+
+
+					</div>
+
+					{if $enableCarousel and $iterator->isLast($numOfRows)}
+						</div>
+					{/if}
+				{/if}
+			{/foreach}
+			</div>
+
+		{else}
+
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil(count($allEvents) / $numOfRows)}">
+			{foreach $allEvents as $recurring}
+				{var $item = $originalEvents[$recurring['id']]}
+				{var $meta = $item->meta('event-pro-data')}
+
+				{var $isFeatured = false}
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, image-present, $isFeatured ? item-featured, defined("AIT_REVIEWS_ENABLED") ? reviews-enabled'	data-id="{$iterator->counter}">
+
+					<div class="item-content-wrap">
+
+						{var $date_timestamp = $recurring['order']}
+						{var $day = date_i18n('d', $date_timestamp)}
+						{var $month = date_i18n('M', $date_timestamp)}
+						{var $year = date_i18n('Y', $date_timestamp)}
+
+						<div class="item-thumbnail">
+							{var $imageUrl = $item->hasImage != '' ? $item->imageUrl : $noFeatured}
+							<a href="{$item->permalink}">
+								<div class="item-thumbnail-wrap" style="background-image: url('{imageUrl $imageUrl, width => $imgWidth, height => $imageHeight, crop => 1}')"></div>
+
+								<div class="item-date">
+									<span class="entry-date">
+										<span class="day">{$day}</span>
+										<span class="month">{$month}</span>
+										<span class="month">{$year}</span>
+									</span>
+
+								</div>
+							</a>
+
+						</div>
+
+						<div class="item-content">
+
+							<div class="item-title">
+								<a href="{$item->permalink}"><h3>{!$item->title}</h3></a>
+							</div>
+
+							{if $itemExcerpt}
+							<div class="item-text">
+								<div class="item-excerpt txtrows-{$textRows}"><p>{!$recurring['excerpt']|striptags}</p></div>
+							</div>
+							{/if}
+
+							{if $itemCategories or $itemLocation}
+							<div class="item-footer">
+								{if $itemCategories}
+								<div class="item-categories">{includePart "portal/parts/event-taxonomy", itemID => $item->id, taxonomy => 'ait-events-pro', onlyParent => true, count => 3}</div>
+								{/if}
+								{if $itemLocation}
+								<div class="item-location">
+									{foreach $item->categories('ait-locations') as $loc}
+									<a href="{$loc->url()}" class="location">{!$loc->title}</a>
+									{/foreach}
+								</div>
+								{/if}
+							</div>
+							{/if}
+
+						</div>
+
+					</div>
+
+				</div>
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/foreach}
+			</div>
+		{/if}
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Events Pro', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no events created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{if $enableCarousel}
+	<div class="carousel-standard-arrows">
+		<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+		<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+	</div>
+	<div class="carousel-bottom-arrows">
+		<div class="carousel-nav-text">{__ 'Navigation'}</div>
+		<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+		<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+	</div>
+{/if}
+
+{includePart "ait-theme/elements/events-pro/javascript", enableCarousel => $enableCarousel}

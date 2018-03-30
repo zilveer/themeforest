@@ -1,0 +1,149 @@
+{* VARIABLES *}
+
+{var $elmAddress = $el->option('address')}
+
+{var $scrollWheel = $el->option(mousewheelZoom) ? "true" : "false"}
+{var $autoZoomAndFit = $el->option('autoZoomAndFit') ? true : false}
+{var $clustering = $el->option('clusterEnable') ? true : false}
+{var $clustering = $el->option('clusterEnable') ? true : false}
+{var $geoLocation = $el->option('geoLocationEnable') ? true : false}
+{var $radius = false}
+{var $streetview = false}
+
+{var $swheading = ''}
+{var $swpitch = ''}
+{var $swzoom = ''}
+
+{* initialise streetview parameters from element settings *}
+{var $elmStreetview = false}
+{if $elmAddress['streetview']}
+	{var $elmStreetview = true}
+	{var $address 	= array(
+		'latitude'  => $elmAddress['latitude'],
+		'longitude' => $elmAddress['longitude'],
+	)}
+	{var $swheading = $elmAddress['swheading']}
+	{var $swpitch   = $elmAddress['swpitch']}
+	{var $swzoom    = $elmAddress['swzoom']}
+{else}
+	{var $address = $el->option('address')}
+{/if}
+
+{var $defaultPostType = 'item'}
+{if defined('AIT_EVENTS_PRO_ENABLED')}
+	{var $defaultPostType = $el->option('defaultPostType')}
+{/if}
+
+{var $markers = array()}
+
+{var $mapHeight = 'style="height: '. $el->option->height .'px;"'}
+
+
+
+{*********************************}
+{******** IS SEARCH PAGE *********}
+{*********************************}
+{if $wp->isSearch && isset($_REQUEST['a'])}
+	{* enable geolocation because searched with radius *}
+	{if !empty($_REQUEST['rad'])}
+		{var $geoLocation = true}
+		{var $radius = $_REQUEST['rad']}
+	{/if}
+	
+	{? global $wp_query}
+	
+	{if $options->theme->items->sortingEnableMapPagination}
+		{var $markers = aitGetItemsMarkers($wp_query)}
+	{else}
+		{var $itemsArgs = $wp_query->query_vars}
+		{var $itemsArgs['posts_per_page'] = 1}
+		{var $itemsArgs['nopaging'] = true}
+		{var $itemsQuery = new WpLatteWpQuery($itemsArgs)}
+		{var $markers = aitGetItemsMarkers($itemsQuery)}
+	{/if}
+	
+	{if empty($markers)}
+		{var $streetview = $elmStreetview}
+	{/if}
+
+{*********************************}
+{******** IS AIT TAX PAGE ********}
+{*********************************}
+{elseif $wp->isTax('ait-items') or $wp->isTax('ait-locations')}
+    {? global $wp_query}
+	{if $options->theme->items->sortingEnableMapPagination}
+		{var $markers = aitGetItemsMarkers($wp_query)}
+	{else}
+		{var $itemsArgs = $wp_query->query_vars}
+		{var $itemsArgs['posts_per_page'] = 1}
+		{var $itemsArgs['nopaging'] = true}
+		{var $itemsQuery = new WpLatteWpQuery($itemsArgs)}
+		{var $markers = aitGetItemsMarkers($itemsQuery)}
+	{/if}
+
+{*********************************}
+{****** IS SINGLE ITEM PAGE ******}
+{*********************************}
+{elseif $wp->isSingular('ait-item')}
+	{? global $wp_query}
+	{var $autoZoomAndFit = true}
+	{var $itemAddress = $post->meta('item-data')->map}
+	{if $itemAddress['streetview']}
+		{var $streetview = true}
+		{var $address 	= array(
+			'latitude'  => $itemAddress['latitude'],
+			'longitude' => $itemAddress['longitude'],
+		)}
+		{var $swheading = $itemAddress['swheading']}
+		{var $swpitch   = $itemAddress['swpitch']}
+		{var $swzoom    = $itemAddress['swzoom']}
+	{/if}
+
+	{var $markers = aitGetItemsMarkers($wp_query)}
+
+{**************************************}
+{****** IS SINGLE EVENT PRO PAGE ******}
+{**************************************}
+{elseif $wp->isSingular('ait-event-pro')}
+
+{****************************}
+{****** IS NORMAL PAGE ******}
+{****************************}
+{else}
+	{var $itemsArgs = array(
+		'post_type'      => 'ait-item',
+		'posts_per_page' => -1,
+		'lang'           => AitLangs::getCurrentLanguageCode(),
+	)}
+	{var $itemsQuery = new WpLatteWpQuery($itemsArgs)}
+	{var $markers = aitGetItemsMarkers($itemsQuery)}
+{/if}
+
+
+<div id="{$htmlId}" class="{$htmlClass}" {!$mapHeight}>
+
+		{var $mapParams = array(
+			'name'				=> 'headerMap',
+			'enableAutoFit'     => $autoZoomAndFit,
+			'enableClustering'  => $clustering,
+			'typeId'            => $el->option('type'),
+			'clusterRadius'     => intval($el->option('clusterRadius')),
+			'enableGeolocation' => $geoLocation,
+			'radius'			=> $radius,
+			'streetview'		=> $streetview,
+			'address'			=> $address,
+			'swheading'			=> $swheading,
+			'swpitch'			=> $swpitch,
+			'swzoom'			=> $swzoom,
+			'externalInfoWindow'=> false
+		)}
+		{includePart parts/google-map
+			options => aitGetMapOptions($el->options),
+			markers => $markers,
+			params  => $mapParams,
+			containerID => $htmlId,
+		}
+
+
+	{includePart "ait-theme/elements/header-map/javascript"}
+</div>

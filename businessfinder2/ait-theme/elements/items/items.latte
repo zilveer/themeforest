@@ -1,0 +1,172 @@
+{include $el->common('header')}
+
+<div id="{$htmlId}" class="elm-item-organizer{if $el->option->layout == 'box'} organizer-alt layout-box{/if} {$htmlClass}">
+	{var $enableCarousel = false}
+	{var $postType = 'ait-item'}
+	{var $lang = AitLangs::getCurrentLanguageCode()}
+	{var $count = $el->option(count)}
+	{var $orderBy = array()}
+	{var $order = $el->option(order)}
+	{var $featuredFirst = $el->option(featuredFirst)}
+
+	{var $metaQuery = array('relation' => 'AND')}
+
+	{if $el->option(onlyFeatured)}
+		{var $metaQuery['featured_clause'] = array(
+			'key'     => '_ait-item_item-featured',
+			'value'     => true,
+			'compare' => '='
+		)}
+	{elseif $featuredFirst}
+		{var $metaQuery['featured_clause'] = array(
+			'key'     => '_ait-item_item-featured',
+			'compare' => 'EXISTS'
+		)}
+
+		{var $orderBy => array(
+			'featured_clause' => 'DESC',
+	    )}
+	{/if}
+
+
+	{var $taxQuery = array()}
+
+	{if $el->option(category) != 0}
+		{? array_push($taxQuery, array(
+			'taxonomy' 	=> 'ait-items',
+			'field'		=> 'term_id',
+			'terms'		=> $el->option(category)
+		))}
+	{/if}
+
+	{if $el->option(location) != 0}
+		{? array_push($taxQuery, array(
+			'taxonomy' 	=> 'ait-locations',
+			'field'		=> 'term_id',
+			'terms'		=> $el->option(location)
+		))}
+	{/if}
+
+
+	{if defined('AIT_REVIEWS_ENABLED') and $el->option(orderby) == 'none'}
+		{var $metaQuery['rating_clause'] = array(
+			'key'     => 'rating_mean',
+			'compare' => 'EXISTS'
+		)}
+		{var $orderBy['rating_clause'] = $order}
+	{/if}
+
+	{var $orderBy[$el->option(orderby)] = $order}
+
+	{var $args = array(
+		'lang'           => $lang,
+		'post_type'      => $postType,
+		'posts_per_page' => $count,
+		'meta_query'     => $metaQuery,
+		'tax_query'      => $taxQuery,
+		'orderby'        => $orderBy,
+	)}
+
+	{var $query = new WpLatteWpQuery($args)}
+
+
+	{if $query->havePosts}
+		{var $layout = $el->option->layout}
+		{var $textRows = $el->option->textRows}
+		{var $addInfo = $el->option->addInfo}
+		{var $noFeatured = $options->theme->item->noFeatured}
+		{* Unified variables and data *}
+		{if $layout == box}
+			{var $enableCarousel  = $el->option->boxEnableCarousel}
+			{var $boxAlign 		  = $el->option->boxAlign}
+			{var $numOfRows       = $el->option->boxRows}
+			{var $numOfColumns    = $el->option->boxColumns}
+			{var $imageHeight     = $el->option->boxImageHeight}
+			{var $imgWidth = 640}
+		{else}
+			{var $enableCarousel  = $el->option->listEnableCarousel}
+			{var $numOfRows       = $el->option->listRows}
+			{var $numOfColumns    = $el->option->listColumns}
+			{var $imgHeight       = 200}
+			{var $imgWidth        = 150}
+		{/if}
+
+
+		{if $enableCarousel}
+			<div class="loading"><span class="ait-preloader">{!__ 'Loading&hellip;'}</span></div>
+		{/if}
+
+		{if $layout == box}
+
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('item-data')}
+
+				{var $dbFeatured = get_post_meta($item->id, '_ait-item_item-featured', true)}
+				{var $isFeatured = $dbFeatured != "" ? (bool)$dbFeatured : false }
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+					{includePart portal/parts/item-container, layout => $layout, noFeatured => $noFeatured}
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+
+		{else}
+
+			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil($query->postCount / $numOfRows)}">
+			{customLoop from $query as $item}
+				{var $meta = $item->meta('item-data')}
+
+				{var $dbFeatured = get_post_meta($item->id, '_ait-item_item-featured', true)}
+				{var $isFeatured = $dbFeatured != "" ? (bool)$dbFeatured : false }
+
+				{if $enableCarousel and $iterator->isFirst($numOfRows)}
+					<div n:class="item-box, $enableCarousel ? carousel-item">
+				{/if}
+
+					{includePart portal/parts/item-container, layout => $layout, noFeatured => $noFeatured}
+
+				{if $enableCarousel and $iterator->isLast($numOfRows)}
+					</div>
+				{/if}
+			{/customLoop}
+			</div>
+		{/if}
+	{else}
+		<div class="elm-item-organizer-container">
+			<div class="alert alert-info">
+				{_x 'Posts', 'name of element'}&nbsp;&nbsp;|&nbsp;&nbsp;{__ 'Info: There are no items created, add some please.'}
+			</div>
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/items/javascript", enableCarousel => $enableCarousel}
+
+{if $el->option->layout == 'icon' && $enableCarousel}
+<div class="carousel-icon-arrows">
+	<div class="carousel-arrow-left icon-arrow icon-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right icon-arrow icon-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+
+</div> <!-- icon-container-content -->
+{/if}
+
+
+{if $el->option->layout != 'icon' && $enableCarousel}
+<div class="carousel-standard-arrows">
+	<div class="carousel-arrow-left standard-arrow standard-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right standard-arrow standard-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+<div class="carousel-bottom-arrows">
+	<div class="carousel-nav-text">{__ 'Navigation'}</div>
+	<div class="carousel-arrow-left bottom-arrow bottom-arrow-left" style="cursor: pointer;">&lt;</div>
+	<div class="carousel-arrow-right bottom-arrow bottom-arrow-right" style="cursor: pointer;">&gt;</div>
+</div>
+{/if}

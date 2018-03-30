@@ -1,0 +1,427 @@
+// ================================================================
+// Navigation
+// ================================================================
+
+//
+// @variables
+//
+
+$header-navigation-font-family: $font-family-sans-serif !default;
+$header-font-size: rem-calc(15) !default;
+$header-navigation-font-color: $light-black !default;
+$header-bottom-bg-default: #fff !default;
+$header-border-color: #d5d5d6 !default;
+
+$sub-menu-position: 40px;
+$sub-menu-font-color: #969696 !default;
+$sub-menu-hover-bg: #f9f9f9 !default;
+$sub-menu-font-size: rem-calc(15) !default;
+$sub-menu-link-border-color: #eaeaea;
+
+$mega-menu-bg: #fff;
+
+$box-shadow-color: #d8d8d8;
+
+$arrow-right-icon: '\ea0f';
+$arrow-right-color: #c7c7c7;
+$arrow-icon-size: rem-calc(16);
+
+//
+// Mixins
+//
+
+@mixin translateY($sub-menu-position: $sub-menu-position) {
+    -webkit-transform: translateY($sub-menu-position);
+            transform: translateY($sub-menu-position);
+}
+
+//
+// Placeholders
+//
+
+%sub-menu {
+    position: absolute;
+    display: block;
+    background-color: $header-bottom-bg-default;
+    width: 250px;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    margin: 0;
+    @include translateY;
+    @include box-shadow(0 1px 3px rgba(0,0,0, 0.3));
+    @include transform-transition(transform .35s ease, opacity .2s ease, visibility .2s ease);
+}
+
+%sub-link {
+    display: block;
+    color: $sub-menu-font-color;
+    line-height: 1;
+    font-family: $header-navigation-font-family;
+    font-size: $sub-menu-font-size;
+    @include transition(color .4s ease-in-out, background-color .4s ease-in-out);
+
+    img {
+        display: block;
+        margin-top: rem-calc(10);
+    }
+}
+
+// Main Navigation
+.header-bottom {
+    background-color: $header-bottom-bg-default;
+    @include box-shadow(0 1px 3px $box-shadow-color);
+
+    nav {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        z-index: 1000;
+
+        &.navigation {
+	        > .menu,
+	        > .menu-primary-menu-container {
+		        display: inline-block;
+
+		        &:before {
+			        position: absolute;
+			        top: 0;
+			        bottom: 0;
+			        left: 0;
+			        right: 0;
+			        content: '';
+			        z-index: 10;
+			        background-color: $header-bottom-bg-default;
+		        }
+
+		        > ul {
+			        position: relative;
+			        display: inline-block;
+			        vertical-align: middle;
+			        margin: 0;
+			        font-size: 0;
+			        z-index: 10;
+
+			        & > li {
+				        position: relative;
+				        display: inline-block;
+
+				        & > a {
+					        position: relative;
+					        display: block;
+					        margin: 0;
+					        color: $header-navigation-font-color;
+					        background-color: transparent;
+					        text-decoration: none;
+					        text-align: center;
+					        padding: {
+						        top: rem-calc(17);;
+						        bottom: rem-calc(17);
+						        left: rem-calc(25);
+						        right: rem-calc(25);
+					        }
+					        font: {
+						        family: $header-navigation-font-family;
+						        size: $header-font-size;
+					        }
+					        &:before {
+						        position: absolute;
+						        display: block;
+						        top: 22px;
+						        left: -1px;
+						        width: 1px;
+						        height: 15px;
+						        background-color: $header-border-color;
+						        content: "";
+						        @include transition(all .3s linear)
+					        }
+					        @include transition(background-color .4s ease-in-out, color .4s ease-in-out);
+				        }
+
+				        &:hover > a:before { left: 0; }
+
+				        &:hover > a,
+				        &:hover > a:after,
+				        &:hover > a:before,
+				        &:hover + li > a:before {
+					        background-color: $link-color;
+					        color: $header-bottom-bg-default;
+				        }
+
+				        &:first-child > a:before { display: none; }    // for hiding border at the first item
+
+				        > .sub-menu,
+				        > ul {
+					        @extend %sub-menu;
+					        top: 64px;
+					        left: 0;
+
+					        li {
+						        list-style: none;
+						        position: relative;
+						        color: $sub-menu-font-color;
+						        padding: rem-calc(12 25);
+						        cursor: pointer;
+						        border-bottom: {
+							        width: 1px;
+							        style: solid;
+							        color: $sub-menu-link-border-color;
+						        }
+						        @include transition(background-color .35s ease);
+
+						        &:first-child {
+							        @include box-shadow(inset 0px 4px 8px -7px rgba(50, 50, 50, 0.75));
+						        }
+						        &:hover { background-color: $sub-menu-hover-bg; }
+						        &:hover > a { color: $link-color; }
+						        a { @extend %sub-link; }
+
+						        &.menu_item_icon > a {
+							        padding-left: rem-calc(15);
+							        i {
+								        position: absolute;
+								        left: 10px;
+							        }
+						        }
+
+						        > .sub-menu,
+						        > ul {
+							        @extend %sub-menu;
+							        top: 0px;
+							        left: 100%;
+						        }
+
+						        &:hover > .sub-menu,
+						        &:hover > ul {
+							        opacity: 1;
+							        visibility: visible;
+							        @include translateY($sub-menu-position: 0);
+						        }
+					        }
+				        }// .sub-menu
+
+				        .mega-menu {
+					        position: absolute;
+					        top: 64px;
+					        left: 0;
+					        background-color: $mega-menu-bg;
+					        z-index: 99999;
+					        opacity: 0;
+					        visibility: hidden;
+					        @include box-shadow(0 1px 3px rgba(0,0,0, 0.3));
+					        @include translateY;
+					        @include transform-transition(transform .35s ease, opacity .2s ease, visibility .2s ease);
+
+					        &:before {
+						        content: '';
+						        position: absolute;
+						        width: 100%;
+						        height: 5px;
+						        top: 0;
+						        left: 0;
+						        @include box-shadow(inset 0px 4px 8px -7px rgba(50, 50, 50, 0.75));
+					        }
+
+					        ul ul:not(.portfolio-filter) {
+						        list-style: none;
+						        position: relative;
+						        left: 0;
+						        display: block;
+						        width: 250px;
+						        margin: 0;
+					        }
+
+					        > ul {
+						        display: table;
+						        list-style: none;
+						        width: auto;
+						        margin: 0;
+					        }
+
+					        > ul > li {
+						        top: 0;
+						        display: table-cell;
+						        vertical-align: top;
+						        height: auto;
+						        list-style: none;
+
+						        > span {
+							        display: block;
+							        padding: rem-calc(12 25);
+							        text-transform: uppercase;
+							        color: $sub-menu-font-color;
+							        line-height: 1em;
+							        z-index: 2;
+							        opacity: 0;
+							        visibility: hidden;
+							        font-size: rem-calc(14);
+							        @include transition(opacity .35s ease);
+						        }
+					        }
+
+					        > ul li li {
+						        background-color: $mega-menu-bg;
+						        padding: rem-calc(12 25);
+						        cursor: pointer;
+						        border-bottom: 1px solid $sub-menu-link-border-color;
+						        @include transition(background-color .35s ease-in-out);
+
+						        > a {
+							        @extend %sub-link;
+							        &:hover { color: $link-color; }
+						        }
+
+						        &:hover { background-color: $sub-menu-hover-bg; }
+
+						        &.menu_item_icon {
+							        > a {
+								        padding-left: rem-calc(15);
+								        i {
+									        position: absolute;
+									        left: 10px;
+								        }
+							        }
+						        }
+					        }
+                            .portfolio-paging {
+                                .load-more { display: none!important; }
+                            }
+				        }// .mega-menu
+
+				        &.is-mega-menu { position: static; }
+
+				        &:hover > .sub-menu,
+				        &:hover > ul,
+				        &.is-mega-menu:hover .mega-menu,
+				        &.is-mega-menu:hover .mega-menu span {
+					        opacity: 1;
+					        visibility: visible;
+					        @include translateY($sub-menu-position: 0);
+					        @include transform-transition(transform .35s ease, opacity .35s ease, visibility .35s ease);
+				        }
+
+				        .current-menu-item,
+				        .current-menu-parent,
+				        .current-menu-ancestor,
+				        .current_page_item,
+				        .current_page_parent,
+				        .current_page_ancestor {
+					        background-color: $sub-menu-hover-bg!important;
+					        > a { color: $link-color!important; }
+				        }
+			        }// .navigation li
+
+			        > .current-menu-item > a,
+			        > .current-menu-item > a:before,
+			        > .current-menu-parent > a,
+			        > .current-menu-parent > a:before,
+			        > .current-menu-ancestor > a,
+			        > .current-menu-ancestor > a:before,
+			        > .current_page_item > a,
+			        > .current_page_item > a:before,
+			        > .current_page_parent > a,
+			        > .current_page_parent > a:before,
+			        > .current_page_ancestor > a,
+			        > .current_page_ancestor > a:before {
+				        background-color: $link-color;
+				        color: $header-bottom-bg-default;
+				        left: 0;
+			        }
+
+			        > .current-menu-item + li > a:before,
+			        > .current-menu-parent + li > a:before,
+			        > .current-menu-ancestor + li > a:before,
+			        > .current_page_item + li > a:before,
+			        > .current_page_parent + li > a:before,
+			        > .current_page_ancestor + li > a:before{
+				        left: -1px;
+				        background-color: $link-color;
+			        }
+
+			        .arrowright {
+				        position: relative;
+				        &:after {
+					        position: absolute;
+					        top: 6px;
+					        right: 12px;
+					        color: $arrow-right-color;
+					        content: $arrow-right-icon;
+					        font: {
+						        family: $icon-font-family;
+						        size: $arrow-icon-size;
+					        }
+				        }
+			        }
+
+		        }
+	        }
+
+            // Nav Bar Search Form
+            .search-form-nav {
+	            position: absolute;
+	            top: 50%;
+	            right: 0;
+	            z-index: 11;
+	            @include transform(translateY(-50%));
+	            background-color: #F5F5F5;
+	            @include transition(all 400ms);
+
+	            fieldset {
+		            margin: 0;
+		            display: inline-block;
+
+		            input[type=text] {
+			            padding-left: 0 !important;
+			            padding-right: 0 !important;
+			            position: relative;
+			            width: 0;
+			            right: 0;
+			            background-color: transparent;
+						@include box-shadow(none);
+
+			            &:hover,
+			            &:focus {
+				            padding: $form-input-padding !important;
+				            width: 360px;
+			            }
+		            }
+	            }
+
+	            &:hover input[type=text] {
+		            padding: $form-input-padding !important;
+		            width: 360px;
+	            }
+            }
+        }
+    }
+}
+
+// Responsive Button
+.responsive-nav-button {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background-color: $link-color;
+    text-align: center;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 21px;
+    font-family: $icon-font-family;
+    line-height: 40px;
+    vertical-align: middle;
+    &:after {
+        content: $mobile-menu-icon;
+        color: #fff;
+    }
+}
+
+.mobile-advanced { display: none; }
+
+#wrapper #advanced-menu-hide {
+    visibility: hidden;
+    pointer-events: none;
+
+    -webkit-transform: translateX(200%);
+            transform: translateX(200%);
+    @include transform-transition(transform .5s ease .4s)
+}

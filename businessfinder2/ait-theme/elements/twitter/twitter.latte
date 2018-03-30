@@ -1,0 +1,39 @@
+{include $element->common('header')}
+
+<div id="{$htmlId}" class="{$htmlClass}">
+
+	{var $tweets = $el->getTweets()}
+
+	{if ($element->option(elmTitle) != '') or ($element->option(elmDescription) != '')}
+		<div class="elm-mainheader {$element->option(elmHeadAlign)}">
+			{if ($element->option(elmTitle) != '')}<h2 class="elm-maintitle">{!$element->option(elmTitle)}</h2>{/if}
+			{if ($element->option(elmDescription) != '')}<p class="elm-maindesc">{!$element->option(elmDescription)}</p>{/if}
+		</div>
+	{/if}
+
+	{if !empty($tweets)}
+		<ul class="twitter">
+		{foreach $tweets as $tweet}
+			<li class="twitter-item">
+				{if $tweet->user->profile_image_url != ""}
+				<a href="http://twitter.com/{!$tweet->user->screen_name}/"><img src="{!$tweet->user->profile_image_url}" alt="profile" class="twicon"/></a>
+				{/if}
+				<div class="twitter-text">
+					<p class="twitter-message">{!$tweet->text}</p>
+					{if $el->option(displayDate)}
+					<span class="twitter-timestamp">
+						<a href="http://twitter.com/{!$tweet->user->screen_name}/status/{!$tweet->id_str}">{!$tweet->timestamp}</a>
+					</span>
+					{/if}
+				</div>
+			</li>
+		{/foreach}
+		</ul>
+	{else}
+		<div class="alert alert-info">
+			{__ 'Please enter Twitter API keys in settings.'}
+		</div>
+	{/if}
+</div>
+
+{includePart "ait-theme/elements/twitter/javascript"}

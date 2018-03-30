@@ -1,0 +1,28 @@
+
+@import "../../../@common/common.less";
+
+.ltoDarkenColor() when (iscolor(@lightAltColor))		{ background-color: darken(@lightAltColor, 10%); }
+.ltoDarkenBorder() when (iscolor(@lightAltColor))		{ border-bottom-color: darken(@lightAltColor, 10%); }
+.ltoCustomColor() when (iscolor(@lightAltColor))		{ background-color: @lightAltColor; .item-info-wrap { background: lighten(@lightAltColor, 3%); } }
+.customFeaturedColor() when (iscolor(@featuredColor))	{ background: @featuredColor; .item-info-wrap { background: lighten(@featuredColor, 3%); } }
+.customBoxBorderColor() when (iscolor(@itemBoxBorder))	{ background: @itemBoxBorder; }
+.padFix() when (isnumber(@padding-bottom))				{ padding-bottom: 8px; }
+
+#@{el}{
+
+	.layout-box 									{ .padFix(); .customBoxBorderColor(); }
+	.layout-box .item .item-box-content-wrap		{ .ltoCustomColor(); }
+
+	.layout-list .item 								{ .ltoCustomColor(); }
+	.layout-list .item.item-featured				{ .customFeaturedColor(); }
+	.layout-list .item .item-title .subtitle		{ .titCustomColor(); }
+	.layout-list .item .item-text					{ .txtCustomColor(); }
+	.layout-list .item .item-location p				{ &, &:before { .txtCustomColor(); } }
+	.layout-list .item .icon-label i				{ .txtCustomColor(); }
+
+}
+
+
+.@{el}{
+	clear:both;
+}

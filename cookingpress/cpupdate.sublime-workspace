@@ -1,0 +1,1695 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bac",
+				"background-position"
+			],
+			[
+				"cur",
+				"curCSS"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"re",
+				"relative"
+			],
+			[
+				"r",
+				"right"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"cate",
+				"category"
+			],
+			[
+				"ligt",
+				"lightbox"
+			],
+			[
+				"ptsc_o",
+				"ptsc_orderby"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"p",
+				"pointer"
+			],
+			[
+				"royal",
+				"royalSlider"
+			],
+			[
+				"i",
+				"inherit"
+			],
+			[
+				"in",
+				"inline"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"fami",
+				"font-family"
+			],
+			[
+				"has_p",
+				"has_post_thumbnail"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"the_post",
+				"the_post_thumbnail"
+			],
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"ver",
+				"vertical-align"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "<?php\n/**\n * CP Tag Converter - CookingPress tags converter plugin\n *\n *\n * @package   CpTagConverter\n * @author    purethemes\n * @license   ThemeForest\n * @copyright 2014 Purethemes.net\n *\n * @wordpress-plugin\n * Plugin Name:       CP Tag Converter - CookingPress tags converter plugin\n * Plugin URI:        @TODO\n * Description:       Plugin for converting tags to ingredients\n * Version:           1.0\n * Author:            purethemes.net\n * Author URI:        http://purethemes.net\n * Text Domain:       foodiepresscp\n * License:           GPL-2.0+\n * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt\n * Domain Path:       /languages\n  */\n\n// If this file is called directly, abort.\nif ( ! defined( 'WPINC' ) ) {\n	die;\n}\n\n/*----------------------------------------------------------------------------*\n * Public-Facing Functionality\n *----------------------------------------------------------------------------*/\n\n/**\n * FoodiePress.\n *\n * @package   FoodiePress\n * @author    purethemes\n * @license   ThemeForest\n * @copyright 2014 Purethemes.net\n */\n\n\nclass FoodiePressTransferTags {\n    /**\n     * Instance of this class.\n     *\n     * @since    1.0.0\n     *\n     * @var      object\n     */\n    /*    protected static $instance = null;*/\n    /**\n     * Slug of the plugin screen.\n     *\n     * @since    1.0.0\n     *\n     * @var      string\n     */\n    protected $plugin_screen_hook_suffix = null;\n\n    public function __construct() {\n        add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );\n        add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );\n        add_action( 'wp_ajax_converttags', array( $this, 'converttags_callback' ) );\n        add_action( 'wp_ajax_nopriv_converttags', array( $this, 'converttags_callback' ) );\n    }\n\n    public static function get_instance() {\n\n        /*\n         * @TODO :\n         *\n         * - Uncomment following lines if the admin class should only be available for super admins\n         */\n        if( ! is_super_admin() ) {\n            return;\n        }\n\n        // If the single instance hasn't been set, set it now.\n        if ( null == self::$instance ) {\n            self::$instance = new self;\n        }\n\n        return self::$instance;\n    }\n\n\n    /**\n     * Register the administration menu for this plugin into the WordPress Dashboard menu.\n     *\n     * @since    1.0.0\n     */\n    public function add_plugin_admin_menu() {\n\n        /*\n         * Add a settings page for this plugin to the Settings menu.\n         *\n         * NOTE:  Alternative menu locations are available via WordPress administration menu functions.\n         *\n         *        Administration Menus: http://codex.wordpress.org/Administration_Menus\n         *\n         * @TODO:\n         *\n         * - Change 'Page Title' to the title of your plugin admin page\n         * - Change 'Menu Text' to the text for menu item for the plugin settings page\n         * - Change 'manage_options' to the capability you see fit\n         *   For reference: http://codex.wordpress.org/Roles_and_Capabilities\n         */\n\n\n        $this->plugin_screen_hook_suffix = add_options_page(\n            __( 'Tags Converter', 'tags-converter' ),\n            __( 'Tags Converter', 'tags-converter' ),\n            'manage_options',\n            'tags-converter',\n            array( $this, 'display_plugin_admin_page' )\n            );\n\n    }\n\n    function admin_enqueues( $hook_suffix ) {\n        if ( $hook_suffix != $this->plugin_screen_hook_suffix )\n            return;\n        wp_enqueue_script( 'jquery-ui-progressbar');\n        wp_enqueue_style( 'jquery-ui', plugins_url( 'assets/jquery-ui.min.min.css', __FILE__ ), array() );\n        wp_enqueue_style( 'jquery-ui-structure', plugins_url( 'assets/jquery-ui.structure.min.css', __FILE__ ), array() );\n        wp_enqueue_style( 'jquery-ui-theme', plugins_url( 'assets/jquery-ui.theme.min.css', __FILE__ ), array() );\n    }\n\n    // Process a single image ID (this is an AJAX handler)\n    public function converttags_callback() {\n\n        $id = (int) $_REQUEST['id'];\n        ob_clean();\n        // this is required to return a proper result\n        $ingredients = array();\n        $posttags = get_the_tags($id);\n        if ($posttags) {\n          foreach($posttags as $tag) {\n            $ingredients[] = $tag->name;\n        }\n        //print_r($ingredients);\n        $term_ingredients_set = wp_set_object_terms($id, $ingredients, 'ingredients');\n        wp_set_post_terms($id, '', 'post_tag');\n        \n        if ( is_wp_error( $result ) ) {\n           $error_string = $result->get_error_message();\n           echo '<div id=\"message\" class=\"error\"><p>' . $error_string . '</p></div>';\n        }\n\n        /*  if ( is_wp_error( $term_ingredients_set ) ) {\n          die( json_encode( array( 'error' => 'dupa')));\n        } else {\n             die( json_encode( array( 'success' => 'sukces')));\n        }*/\n\n       die();\n       }\n    }\n\n\n    /**\n         * Render the settings page for this plugin.\n         *\n         * @since    1.0.0\n         */\n    public function display_plugin_admin_page() {\n        global $wpdb; ?>\n        <div class=\"wrap\">\n            <h2>Tags converter</h2>\n            <?php\n            if (!empty($_POST['convert-tags'])) {\n                check_admin_referer( 'convert-tags' );\n                $args = array(\n                    'post_type' => 'post',\n                    'posts_per_page' => '-1',\n                    );\n                $postsids = array();\n                $post_query = new WP_Query($args);\n                if($post_query->have_posts() ) {\n                    while($post_query->have_posts() ) {\n                        $post_query->the_post();\n                        $post_id = get_the_ID();\n                        $postsids[] = $post_id;\n                    }\n                    $postsids = implode( ',', $postsids );\n                    $count = count($postsids);\n                }\n                ?>\n\n                <script type=\"text/javascript\">\n    // <![CDATA[\n    jQuery(document).ready(function($){\n        var i;\n        var pp_posts = [<?php echo $postsids; ?>];\n        var pp_posts_total = pp_posts.length;\n        var pp_count = 1;\n        var pp_percent = 0;\n        var pp_successes = 0;\n        var pp_errors = 0;\n        var pp_failedlist = '';\n        var pp_resulttext = '';\n        var pp_timestart = new Date().getTime();\n        var pp_timeend = 0;\n        var pp_totaltime = 0;\n        var pp_continue = true;\n\n\n        $( \"#progressbar\" ).progressbar();\n\n        // Regenerate a specified image via AJAX\n        function ConvertTags( postid ) {\n\n            $.ajax({\n                type: 'POST',\n                url: ajaxurl,\n                data: {\n                    action: \"converttags\",\n                    id: postid\n                },\n                success: function( response ) {\n                   /* if ( response !== Object( response ) || ( typeof response.success === \"undefined\" && typeof response.error === \"undefined\" ) ) {\n                        response = new Object;\n                        response.success = false;\n                        response.error = \"<?php printf( esc_js( __( 'The request was abnormally terminated (ID %s).', 'foodiepresscp' ) ), '\" + postid + \"' ); ?>\";\n                    }*/\n                    console.log(\"sukces\"+response);\n                    if ( response.success ) {\n                        ConvertTagsUpdateStatus( postid, true, response );\n                    }\n                    else {\n                        ConvertTagsUpdateStatus( postid, false, response );\n                    }\n\n                    if ( pp_posts.length && pp_continue ) {\n                        ConvertTags( pp_posts.shift() );\n                    } else {\n                        ConvertTagsFinishUp();\n                    }\n                },\n                error: function( response ) {\n                    console.log(\"poracha\"+response);\n                    ConvertTagsUpdateStatus( postid, false, response );\n                    console.log(\"error\"+response);\n                    if ( pp_posts.length && pp_continue ) {\n                        ConvertTags( pp_posts.shift() );\n                    } else {\n                        ConvertTagsFinishUp();\n                    }\n                }\n            });\n        }\n\n        function ConvertTagsUpdateStatus( id, success, response ) {\n            $(\"#progressbar\").progressbar( \"value\", ( pp_count / pp_posts_total ) * 100 );\n            pp_count = pp_count + 1;\n            if ( success ) {\n                    pp_successes = pp_successes + 1;\n                    $(\"#regenthumbs-debug-successcount\").html(rt_successes);\n                    $(\"#regenthumbs-debuglist\").append(\"<li>\" + response.success + \"</li>\");\n            }\n            else {\n                pp_errors = pp_errors + 1;\n                pp_failedlist = pp_failedlist + ',' + id;\n                $(\"#regenthumbs-debug-failurecount\").html(pp_errors);\n                $(\"#regenthumbs-debuglist\").append(\"<li>\" + response.error + \"</li>\");\n            }\n        }\n        function ConvertTagsFinishUp() {\n                    pp_timeend = new Date().getTime();\n                    pp_totaltime = Math.round( ( pp_timeend - pp_timestart ) / 1000 );\n                    $('#regenthumbs-stop').hide();\n                    $(\"#message\").html(\"<p><strong>\" + pp_resulttext + \"</strong></p>\");\n                    $(\"#message\").show();\n                }\n\n           ConvertTags( pp_posts.shift() );\n        });\n    </script>\n    <div id=\"progressbar\"></div>\n<?php } //eof if ?>\n\n<p>This is Tool for CookingPress users, where tags were used to hold ingredients informations for recipe. From version 1.0.6 of FoodiePress,\n    we are changing it to new Taxonomy named <strong>\"Ingredients\"</strong>, and we've created that simple tool to convert old posts. \n    This will copy all current tags to 'ingredients', and if you wish, it will also remove tags from current posts leaving it blank.\n</p>\n<p><strong>Important</strong> Be sure to make backup before you press the 'Convert' button. We have done our best to make it bug free, but it's better to be safe than sorry. <a href=\"http://wordpress.org/plugins/backupwordpress/\">Here's a good little plugin for this</a></p>\n<form method=\"post\" action=\"\">\n    <?php wp_nonce_field('convert-tags') ?>\n    <p><input type=\"checkbox\" name=\"cleartags\" id=\"cleartags\"><label for=\"cleartags\">Clear tags (This action cannot be undone)</label></p>\n    <p><input type=\"submit\" class=\"button hide-if-no-js\" name=\"convert-tags\" id=\"convert-tags\" value=\"<?php _e( 'Convert All Tags', 'foodiepresscp' ) ?>\" /></p>\n</form>\n<?php  if (!empty($_POST['convert-tags'])) { ?>\n<h3 class=\"title\"><?php _e( 'Debugging Information', 'foodiepresscp' ) ?></h3>\n\n<p>\n    <?php printf( __( 'Total Images: %s', 'regenerate-thumbnails' ), $count ); ?><br />\n    <?php printf( __( 'Images Resized: %s', 'regenerate-thumbnails' ), '<span id=\"regenthumbs-debug-successcount\">0</span>' ); ?><br />\n    <?php printf( __( 'Resize Failures: %s', 'regenerate-thumbnails' ), '<span id=\"regenthumbs-debug-failurecount\">0</span>' ); ?>\n</p>\n\n<ol id=\"regenthumbs-debuglist\">\n    <li style=\"display:none\"></li>\n</ol>\n<?php } ?>\n</div>\n<?php }\n}\n\nnew FoodiePressTransferTags();\n\n\n\n\nclass IteratorPresenter implements IteratorAggregate\n{\n  private $values;\n\n  public function __construct($values)\n  {\n    if (!is_array($values) && !$values instanceof Traversable) {\n      throw new InvalidArgumentException('IteratorPresenter requires an array or Traversable object');\n    }\n\n    $this->values = $values;\n  }\n\n  public function getIterator()\n  {\n    $values = array();\n    foreach ($this->values as $key => $val) {\n      $values[$key] = array(\n        'key'   => $key,\n        'value' => $val,\n        'first' => false,\n        'last'  => false,\n        );\n    }\n\n    $keys = array_keys($values);\n\n    if (!empty($keys)) {\n      $values[reset($keys)]['first'] = true;\n      $values[end($keys)]['last']    = true;\n    }\n\n    return new ArrayIterator($values);\n  }\n}\n\n\n\n\n",
+			"file": "/C/wamp/www/themes/wp-content/plugins/cp-tag-converter/cp-tag-converter.php",
+			"file_size": 11928,
+			"file_write_time": 130758275512497015,
+			"settings":
+			{
+				"buffer_size": 12112,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/content-pageleft.php",
+			"settings":
+			{
+				"buffer_size": 1644,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/woocommerce/content-single-product.php",
+			"settings":
+			{
+				"buffer_size": 1825,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/woocommerce/content-product.php",
+			"settings":
+			{
+				"buffer_size": 2730,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/woocommerce/single-product.php",
+			"settings":
+			{
+				"buffer_size": 1718,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/theme-options.php",
+			"settings":
+			{
+				"buffer_size": 57070,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack add",
+				"Package Control: Add Repository"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 450.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/css",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/postformats",
+		"/C/wamp/www/themes/wp-content/themes/chow/inc",
+		"/C/wamp/www/themes/wp-content/plugins/cp-tag-converter"
+	],
+	"file_history":
+	[
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/theme-options.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/index.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/style.css",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/customizer.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/functions.php",
+		"/C/wamp/www/themes/wp-content/themes/chow/inc/customizer.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/script.js",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/header.php",
+		"/C/wamp/www/themes/wp-content/themes/chow/inc/theme-options.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/template-tags.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/js/jquery.isotope.min.js",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/js/custom.js",
+		"/C/wamp/www/themes/wp-content/themes/chow/inc/template-tags.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/css/font-awesome.css",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider/inc/postssel.admin.slides.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider/init.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider_old/init.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider_old/inc/postssel.admin.slides.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider_old/inc/posts.admin.slides.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider/inc/posts.admin.slides.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider_old/js/cpslider.js",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider/js/cpslider.js",
+		"/C/wamp/www/themes/wp-content/themes/chow/functions.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/inc/cpslider.php",
+		"/C/wamp/www/cp/wp-content/themes/cookingpress/theme-options.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/js/custom.js",
+		"/C/wamp/www/themes/wp-content/themes/Centum/js/jquery.royalslider.min.js",
+		"/C/wamp/www/themes/wp-content/themes/Centum/functions.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/style.css",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/theme-options.php",
+		"/C/wamp/www/single/wp-config.php",
+		"/C/wamp/www/cp/wp-config.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/header.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/shortcodes.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/slider.php",
+		"/C/wamp/www/cp/wp-config-sample.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/css/base.css",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/extras.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/template-tags.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/customizer.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/js/customizer.js",
+		"/D/ThemeForest/Purethemes/centum/v2.6/Centum/style.css",
+		"/C/wamp/www/themes/wp-content/themes/Centum/archive.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/loop.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/tgmpa.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/index.php",
+		"/D/ThemeForest/Purethemes/centum/v2.6/Centum/js/custom.js",
+		"/D/ThemeForest/Purethemes/centum/v2.6/Centum/functions.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/single-portfolio.php",
+		"/D/ThemeForest/Purethemes/centum/v2.6/Centum/single-portfolio.php",
+		"/C/wamp/www/HTML Incredible/js/effects.js",
+		"/C/wamp/www/themes/wp-content/themes/Centum/template-flex.php",
+		"/C/wamp/www/themes/wp-content/themes/chow/template-submitrecipe.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/template-home.php",
+		"/C/Users/T520/Dropbox/ThemeForest/wpvoyage html/scripts/maps.js",
+		"/C/wamp/www/HTML Incredible/js/custom.js",
+		"/C/wamp/www/HTML Incredible/contact.html",
+		"/C/wamp/www/themes/wp-content/themes/Centum-old/backend/helpers.php",
+		"/C/wamp/www/single/wp-content/plugins/purethemes-shortcodes/shortcodes.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/pftpl4col.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/pftpl3col.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/pftpl.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/content-page.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/content-single.php",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/content-single.php",
+		"/D/ThemeForest/Purethemes/Trizzy/1.5.5/trizzy/inc/tgmpa.php",
+		"/C/wamp/www/single/wp-content/themes/trizzy/inc/tgmpa.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/woocommerce/cart/cart.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/inc/class-tgm-plugin-activation.php",
+		"/C/wamp/www/themes/wp-content/plugins/woocommerce/templates/cart/cart.php",
+		"/D/ThemeForest/Purethemes/centum/v3.0.2/docs/index.html",
+		"/C/wamp/www/single/wp-content/themes/chow-child/style.css",
+		"/C/wamp/www/single/wp-content/themes/chow-child/functions.php",
+		"/C/wamp/www/single/wp-content/themes/chow/style.css",
+		"/C/wamp/www/single/wp-content/themes/centum2015/option-tree/includes/ot-meta-box-api.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/option-tree/includes/ot-functions-option-types.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/theme-options.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/shortcodes.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/functions.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/class-tgm-plugin-activation.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/style.css",
+		"/C/wamp/www/single/wp-content/themes/centum2015/js/custom.js",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/functions.php",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/style.css",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/js/custom.js",
+		"/C/wamp/www/single/wp-content/themes/centum2015/header.php",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/inc/megamenu.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/backend/helpers.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/template-tags.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/woocommerce.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/backend/class-tgm-plugin-activation.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/woocommerce/cart/cart.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/customizer.php",
+		"/C/wamp/www/single/wp-content/plugins/woocommerce/templates/cart/cart.php",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/switcher.js",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/blue.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/yellow.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/red.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/purple.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/pink.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/peach.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/orange.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/olive.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/navy.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/green.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/gray.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/darkcol.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/dark.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/cyan.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/cherry.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/celadon.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/brown.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors/beige.css",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/init.php",
+		"/C/wamp/www/single/wp-content/plugins/centum-styleswitcher/colors.css",
+		"/C/wamp/www/single/wp-content/themes/centum2015/css/light.css",
+		"/C/wamp/www/themes/wp-content/plugins/trizzy-styleswitcher/switcher.js",
+		"/C/wamp/www/themes/wp-content/plugins/trizzy-styleswitcher/init.php",
+		"/C/wamp/www/themes/wp-content/plugins/trizzy-styleswitcher/colors.css",
+		"/C/demo/redirect.php",
+		"/C/demo/index.php",
+		"/D/ThemeForest/Purethemes/centum/v3/Centum/style.css",
+		"/D/ThemeForest/Purethemes/centum/v3/centum-child/style.css",
+		"/C/wamp/www/single/wp-content/themes/centum2015/inc/meta-boxes.php",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/single-portfolio.php",
+		"/C/wamp/www/single/wp-content/themes/centum2015/single-portfolio.php",
+		"/C/wamp/www/themes/wp-content/themes/trizzy/inc/theme-options.php",
+		"/C/wamp/www/themes/wp-content/themes/Centum/backend/widgets.php"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 92.0,
+		"where_history":
+		[
+			"<project>",
+			"C:\\wamp\\www\\themes\\wp-content\\themes\\trizzy",
+			"C:\\wamp\\www\\single\\wp-content\\themes\\centum2015",
+			"<project>",
+			"C:\\wamp\\www\\single\\wp-content\\themes\\centum2015",
+			"<project>",
+			"C:\\wamp\\www\\themes\\wp-content\\themes\\Centum",
+			"<project>",
+			"C:\\wamp\\www\\single\\wp-content\\themes\\centum2015",
+			"<project>",
+			"C:\\wamp\\www\\single\\wp-content\\themes\\centum2015",
+			"<project>",
+			"C:\\wamp\\www\\single\\wp-content\\themes\\centum2015",
+			"<project>",
+			"C:\\wamp\\www\\themes\\wp-content\\themes\\Centum",
+			"<project>",
+			"C:\\wamp\\www\\themes\\wp-content\\themes\\Centum",
+			"<project>",
+			"C:\\wamp\\www\\themes\\wp-content\\themes\\trizzy\\woocommerce",
+			"C:\\wamp\\www\\themes\\wp-content\\plugins\\woocommerce"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"script.js",
+			"chow",
+			"typography",
+			"cookingpress_posted_on",
+			"awesome",
+			"imageScaleMode",
+			"measu",
+			"typogr",
+			"header",
+			"home",
+			"menu",
+			"header",
+			"#navigation",
+			"@media only screen and (min-width: 960px) and (max-width: 1389px) {",
+			"@media only screen and (max-width: 1389px) ",
+			"@media only screen and (max-width: 1389px) and (min-width: 960px)",
+			"flexslider",
+			"flexsli",
+			"flexsl",
+			"portfoli",
+			"royalSlider",
+			"curCSS",
+			"backgroundColor",
+			"validateName",
+			".curCSS",
+			"pre",
+			".twelve.columns .products,",
+			"$('.full-width-class .products, .twelve.columns .products,",
+			"http://",
+			"google_fonts",
+			"ot_recognized_google_font_fields",
+			"typogr",
+			"contact-detail",
+			"contact",
+			"retinalogo",
+			"retina",
+			"images",
+			"woocomm",
+			"trizzy_wishlist_get_share_links",
+			"is_shop",
+			"Walker_Nav_Menu_Dropdown",
+			"stack",
+			"bfa980",
+			"72b626",
+			"bg",
+			"layout-style",
+			"enqu",
+			"chow",
+			"portfolio",
+			"pp_recent_portfolio_posts",
+			"pp_recent_pofrfolio_textblock",
+			"$cb",
+			"cb",
+			"twitter",
+			"statuses_userTimeline",
+			"purepress_twitter_widget",
+			"disable comm",
+			"one-third.",
+			"one-third.columns",
+			"comments",
+			"post-content",
+			"fullpage",
+			"fullpage ",
+			"number",
+			"high",
+			"column",
+			"column ",
+			"toggle",
+			"button",
+			"unset",
+			"ptsc_icons",
+			"accordi",
+			"accordo",
+			"accordion",
+			"return-to-shop",
+			"woocommerce-message",
+			".button",
+			"button",
+			"added_to_cart",
+			".button.color:hover",
+			"bm_displayArchives",
+			"portfolio-slider",
+			"wpcf7-not-valid-tip",
+			".product-page section",
+			"table.variations, .product-page section",
+			".widget.woocommerce li",
+			"background-colo",
+			"active",
+			"centum_overlay_opacity",
+			"custom_overlay_opacity",
+			"widget",
+			"tagcloud",
+			"rsswidget",
+			"widget li a",
+			"#footer li a",
+			"wp-caption-text",
+			".wp-caption",
+			"select",
+			"archive",
+			"is_tax",
+			"tags_options",
+			"categories_options",
+			"posts",
+			"blog",
+			"recent_",
+			"recent_blog",
+			"iconbox",
+			"notice",
+			"filters",
+			"orderby",
+			"ptsc_limit",
+			"recent_pf",
+			"box",
+			"button",
+			"slide",
+			"pureslideshow",
+			"separator",
+			"trizzy",
+			"trizzy_shortcodes_list",
+			"requ",
+			"magnificPopup",
+			"mfp",
+			"shop-small-thumb",
+			".product img",
+			"royal",
+			"royalis",
+			"productSlider",
+			"royal"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"cookingpress",
+			"2db2ea",
+			"ffb400",
+			"dd3737",
+			"917ae9",
+			"d64391",
+			"fcab55",
+			"fa5b0f",
+			"b3c211",
+			"495d7f",
+			"8dc63f",
+			"808080",
+			"333",
+			"37b6bd",
+			"911938",
+			"74aea1",
+			"784e3d",
+			"bfa980",
+			"centum",
+			"#navigation .dropmenu ",
+			"header",
+			"Royal",
+			"royal",
+			"",
+			"product",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/wamp/www/themes/wp-content/plugins/cp-tag-converter/cp-tag-converter.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12112,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4367,
+								4367
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"side_bar_folders_auto_load_folder": 1,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2268.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/content-pageleft.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1644,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								714,
+								728
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"side_bar_folders_auto_load_folder": 1,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/woocommerce/content-single-product.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1825,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								589,
+								589
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"side_bar_folders_auto_load_folder": 1,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/woocommerce/content-product.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2730,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"side_bar_folders_auto_load_folder": 1,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/woocommerce/single-product.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1718,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								736,
+								750
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"side_bar_folders_auto_load_folder": 1,
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/C/wamp/www/themes/wp-content/themes/astrum-theme/theme-options.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 57070,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14287,
+								14305
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"side_bar_folders_auto_load_folder": 1,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7930.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 55.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "cpupdate.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"inde",
+				"cookingpress\\index.php"
+			],
+			[
+				"style",
+				"cookingpress\\style.css"
+			],
+			[
+				"theme",
+				"cookingpress\\inc\\theme-options.php"
+			],
+			[
+				"cusotmi",
+				"chow\\inc\\customizer.php"
+			],
+			[
+				"chowtemplate-ta",
+				"chow\\inc\\template-tags.php"
+			],
+			[
+				"sty",
+				"cookingpress\\style.css"
+			],
+			[
+				"header",
+				"Centum\\header.php"
+			],
+			[
+				"sho",
+				"Centum\\inc\\shortcodes.php"
+			],
+			[
+				"fun",
+				"Centum\\functions.php"
+			],
+			[
+				"custom.js",
+				"Centum\\js\\custom.js"
+			],
+			[
+				"slide",
+				"Centum\\slider.php"
+			],
+			[
+				"template-tag",
+				"Centum\\inc\\template-tags.php"
+			],
+			[
+				"extr",
+				"Centum\\inc\\extras.php"
+			],
+			[
+				"cust",
+				"Centum\\inc\\customizer.php"
+			],
+			[
+				"tgmp",
+				"Centum\\inc\\tgmpa.php"
+			],
+			[
+				"func",
+				"Centum\\functions.php"
+			],
+			[
+				"customize",
+				"Centum\\inc\\customizer.php"
+			],
+			[
+				"theme-",
+				"Centum\\inc\\theme-options.php"
+			],
+			[
+				"home",
+				"Centum\\template-home.php"
+			],
+			[
+				"shor",
+				"Centum\\inc\\shortcodes.php"
+			],
+			[
+				"templat-",
+				"Centum\\template-flex.php"
+			],
+			[
+				"heade",
+				"Centum\\header.php"
+			],
+			[
+				"custom",
+				"Centum\\js\\custom.js"
+			],
+			[
+				"template-tags.php",
+				"Centum\\inc\\template-tags.php"
+			],
+			[
+				"head",
+				"Centum\\header.php"
+			],
+			[
+				"trizzyfun",
+				"trizzy\\functions.php"
+			],
+			[
+				"centum20cust",
+				"centum2015\\js\\custom.js"
+			],
+			[
+				"trizzcustom.",
+				"trizzy\\js\\custom.js"
+			],
+			[
+				"woo",
+				"centum2015\\inc\\woocommerce.php"
+			],
+			[
+				"custo",
+				"centum2015\\inc\\customizer.php"
+			],
+			[
+				"portfolio",
+				"Centum\\single-portfolio.php"
+			],
+			[
+				"content",
+				"Centum\\content-single.php"
+			],
+			[
+				"meta",
+				"centum2015\\inc\\meta-boxes.php"
+			],
+			[
+				"style.",
+				"centum2015\\style.css"
+			],
+			[
+				"trizzystyle",
+				"trizzy\\style.css"
+			],
+			[
+				"customi",
+				"centum2015\\inc\\customizer.php"
+			],
+			[
+				"ptsh",
+				"centum2015\\inc\\ptshortcodes.php"
+			],
+			[
+				"trizzyptsh",
+				"trizzy\\inc\\ptshortcodes.php"
+			],
+			[
+				"centumstyl",
+				"centum2015\\style.css"
+			],
+			[
+				"trizyshor",
+				"trizzy\\inc\\shortcodes.php"
+			],
+			[
+				"custom.",
+				"centum2015\\js\\custom.js"
+			],
+			[
+				"tristyl",
+				"trizzy\\style.css"
+			],
+			[
+				"trizzsytle",
+				"trizzy\\style.css"
+			],
+			[
+				"loop",
+				"centum2015\\loop.php"
+			],
+			[
+				"trizzystyl",
+				"trizzy\\style.css"
+			],
+			[
+				"extra",
+				"trizzy\\inc\\extras.php"
+			],
+			[
+				"tri",
+				"trizzy\\inc\\shortcodes.php"
+			],
+			[
+				"funct",
+				"centum2015\\functions.php"
+			],
+			[
+				"singleimag",
+				"centum2015\\woocommerce\\single-product\\product-image.php"
+			],
+			[
+				"trifun",
+				"trizzy\\functions.php"
+			],
+			[
+				"centumsty",
+				"centum2015\\style.css"
+			],
+			[
+				"trizycustom",
+				"trizzy\\js\\custom.js"
+			],
+			[
+				"product-ima",
+				"centum2015\\woocommerce\\single-product\\product-image.php"
+			],
+			[
+				"meta-b",
+				"Centum\\meta-boxes.php"
+			],
+			[
+				"trizzycustom",
+				"trizzy\\js\\custom.js"
+			],
+			[
+				"cu",
+				"centum2015\\js\\custom.js"
+			],
+			[
+				"styl",
+				"centum2015\\style.css"
+			],
+			[
+				"customiz",
+				"trizzy\\inc\\customizer.php"
+			],
+			[
+				"trizzyshor",
+				"trizzy\\inc\\shortcodes.php"
+			],
+			[
+				"single",
+				"centum2015\\single-portfolio.php"
+			],
+			[
+				"skele",
+				"centum2015\\css\\skeleton.css"
+			],
+			[
+				"theme-o",
+				"trizzy\\inc\\theme-options.php"
+			],
+			[
+				"foot",
+				"centum2015\\footer.php"
+			],
+			[
+				"tristy",
+				"trizzy\\style.css"
+			],
+			[
+				"trizzyfunc",
+				"trizzy\\functions.php"
+			],
+			[
+				"contentsing",
+				"centum2015\\content-single.php"
+			],
+			[
+				"loo",
+				"centum2015\\loop.php"
+			],
+			[
+				"centumstyle",
+				"Centum\\style.css"
+			],
+			[
+				"comme",
+				"Centum\\comments.php"
+			],
+			[
+				"content-sin",
+				"Centum\\content-single.php"
+			],
+			[
+				"single-",
+				"Centum\\single-portfolio.php"
+			],
+			[
+				"single-po",
+				"centum2015\\single-portfolio.php"
+			],
+			[
+				"review",
+				"trizzy\\woocommerce\\single-product\\review.php"
+			],
+			[
+				"single-prod",
+				"trizzy\\woocommerce\\single-product.php"
+			],
+			[
+				"centumfun",
+				"centum2015\\functions.php"
+			],
+			[
+				"centumcustom",
+				"centum2015\\js\\custom.js"
+			],
+			[
+				"single-pro",
+				"centum2015\\woocommerce\\single-product.php"
+			],
+			[
+				"product-searchform.php",
+				"Centum\\product-searchform.php"
+			],
+			[
+				"trizstyl",
+				"trizzy\\style.css"
+			],
+			[
+				"content-pro",
+				"Centum\\woocommerce\\content-product.php"
+			],
+			[
+				"trizcusto",
+				"trizzy\\js\\custom.js"
+			],
+			[
+				"iso",
+				"centum2015\\js\\isotope.js"
+			],
+			[
+				"sideb",
+				"centum2015\\sidebar.php"
+			],
+			[
+				"template-portfolio2",
+				"centum2015\\template-portfolio2col.php"
+			],
+			[
+				"template-portfolio3col.php",
+				"centum2015\\template-portfolio3col.php"
+			],
+			[
+				"widget",
+				"centum2015\\inc\\widgets.php"
+			],
+			[
+				"wid",
+				"centum2015\\css\\wide.css"
+			],
+			[
+				"trizthem",
+				"trizzy\\inc\\theme-options.php"
+			],
+			[
+				"st",
+				"centum2015\\style.css"
+			],
+			[
+				"page",
+				"Centum\\page.php"
+			],
+			[
+				"he",
+				"Centum\\header.php"
+			],
+			[
+				"content-",
+				"Centum\\content-page.php"
+			],
+			[
+				"singl",
+				"Centum\\single-portfolio.php"
+			],
+			[
+				"sh",
+				"Centum\\backend\\shortcodes.php"
+			],
+			[
+				"sing",
+				"Centum\\single-portfolio.php"
+			],
+			[
+				"portfo",
+				"Centum\\single-portfolio.php"
+			],
+			[
+				"single-product-reviews.php",
+				"woocommerce\\templates\\single-product-reviews.php"
+			],
+			[
+				"product-thumbnails.php",
+				"woocommerce\\templates\\single-product\\product-thumbnails.php"
+			],
+			[
+				"var",
+				"woocommerce\\templates\\single-product\\add-to-cart\\variable.php"
+			],
+			[
+				"order-details.php",
+				"woocommerce\\templates\\order\\order-details.php"
+			],
+			[
+				"review-order.php",
+				"woocommerce\\templates\\checkout\\review-order.php"
+			],
+			[
+				"form-checkout.php",
+				"woocommerce\\templates\\checkout\\form-checkout.php"
+			],
+			[
+				"hea",
+				"trizzy\\header.php"
+			],
+			[
+				"rati",
+				"trizzy\\woocommerce\\single-product\\rating.php"
+			],
+			[
+				"rating",
+				"templates\\single-product\\rating.php"
+			],
+			[
+				"rat",
+				"templates\\loop\\rating.php"
+			],
+			[
+				"variable.php",
+				"trizzy\\woocommerce\\single-product\\add-to-cart\\variable.php"
+			],
+			[
+				"rder-details",
+				"trizzy\\woocommerce\\order\\order-details.php"
+			],
+			[
+				"breadcrumb",
+				"trizzy\\woocommerce\\global\\breadcrumb.php"
+			],
+			[
+				"cart.ph",
+				"trizzy\\woocommerce\\cart\\cart.php"
+			],
+			[
+				"car",
+				"templates\\cart\\cart.php"
+			],
+			[
+				"cart-totals.php",
+				"trizzy\\woocommerce\\cart\\cart-totals.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "ce",
+		"selected_items":
+		[
+			[
+				"ce",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\Centum\\centum.sublime-project"
+			],
+			[
+				"as",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\astrum-theme\\astrum.sublime-workspace"
+			],
+			[
+				"tr",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\trizzy\\trizzy.sublime-project"
+			],
+			[
+				"nevi",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\nevia\\nevia.sublime-project"
+			],
+			[
+				"chow",
+				"C:\\Users\\T520\\Desktop\\chow.sublime-project"
+			],
+			[
+				"cen",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\Centum\\centum.sublime-project"
+			],
+			[
+				"ast",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\astrum-theme\\astrum.sublime-workspace"
+			],
+			[
+				"wp",
+				"C:\\wamp\\www\\wordpress\\wp-content\\themes\\wpvoyager.sublime-project"
+			],
+			[
+				"voya",
+				"C:\\wamp\\www\\wordpress\\wp-content\\themes\\wpvoyager.sublime-project"
+			],
+			[
+				"vo",
+				"C:\\wamp\\www\\wordpress\\wp-content\\themes\\wpvoyager.sublime-project"
+			],
+			[
+				"cho",
+				"C:\\Users\\T520\\Desktop\\chow.sublime-project"
+			],
+			[
+				"astr",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\astrum-theme\\astrum.sublime-project"
+			],
+			[
+				"n",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\nevia\\nevia.sublime-project"
+			],
+			[
+				"ne",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\nevia\\nevia.sublime-project"
+			],
+			[
+				"ch",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\chow\\chow.sublime-project"
+			],
+			[
+				"t",
+				"C:\\wamp\\www\\themes\\wp-content\\themes\\trizzy\\trizzy.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 375.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 442.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 255.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

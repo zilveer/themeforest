@@ -1,0 +1,385 @@
+@import "tmm_settings";
+
+// @Variables
+
+$donate-amount-button-bg-color:            #e1e1e1;
+$donate-amount-button-bg-hover-color:      #11547b !default;
+$donate-amount-button-text-color:          #262626;
+$donate-amount-button-text-hover-color:    #ffffff;
+
+//
+// @Plugin Seamless Donations
+//
+
+.dgx-donate-form-section {
+	position: relative;
+	margin-bottom: rem-calc(30);
+	padding-bottom: rem-calc(30);
+
+	&:after {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background-image: url("../images/doted-border.png");
+		content: "";
+	}
+
+	&:last-of-type {
+		padding-bottom: 0;
+		&:after {
+			display: none;
+		}
+	}
+
+	h2 {
+		font-size: rem-calc(25);
+		font-weight: 400;
+	}
+
+	p,
+	span,
+	> div {
+		margin-bottom: rem-calc(20);
+
+		.dgx-donate-comment {
+			display: inline-block;
+			margin-left: rem-calc(20);
+		}
+
+		input {
+			&[name="_dgx_donate_amount"] {
+				+ label {
+					width: rem-calc(120) !important;
+				}
+
+				&:not([id="dgx-donate-other-radio"]) {
+					+ label {
+						font-size: rem-calc(16);
+						margin: rem-calc(0 20 10 0);
+						padding: rem-calc(18 30);
+						text-align: center;
+						color: $donate-amount-button-text-color;
+						background-color: $donate-amount-button-bg-color;
+						@include transition(all .35s ease-in-out);
+
+						&:hover {
+							color: $donate-amount-button-text-hover-color;
+							background-color: $donate-amount-button-bg-hover-color;
+						}
+
+						&:before,
+						&:after {display: none;}
+					}
+
+					&:checked {
+						+ label {
+							color: $donate-amount-button-text-hover-color;
+							background-color: $donate-amount-button-bg-hover-color;
+						}
+					}
+				}
+			}
+
+			&[type="checkbox"],
+			&[name="_dgx_donate_honor_by_email"] {
+				+ label {
+					width: auto !important;
+				}
+			}
+
+		}
+
+		input[type="text"],
+		select {
+			width: rem-calc(330);
+
+			&.required,
+			&.dgx_donate_zip_input {
+				&.dgx-donate-invalid-input {
+					@include box-shadow($required-box-shadow);
+				}
+				&:focus {
+					&:invalid {
+						@include box-shadow($required-box-shadow);
+					}
+				}
+			}
+		}
+
+		label {
+			width: rem-calc(150);
+			display: inline-block;
+			margin-right: rem-calc(20);
+
+			&[for="_dgx_donate_user_amount"],
+			&[for="_dgx_donate_honoree_name2"] {
+				width: auto;
+			}
+		}
+	}
+
+	.other-donation-level {
+		margin: rem-calc(20 0);
+
+		input {
+			&[name="_dgx_donate_user_amount"] {
+				width: rem-calc(150) !important;
+				margin-left: rem-calc(20);
+			}
+		}
+	}
+}
+
+.seamless-donations-forms-error-message {
+	margin-bottom: rem-calc(10);
+	padding: rem-calc(20);
+	color: $error-font-color;
+	background: $error-background;
+	border: 1px solid $error-border-color;
+}
+
+.seamless-donations-error-message-field {
+	margin: rem-calc(5 0);
+	color: $error-font-color;
+}
+
+#dgx-donate-form-sandbox-warning {
+	color: $error-font-color;
+}
+
+//
+// @Plugin Layer Slider
+//
+
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+
+.ls-container {
+	.ls-inner {
+		.ls-slide {
+			h2, h3 {
+				color: #fefefe;
+				font-family: 'Droid Serif';
+				letter-spacing: -0.5px;
+			}
+
+			hr {
+				border: 0;
+				opacity: 0.7;
+				height: 2px;
+				background-color: $white;
+			}
+
+			p {
+				color: $white;
+				opacity: 0.8;
+				font-size: rem-calc(18);
+				line-height: 1.4;
+			}
+
+			input[type="email"] {
+				width: rem-calc(254);
+			}
+
+			input[type="text"],
+			input[type="email"] {
+				padding-top: rem-calc(14);
+				padding-bottom: rem-calc(15);
+				color: $white;
+				box-shadow: none;
+				background-color: rgba(255, 255, 255, .5);
+			}
+
+			// Chrome, Safari
+			input::-webkit-input-placeholder,
+			textarea::-webkit-input-placeholder {
+				color: $white-smoke;
+			}
+
+			// Firefox 4 to 18
+			input:-moz-placeholder,
+			textarea:-moz-placeholder {
+				color: $white-smoke;
+				opacity: 1;
+			}
+
+			// Firefox 19+
+			input::-moz-placeholder,
+			textarea::-moz-placeholder {
+				color: $white-smoke;
+				opacity: 1;
+			}
+
+			// Internet Explorer 10+
+			input:-ms-input-placeholder,
+			textarea:-ms-input-placeholder {
+				color: $white-smoke;
+			}
+		}
+	}
+}
+
+//
+// @Plugin Arqam Counter Widget
+//
+.widget {
+	&.arqam_counter-widget {
+		.arqam-widget-counter {
+			background-color: transparent;
+			@include box-shadow(none);
+			@include border(none);
+
+			&.arq-flat {
+
+				> ul {
+					> li {
+						width: 49% !important;
+						@include border(none);
+
+						> a {
+							@include transition();
+							background-color: transparent !important;
+
+							[class^="arqicon-"] {
+								@include border-radius(0);
+								font-size: 20px;
+								float: left;
+								margin-right: 20px;
+								background-color: #424246;
+							}
+
+							&:hover {
+								.arqicon-facebook {
+									background-color: #395998;
+								}
+								.arqicon-youtube {
+									background-color: #cc181e;
+								}
+								.arqicon-envato {
+									background-color: #5DA01A;
+								}
+								.arqicon-rss {
+									background-color: #ee802f;
+								}
+							}
+
+							span {
+								font-size: 24px;
+								font-family: $widget-font-family-text;
+								color: $widget-sidebar-sub-color;
+								display: block;
+								text-align: left;
+								margin: 20px 0 5px;
+							}
+
+							small {
+								text-transform: uppercase;
+								font-size: 10px;
+								font-family: $widget-font-family-text-small;
+								color: $widget-sidebar-list-hover-color;
+								display: block;
+								text-align: left;
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+}
+
+//
+// @Plugin bbPress Forum
+//
+#bbpress-forums {
+	.bbp-search-form {
+		margin-bottom: rem-calc(20);
+
+		#bbp_search {
+			margin-right: rem-calc(20);
+		}
+	}
+
+	.bbp-breadcrumb {
+		p {
+			line-height: rem-calc(46);
+		}
+
+		+ #subscription-toggle {
+			display: block;
+			@extend .right;
+			line-height: rem-calc(46);
+		}
+
+		+ .bbp-topic-tags p {
+			line-height: rem-calc(46);
+		}
+	}
+
+	img.avatar {
+		margin-bottom: 0 !important;
+	}
+}
+
+.widget {
+	&.widget_display_search {
+		.screen-reader-text {
+			display: none;
+		}
+
+		input[name="bbp_search"] {
+			width: calc(100% - 130px);
+			margin-right: rem-calc(15);
+		}
+	}
+
+	&.widget_display_stats {
+		@extend .clearfix;
+
+		dl {
+			padding: rem-calc(0 20);
+		}
+
+		dt {
+			display: block;
+			float: left;
+			margin-bottom: rem-calc(10);
+			width: calc(100% - 50px);
+		}
+		dd {
+			display: block;
+			float: right;
+			margin-bottom: rem-calc(10);
+			width: rem-calc(45);
+			text-align: right;
+		}
+	}
+}
+
+.bbp-login-form {
+	@extend .clearfix;
+
+	.bbp-username input[name="log"],
+	.bbp-password input[name="pwd"] {
+		padding: $form-input-padding;
+	}
+
+	.bbp-username,
+	.bbp-password {
+		margin-bottom: rem-calc(20);
+	}
+
+	.bbp-remember-me {
+		float: left;
+
+		label {
+			width: rem-calc(130) !important;
+		}
+	}
+
+	.bbp-submit-wrapper {
+		clear: none;
+	}
+}

@@ -1,0 +1,306 @@
+// Uber Menu Implementation
+.site-header {
+
+	// Main Menu
+	.ubermenu {
+		white-space: normal;
+	}
+
+	.ubermenu.ubermenu-skin-none {
+		position: static;
+
+		// General Styling
+		.ubermenu-item {
+
+			.ubermenu-target {
+				outline: none;
+
+				.ubermenu-target-title {
+					text-transform: uppercase;
+					font-weight: 300;
+					font-size: @font-size-base;
+				}
+
+				.ubermenu-image {
+
+					+ .ubermenu-target-title {
+						display: block;
+					}
+				}
+			}
+
+			// Flyout menu padding
+			> .ubermenu-submenu-type-flyout {
+
+				&:before,
+				&:after {
+					display: block;
+					height: @default-padding;
+					content: '';
+				}
+			}
+
+			// Level 0
+			&.ubermenu-item-level-0 {
+
+				> .ubermenu-target {
+					padding: 25px @base-margin;
+					
+					@media screen and (max-width: @screen-md-min){
+						padding: 25px 15px;
+					}
+
+					> .ubermenu-target-title {
+						font-size: @font-size-base + 2;
+
+						.transparent-header & {
+							color: @transparent-header-font;
+
+							&:after {
+								background-color: @transparent-header-font;
+							}
+						}
+
+						&:after {
+							display: block;
+							content: '';
+							height: 2px;
+							margin-top: 1px;
+							background: @menu-color;
+							visibility: hidden;
+						}
+					}
+
+					> .ubermenu-target-description {
+						text-transform: uppercase;
+						font-weight: 300;
+						font-size: @font-size-small - 1;
+						color: @text-color-two;
+					}
+
+					.transparent-header & {
+
+						&:hover {
+							background-color: fade(@transparent-header-font, 25%);
+						}
+					}
+				}
+
+				// Hover
+				&:hover > .ubermenu-target {
+					background-color: @submenu;
+
+					.transparent-header & {
+						background-color: fade(@transparent-header-font, 25%);
+					}
+				}
+
+				// Active
+				&.ubermenu-current-menu-item,
+				&.ubermenu-current_page_item,
+
+				&.ubermenu-current-menu-ancestor,
+				&.ubermenu-current_page_ancestor {
+
+					> .ubermenu-target {
+
+						> .ubermenu-target-title {
+
+							&:after {
+								visibility: visible;
+							}
+						}
+					}
+				}
+
+				// Full width submenus
+				> .ubermenu-submenu-align-full_width {
+					left: @default-padding;
+					right: @default-padding;
+					width: auto;
+				}
+			}
+
+			// Level 1
+			&.ubermenu-item-level-1 {
+
+				// Minus margin for flyout menus
+				.ubermenu-submenu-type-flyout {
+					margin-top: -@default-padding;
+				}
+			}
+
+
+			// Flyouts with Submenus
+			.ubermenu-submenu-type-flyout {
+
+				> .ubermenu-item-has-children {
+
+					> .ubermenu-target {
+
+						> .ubermenu-target-title {
+							white-space: nowrap;
+
+							&:before {
+								font-family: @font-icon;
+								content: '\e879';
+								display: block;
+								float: right;
+								margin-left: @base-padding;
+								.opacity(0.5);
+							}
+						}
+					}
+
+					&:hover > .ubermenu-target {
+
+						> .ubermenu-target-title {
+
+							&:before {
+								.opacity(1);
+							}
+						}
+					}
+				}
+			}
+
+			// Submenus
+			.ubermenu-submenu {
+				@submenu-active: darken(@submenu, 3%);
+
+				background-color: @submenu;
+				.box-shadow(none);
+
+				.ubermenu-item {
+
+					> .ubermenu-target {
+						padding: @base-padding/2 @base-margin;
+						padding: 3px @base-margin;
+
+						> .ubermenu-target-description {
+							text-transform: uppercase;
+							color: @text-color-two;
+							font-size: @font-size-small - 1;
+							font-weight: 300;
+						}
+
+
+						// Disabled Item Hover and Active
+						&.ubermenu-item-notext {
+							background-color: transparent !important;
+						}
+					}
+
+					&:hover {
+
+						> .ubermenu-target {
+							background-color: @submenu-active;
+							color: @menu-color;
+
+							.ubermenu-target-title {
+								text-decoration: underline;
+							}
+						}
+					}
+
+					// Active
+					&.ubermenu-current-menu-item,
+					&.ubermenu-current_page_item,
+
+					&.ubermenu-current-menu-ancestor,
+					&.ubermenu-current_page_ancestor {
+
+						> .ubermenu-target {
+							background-color: @submenu-active;
+
+							> .ubermenu-target-title {
+							}
+						}
+					}
+
+					// Content Block
+					.ubermenu-content-block {
+						padding: @base-padding/2 @base-margin;
+						font-weight: 300;
+						font-size: @font-size-small;
+					}
+
+					// Images maximum size
+					img {
+						max-width: 100%;
+						height: auto !important;
+					}
+				}
+
+				// Mega Menu Options
+				&.ubermenu-submenu-type-mega {
+
+					.ubermenu-item {
+
+						&:hover {
+
+							> .ubermenu-target {
+								background-color: transparent;
+							}
+						}
+
+						// Active
+						&.ubermenu-current-menu-item,
+						&.ubermenu-current_page_item,
+
+						&.ubermenu-current-menu-ancestor,
+						&.ubermenu-current_page_ancestor {
+
+							> .ubermenu-target {
+								background-color: transparent;
+
+								> .ubermenu-target-title {
+									color: @secondary-color;
+									font-weight: 500;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		// Menu has Sub
+		&.ubermenu-sub-indicators {
+
+			.ubermenu-has-submenu-drop > .ubermenu-target:after {
+				display: none;
+			}
+		}
+	}
+
+
+	// Menu Centered
+	.menu-centered {
+
+		.ubermenu.ubermenu-skin-none {
+			display: inline-block !important;
+
+			.ubermenu-item {
+
+				// Level 0
+				&.ubermenu-item-level-0 {
+
+					> .ubermenu-target {
+						padding: 10px @base-margin;
+					}
+				}
+			}
+		}
+	}
+
+
+	// Stick Menu
+	&.sticky.sticked {
+
+		.ubermenu.ubermenu-skin-none .ubermenu-item.ubermenu-item-level-0 > .ubermenu-target {
+			padding: 10px @base-margin;
+		}
+	}
+}

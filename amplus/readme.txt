@@ -1,0 +1,1 @@
+Please read the documentation found in the documentation folder from the package you downloaded from ThemeForest.net when you bought the theme.

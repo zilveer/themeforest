@@ -1,0 +1,165 @@
+@dark-text-color: #222222;
+@active-text-color: #7b599b;
+
+.banner {
+	padding: 15px; // let the padding be with pixels
+	background: #FFF;
+	margin-bottom: @base-margin;
+	border: 1px solid @border-color;
+	.box-shadow(inset 0px 0px 0px 3px #fff, inset 0px 0px 0px 4px @border-color);
+
+	&.wpb_content_element {
+		margin-bottom: @base-margin;
+	}
+
+	&.button-right {
+
+		.button_outer .button_inner {
+
+			.banner-content {
+				text-align: right;
+			}
+		}
+	}
+
+	&.text-button-center {
+
+		.button_outer .button_inner {
+			text-align: center;
+			display: block;
+
+			.banner-content, .banner-call-button {
+				display: block;
+				width: 100%;
+			}
+		}
+	}
+
+	.button_outer {
+
+		.button_inner {
+			padding: @base-margin @base-margin*2;
+			.clearfix; // will fix the floating
+
+			.banner-content, .banner-call-button {
+				display: table-cell;
+				vertical-align: middle;
+				padding: @base-padding 0;
+
+				@media screen and (max-width: @screen-xs-max){
+					display: block;
+					width: 100%;
+					text-align: center !important;
+				}
+			}
+
+			.banner-content {
+				width: 100%;
+
+				strong {
+					&:extend(.to-uppercase);
+					&:extend(.heading-font);
+					font-size: 30px;
+					display: block;
+					font-weight: 300;
+				}
+
+				span {
+					display: block;
+					color: #777;
+					font-size: 15px;
+					text-transform: uppercase;
+					font-weight: 300;
+					margin-top: @base-padding;
+				}
+			}
+
+			.banner-call-button {
+
+				.btn {
+					border: 0;
+					//.transall;
+				}
+			}
+		}
+	}
+
+	&.banner-white {
+
+		.btn {
+			background-color: #000;
+			color: #FFF;
+
+			&:hover {
+				background-color: lighten(#000, 25%);
+				color: #FFF;
+			}
+		}
+	}
+
+	&.banner-black {
+		@border: fade(#fff, 50%);
+
+		background: @dark-text-color;
+		border: 0;
+		.box-shadow(inset 0px 0px 0px 4px @dark-text-color, inset 0px 0px 0px 5px @border);
+
+		.button_outer {
+			border-color: lighten(@dark-text-color, 25%);
+		}
+
+		.button_outer  .button_inner .banner-content {
+
+			strong, span {
+				color: #fff;
+				font-weight: 300;
+			}
+
+			span {
+				.opacity(.7);
+			}
+		}
+
+		.btn {
+			color: #000;
+			background: #fff;
+
+			&:hover {
+				color: @active-text-color;
+			}
+		}
+	}
+
+	&.banner-purple {
+		@border: fade(#fff, 40%);
+
+		background: @secondary-color;
+		border: 0;
+		.box-shadow(inset 0px 0px 0px 4px @secondary-color, inset 0px 0px 0px 5px @border);
+
+		.button_outer {
+			border-color: lighten(@active-text-color, 25%);
+		}
+
+		.button_outer  .button_inner .banner-content {
+
+			strong, span {
+				color: #fff;
+			}
+
+			span {
+				.opacity(.7);
+			}
+		}
+
+		.btn {
+			background-color: darken(@active-text-color, 10%);
+			color: #FFF;
+
+			&:hover {
+				background-color: darken(@active-text-color, 20%);
+				color: #FFF;
+			}
+		}
+	}
+}

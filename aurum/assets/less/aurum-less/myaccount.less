@@ -1,0 +1,280 @@
+// My Account Tabs
+@acc-tabs-width: 23%;
+@acc-tabs-responsive: 768px;
+
+.wc-my-account-tabs {
+	float: left;
+	width: @acc-tabs-width;
+	position: relative;
+	text-transform: uppercase;
+	&:extend(.heading-font);
+	
+	&:before {
+		display: block;
+		content: '';
+		position: absolute;
+		top: 0;
+		right: -1px;
+		bottom: 0;
+		width: 1px;
+		background: @border-color;
+	}
+	
+	.user-profile {
+		margin-bottom: @base-margin * 2;
+		display: table;
+		width: 100%;
+		table-layout: auto;
+		
+		.image,
+		.user-info {
+			display: table-cell;
+			vertical-align: middle;
+		}
+		
+		.image {
+			.size(64px);
+			
+			img {
+				width: 100%;
+				height: auto;
+				.border-radius(50%);
+			}
+		}
+		
+		.user-info {
+			padding-left: @base-padding * 1.5;
+		
+			.name {
+				display: block;
+				font-size: @font-size-h4;
+				line-height: 1;
+				margin-bottom: @base-padding/2;
+				color: @dark-text-color;
+			}
+			
+			.logout {
+				font-size: 13px;
+				color: @sub-heading;
+			}
+		}
+		
+		
+		@media screen and (max-width: @acc-tabs-responsive) {
+			margin-bottom: @base-margin;
+			
+			.image {
+				.size(48px);
+			}
+			
+			.user-info {
+				
+				.name {
+					font-size: @font-size-h4 - 3;
+					margin-bottom: 2px;
+				}
+				
+				.logout {
+					font-size: @font-size-small - 1;
+				}
+			}
+		}
+	}
+	
+	.woocommerce-MyAccount-navigation {
+		
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			
+			li {
+				
+				a {
+					display: block;
+					border-top: 1px solid @border-color;
+					border-right: 1px solid transparent;
+					margin-right: -1px;
+					color: @secondary-color;
+					padding: 10px 0;
+					&:extend(.transall all);
+				}
+				
+
+				&.is-active {
+					position: relative;
+					background: #FFF;
+					border-right-color: #fff;
+					z-index:1;
+
+					a {
+						color: @heading;
+					}
+				}
+
+				a {
+					color: @sub-heading;
+					display: block;
+				}
+				
+				&.is-active,
+				&:hover {
+					
+					a {
+						color: @dark-text-color;
+					}
+				}
+				
+				&.is-active {
+					
+					a {
+						border-right-color: #fff;
+						
+						@media screen and (max-width: @acc-tabs-responsive){
+							border-right: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Account Tab Content
+.woocommerce-MyAccount-content {
+	float: right;
+	width: 100% - @acc-tabs-width;
+	border-left: 1px solid @border-color;
+	padding-left: @base-margin * 4;
+	
+	.page-title {
+		margin-top: 0;
+		padding-top: 0;
+	}
+	
+	.edit {
+	    display: inline-block;
+	    margin-bottom: 10px;
+	    font-size: 11px;
+	    text-transform: uppercase;
+	    position: relative;
+	    top: 20px;
+	}
+	
+	.woocommerce-Pagination {
+		margin-top: @base-margin;
+		.clearfix;
+		
+		.woocommerce-Button {
+			.opacity(0.7);
+			.transall;
+			
+			&:hover {
+				.opacity(1);
+			}
+			
+			&.woocommerce-Button--previous {
+				float: left;
+			}
+			
+			&.woocommerce-Button--next {
+				float: right;
+			}
+		}
+	}
+	
+	.woocommerce-EditAccountForm {
+		
+		legend {
+			color: @menu-color;
+			font-weight: 400;
+		}
+	}
+}
+
+.wc-my-account-tabs,
+.woocommerce-MyAccount-content {
+	margin: 40px 0;
+	
+	@media screen and (max-width: @acc-tabs-responsive) {
+		width: 100%;
+		border: 0;
+		padding: 0;
+		float: none;
+		margin-bottom: @base-margin + @base-padding;			
+	}
+}
+	
+
+// Password Strength
+.woocommerce-password-strength {
+	text-align: right;
+	margin: 10px 0;
+	font-size: @font-size-base - 1;
+	font-weight: bold;
+	
+	&.short,
+	&.bad {
+		color: @brand-danger;
+	}
+	
+	&.good {
+		color: @brand-warning;
+	}
+	
+	&.strong {
+		color: @brand-success;
+	}
+}
+
+.order-list {
+
+	td {
+		font-weight: 300;
+
+		&.order-number {
+			width: 10%;
+			
+			a {
+				font-size: 22px;
+				font-weight: 300;
+				color: @menu-color;
+			}
+		}
+		
+		&.order-date {
+			width: 20%;
+		}
+		
+		&.order-status {
+			width: 20%;
+		}
+		
+		&.order-actions {
+			width: 30%;
+			text-align: right;
+			
+			.btn + .btn {
+				margin-left: @base-padding/2;
+			}
+		}
+
+		&.order-total {
+
+			.amount {
+				font-weight: 400;
+				text-decoration: underline;
+			}
+		}
+
+		.price {
+			display: block;
+			color: @menu-color;
+		}
+	}
+}
+
+.form-forgot-passwd-env {
+	margin-top: @base-margin + @base-padding;
+	margin-bottom: @base-margin + @base-padding;
+}

@@ -1,0 +1,1 @@
+<?php echo do_shortcode('[spb_directory size="500" directory_category="All" directory_map_filter="yes" directory_map_filter_pos="below" directory_map_results="maplist" item_count="20" excerpt_length="80" pagination="yes" type="roadmap" zoom="14" saturation="color" fullscreen="yes" width="1/1" el_position="first last"]'); ?>

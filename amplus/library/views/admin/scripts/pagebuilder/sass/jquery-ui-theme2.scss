@@ -1,0 +1,636 @@
+@import "compass";
+@import "compass/css3/transition";
+/*@import "compass/css3/box-shadow";*/
+@import "compass/css3/opacity";
+@import "compass/css3/box-sizing";
+@import "compass/css3/border-radius";
+
+@mixin font-awesome() {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    display: inline;
+    width: auto;
+    height: auto;
+    line-height: normal;
+    vertical-align: baseline;
+    background-image: none!important;
+    background-position: 0 0;
+    background-repeat: repeat;
+    @include opacity(.7);
+}
+
+/* styling for the page builder tab when selected */
+.panels-active .switch-panels {
+    border-color: #ccc #ccc #f4f4f4;
+    background-color: #f4f4f4;
+    color: #555;
+}
+/* fix for tabs going behind the pagebuilder editor. an outline on the
+tab is showing up */
+.wp-editor-tools {
+    position: relative;
+    z-index: 1;
+}
+.ui-tooltip {
+    -webkit-box-shadow: 0 0 2px #ccc;
+	box-shadow: 0 0 2px #ccc;
+	background: #111;
+	@include border-radius(4px);
+	padding: 6px 10px;
+	border: 0;
+	width: 50px !important;
+    .ui-tooltip-content {
+        font-size: 10px !important;
+        color: white;
+    }
+}
+.ui-tooltip {
+    text-align: center;
+	position: relative;
+	background: #222;
+	border: 2px solid #99cbe0;
+}
+.ui-tooltip:after, .ui-tooltip:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.ui-tooltip:after {
+	border-color: rgba(0, 0, 0, 0);
+	border-top-color: #222;
+	border-width: 6px;
+	left: 50%;
+	margin-left: -6px;
+}
+.ui-tooltip:before {
+	border-color: rgba(43, 184, 255, 0);
+	border-top-color: #99cbe0;
+	border-width: 9px;
+	left: 50%;
+	margin-left: -9px;
+}
+
+#dialog-section-new, #dialog-section-change {
+    text-align: center;
+    button span {
+        display: block;
+        font-size: 10px;
+    }
+}
+#dialog-delete {
+    text-align: center;
+}
+#dialog-panel-new, #dialog-section-change {
+    font-size: 12px;
+    .panel-type-container {
+        text-align: center;
+    }
+    .panel-type {
+        padding: 5px 0;
+        width: 200px;
+        text-align: left;
+        margin-bottom: 5px;
+        vertical-align: text-top;
+        .desc {
+            display: block;
+            font-weight: normal;
+            color: #888;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+        &:hover, &.ui-state-focus {
+            .desc {
+                color: white;
+            }
+        }
+    }
+    .type {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 3px;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+    }
+}
+.ui-dialog {
+    font-size: 12px;
+    .ui-dialog-content {
+        min-height: auto !important;
+    }
+    .ui-dialog-title {
+        font-size: 1.4em;
+    }
+    .option_select {
+        .t {
+            float: left;
+            line-height: 27px;
+            margin-right: 15px;
+        }
+    }
+    .option_selectIcon {
+        .dd-container {
+            float: left !important;
+        }
+    }
+    .mceLayout {
+        border: none !important;
+        td.mceToolbar {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            border: 1px solid #ccc;
+            border-bottom: 0;
+            padding: 5px;
+            box-shadow: inset 0 30px 5px #f9f9f9;
+        }
+        .mceIframeContainer {
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+        }
+        .mceStatusbar {
+            border: 1px solid #ccc;
+            border-top: none;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            padding: 5px;
+            font-style: italic;
+            span {
+                color: #999;
+            }
+            box-shadow: inset 0 12px 5px #f9f9f9;
+        }
+    }
+}
+
+.panels-container {
+    .grid-container {
+        position: relative;
+        padding-bottom: 65px;
+        > button {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            &:hover {
+                background: #bbb;
+                color: #fff;
+            }
+        }
+    }
+    .clearfix {
+        clear: both;
+    }
+    .ui-widget {
+        font-size: 12px !important;
+    }
+    .ui-button-text-only .ui-button-text {
+        padding: 0.3em .6em;
+    }
+    .placeholder {
+        background: #fff;
+        @include opacity(.3);
+        border:1px dashed #ddd;
+        visibility: visible !important;
+        
+            text-align: left;
+            padding: 10px;
+            display: block;
+            margin: 10px 10px 0;
+    }
+    
+    .controls {
+        text-align: right;
+        margin-bottom: 4px;
+        .move {
+            cursor: url(https://mail.google.com/mail/images/2/closedhand.cur), default !important;
+        }
+        button.off {
+            @include opacity(.4);
+        }
+        .panel-name {
+            float: left;
+            font-size: 12px;
+            font-style: italic;
+            line-height: 27px;
+            font-weight: bold;
+            background: #EEE;
+            padding: 0 10px;
+            border-radius: 5px;
+            @include box-shadow(inset 1px 1px 0 #BBB, 1px 1px 0 #FFF);
+            color: #666;
+            text-shadow: 1px 1px 0 #FFF;
+        }
+    }
+    .row-container, .sub-container {
+        font-size: 0;
+        padding-bottom: 15px;
+        white-space: nowrap;
+        margin-bottom: 5px;
+    }
+    .resize-handle {
+        width: 10px;
+        display: inline-block;
+        min-height: 45px;
+        vertical-align: text-top;
+        position: relative;
+        cursor: url(https://mail.google.com/mail/images/2/closedhand.cur), default !important;
+        > * {
+            top: 30%;
+            bottom: 30%;
+            position: absolute;
+            left: 3px;
+            right: 3px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+    }
+    .ui-resizable-handle.ui-resizable-e {
+        width: 4px;
+        right: -8px;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        top: 25%;
+        bottom: 25%;
+        height: auto;
+        z-index: 99 !important;
+    }
+    .row-container, .panel-container, .sub-container, .subpanel-container {
+        @include box-sizing(border-box);
+    }
+    .panel-container, .subpanel-container {
+        height: auto !important;
+        background: #cde3ed;
+        border: 1px solid #bcccd2;
+            border: 0;
+        @include border-radius(2px);
+        padding-bottom: 40px;
+        min-height: 45px;
+        margin-bottom: 10px;
+        vertical-align: text-top;
+        cursor: pointer;
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        &.ui-selected { background: #cde3ed; }
+        
+        &.has-resize-handle {
+            margin-right: 10px;
+        }
+        .measurement {
+            position: absolute;
+            bottom: -21px;
+            left: 0;
+            right: 0;
+            height: 17px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            text-align: center;
+            overflow: hidden;
+            input {
+                text-align: center;
+                border: 0;
+                background: #f5f5f5;
+                width: 50px;
+                font-size: 10px;
+                padding-top: 2px;
+                position: relative;
+                z-index: 9;
+                color: #888;
+                font-weight: normal;
+            }
+            hr {
+                height: 1px;
+                border: 0;
+                background: #ddd;
+                margin: 8px 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+        .add-panel-inside {
+/*            display: none;*/
+            color: #3388bb;
+            text-align: center;
+            margin: 10px 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: transparent;
+            border: none;
+            &:hover {
+                color: white;
+            }
+            width: 100%;
+        }
+    }
+    .panel {
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+        padding: 10px;
+        display: block;
+        margin: 10px 10px 0;
+        cursor: url(https://mail.google.com/mail/images/2/closedhand.cur), default !important;
+        .preview {
+            font-weight: normal;
+            font-style: italic;
+            font-size: 10px;
+            margin-left: 10px;
+            color: #aaa;
+            float: none;
+        }
+        .desc {
+            display: block;
+            margin-top: 5px;
+            font-weight: normal;
+            color: #666;
+            font-size: 10px;
+        }
+        button {
+            font-size: 10px !important;
+            z-index: 9;
+            white-space: nowrap;
+            overflow: hidden;
+            position: absolute;
+            &.clone {
+                right: 10px;
+            }
+            &.edit {
+                right: 40px;
+            }
+            &.delete {
+                right: 70px;
+            }
+        }
+    }
+}
+
+
+.mceMenu.mceListBoxMenu {
+    border-radius: 5px !important;
+    box-shadow: 2px 2px 10px #eee !important;
+}
+.mceMenuItem.mceMenuItemSelected a {
+    background: #bbeeff !important;
+}
+.mceContentBody {
+    font-size: 13px !important;
+}
+
+.bfi-pagebuilder-dialog {
+    padding-top: 20px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    > p {
+        font-style: italic;
+        color: #999;
+        margin-top: 0;
+    }
+    .t {
+        font-weight: bold;
+        display: block;
+        font-size: 1.2em;
+        line-height: 1.2em;
+        margin-bottom: 10px;
+    }
+    input, select, .colorSelector {
+        float: left;
+    }
+    input[type='text'] {
+        width: 380px !important;
+    }
+    .mul {
+        float: left;
+        width: 380px !important;
+        input {
+            clear: both;
+            float: left;
+            margin-bottom: 10px;
+        }
+        span {
+            float: left;
+            margin-left: 10px;
+        }
+    }
+    .c {
+        clear: both;
+    }
+    .h .heading {
+        font-size: 1.4em;
+        background: #EEE;
+        padding: 5px 10px;
+        @include border-radius(4px);
+    }
+    .m {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        &:last-of-type, &.last {
+            margin-bottom: 0;
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+        position: relative;
+        &.option_boolean {
+            .t {
+                float: left;
+                margin-right: 20px;
+                line-height: 21px;
+            }
+            input {
+                margin-top: 5px;
+            }
+        }
+        &.option_colorpicker {
+            .t {
+                float: left;
+                margin-right: 20px;
+                line-height: 35px;
+            }
+        }
+        &.option_upload, &.option_uploadImage {
+            input {
+                width: 250px !important;
+                margin-right: 10px;
+            }
+            .button-upload {
+                float: left;
+            }
+        }
+        &.option_note {
+            .t {
+                float: left;
+                margin-right: 15px;
+            }
+            .n {
+                overflow: hidden;
+                font-style: italic;
+                color: #0073EA;
+            }
+        }
+        &.option_hidden {
+            display: none;
+        }
+    }
+    textarea {
+        height: 100px !important;
+        width: 380px !important;
+        float: left;
+    }
+    table.mceLayout {
+        width: 380px !important;
+        float: left;
+        .mce_highlight {
+            background-image: url('../images/highlight.png') !important;
+            background-position: 0 0 !important;
+        }
+        .mce_starbullist {
+            background-image: url('../images/star.png') !important;
+            background-position: 0 0 !important;
+        }
+        .mce_checkbullist {
+            background-image: url('../images/check.png') !important;
+            background-position: 0 0 !important;
+        }
+        .mce_xbullist {
+            background-image: url('../images/x.png') !important;
+            background-position: 0 0 !important;
+        }
+        .mce_dropcap {
+            background-image: url('../images/dropcap.png') !important;
+            background-position: 0 0 !important;
+        }
+        .mce_dropcircle {
+            background-image: url('../images/dropcircle.png') !important;
+            background-position: 0 0 !important;
+        }
+        .mceIframeContainer > iframe {
+            height: 150px !important;
+        }
+        table.mceToolbar {
+            .mceListBox {
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 2px;
+                box-shadow: 1px 1px 0 #ddd, inset 0 10px 10px #f9f9f9;
+                margin: 3px 2px !important;
+                background: #eee !important;
+                a.mceText {
+                    border: none;
+                    background: transparent;
+                    border-right: 1px solid #bbb;
+                    margin-right: 6px;
+                }
+                a.mceOpen {
+                    border: none;
+                    margin-right: 5px;
+                    &:hover {
+                        background-color: transparent !important;
+                    }
+                }
+                &.mceListBoxSelected .mceOpen {
+                    background-color: transparent !important;
+                }
+                &:hover {
+                    a.mceOpen {
+                        background-color: transparent !important;
+                    }
+                    background-color: #cccccc !important;
+                    box-shadow: inset 0 10px 10px #eee !important;
+                }
+            }
+            a.mceButton {
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 2px;
+                box-shadow: 1px 1px 0 #ddd, inset 0 10px 10px #f9f9f9;
+                margin: 3px 2px !important;
+                background: #eee !important;
+                &:hover, &.mceButtonActive {
+                    background-color: #cccccc !important;
+                    box-shadow: inset 0 10px 10px #eee !important;
+                }
+                &, > * {
+                    cursor: pointer;
+                }
+            }
+            .mceSeparator {
+                background: none !important;
+                margin: 0 5px !important;
+            }
+        }
+    }
+    .tooltip.vtip, .hasmore.vtip {
+        margin-top: 2px;
+        height: 20px !important;
+        width: 20px !important;
+        float: left;
+/*        background: url(../../images/tooltip.png);*/
+        
+        background-repeat: no-repeat;
+        margin-left: 10px;
+/*        position: relative;*/
+            position: absolute;
+            right: 0;
+        @include font-awesome();
+        &:before {
+            position: absolute;
+            top: 0px;
+            bottom: 0;
+            left: 0px;
+            right: 0;
+            content: "\f059";
+            font-size: 20px;
+            color: #0073ea;
+        }
+        &.hasmore:before {
+            content: "\f06e";
+            font-size: 20px;
+            line-height: 21px;
+            color: #999;
+        }
+        &.hasmore {
+            margin-right: 30px;
+        }
+    }
+}
+
+.dd-container  {
+    .dd-selected {
+        padding: 5px !important;
+        i {
+            font-size: 20px !important;
+            padding: 0 10px 0 15px !important;
+            line-height: 41px !important;
+        }
+        label {
+            line-height: 40px !important;
+        }
+    }
+    .dd-option {
+        i {
+            font-size: 20px !important;
+            line-height: 14px !important;
+        }
+    }
+}
+.bfi-pagebuilder-dialog .option_colorpicker > input {
+	float: left;
+	width: 80px !important;
+	line-height: 26px;
+	margin-right: 10px;
+}

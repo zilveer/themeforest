@@ -1,0 +1,110 @@
+// Helper mixins
+.opacity(@o) {
+  @IEValue: @o * 100;
+  opacity: @o;
+      filter: alpha(opacity=@IEValue);
+}
+
+.border-radius(@r) {
+  -webkit-border-radius: @r;
+     -moz-border-radius: @r;
+      -ms-border-radius: @r;
+          border-radius: @r;
+}
+
+.transition(@t...) {
+  -webkit-transition: @t;
+     -moz-transition: @t;
+       -o-transition: @t;
+          transition: @t;
+}
+
+// Scrollbar mixins
+.scrollbar-rail-default {
+  display: none;
+  position: absolute; /* please don't change 'position' */
+  .border-radius(0px);
+  .opacity(0);
+  .transition(background-color .2s linear, opacity .2s linear);
+}
+
+.scrollbar-rail-hover {
+  background-color: #eee;
+  .opacity(0.9);
+}
+
+.scrollbar-default {
+  position: absolute; /* please don't change 'position' */
+  background-color: #aaa;
+  .border-radius(0px);
+  .transition(background-color .2s linear);
+}
+
+.scrollbar-hover {
+  background-color: #999;
+}
+
+.in-scrolling {
+  &.in-scrolling {
+    .scrollbar-rail-hover;
+  }
+}
+
+.ps-container {
+  &.ps-active-x > .ps-scrollbar-x-rail,
+  &.ps-active-y > .ps-scrollbar-y-rail {
+    display: block;
+  }
+
+  >.ps-scrollbar-x-rail {
+    .scrollbar-rail-default;
+    bottom: 1px; /* there must be 'bottom' for ps-scrollbar-x-rail */
+    height: 5px;
+
+    >.ps-scrollbar-x {
+      .scrollbar-default;
+      bottom: 0; /* there must be 'bottom' for ps-scrollbar-x */
+      height: 5px;
+    }
+
+    .in-scrolling;
+  }
+
+  >.ps-scrollbar-y-rail {
+    .scrollbar-rail-default;
+    right: 1px; /* there must be 'right' for ps-scrollbar-y-rail */
+    width: 5px;
+
+    >.ps-scrollbar-y {
+      .scrollbar-default;
+      right: 0; /* there must be 'right' for ps-scrollbar-y */
+      width: 5px;
+    }
+
+    .in-scrolling;
+  }
+
+  &:hover {
+    >.ps-scrollbar-x-rail,
+    >.ps-scrollbar-y-rail {
+      .opacity(0.6);
+      .in-scrolling;
+    }
+
+    >.ps-scrollbar-x-rail:hover {
+      .scrollbar-rail-hover;
+
+      >.ps-scrollbar-x {
+        .scrollbar-hover;
+      }
+    }
+
+    >.ps-scrollbar-y-rail:hover {
+      .scrollbar-rail-hover;
+
+      >.ps-scrollbar-y {
+        .scrollbar-hover;
+      }
+    }
+  }
+}
